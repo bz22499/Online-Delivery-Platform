@@ -1,15 +1,15 @@
 # 2023-OnlineDeliveryPlatform
-User Stories
 
-As a subscriber, I wish to place an order so that I can have food delivered to me in a conveniant way
+## Table of contents
+- Overview
+- Project Description
+- User Stories
+- Stakeholders
 
-As a chef, I wish to receive orders promptly after they are processed, so that I can quickly prepare food for delivery.
+## Overview
+EMPTY
 
-As a Delivery driver, I want to receive notifications in advance of the product be prepared with a pick-up and drop-off location so that I can deliver food quickly and efficiently
-
-
-
-Project Description.
+## Project Description.
 
 3-way login system, where the user can either be a subscriber, chef, or delivery driver.
 
@@ -19,7 +19,14 @@ Chef: Be able to post a menu onto the website, update the menu's current availab
 
 Delivery driver: Receive an order when they have no current orders they're currently working on. Ideally closest driver to pick-up point would be selected for the delivery. They would recieve a pick-up number to show the chef and a drop-off number to show the customer. They may also need a temporary direct message system to the customer and the chef.
 
+## User Stories
 
-Stake Holders
+As a subscriber, I wish to place an order so that I can have food delivered to me in a conveniant way
+
+As a chef, I wish to receive orders promptly after they are processed, so that I can quickly prepare food for delivery.
+
+As a Delivery driver, I want to receive notifications in advance of the product be prepared with a pick-up and drop-off location so that I can deliver food quickly and efficiently
+
+## Stake Holders
 
 Chefs, Customers, Delivery Drivers, The client, Future generations
