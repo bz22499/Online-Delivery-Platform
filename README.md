@@ -1,16 +1,15 @@
-# 2023-OnlineDeliveryPlatform
-
-## Table of contents
-- Overview
-- Project Description
-- User Stories
-- Stakeholders
-- Gantt Chart
-
-## Overview
+# 1. 2023-OnlineDeliveryPlatform
+## 1.1 Table of contents
+- [Overview](#12-overview)
+- [Project Description](#13-project-description)
+- [User Stories](#14-user-stories)
+- [Stakeholders](#15-stake-holders)
+- [Gantt Chart](#16-gantt-chart)
+---
+## 1.2 Overview
 EMPTY
 
-## Project Description.
+## 1.3 Project Description.
 
 3-way login system, where the user can either be a subscriber, chef, or delivery driver.
 
@@ -20,7 +19,7 @@ Chef: Be able to post a menu onto the website, update the menu's current availab
 
 Delivery driver: Receive an order when they have no current orders they're currently working on. Ideally closest driver to pick-up point would be selected for the delivery. They would recieve a pick-up number to show the chef and a drop-off number to show the customer. They may also need a temporary direct message system to the customer and the chef.
 
-## User Stories
+## 1.4 User Stories
 
 As a subscriber, I wish to place an order so that I can have food delivered to me in a conveniant way
 
@@ -28,10 +27,10 @@ As a chef, I wish to receive orders promptly after they are processed, so that I
 
 As a Delivery driver, I want to receive notifications in advance of the product be prepared with a pick-up and drop-off location so that I can deliver food quickly and efficiently
 
-## Stake Holders
+## 1.5 Stake Holders
 
 Chefs, Customers, Delivery Drivers, The client, Future generations
 
-## Gantt Chart
+## 1.6 Gantt Chart
 
 https://uob-my.sharepoint.com/:x:/r/personal/ek21604_bristol_ac_uk/Documents/Software%20Engineering%20Project%20Gantt%20chart.xlsx?d=w8bac0904315443e9ab9eeab7c2909573&csf=1&web=1&e=EmN3e1
