@@ -5,6 +5,7 @@
 - Project Description
 - User Stories
 - Stakeholders
+- Gantt Chart
 
 ## Overview
 EMPTY
@@ -30,3 +31,7 @@ As a Delivery driver, I want to receive notifications in advance of the product 
 ## Stake Holders
 
 Chefs, Customers, Delivery Drivers, The client, Future generations
+
+## Gantt Chart
+
+https://uob-my.sharepoint.com/:x:/r/personal/ek21604_bristol_ac_uk/Documents/Software%20Engineering%20Project%20Gantt%20chart.xlsx?d=w8bac0904315443e9ab9eeab7c2909573&csf=1&web=1&e=EmN3e1
