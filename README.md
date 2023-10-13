@@ -5,6 +5,7 @@
 - [User Stories](#14-user-stories)
 - [Stakeholders](#15-stake-holders)
 - [Licence](#16-licence)
+- [Acknowledgements](#18-acknowledgements)
 - [Gantt Chart](#17-gantt-chart)
 ---
 ## 1.2 Overview
@@ -36,6 +37,11 @@ Chefs, Customers, Delivery Drivers, The client, Future generations
 
 This project is licensed under the [License Name] - see the LICENSE file for details.
 
-## 1.7 Gantt Chart
+## 1.7 Acknowledgments
+
+Mention any external libraries, frameworks, or tools used in the project.   
+Credit any sources of inspiration or references that contributed to the project.
+
+## 1.8 Gantt Chart
 
 https://uob-my.sharepoint.com/:x:/r/personal/ek21604_bristol_ac_uk/Documents/Software%20Engineering%20Project%20Gantt%20chart.xlsx?d=w8bac0904315443e9ab9eeab7c2909573&csf=1&web=1&e=EmN3e1
