@@ -1,12 +1,11 @@
 # 2023-OnlineDeliveryPlatform
 ## 1.1 Table of contents
-- [Overview](#12-overview)
-- [Project Description](#13-project-description)
-- [User Stories](#14-user-stories)
-- [Stakeholders](#15-stake-holders)
-- [Licence](#16-licence)
-- [Acknowledgements](#17-acknowledgements)
-- [Gantt Chart](#18-gantt-chart)
+- [Project Description](#12-project-description)
+- [User Stories](#13-user-stories)
+- [Stakeholders](#14-stake-holders)
+- [Licence](#15-licence)
+- [Acknowledgements](#16-acknowledgements)
+- [Gantt Chart](#17-gantt-chart)
 ---
 ## 1.2 Goals
 Our delivery app aims to create a seamless experience for customers, chefs, and delivery drivers alike. 
