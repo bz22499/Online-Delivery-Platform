@@ -5,8 +5,8 @@
 - [User Stories](#14-user-stories)
 - [Stakeholders](#15-stake-holders)
 - [Licence](#16-licence)
-- [Acknowledgements](#18-acknowledgements)
-- [Gantt Chart](#17-gantt-chart)
+- [Acknowledgements](#17-acknowledgements)
+- [Gantt Chart](#18-gantt-chart)
 ---
 ## 1.2 Overview
 EMPTY
