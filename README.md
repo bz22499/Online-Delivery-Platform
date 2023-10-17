@@ -37,7 +37,7 @@ Chefs, Customers, Delivery Drivers, The client, Future generations
 
 This project is licensed under the [License Name] - see the LICENSE file for details.
 
-## 1.7 Acknowledgments
+## 1.7 Acknowledgements
 
 Mention any external libraries, frameworks, or tools used in the project.   
 Credit any sources of inspiration or references that contributed to the project.
