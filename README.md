@@ -8,40 +8,41 @@
 - [Acknowledgements](#17-acknowledgements)
 - [Gantt Chart](#18-gantt-chart)
 ---
-## 1.2 Overview
-EMPTY
+## 1.2 Goals
+Our delivery app aims to create a seamless experience for customers, chefs, and delivery drivers alike. 
 
-## 1.3 Project Description.
+Customers can browse through an array of restaurants, view menus, and place orders effortlessly. They can input their location via GPS or manual entry and receive real-time updates to monitor their order progress. Each customer is provided with a unique order number to present to their designated driver. The app also features optional functionalities like a review system, temporary private messaging with the driver, and even a potential refund mechanism backed by photo verification. If time permits, the app will offer personalized food recommendations based on previous order history. Customers can also set filters to match their specific dining needs such as allergies, vegan options, or Halal food.
 
-3-way login system, where the user can either be a subscriber, chef, or delivery driver.
+For chefs, the platform offers the ability to upload and manage menus, update food item availability via a stock management system, and communicate estimated preparation times to drivers. Chefs also receive orders complete with customer preferences and dietary needs.
 
-Customer: Browse different restaurants and see their menus and place orders. Enter location using either GPS/Manual entry. Updates throughout order to check the process. Recieve an order number to show to the designated delivery driver. Maybe a review system as well. Temporary private message with driver. Potential refund system in case something is missing (verified by photos taken by driver and restaurant) - refund time limit ? Recommended suggestions based of order history - (if we have time). Filters for dining references e.g. (Allergies, Vegan, Halal - these are specified on the order). An order history so they can order again.
+Delivery drivers are assigned orders based on their proximity to the pick-up location, ensuring efficiency. They receive unique pick-up and drop-off numbers for verification purposes and can use a temporary messaging system for coordinating with chefs and customers. This holistic approach aims to streamline the food ordering and delivery process for all parties involved.
 
-Chef: Be able to post a menu onto the website, update the menu's current availability with a stock system. Be able to give a rough time estimate to the driver; receive order with order number to give the delivery driver, this order would recieve information about allerigies or dining preferences for the customer.
+## 1.3 User Stories
 
-Delivery driver: Receive an order when they have no current orders they're currently working on. Ideally closest driver to pick-up point would be selected for the delivery. They would recieve a pick-up number to show the chef and a drop-off number to show the customer. They may also need a temporary direct message system to the customer and the chef.
+As a **customer**, I wish to place an order so that I can have food delivered to me in a conveniant way
 
-## 1.4 User Stories
+As a **chef**, I wish to receive orders promptly after they are processed, so that I can quickly prepare food for delivery.
 
-As a subscriber, I wish to place an order so that I can have food delivered to me in a conveniant way
+As a **delivery driver**, I want to receive notifications in advance of the product be prepared with a pick-up and drop-off location so that I can deliver food quickly and efficiently
 
-As a chef, I wish to receive orders promptly after they are processed, so that I can quickly prepare food for delivery.
+## 1.4 Stake Holders
 
-As a Delivery driver, I want to receive notifications in advance of the product be prepared with a pick-up and drop-off location so that I can deliver food quickly and efficiently
+- Chefs
+- Customers
+- Delivery Drivers
+- The client
+- The local community
+- Local farmers
 
-## 1.5 Stake Holders
-
-Chefs, Customers, Delivery Drivers, The client, Future generations
-
-## 1.6 Licence
+## 1.5 Licence
 
 This project is licensed under the [License Name] - see the LICENSE file for details.
 
-## 1.7 Acknowledgements
+## 1.6 Acknowledgements
 
 Mention any external libraries, frameworks, or tools used in the project.   
 Credit any sources of inspiration or references that contributed to the project.
 
-## 1.8 Gantt Chart
+## 1.7 Gantt Chart
 
 https://uob-my.sharepoint.com/:x:/r/personal/ek21604_bristol_ac_uk/Documents/Software%20Engineering%20Project%20Gantt%20chart.xlsx?d=w8bac0904315443e9ab9eeab7c2909573&csf=1&web=1&e=EmN3e1
