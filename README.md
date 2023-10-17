@@ -1,6 +1,6 @@
 # 2023-OnlineDeliveryPlatform
 ## 1.1 Table of contents
-- [Project Description](#12-project-description)
+- [Project Description](#12-goals)
 - [User Stories](#13-user-stories)
 - [Stakeholders](#14-stake-holders)
 - [Licence](#15-licence)
