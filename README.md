@@ -1,13 +1,13 @@
 # 2023-OnlineDeliveryPlatform
 ## 1.1 Table of contents
-- [Project Description](#12-goals)
+- [Project Description](#12-project-description)
 - [User Stories](#13-user-stories)
 - [Stakeholders](#14-stake-holders)
 - [Licence](#15-licence)
 - [Acknowledgements](#16-acknowledgements)
 - [Gantt Chart](#17-gantt-chart)
 ---
-## 1.2 Goals
+## 1.2 Project Description
 Our delivery app aims to create a seamless experience for customers, chefs, and delivery drivers alike. 
 
 Customers can browse through an array of restaurants, view menus, and place orders effortlessly. They can input their location via GPS or manual entry and receive real-time updates to monitor their order progress. Each customer is provided with a unique order number to present to their designated driver. The app also features optional functionalities like a review system, temporary private messaging with the driver, and even a potential refund mechanism backed by photo verification. If time permits, the app will offer personalized food recommendations based on previous order history. Customers can also set filters to match their specific dining needs such as allergies, vegan options, or Halal food.
