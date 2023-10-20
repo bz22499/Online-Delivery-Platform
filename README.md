@@ -6,8 +6,7 @@
 - [Stakeholders](#14-stake-holders)
 - [Licence](#15-licence)
 - [Acknowledgements](#16-acknowledgements)
-- [Gantt Chart](#17-gantt-chart)
-- [Team](#18-group-members)
+- [Team](#17-group-members)
 ---
 ## 1.2 Project Description
 Our delivery app aims to create a seamless experience for customers, chefs, and delivery drivers alike. 
@@ -42,11 +41,7 @@ This project is licensed under the [License Name] - see the LICENSE file for det
 Mention any external libraries, frameworks, or tools used in the project.   
 Credit any sources of inspiration or references that contributed to the project.
 
-## 1.7 Gantt Chart
-
-https://uob-my.sharepoint.com/:x:/r/personal/ek21604_bristol_ac_uk/Documents/Software%20Engineering%20Project%20Gantt%20chart.xlsx?d=w8bac0904315443e9ab9eeab7c2909573&csf=1&web=1&e=EmN3e1
-
-## 1.8 Group Members
+## 1.7 Group Members
 - Luke Trott (zq22843)
 - Hugh Kiggell (bz22499)
 - Anthony Price (ek21604)
