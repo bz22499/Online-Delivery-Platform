@@ -28,12 +28,10 @@ As a **delivery driver**, I want to receive notifications in advance of the prod
 
 ## 1.4 Stake Holders
 
-- Chefs
-- Customers
-- Delivery Drivers
-- The client
-- The local community
-- Local farmers
+- **Chefs/restaurants** have the option to sign up to the service so that they can sell and distribute their meals to customers in reusable containers which will be returned to them. 
+- **Customers** can place orders for meals to be delivered to them on following days in reusable containers; at a later time or during their next order the container can be collected by a driver to be returned to the chef/restaurant.
+- **Delivery Drivers** will sign up to the service and receive notifications of nearby orders to pick up/customers to deliver to/containers to collect. They are able to verify deliveries by a customer's username and unique order code. They should have some way of storing the reusable containers during journeys, and ideally would be either travelling either by bicycle or electric vehicle.
+- **The client** will have created a sustainable, eco-friendly delivery service in which food containers are reused and orders are delivered by green vehicles. 
 
 ## 1.5 Licence
 
