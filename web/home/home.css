@@ -9,10 +9,15 @@ ul.banner {
     padding: 0;
     overflow: hidden;
     background-color: whitesmoke;
-    position: fixed;
     top: 0;
     width: 100%;
   }
+
+ul.banner img{
+  height: 20px;
+  padding: 14px;
+  float: left;
+}  
   
  ul.banner li {
     float: left;
@@ -21,7 +26,6 @@ ul.banner {
   ul.banner li.right {
     float: right;
   }
-
   
  ul.banner li a {
     display: block;
@@ -36,10 +40,8 @@ ul.banner {
     color: white;
     background-color: black;
     border-radius: 10px;
-    text-align: center;
     padding: 5px 16px;
     margin: 8px 10px;
-    text-decoration: none;
   }
 
 ul.banner li a:hover{
