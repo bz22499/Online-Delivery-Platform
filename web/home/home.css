@@ -1,3 +1,31 @@
-body {
-    color: #00ffff;
+body{
+    background-color: lightgray;
+    margin: 0;
+}
+
+.banner ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: whitesmoke;
+    position: fixed;
+    top: 0;
+    width: 100%;
+  }
+  
+ .banner li {
+    float: left;
+  }
+  
+ .banner li a {
+    display: block;
+    color: black;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+  }
+
+.banner li a:hover{
+    background-color: gray;
 }
