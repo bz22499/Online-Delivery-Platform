@@ -3,7 +3,7 @@ body{
     margin: 0;
 }
 
-.banner ul {
+ul.banner {
     list-style-type: none;
     margin: 0;
     padding: 0;
@@ -14,11 +14,16 @@ body{
     width: 100%;
   }
   
- .banner li {
+ ul.banner li {
     float: left;
   }
+
+  ul.banner li.right {
+    float: right;
+  }
+
   
- .banner li a {
+ ul.banner li a {
     display: block;
     color: black;
     text-align: center;
@@ -26,6 +31,17 @@ body{
     text-decoration: none;
   }
 
-.banner li a:hover{
+  ul.banner li.right a {
+    display: block;
+    color: white;
+    background-color: black;
+    border-radius: 10px;
+    text-align: center;
+    padding: 14px 20px;
+    margin: 0px 10px;
+    text-decoration: none;
+  }
+
+ul.banner li a:hover{
     background-color: gray;
 }
