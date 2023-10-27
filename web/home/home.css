@@ -11,6 +11,7 @@ ul.banner {
     background-color: whitesmoke;
     top: 0;
     width: 100%;
+    position: fixed;
   }
 
 ul.banner img{
