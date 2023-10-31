@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class WebController {
-    @GetMapping(value = "/")
+    @GetMapping(value = "/home")
     public String index(){
         return "home";
     }
