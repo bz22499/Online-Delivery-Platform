@@ -1,0 +1,73 @@
+ body{
+     background-color: lightgray;
+     margin: 0;
+ }
+
+ ul.banner {
+     list-style-type: none;
+     margin: 0;
+     padding: 0;
+     overflow: hidden;
+     background-color: whitesmoke;
+     top: 0;
+     width: 100%;
+     position: fixed;
+   }
+
+ ul.banner img{
+   height: 19px;
+   padding: 14px;
+   float: left;
+ }
+
+  ul.banner li {
+     float: left;
+   }
+
+   ul.banner li.right {
+     float: right;
+   }
+
+  ul.banner li a {
+     display: block;
+     color: black;
+     text-align: center;
+     padding: 14px 16px;
+     text-decoration: none;
+   }
+
+  ul.banner li.active a{
+     background-color: rgb(196, 194, 188);
+  }
+
+   ul.banner li.right a {
+     display: block;
+     color: white;
+     background-color: black;
+     border-radius: 10px;
+     padding: 5px 16px;
+     margin: 8px 10px;
+   }
+
+ ul.banner li a:hover{
+     background-color: gray;
+ }
+
+
+ //now making the location input
+ .locationInput {
+   position: relative;
+   text-align: center;
+ }
+ .locationInput input{
+       position: absolute;
+       top: 12%;
+       left: 50%;
+       transform: translate(-50%, -50%);
+       padding: 20px;
+       font-size: 17px;
+       border: 1px solid grey;
+       width: 40%;
+       background: #f1f1f1;
+       border-radius: 27px;
+ }
