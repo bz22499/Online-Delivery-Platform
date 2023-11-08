@@ -36,6 +36,10 @@ ul.banner img{
     text-decoration: none;
   }
 
+ul.banner li.active a{
+    background-color: rgb(196, 194, 188);
+}
+
   ul.banner li.right a {
     display: block;
     color: white;

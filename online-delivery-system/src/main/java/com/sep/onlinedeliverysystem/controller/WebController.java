@@ -16,7 +16,6 @@ public class WebController {
         return "login";
     }
     @GetMapping("/order")
-    @ResponseBody
     public String order(){
         return "order";
     }
