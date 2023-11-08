@@ -22,11 +22,11 @@
 
   ul.banner li {
      float: left;
-   }
+  }
 
    ul.banner li.right {
      float: right;
-   }
+  }
 
   ul.banner li a {
      display: block;
@@ -34,7 +34,7 @@
      text-align: center;
      padding: 14px 16px;
      text-decoration: none;
-   }
+  }
 
   ul.banner li.active a{
      background-color: rgb(196, 194, 188);
@@ -71,3 +71,32 @@
        background: #f1f1f1;
        border-radius: 27px;
  }
+
+
+
+ul.cuisineList{
+     list-style-type: none;
+     margin:auto;
+     overflow: hidden;
+     background-color: whitesmoke;
+     width: 80%;
+     position: relative;
+}
+
+  ul.cuisineList li {
+     display: inline;
+     color: black;
+     text-align: center;
+     padding: 14px 16px;
+     text-decoration: none;
+  }
+
+    ul.cuisineList li .button{
+    background-color: #04AA6D;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+  }
