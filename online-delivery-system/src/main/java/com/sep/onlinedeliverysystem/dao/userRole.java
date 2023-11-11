@@ -1,4 +1,4 @@
-package com.sep.onlinedeliverysystem.model;
+package com.sep.onlinedeliverysystem.dao;
 
 public enum userRole {
     customer, vendor, delivery

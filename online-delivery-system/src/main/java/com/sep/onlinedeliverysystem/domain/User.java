@@ -1,11 +1,9 @@
-package com.sep.onlinedeliverysystem.model;
+package com.sep.onlinedeliverysystem.domain;
 
+import com.sep.onlinedeliverysystem.dao.userRole;
 import jakarta.persistence.*;
-
 import java.time.LocalDateTime;
-import java.util.UUID;
 
-@Entity
 @Table(name="users")
 public class User {
     @Id
