@@ -5,7 +5,6 @@ import com.sep.onlinedeliverysystem.dao.UserDao;
 import com.sep.onlinedeliverysystem.dao.implementation.AddressDaoImpl;
 import com.sep.onlinedeliverysystem.model.Address;
 import com.sep.onlinedeliverysystem.model.User;
-import org.checkerframework.checker.units.qual.A;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,28 +23,29 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class AddressDaoImplIntegrationTest {
 
     private UserDao userDao;
-    private AddressDaoImpl underTest;
+    private AddressDaoImpl daoImplUnderTest;
 
     @Autowired
-    public AddressDaoImplIntegrationTest(AddressDaoImpl underTest, UserDao userDao){
-        this.underTest = underTest;
+    public AddressDaoImplIntegrationTest(AddressDaoImpl daoImplUnderTest, UserDao userDao){
+        this.daoImplUnderTest = daoImplUnderTest;
         this.userDao = userDao;
     }
 
     @Test
     public void testSingleAddressCreationAndFind(){
-        User user = TestUtil.userBuild();
+        User user = TestUtil.userBuild1();
         userDao.createUser(user);
         Address address = TestUtil.addressBuild1();
-        underTest.createAddress(address);
-        Optional<Address> result = underTest.findSingle(address.getId());
+        address.setUserId(user.getId());
+        daoImplUnderTest.createAddress(address);
+        Optional<Address> result = daoImplUnderTest.findSingle(address.getId());
         assertThat(result).isPresent();
         assertThat(result.get()).isEqualTo(address);
     }
 
     @Test
     public void testMultipleAddressCreationAndFind(){
-        User user = TestUtil.userBuild();
+        User user = TestUtil.userBuild1();
         userDao.createUser(user);
         Address address1 = TestUtil.addressBuild1();
         Address address2 = TestUtil.addressBuild2();
@@ -53,12 +53,38 @@ public class AddressDaoImplIntegrationTest {
         address1.setUserId(user.getId());
         address2.setUserId(user.getId());
         address3.setUserId(user.getId());
-        underTest.createAddress(address1);
-        underTest.createAddress(address2);
-        underTest.createAddress(address3);
-        List<Address> result = underTest.find();
+        daoImplUnderTest.createAddress(address1);
+        daoImplUnderTest.createAddress(address2);
+        daoImplUnderTest.createAddress(address3);
+        List<Address> result = daoImplUnderTest.find();
         assertThat(result)
                 .hasSize(3)
                 .containsExactly(address1, address2, address3);
+    }
+
+    @Test
+    public void testAddressUpdate() {
+        User user = TestUtil.userBuild1();
+        userDao.createUser(user);
+        Address address1 = TestUtil.addressBuild1();
+        address1.setUserId(user.getId());
+        daoImplUnderTest.createAddress(address1);
+        address1.setPostCode("Y67 Z89");
+        daoImplUnderTest.update(address1.getId(), address1);
+        Optional<Address> result = daoImplUnderTest.findSingle(address1.getId());
+        assertThat(result).isPresent();
+        assertThat(result.get()).isEqualTo(address1);
+    }
+
+    @Test
+    public void testAddressDelete() {
+        User user = TestUtil.userBuild1();
+        userDao.createUser(user);
+        Address address1 = TestUtil.addressBuild1();
+        address1.setUserId(user.getId());
+        daoImplUnderTest.createAddress(address1);
+        daoImplUnderTest.delete(address1.getId());
+        Optional<Address> result = daoImplUnderTest.findSingle(address1.getId());
+        assertThat(result).isEmpty();
     }
 }
