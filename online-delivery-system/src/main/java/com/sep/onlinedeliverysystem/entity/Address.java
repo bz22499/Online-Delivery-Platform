@@ -1,19 +1,26 @@
-package com.sep.onlinedeliverysystem.model;
+package com.sep.onlinedeliverysystem.entity;
 
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.extern.java.Log;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Log
+@Entity
+@Table(name = "addresses")
 public class Address {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "address_id_uuid")
     private Long id;
-    private Long userId;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "userId")
+    private User user;
     private String street;
     private String city;
     private String postCode;

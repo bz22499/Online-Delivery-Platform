@@ -1,7 +1,7 @@
 package com.sep.onlinedeliverysystem;
 
-import com.sep.onlinedeliverysystem.model.Address;
-import com.sep.onlinedeliverysystem.model.User;
+import com.sep.onlinedeliverysystem.entity.Address;
+import com.sep.onlinedeliverysystem.entity.User;
 
 public final class TestUtil {
     private TestUtil(){
@@ -10,10 +10,9 @@ public final class TestUtil {
 
     public static User userBuild1() {
         User user = User.builder()
-            .id(1L)
-            .first_name("Luke")
-            .last_name("Trott")
             .email("luke@trottmail.com")
+            .firstName("Luke")
+            .lastName("Trott")
             .password("password")
             .role("customer")
             .build();
@@ -22,10 +21,9 @@ public final class TestUtil {
 
     public static User userBuild2() {
         User user = User.builder()
-                .id(2L)
-                .first_name("Hugh")
-                .last_name("Kiggell")
                 .email("hugh@kiggmail.com")
+                .firstName("Hugh")
+                .lastName("Kiggell")
                 .password("drowssap")
                 .role("customer")
                 .build();
@@ -34,20 +32,19 @@ public final class TestUtil {
 
     public static User userBuild3() {
         User user = User.builder()
-                .id(3L)
-                .first_name("Anthony")
-                .last_name("Price")
                 .email("anthony@pricemmail.com")
+                .firstName("Anthony")
+                .lastName("Price")
                 .password("wordpass")
                 .role("customer")
                 .build();
         return user;
     }
 
-    public static Address addressBuild1() {
+    public static Address addressBuild1(final User user) {
         Address address = Address.builder()
                 .id(100L)
-                .userId(0L)
+                .user(user)
                 .street("123 Kiggell Road")
                 .city("Bristol")
                 .postCode("A12 B34")
@@ -56,10 +53,10 @@ public final class TestUtil {
         return address;
     }
 
-    public static Address addressBuild2() {
+    public static Address addressBuild2(final User user) {
         Address address = Address.builder()
                 .id(200L)
-                .userId(0L)
+                .user(user)
                 .street("123 Price Road")
                 .city("Bristol")
                 .postCode("C12 D34")
@@ -68,10 +65,10 @@ public final class TestUtil {
         return address;
     }
 
-    public static Address addressBuild3() {
+    public static Address addressBuild3(final User user) {
         Address address = Address.builder()
                 .id(300L)
-                .userId(0L)
+                .user(user)
                 .street("123 Li Road")
                 .city("Bristol")
                 .postCode("E12 F34")
