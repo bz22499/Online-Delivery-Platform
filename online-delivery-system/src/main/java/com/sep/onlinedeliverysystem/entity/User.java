@@ -1,21 +1,23 @@
-package com.sep.onlinedeliverysystem.model;
+package com.sep.onlinedeliverysystem.entity;
 
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.extern.java.Log;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Log
+@Entity
+@Table(name = "users")
 public class User {
-    private Long id;
-    private String first_name;
-    private String last_name;
+
+    @Id
     private String email;
+    private String firstName;
+    private String lastName;
     private String password;
     private String role;
 }
