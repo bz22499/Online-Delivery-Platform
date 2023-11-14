@@ -1,3 +1,5 @@
+-- noinspection SqlNoDataSourceInspectionForFile
+
 -- ENUM Types
 CREATE TYPE role_type AS ENUM ('customer', 'vendor', 'delivery');
 CREATE TYPE payment_type AS ENUM ('credit_card', 'debit_card');
@@ -11,29 +13,29 @@ CREATE TABLE users (
     last_name VARCHAR(255) NOT NULL,
     email VARCHAR(255) UNIQUE NOT NULL,
     password VARCHAR(255) NOT NULL,
-    address_id INT NOT NULL,
-    role role_type NOT NULL,
-    created_at TIMESTAMP NOT NULL DEFAULT NOW(),
-    updated_at TIMESTAMP NOT NULL DEFAULT NOW()
+    role VARCHAR(50) NOT NULL
 );
 
 -- Addresses Table
 CREATE TABLE addresses (
-    id UUID PRIMARY KEY,
+    id INT PRIMARY KEY,
+    userId INT NOT NULL REFERENCES users(id),
     street VARCHAR(255) NOT NULL,
-    city VARCHAR(255) NOT NULL
+    city VARCHAR(255) NOT NULL,
+    postcode VARCHAR(50) NOT NULL,
+    country VARCHAR(50) NOT NULL
 );
 
 -- Payment Methods Table
 CREATE TABLE payment_methods (
-     id UUID PRIMARY KEY,
-     user_id UUID NOT NULL REFERENCES users(id),
-     type payment_type NOT NULL,
-     provider VARCHAR(50) NOT NULL,
-     card_number VARCHAR(255) NOT NULL,
-     card_holder VARCHAR(255) NOT NULL,
-     expiration_date DATE NOT NULL,
-     cvv VARCHAR(4) NOT NULL
+    id UUID PRIMARY KEY,
+    user_id UUID NOT NULL REFERENCES users(id),
+    type payment_type NOT NULL,
+    provider VARCHAR(50) NOT NULL,
+    card_number VARCHAR(255) NOT NULL,
+    card_holder VARCHAR(255) NOT NULL,
+    expiration_date DATE NOT NULL,
+    cvv VARCHAR(4) NOT NULL
 );
 
 -- Delivery Person Table
