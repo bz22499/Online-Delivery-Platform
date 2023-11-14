@@ -9,6 +9,10 @@ import java.util.Optional;
 public interface AddressDao {
     void createAddress(Address address);
 
-    Optional<Address> findSingle(long l);
+    Optional<Address> findSingle(long id);
     List<Address> find();
+
+    void update(long id, Address address);
+
+    void delete(long id);
 }

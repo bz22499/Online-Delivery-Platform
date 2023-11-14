@@ -24,12 +24,12 @@ public class UserDaoImplTests {
     private JdbcTemplate jdbcTemplate;
 
     @InjectMocks
-    private UserDaoImpl underTest;
+    private UserDaoImpl daoImplUnderTest;
 
     @Test
     public void userCreationTest() {
-        User user = TestUtil.userBuild();
-        underTest.createUser(user);
+        User user = TestUtil.userBuild1();
+        daoImplUnderTest.createUser(user);
         verify(jdbcTemplate).update(
                 eq("INSERT INTO users (id, first_name, last_name, email, password, role) VALUES (?, ?, ?, ?, ?, ?)"),
                 eq(1L),
@@ -42,12 +42,55 @@ public class UserDaoImplTests {
     }
 
     @Test
-    public void findSingleTest(){
-        underTest.findSingle(1L);
+    public void findSingleIdTest(){
+        daoImplUnderTest.findSingleId(1L);
         verify(jdbcTemplate).query(
                 eq("SELECT id, first_name, last_name, email, password, role FROM users WHERE id = ? LIMIT 1"),
                 ArgumentMatchers.<UserDaoImpl.UserRowMapper>any(),
                 eq(1L)
+        );
+    }
+
+    @Test public void findSingleEmailTest(){
+        daoImplUnderTest.findSingleEmail("luke@trottmail.com");
+        verify(jdbcTemplate).query(
+                eq("SELECT id, first_name, last_name, email, password, role FROM users WHERE email = ? LIMIT 1"),
+                ArgumentMatchers.<UserDaoImpl.UserRowMapper>any(),
+                eq("luke@trottmail.com")
+        );
+    }
+
+    @Test
+    public void find(){
+        daoImplUnderTest.find();
+        verify(jdbcTemplate).query(
+                eq("SELECT id, first_name, last_name, email, password, role FROM users"),
+                ArgumentMatchers.<UserDaoImpl.UserRowMapper>any()
+        );
+    }
+
+    @Test
+    public void updateTest(){
+        User user = TestUtil.userBuild1();
+        daoImplUnderTest.update(4L, user);
+        verify(jdbcTemplate).update(
+                "UPDATE users SET id = ?, first_name = ?, last_name = ?, email = ?, password = ?, role = ? WHERE id = ?",
+                 1l,
+                "Luke",
+                "Trott",
+                "luke@trottmail.com",
+                "password",
+                "customer",
+                4L
+        );
+    }
+
+    @Test
+    public void deleteTest(){
+        daoImplUnderTest.delete(1L);
+        verify(jdbcTemplate).update(
+                "DELETE FROM users where id = ?",
+                1L
         );
     }
 }

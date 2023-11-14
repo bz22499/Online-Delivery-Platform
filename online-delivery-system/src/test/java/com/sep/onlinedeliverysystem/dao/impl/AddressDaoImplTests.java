@@ -21,16 +21,16 @@ public class AddressDaoImplTests {
     private JdbcTemplate jdbcTemplate;
 
     @InjectMocks
-    private AddressDaoImpl underTest;
+    private AddressDaoImpl daoImplUnderTest;
 
     @Test
     public void addressCreationTest(){
         Address address = TestUtil.addressBuild1();
-        underTest.createAddress(address);
+        daoImplUnderTest.createAddress(address);
         verify(jdbcTemplate).update(
                 eq("INSERT INTO addresses (id, userId, street, city, postcode, country) VALUES (?, ?, ?, ?, ?, ?)"),
-                eq(2L),
-                eq(1L),
+                eq(100L),
+                eq(0L),
                 eq("123 Kiggell Road"),
                 eq("Bristol"),
                 eq("A12 B34"),
@@ -40,20 +40,45 @@ public class AddressDaoImplTests {
 
     @Test
     public void findSingleTest(){
-        underTest.findSingle(2L);
+        daoImplUnderTest.findSingle(100L);
         verify(jdbcTemplate).query(
                 eq("SELECT id, userId, street, city, postcode, country FROM addresses WHERE id = ? LIMIT 1"),
                 ArgumentMatchers.<AddressDaoImpl.AddressRowMapper>any(),
-                eq(2L)
+                eq(100L)
         );
     }
 
     @Test
-    public void find(){
-        underTest.find();
+    public void findTest(){
+        daoImplUnderTest.find();
         verify(jdbcTemplate).query(
                 eq("SELECT id, userId, street, city, postcode, country FROM addresses"),
                 ArgumentMatchers.<AddressDaoImpl.AddressRowMapper>any()
+        );
+    }
+
+    @Test
+    public void updateTest(){
+        Address address = TestUtil.addressBuild1();
+        daoImplUnderTest.update(400L, address);
+        verify(jdbcTemplate).update(
+                "UPDATE addresses SET id = ?, userId = ?, street = ?, city = ?, postcode = ?, country = ? WHERE id = ?",
+                100L,
+                0L,
+                "123 Kiggell Road",
+                "Bristol",
+                "A12 B34",
+                "Wales",
+                400L
+        );
+    }
+
+    @Test
+    public void deleteTest(){
+        daoImplUnderTest.delete(100L);
+        verify(jdbcTemplate).update(
+                "DELETE FROM addresses where id = ?",
+                100L
         );
     }
 }

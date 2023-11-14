@@ -34,10 +34,18 @@ public class UserDaoImpl implements com.sep.onlinedeliverysystem.dao.UserDao{
     }
 
     @Override
-    public Optional<User> findSingle(long userId) {
+    public Optional<User> findSingleId(long userId) {
         List<User> results = jdbcTemplate.query(
                 "SELECT id, first_name, last_name, email, password, role FROM users WHERE id = ? LIMIT 1",
                 new UserRowMapper(), userId);
+        return results.stream().findFirst();
+    }
+
+    @Override
+    public Optional<User> findSingleEmail(String email){
+        List<User> results = jdbcTemplate.query(
+                "SELECT id, first_name, last_name, email, password, role FROM users WHERE email = ? LIMIT 1",
+                new UserRowMapper(), email);
         return results.stream().findFirst();
     }
 
@@ -46,6 +54,29 @@ public class UserDaoImpl implements com.sep.onlinedeliverysystem.dao.UserDao{
         return jdbcTemplate.query(
                 "SELECT id, first_name, last_name, email, password, role FROM users",
                 new UserRowMapper());
+    }
+
+    @Override
+    public void update(long id, User user) {
+        jdbcTemplate.update(
+                "UPDATE users SET id = ?, first_name = ?, last_name = ?, email = ?, password = ?, role = ? WHERE id = ?",
+                user.getId(),
+                user.getFirst_name(),
+                user.getLast_name(),
+                user.getEmail(),
+                user.getPassword(),
+                user.getRole(),
+                id
+        );
+    }
+
+    @Override
+    public void delete(long id) {
+        jdbcTemplate.update(
+                "DELETE FROM users where id = ?",
+                id
+        );
+
     }
 
     public static class UserRowMapper implements RowMapper<User>{

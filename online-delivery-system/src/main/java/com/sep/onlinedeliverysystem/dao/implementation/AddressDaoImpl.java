@@ -45,6 +45,28 @@ public class AddressDaoImpl implements com.sep.onlinedeliverysystem.dao.AddressD
                 new AddressRowMapper());
     }
 
+    @Override
+    public void update(long id, Address address) {
+        jdbcTemplate.update(
+                "UPDATE addresses SET id = ?, userId = ?, street = ?, city = ?, postcode = ?, country = ? WHERE id = ?",
+                address.getId(),
+                address.getUserId(),
+                address.getStreet(),
+                address.getCity(),
+                address.getPostCode(),
+                address.getCountry(),
+                id
+        );
+    }
+
+    @Override
+    public void delete(long id) {
+        jdbcTemplate.update(
+                "DELETE FROM addresses where id = ?",
+                id
+        );
+    }
+
     public static class AddressRowMapper implements RowMapper<Address> {
 
         @Override

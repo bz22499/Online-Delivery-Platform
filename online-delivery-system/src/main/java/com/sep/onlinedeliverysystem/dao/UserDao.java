@@ -7,6 +7,13 @@ import java.util.Optional;
 
 public interface UserDao {
     void createUser(User user);
-    Optional<User> findSingle(long l);
+    Optional<User> findSingleId(long l);
+
+    Optional<User> findSingleEmail(String email);
+
     List<User> find();
+
+    void update(long id, User user);
+
+    void delete(long l);
 }
