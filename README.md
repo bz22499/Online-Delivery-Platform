@@ -4,9 +4,10 @@
 - [Project Description](#12-project-description)
 - [User Stories](#13-user-stories)
 - [Stakeholders](#14-stake-holders)
-- [Licence](#15-licence)
-- [Acknowledgements](#16-acknowledgements)
-- [Team](#17-group-members)
+- [Product Map](#15-product-map)
+- [Licence](#16-licence)
+- [Acknowledgements](#17-acknowledgements)
+- [Team](#18-group-members)
 ---
 ## 1.2 Project Description
 Our delivery app aims to create a seamless experience for customers, chefs, and delivery drivers alike. 
@@ -30,18 +31,22 @@ As a **delivery driver**, I would like to receive a daily quota of deliveries to
 - **Chefs/restaurants** have the option to sign up to the service so that they can sell and distribute their meals to customers in reusable containers which will be returned to them. 
 - **Customers** can place orders for meals to be delivered to them on following days in reusable containers; at a later time or during their next order the container can be collected by a driver to be returned to the chef/restaurant.
 - **Delivery Drivers** will sign up to the service and receive notifications of nearby orders to pick up/customers to deliver to/containers to collect. They are able to verify deliveries by a customer's username and unique order code. They should have some way of storing the reusable containers during journeys, and ideally would be either travelling either by bicycle or electric vehicle.
-- **The client** will have created a sustainable, eco-friendly delivery service in which food containers are reused and orders are delivered by green vehicles. 
+- **The client** will have created a sustainable, eco-friendly delivery service in which food containers are reused and orders are delivered by green vehicles.
 
-## 1.5 Licence
+## 1.5 Product Map
+
+[Product map.pdf](https://github.com/spe-uob/2023-OnlineDeliveryPlatform/files/13364434/Product.map.pdf)
+
+## 1.6 Licence
 
 This project is licensed under MIT - see the [LICENSE](https://github.com/spe-uob/2023-OnlineDeliveryPlatform/blob/main/LICENSE) file for details.
 
-## 1.6 Acknowledgements
+## 1.7 Acknowledgements
 
 Mention any external libraries, frameworks, or tools used in the project.   
 Credit any sources of inspiration or references that contributed to the project.
 
-## 1.7 Group Members
+## 1.8 Group Members
 - Luke Trott (zq22843)
 - Hugh Kiggell (bz22499)
 - Anthony Price (ek21604)
