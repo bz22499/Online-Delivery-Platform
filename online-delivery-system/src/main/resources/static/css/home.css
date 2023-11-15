@@ -4,6 +4,7 @@ body{
 }
 
 ul.banner {
+    z-index:1;
     list-style-type: none;
     margin: 0;
     padding: 0;
@@ -15,7 +16,7 @@ ul.banner {
   }
 
 ul.banner img{
-  height: 20px;
+  height: 19px;
   padding: 14px;
   float: left;
 }  

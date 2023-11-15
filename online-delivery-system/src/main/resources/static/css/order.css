@@ -4,6 +4,7 @@
  }
 
  ul.banner {
+      z-index:1;
      list-style-type: none;
      margin: 0;
      padding: 0;
@@ -22,11 +23,11 @@
 
   ul.banner li {
      float: left;
-   }
+  }
 
    ul.banner li.right {
      float: right;
-   }
+  }
 
   ul.banner li a {
      display: block;
@@ -34,7 +35,7 @@
      text-align: center;
      padding: 14px 16px;
      text-decoration: none;
-   }
+  }
 
   ul.banner li.active a{
      background-color: rgb(196, 194, 188);
@@ -71,3 +72,50 @@
        background: #f1f1f1;
        border-radius: 27px;
  }
+
+
+
+ul.cuisineList{
+     list-style-type: none;
+     margin:auto;
+     overflow: hidden;
+     background-color: whitesmoke;
+     width: 80%;
+     position: relative;
+}
+
+  ul.cuisineList li {
+     display: inline;
+     color: black;
+     text-align: center;
+     padding: 14px 16px;
+     text-decoration: none;
+  }
+
+    ul.cuisineList li .button{
+    background-color: #04AA6D;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+
+
+  .grid-container {
+    display: grid;
+    grid-template-columns: auto auto;
+    column-gap: 30px;
+    row-gap: 20px;
+    padding: 40px;
+  }
+  .grid-item {
+    background-color: rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(0, 0, 0, 0.8);
+    padding: 20px;
+    font-size: 30px;
+    text-align: center;
+    height: 100px;
+  }
