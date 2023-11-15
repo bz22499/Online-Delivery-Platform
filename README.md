@@ -33,7 +33,7 @@ As a **delivery driver**, I would like to receive a daily quota of deliveries to
 - **Delivery Drivers** will sign up to the service and receive notifications of nearby orders to pick up/customers to deliver to/containers to collect. They are able to verify deliveries by a customer's username and unique order code. They should have some way of storing the reusable containers during journeys, and ideally would be either travelling either by bicycle or electric vehicle.
 - **The client** will have created a sustainable, eco-friendly delivery service in which food containers are reused and orders are delivered by green vehicles.
 
-## 1.5  Product Map
+## 1.5 Product Map
 
 [Product map.pdf](https://github.com/spe-uob/2023-OnlineDeliveryPlatform/files/13349951/Product.map.pdf)
 
