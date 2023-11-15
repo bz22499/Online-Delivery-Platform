@@ -4,6 +4,7 @@
  }
 
  ul.banner {
+      z-index:1;
      list-style-type: none;
      margin: 0;
      padding: 0;
@@ -99,4 +100,22 @@ ul.cuisineList{
     text-align: center;
     text-decoration: none;
     cursor: pointer;
+  }
+
+
+
+  .grid-container {
+    display: grid;
+    grid-template-columns: auto auto;
+    column-gap: 30px;
+    row-gap: 20px;
+    padding: 40px;
+  }
+  .grid-item {
+    background-color: rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(0, 0, 0, 0.8);
+    padding: 20px;
+    font-size: 30px;
+    text-align: center;
+    height: 100px;
   }
