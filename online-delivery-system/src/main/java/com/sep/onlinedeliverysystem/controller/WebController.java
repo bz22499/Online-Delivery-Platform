@@ -10,8 +10,16 @@ public class WebController {
     @GetMapping("/home")
     public String home(){ return "home"; }
 
+    @GetMapping("/customerlogin")
+    public String customerlogin(){ return "customer"; }
+
+    @GetMapping("/driverlogin")
+    public String driverlogin(){ return "driver"; }
+
+    @GetMapping("/restaurantlogin")
+    public String restaurant(){ return "restaurant"; }
+
     @GetMapping("/login")
-    @ResponseBody
     public String login(){
         return "login";
     }
