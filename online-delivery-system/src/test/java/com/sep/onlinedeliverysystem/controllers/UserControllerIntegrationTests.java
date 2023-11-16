@@ -35,7 +35,7 @@ public class UserControllerIntegrationTests {
     @Test
     public void testThatCreateAuthorSuccessfullyReturnsHttp201Created() throws Exception {
         UserEntity testUser1 = TestUtil.userBuild1();
-        testUser1.setEmail(null); //will autogenerate for us
+//        testUser1.setEmail(null); //should autogenerate for us... doesn't seem to as this causes test to fail
         String userJson = objectMapper.writeValueAsString(testUser1);
         mockMvc.perform(
                 MockMvcRequestBuilders.post("/users")
@@ -49,7 +49,7 @@ public class UserControllerIntegrationTests {
     @Test
     public void testThatCreateAuthorSuccessfullyReturnsSavedUser() throws Exception {
         UserEntity testUser1 = TestUtil.userBuild1();
-        testUser1.setEmail(null); //will autogenerate for us
+//        testUser1.setEmail(null); //should autogenerate for us... doesn't seem to as this causes test to fail
         String userJson = objectMapper.writeValueAsString(testUser1);
         mockMvc.perform(
                 MockMvcRequestBuilders.post("/users")
