@@ -19,10 +19,14 @@ public class AddressEntity {
     private Long id;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "userId")
+    @JoinColumn(name = "email")
     private UserEntity userEntity;
+
     private String street;
+
     private String city;
+
     private String postCode;
+
     private String country;
 }
