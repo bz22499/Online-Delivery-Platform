@@ -1,5 +1,7 @@
 package com.sep.onlinedeliverysystem;
 
+import com.sep.onlinedeliverysystem.domain.dto.AddressDTO;
+import com.sep.onlinedeliverysystem.domain.dto.UserDTO;
 import com.sep.onlinedeliverysystem.domain.entities.AddressEntity;
 import com.sep.onlinedeliverysystem.domain.entities.UserEntity;
 
@@ -51,6 +53,18 @@ public final class TestUtil {
                 .country("Wales")
                 .build();
         return addressEntity;
+    }
+
+    public static AddressDTO addressDTOCreate1(final UserDTO userDTO) {
+        AddressDTO addressDTO = AddressDTO.builder()
+                .id(100L)
+                .userDTO(userDTO)
+                .street("123 Kiggell Road")
+                .city("Bristol")
+                .postCode("A12 B34")
+                .country("Wales")
+                .build();
+        return addressDTO;
     }
 
     public static AddressEntity addressBuild2(final UserEntity userEntity) {
