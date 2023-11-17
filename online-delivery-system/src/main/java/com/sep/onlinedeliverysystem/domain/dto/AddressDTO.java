@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class AddressDTO {
     private Long id;
-    private UserDTO userEntity;
+    private UserDTO userDTO;
     private String street;
     private String city;
     private String postCode;
