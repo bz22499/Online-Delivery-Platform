@@ -5,6 +5,11 @@ import com.sep.onlinedeliverysystem.repositories.UserRepository;
 import com.sep.onlinedeliverysystem.services.UserService;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
+
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -19,5 +24,13 @@ public class UserServiceImpl implements UserService {
         return userRepository.save(userEntity);
     }
 
+    @Override
+    public List<UserEntity> findAll() {
+       return StreamSupport.stream(userRepository.findAll().spliterator(), false).collect(Collectors.toList()); //converting iterator to a list (easier to work with)
+    }
 
+    @Override
+    public Optional<UserEntity> findOne(String email) {
+        return userRepository.findById(email);
+    }
 }

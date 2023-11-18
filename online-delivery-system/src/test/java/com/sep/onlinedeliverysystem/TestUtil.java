@@ -57,7 +57,7 @@ public final class TestUtil {
 
     public static AddressDTO addressDTOCreate1(final UserDTO userDTO) {
         AddressDTO addressDTO = AddressDTO.builder()
-                .id(100L)
+                .id(101L)
                 .userDTO(userDTO)
                 .street("123 Kiggell Road")
                 .city("Bristol")

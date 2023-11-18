@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sep.onlinedeliverysystem.TestUtil;
 import com.sep.onlinedeliverysystem.domain.dto.AddressDTO;
 import com.sep.onlinedeliverysystem.domain.entities.AddressEntity;
-import com.sep.onlinedeliverysystem.domain.entities.UserEntity;
+import com.sep.onlinedeliverysystem.services.AddressService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,12 +23,15 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 @AutoConfigureMockMvc
 public class AddressControllerIntegrationTests {
+
+    private AddressService addressService;
     private MockMvc mockMvc;
     private ObjectMapper objectMapper;
 
     @Autowired
-    public AddressControllerIntegrationTests(MockMvc mockMvc) {
+    public AddressControllerIntegrationTests(MockMvc mockMvc, AddressService addressService) {
         this.mockMvc = mockMvc;
+        this.addressService = addressService;
         this.objectMapper = new ObjectMapper();
     }
 
@@ -46,7 +49,7 @@ public class AddressControllerIntegrationTests {
     }
 
     @Test
-    public void testThatCreateAddressEntitySuccessfullyReturnsSavedUser() throws Exception {
+    public void testThatCreateAddressEntitySuccessfullyReturnsSavedAddress() throws Exception {
         AddressEntity testAddress1 = TestUtil.addressBuild1(null);
         String addressJson = objectMapper.writeValueAsString(testAddress1);
         mockMvc.perform(
@@ -59,7 +62,7 @@ public class AddressControllerIntegrationTests {
     }
 
     @Test
-    public void testThatCreateAddressDTOSuccessfullyReturnsSavedUser() throws Exception {
+    public void testThatCreateAddressDTOSuccessfullyReturnsSavedAddress() throws Exception {
         AddressDTO testAddress1 = TestUtil.addressDTOCreate1(null);
         String addressJson = objectMapper.writeValueAsString(testAddress1);
         mockMvc.perform(
@@ -70,4 +73,58 @@ public class AddressControllerIntegrationTests {
                 MockMvcResultMatchers.jsonPath("$.street").value("123 Kiggell Road")
         );
     }
+
+    @Test
+    public void testThatListAddressSuccessfullyReturnsHttp200Ok() throws Exception {
+        mockMvc.perform(
+                MockMvcRequestBuilders.get("/addresses")
+                        .contentType(MediaType.APPLICATION_JSON)
+        ).andExpect(
+                MockMvcResultMatchers.status().isOk()
+        );
+    }
+
+    @Test
+    public void testThatListAddressSuccessfullyReturnsListOfAddresses() throws Exception {
+        AddressEntity testAddress1 = TestUtil.addressBuild1(null);
+        addressService.createAddress(testAddress1);
+        mockMvc.perform(
+                MockMvcRequestBuilders.get("/addresses")
+                        .contentType(MediaType.APPLICATION_JSON)
+        ).andExpect(
+                MockMvcResultMatchers.jsonPath("$[0].street").value("123 Kiggell Road")
+        );
+    }
+
+    @Test
+    public void testThatGetAddressSuccessfullyReturnsHttpStatus200OkWhenAddressExists() throws Exception {
+        AddressEntity testAddress1 = TestUtil.addressBuild1(null);
+        addressService.createAddress(testAddress1);
+        mockMvc.perform(
+                MockMvcRequestBuilders.get("/addresses/" + testAddress1.getId())
+                        .contentType(MediaType.APPLICATION_JSON)
+        ).andExpect(MockMvcResultMatchers.status().isOk());
+    }
+
+    @Test
+    public void testThatGetAddressSuccessfullyReturnsHttpStatus404NotFoundWhenAddressDoesNotExist() throws Exception {
+        mockMvc.perform(
+                MockMvcRequestBuilders.get("/addresses/123")
+                        .contentType(MediaType.APPLICATION_JSON)
+        ).andExpect(MockMvcResultMatchers.status().isNotFound());
+    }
+
+    @Test
+    public void testThatGetAddressSuccessfullyReturnsAddressWhenAddressExists() throws Exception {
+        AddressEntity testAddress1 = TestUtil.addressBuild1(null);
+        addressService.createAddress(testAddress1);
+        mockMvc.perform(
+                MockMvcRequestBuilders.get("/addresses/" + testAddress1.getId())
+                        .contentType(MediaType.APPLICATION_JSON)
+        ).andExpect(
+                MockMvcResultMatchers.jsonPath("$.street").value("123 Kiggell Road")
+        );
+    }
+
+
 }
