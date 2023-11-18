@@ -26,10 +26,10 @@ public class UserController {
     //using DTOs to decouple service layer from persistence layer!!!
 
     @PostMapping(path = "/users")
-    public ResponseEntity<UserDTO> createUser(@RequestBody UserDTO user){ //Create functionality
+    public ResponseEntity<UserDTO> save(@RequestBody UserDTO user){ //Create functionality
         UserEntity userEntity = userMapper.mapFrom(user);
-        UserEntity savedUserEntity = userService.createUser(userEntity);
-        return new ResponseEntity<>(userMapper.mapTo(savedUserEntity), HttpStatus.CREATED);
+        UserEntity savedUserEntity = userService.save(userEntity); //saves user DTO as entity into our database
+        return new ResponseEntity<>(userMapper.mapTo(savedUserEntity), HttpStatus.CREATED); //returns our saved entity as a DTO
     }
 
     @GetMapping(path = "/users")
@@ -47,4 +47,15 @@ public class UserController {
         }).orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND)); //for if user doesn't exist
     }
 
+    @PutMapping(path = "/users/{email}")
+    public ResponseEntity<UserDTO> fullUpdateUser(@PathVariable("email") String email, @RequestBody UserDTO userDTO){ //Full Update functionality
+        if(!userService.Exists(email)){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        userDTO.setEmail(email);
+        UserEntity userEntity = userMapper.mapFrom(userDTO);
+        UserEntity savedUserEntity = userService.save(userEntity); //can reuse our create functionality to overwrite current user's info
+        return new ResponseEntity<>(userMapper.mapTo(savedUserEntity), HttpStatus.OK);
+    }
 }

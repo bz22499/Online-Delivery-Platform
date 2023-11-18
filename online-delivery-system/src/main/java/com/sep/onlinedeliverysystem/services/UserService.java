@@ -8,9 +8,11 @@ import java.util.Optional;
 
 @Component
 public interface UserService {
-    UserEntity createUser(UserEntity userEntity);
+    UserEntity save(UserEntity userEntity);
 
     List<UserEntity> findAll();
 
     Optional<UserEntity> findOne(String email);
+
+    boolean Exists(String email);
 }
