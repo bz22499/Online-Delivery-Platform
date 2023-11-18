@@ -4,7 +4,9 @@ package com.sep.onlinedeliverysystem.controllers;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sep.onlinedeliverysystem.TestUtil;
 import com.sep.onlinedeliverysystem.domain.dto.AddressDTO;
+import com.sep.onlinedeliverysystem.domain.dto.UserDTO;
 import com.sep.onlinedeliverysystem.domain.entities.AddressEntity;
+import com.sep.onlinedeliverysystem.domain.entities.UserEntity;
 import com.sep.onlinedeliverysystem.services.AddressService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -87,7 +89,7 @@ public class AddressControllerIntegrationTests {
     @Test
     public void testThatListAddressSuccessfullyReturnsListOfAddresses() throws Exception {
         AddressEntity testAddress1 = TestUtil.addressBuild1(null);
-        addressService.createAddress(testAddress1);
+        addressService.save(testAddress1);
         mockMvc.perform(
                 MockMvcRequestBuilders.get("/addresses")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -99,7 +101,7 @@ public class AddressControllerIntegrationTests {
     @Test
     public void testThatGetAddressSuccessfullyReturnsHttpStatus200OkWhenAddressExists() throws Exception {
         AddressEntity testAddress1 = TestUtil.addressBuild1(null);
-        addressService.createAddress(testAddress1);
+        addressService.save(testAddress1);
         mockMvc.perform(
                 MockMvcRequestBuilders.get("/addresses/" + testAddress1.getId())
                         .contentType(MediaType.APPLICATION_JSON)
@@ -117,7 +119,7 @@ public class AddressControllerIntegrationTests {
     @Test
     public void testThatGetAddressSuccessfullyReturnsAddressWhenAddressExists() throws Exception {
         AddressEntity testAddress1 = TestUtil.addressBuild1(null);
-        addressService.createAddress(testAddress1);
+        addressService.save(testAddress1);
         mockMvc.perform(
                 MockMvcRequestBuilders.get("/addresses/" + testAddress1.getId())
                         .contentType(MediaType.APPLICATION_JSON)
@@ -126,5 +128,49 @@ public class AddressControllerIntegrationTests {
         );
     }
 
+    @Test
+    public void testThatFullUpdateAddressSuccessfullyReturnsHttpStatus404NotFoundWhenAddressDoesNotExist() throws Exception {
+        AddressDTO testAddress1 = TestUtil.addressDTOCreate1(null);
+        String addressDTOJson = objectMapper.writeValueAsString(testAddress1);
+        mockMvc.perform(
+                MockMvcRequestBuilders.put("/addresses/123")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(addressDTOJson)
+        ).andExpect(MockMvcResultMatchers.status().isNotFound());
+    }
+
+    @Test
+    public void testThatFullUpdateAddressSuccessfullyReturnsHttpStatus200OKWhenAddressExists() throws Exception {
+        AddressEntity testAddressEntity1 = TestUtil.addressBuild1(null);
+        AddressEntity savedAddress = addressService.save(testAddressEntity1);
+        AddressDTO testAddressDTO1 = TestUtil.addressDTOCreate1(null);
+        String addressDTOJson = objectMapper.writeValueAsString(testAddressDTO1);
+        mockMvc.perform(
+                MockMvcRequestBuilders.put("/addresses/" + savedAddress.getId())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(addressDTOJson)
+        ).andExpect(MockMvcResultMatchers.status().isOk());
+    }
+
+    @Test
+    public void testThatFullUpdateUpdatesExistingAddress() throws Exception {
+        AddressEntity testAddressEntity1 = TestUtil.addressBuild1(null);
+        AddressEntity savedAddress = addressService.save(testAddressEntity1);
+
+        AddressEntity addressDTO = TestUtil.addressBuild2(null);
+        addressDTO.setId(savedAddress.getId());
+        String addressUpdateDTOJson = objectMapper.writeValueAsString(addressDTO);
+        mockMvc.perform(
+                MockMvcRequestBuilders.put("/addresses/" + savedAddress.getId())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(addressUpdateDTOJson)
+        ).andExpect(
+                MockMvcResultMatchers.jsonPath("$.id").value(savedAddress.getId())
+        ).andExpect(
+                MockMvcResultMatchers.jsonPath("$.street").value(addressDTO.getStreet())
+        ).andExpect(
+                MockMvcResultMatchers.jsonPath("$.postCode").value(addressDTO.getPostCode())
+        );
+    }
 
 }

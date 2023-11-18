@@ -21,6 +21,17 @@ public final class TestUtil {
         return userEntity;
     }
 
+    public static UserDTO userDTOCreate1() {
+        UserDTO userDTO = UserDTO.builder()
+                .email("luke2@trottmail.com")
+                .firstName("LukeyPookie")
+                .lastName("Trottottottott")
+                .password("password")
+                .role("customer")
+                .build();
+        return userDTO;
+    }
+
     public static UserEntity userBuild2() {
         UserEntity userEntity = UserEntity.builder()
                 .email("hugh@kiggmail.com")

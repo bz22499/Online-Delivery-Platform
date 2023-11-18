@@ -2,7 +2,6 @@ package com.sep.onlinedeliverysystem.controller;
 import com.sep.onlinedeliverysystem.domain.dto.AddressDTO;
 import com.sep.onlinedeliverysystem.domain.dto.UserDTO;
 import com.sep.onlinedeliverysystem.domain.entities.AddressEntity;
-import com.sep.onlinedeliverysystem.domain.entities.UserEntity;
 import com.sep.onlinedeliverysystem.mappers.Mapper;
 import com.sep.onlinedeliverysystem.services.AddressService;
 import org.springframework.http.HttpStatus;
@@ -29,9 +28,9 @@ public class AddressController {
 
 
     @PostMapping(path = "/addresses")
-    public ResponseEntity<AddressDTO> createAddress(@RequestBody AddressDTO address){ //Create functionality
+    public ResponseEntity<AddressDTO> save(@RequestBody AddressDTO address){ //Create functionality
         AddressEntity addressEntity = addressMapper.mapFrom(address);
-        AddressEntity savedAddressEntity = addressService.createAddress(addressEntity);
+        AddressEntity savedAddressEntity = addressService.save(addressEntity);
         return new ResponseEntity<>(addressMapper.mapTo(savedAddressEntity), HttpStatus.CREATED);
     }
 
@@ -42,12 +41,24 @@ public class AddressController {
     }
 
     @GetMapping(path = "/addresses/{id}") //Read One functionality
-    public ResponseEntity<AddressDTO> getAddress(@PathVariable("id") long id){
+    public ResponseEntity<AddressDTO> getAddress(@PathVariable("id") Long id){
         Optional<AddressEntity> foundAddress = addressService.findOne(id); //Use optional because either the user exists or it doesn't
         return foundAddress.map(addressEntity -> { //for if user exists
             AddressDTO addressDTO = addressMapper.mapTo(addressEntity);
             return new ResponseEntity<>(addressDTO, HttpStatus.OK);
         }).orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND)); //for if user doesn't exist
+    }
+
+    @PutMapping(path = "/addresses/{id}")
+    public ResponseEntity<AddressDTO> fullUpdateAddress(@PathVariable("id") Long id, @RequestBody AddressDTO addressDTO){ //Full Update functionality
+        if(!addressService.Exists(id)){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        addressDTO.setId(id);
+        AddressEntity addressEntity = addressMapper.mapFrom(addressDTO);
+        AddressEntity savedAddressEntity = addressService.save(addressEntity); //can reuse our create functionality to overwrite current user's info
+        return new ResponseEntity<>(addressMapper.mapTo(savedAddressEntity), HttpStatus.OK);
     }
 
 }

@@ -21,7 +21,7 @@ public class AddressServiceImpl implements AddressService {
     }
 
     @Override
-    public AddressEntity createAddress(AddressEntity addressEntity) {
+    public AddressEntity save(AddressEntity addressEntity) {
         return addressRepository.save(addressEntity);
     }
 
@@ -31,7 +31,12 @@ public class AddressServiceImpl implements AddressService {
     }
 
     @Override
-    public Optional<AddressEntity> findOne(long id) {
+    public Optional<AddressEntity> findOne(Long id) {
         return addressRepository.findById(id);
+    }
+
+    @Override
+    public boolean Exists(Long id) {
+        return addressRepository.existsById(id);
     }
 }

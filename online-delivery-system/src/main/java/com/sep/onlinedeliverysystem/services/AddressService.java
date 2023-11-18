@@ -8,9 +8,11 @@ import java.util.Optional;
 
 @Component
 public interface AddressService {
-    AddressEntity createAddress(AddressEntity addressEntity);
+    AddressEntity save(AddressEntity addressEntity);
 
     List<AddressEntity> findAll();
 
-    Optional<AddressEntity> findOne(long id);
+    Optional<AddressEntity> findOne(Long id);
+
+    boolean Exists(Long id);
 }
