@@ -1,5 +1,6 @@
 package com.sep.onlinedeliverysystem.services;
 
+import com.sep.onlinedeliverysystem.domain.dto.UserDTO;
 import com.sep.onlinedeliverysystem.domain.entities.UserEntity;
 import org.springframework.stereotype.Component;
 
@@ -15,4 +16,8 @@ public interface UserService {
     Optional<UserEntity> findOne(String email);
 
     boolean Exists(String email);
+
+    UserEntity partialUpdate(String email, UserEntity userEntity);
+
+    void delete(String email);
 }

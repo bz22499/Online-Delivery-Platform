@@ -162,5 +162,57 @@ public class UserControllerIntegrationTests {
         );
     }
 
+    @Test
+    public void testThatPartialUpdateUserSuccessfullyReturnsHttpStatus200OKWhenUserExists() throws Exception {
+        UserEntity testUserEntity1 = TestUtil.userBuild1();
+        UserEntity savedUser = userService.save(testUserEntity1);
 
+        UserDTO testUserDTO1 = TestUtil.userDTOCreate1();
+        testUserDTO1.setFirstName("UPDATED!!!");
+        String userDTOJson = objectMapper.writeValueAsString(testUserDTO1);
+        mockMvc.perform(
+                MockMvcRequestBuilders.patch("/users/" + savedUser.getEmail())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(userDTOJson)
+        ).andExpect(MockMvcResultMatchers.status().isOk());
+    }
+
+    @Test
+    public void testThatPartialUpdateUserSuccessfullyReturnsUpdatedUser() throws Exception {
+        UserEntity testUserEntity1 = TestUtil.userBuild1();
+        UserEntity savedUser = userService.save(testUserEntity1);
+
+        UserDTO testUserDTO1 = TestUtil.userDTOCreate1();
+        testUserDTO1.setFirstName("UPDATED!!!");
+        String userDTOJson = objectMapper.writeValueAsString(testUserDTO1);
+        mockMvc.perform(
+                MockMvcRequestBuilders.patch("/users/" + savedUser.getEmail())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(userDTOJson)
+        ).andExpect(
+                MockMvcResultMatchers.jsonPath("$.email").value(savedUser.getEmail())
+        ).andExpect(
+                MockMvcResultMatchers.jsonPath("$.lastName").value(testUserDTO1.getLastName())
+        ).andExpect(
+                MockMvcResultMatchers.jsonPath("$.firstName").value("UPDATED!!!")
+        );
+    }
+
+    @Test
+    public void testThatDeleteUserReturnsHttpStatus204ForNonExistingUser() throws Exception{
+        mockMvc.perform(
+                MockMvcRequestBuilders.delete("/users/incorrectemail")
+                        .contentType(MediaType.APPLICATION_JSON)
+        ).andExpect(MockMvcResultMatchers.status().isNoContent());
+    }
+
+    @Test
+    public void testThatDeleteUserReturnsHttpStatus204ForExistingUser() throws Exception{
+        UserEntity testUserEntity1 = TestUtil.userBuild1();
+        UserEntity savedUser = userService.save(testUserEntity1);
+        mockMvc.perform(
+                MockMvcRequestBuilders.delete("/users/" + savedUser.getEmail())
+                        .contentType(MediaType.APPLICATION_JSON)
+        ).andExpect(MockMvcResultMatchers.status().isNoContent());
+    }
 }

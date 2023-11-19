@@ -58,4 +58,21 @@ public class UserController {
         UserEntity savedUserEntity = userService.save(userEntity); //can reuse our create functionality to overwrite current user's info
         return new ResponseEntity<>(userMapper.mapTo(savedUserEntity), HttpStatus.OK);
     }
+
+    @PatchMapping(path = "/users/{email}")
+    public ResponseEntity<UserDTO> partialUpdate(@PathVariable("email") String email, @RequestBody UserDTO userDTO){ //Partial Update functionality
+        if(!userService.Exists(email)){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        UserEntity userEntity = userMapper.mapFrom(userDTO);
+        UserEntity updatedUser = userService.partialUpdate(email, userEntity);
+        return new ResponseEntity<>(userMapper.mapTo(updatedUser), HttpStatus.OK);
+    }
+
+    @DeleteMapping(path = "/users/{email}")
+    public ResponseEntity deleteUser(@PathVariable("email") String email){
+        userService.delete(email);
+        return new ResponseEntity(HttpStatus.NO_CONTENT);
+    }
 }

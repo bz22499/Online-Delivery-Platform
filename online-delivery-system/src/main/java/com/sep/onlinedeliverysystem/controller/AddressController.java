@@ -2,6 +2,7 @@ package com.sep.onlinedeliverysystem.controller;
 import com.sep.onlinedeliverysystem.domain.dto.AddressDTO;
 import com.sep.onlinedeliverysystem.domain.dto.UserDTO;
 import com.sep.onlinedeliverysystem.domain.entities.AddressEntity;
+import com.sep.onlinedeliverysystem.domain.entities.UserEntity;
 import com.sep.onlinedeliverysystem.mappers.Mapper;
 import com.sep.onlinedeliverysystem.services.AddressService;
 import org.springframework.http.HttpStatus;
@@ -42,7 +43,7 @@ public class AddressController {
 
     @GetMapping(path = "/addresses/{id}") //Read One functionality
     public ResponseEntity<AddressDTO> getAddress(@PathVariable("id") Long id){
-        Optional<AddressEntity> foundAddress = addressService.findOne(id); //Use optional because either the user exists or it doesn't
+        Optional<AddressEntity> foundAddress = addressService.findOne(id); //Use optional because either the address exists or it doesn't
         return foundAddress.map(addressEntity -> { //for if user exists
             AddressDTO addressDTO = addressMapper.mapTo(addressEntity);
             return new ResponseEntity<>(addressDTO, HttpStatus.OK);
@@ -57,8 +58,25 @@ public class AddressController {
 
         addressDTO.setId(id);
         AddressEntity addressEntity = addressMapper.mapFrom(addressDTO);
-        AddressEntity savedAddressEntity = addressService.save(addressEntity); //can reuse our create functionality to overwrite current user's info
+        AddressEntity savedAddressEntity = addressService.save(addressEntity); //can reuse our create functionality to overwrite current address' info
         return new ResponseEntity<>(addressMapper.mapTo(savedAddressEntity), HttpStatus.OK);
+    }
+
+    @PatchMapping(path = "/addresses/{id}")
+    public ResponseEntity<AddressDTO> partialUpdate(@PathVariable("id") Long id, @RequestBody AddressDTO addressDTO){ //Partial Update functionality
+        if(!addressService.Exists(id)){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        AddressEntity addressEntity = addressMapper.mapFrom(addressDTO);
+        AddressEntity updatedAddress = addressService.partialUpdate(id, addressEntity);
+        return new ResponseEntity<>(addressMapper.mapTo(updatedAddress), HttpStatus.OK);
+    }
+
+    @DeleteMapping(path = "/addresses/{id}")
+    public ResponseEntity deleteAddress(@PathVariable("id") Long id){
+        addressService.delete(id);
+        return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 
 }

@@ -173,4 +173,61 @@ public class AddressControllerIntegrationTests {
         );
     }
 
+    @Test
+    public void testThatPartialUpdateAddressSuccessfullyReturnsHttpStatus200OKWhenAddressExists() throws Exception {
+        AddressEntity testAddressEntity = TestUtil.addressBuild1(null);
+        AddressEntity savedAddress = addressService.save(testAddressEntity);
+
+        AddressDTO testAddressDTO = TestUtil.addressDTOCreate1(null);
+        testAddressDTO.setId(savedAddress.getId());
+        testAddressDTO.setStreet("UPDATED!!!");
+        String addressDTOJson = objectMapper.writeValueAsString(testAddressDTO);
+        mockMvc.perform(
+                MockMvcRequestBuilders.patch("/addresses/" + savedAddress.getId())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(addressDTOJson)
+        ).andExpect(MockMvcResultMatchers.status().isOk());
+    }
+
+    @Test
+    public void testThatPartialUpdateAddressSuccessfullyReturnsUpdatedAddress() throws Exception {
+        AddressEntity testAddressEntity = TestUtil.addressBuild1(null);
+        AddressEntity savedAddress = addressService.save(testAddressEntity);
+
+        AddressDTO testAddressDTO = TestUtil.addressDTOCreate1(null);
+        testAddressDTO.setId(savedAddress.getId());
+        testAddressDTO.setStreet("UPDATED!!!");
+        String addressDTOJson = objectMapper.writeValueAsString(testAddressDTO);
+        mockMvc.perform(
+                MockMvcRequestBuilders.patch("/addresses/" + savedAddress.getId())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(addressDTOJson)
+        ).andExpect(
+                MockMvcResultMatchers.jsonPath("$.id").value(savedAddress.getId())
+        ).andExpect(
+                MockMvcResultMatchers.jsonPath("$.postCode").value(testAddressDTO.getPostCode())
+        ).andExpect(
+                MockMvcResultMatchers.jsonPath("$.street").value("UPDATED!!!")
+        );
+    }
+
+    @Test
+    public void testThatDeleteAddressReturnsHttpStatus204ForNonExistingAddress() throws Exception{
+        mockMvc.perform(
+                MockMvcRequestBuilders.delete("/addresses/1235832")
+                        .contentType(MediaType.APPLICATION_JSON)
+        ).andExpect(MockMvcResultMatchers.status().isNoContent());
+    }
+
+    @Test
+    public void testThatDeleteAddressReturnsHttpStatus204ForExistingAddress() throws Exception{
+        AddressEntity testAddressEntity = TestUtil.addressBuild1(null);
+        AddressEntity savedAddress = addressService.save(testAddressEntity);
+        mockMvc.perform(
+                MockMvcRequestBuilders.delete("/addresses/" + savedAddress.getId())
+                        .contentType(MediaType.APPLICATION_JSON)
+        ).andExpect(MockMvcResultMatchers.status().isNoContent());
+    }
+
+
 }

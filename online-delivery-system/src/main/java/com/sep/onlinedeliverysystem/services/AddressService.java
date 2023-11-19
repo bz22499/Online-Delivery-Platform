@@ -15,4 +15,8 @@ public interface AddressService {
     Optional<AddressEntity> findOne(Long id);
 
     boolean Exists(Long id);
+
+    AddressEntity partialUpdate(Long id, AddressEntity addressEntity);
+
+    void delete(Long id);
 }
