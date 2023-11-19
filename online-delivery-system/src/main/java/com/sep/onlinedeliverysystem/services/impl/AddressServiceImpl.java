@@ -39,4 +39,22 @@ public class AddressServiceImpl implements AddressService {
     public boolean Exists(Long id) {
         return addressRepository.existsById(id);
     }
+
+    @Override
+    public AddressEntity partialUpdate(Long id, AddressEntity addressEntity) {
+        addressEntity.setId(id);
+
+        return addressRepository.findById(id).map(existingAddress ->{
+            Optional.ofNullable(addressEntity.getCity()).ifPresent(existingAddress::setCity);
+            Optional.ofNullable(addressEntity.getCountry()).ifPresent(existingAddress::setCountry);
+            Optional.ofNullable(addressEntity.getPostCode()).ifPresent(existingAddress::setPostCode);
+            Optional.ofNullable(addressEntity.getStreet()).ifPresent(existingAddress::setStreet);
+            return addressRepository.save(existingAddress);
+        }).orElseThrow(() -> new RuntimeException("Address doesn't exist"));
+    }
+
+    @Override
+    public void delete(Long id) {
+        addressRepository.deleteById(id);
+    }
 }
