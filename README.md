@@ -2,7 +2,7 @@
 -![图片_20231020112609（1）](https://github.com/spe-uob/2023-OnlineDeliveryPlatform/assets/101518538/84d3c1fc-8338-4d18-abb6-edf01fb53b5f)
 ## 1.1 Table of contents
 - [Project Description](#12-project-description)
-- [User Stories](#13-userEntity-stories)
+- [User Stories](#13-user-stories)
 - [Stakeholders](#14-stake-holders)
 - [Product Map](#15-product-map)
 - [Licence](#16-licence)
@@ -30,7 +30,7 @@ As a **delivery driver**, I would like to receive a daily quota of deliveries to
 
 - **Chefs/restaurants** have the option to sign up to the service so that they can sell and distribute their meals to customers in reusable containers which will be returned to them. 
 - **Customers** can place orders for meals to be delivered to them on following days in reusable containers; at a later time or during their next order the container can be collected by a driver to be returned to the chef/restaurant.
-- **Delivery Drivers** will sign up to the service and receive notifications of nearby orders to pick up/customers to deliver to/containers to collect. They are able to verify deliveries by a customer's username and unique order code. They should have some way of storing the reusable containers during journeys, and ideally would be either travelling either by bicycle or electric vehicle.
+- **Delivery Drivers** will sign up to the service and receive notifications of nearby orders to pick up/customers to deliver to/containers to collect. They are able to verify deliveries by a customer's username and unique order code. They should have some way of storing the reusable containers during journeys, and ideally would be either travelling by bicycle or electric vehicle.
 - **The client** will have created a sustainable, eco-friendly delivery service in which food containers are reused and orders are delivered by green vehicles.
 
 ## 1.5  Product Map
