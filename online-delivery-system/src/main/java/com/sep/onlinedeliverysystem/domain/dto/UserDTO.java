@@ -1,6 +1,6 @@
-package com.sep.onlinedeliverysystem.entity;
+package com.sep.onlinedeliverysystem.domain.dto;
 
-import jakarta.persistence.*;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,11 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Entity
-@Table(name = "users")
-public class User {
-
-    @Id
+public class UserDTO {
     private String email;
     private String firstName;
     private String lastName;
