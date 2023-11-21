@@ -1,7 +1,6 @@
 package com.sep.onlinedeliverysystem.services;
 
-import com.sep.onlinedeliverysystem.domain.dto.UserDTO;
-import com.sep.onlinedeliverysystem.domain.entities.UserEntity;
+import com.sep.onlinedeliverysystem.domain.entities.User;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -9,15 +8,15 @@ import java.util.Optional;
 
 @Component
 public interface UserService {
-    UserEntity save(UserEntity userEntity);
+    User save(User userEntity);
 
-    List<UserEntity> findAll();
+    List<User> findAll();
 
-    Optional<UserEntity> findOne(String email);
+    Optional<User> findOne(String email);
 
     boolean Exists(String email);
 
-    UserEntity partialUpdate(String email, UserEntity userEntity);
+    User partialUpdate(String email, User userEntity);
 
     void delete(String email);
 }

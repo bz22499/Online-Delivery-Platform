@@ -12,16 +12,11 @@ import lombok.NoArgsConstructor;
 @Builder
 @Entity
 @Table(name = "users")
-public class UserEntity {
+public class User {
 
     @Id
     private String email;
-
     private String firstName;
-
     private String lastName;
-
     private String password;
-
-    private String role;
 }
