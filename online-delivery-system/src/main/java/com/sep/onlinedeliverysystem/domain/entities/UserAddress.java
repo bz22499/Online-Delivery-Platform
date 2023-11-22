@@ -11,22 +11,16 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name = "addresses")
+@Table(name = "user_addresses")
 public class UserAddress {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "address_id_uuid")
     private Long id;
-
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "email")
+    @JoinColumn(name = "user_email")
     private User user;
-
     private String street;
-
     private String city;
-
     private String postCode;
-
     private String country;
 }

@@ -1,8 +1,5 @@
-package com.sep.onlinedeliverysystem.domain.entities;
+package com.sep.onlinedeliverysystem.domain.dto;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,10 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Entity
-@Table(name = "vendors")
-public class Vendor {
-    @Id
+public class VendorDTO {
     private String email;
     private String name;
     private String description;

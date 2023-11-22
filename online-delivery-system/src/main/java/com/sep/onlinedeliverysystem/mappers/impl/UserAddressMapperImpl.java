@@ -7,11 +7,10 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
 @Component
-public class UserAddressMapper implements Mapper<UserAddress, UserAddressDTO> {
-
+public class UserAddressMapperImpl implements Mapper<UserAddress, UserAddressDTO> {
    private ModelMapper modelMapper;
 
-    public UserAddressMapper(ModelMapper modelMapper) {
+    public UserAddressMapperImpl(ModelMapper modelMapper) {
         this.modelMapper = modelMapper;
     }
 
@@ -21,7 +20,5 @@ public class UserAddressMapper implements Mapper<UserAddress, UserAddressDTO> {
     }
 
     @Override
-    public UserAddress mapFrom(UserAddressDTO userAddressDTO) {
-        return modelMapper.map(userAddressDTO, UserAddress.class);
-    }
+    public UserAddress mapFrom(UserAddressDTO userAddressDTO) { return modelMapper.map(userAddressDTO, UserAddress.class); }
 }
