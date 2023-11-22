@@ -4,9 +4,12 @@ import com.sep.onlinedeliverysystem.domain.dto.VendorDTO;
 import com.sep.onlinedeliverysystem.domain.entities.Vendor;
 import com.sep.onlinedeliverysystem.mappers.Mapper;
 import com.sep.onlinedeliverysystem.services.VendorService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 
 import java.util.List;
 import java.util.Optional;
@@ -34,9 +37,9 @@ public class VendorController {
     }
 
     @GetMapping(path = "/vendors")
-    public List<VendorDTO> listVendors(){ //Read All functionality
-        List<Vendor> vendors = vendorService.findAll();
-        return vendors.stream().map(vendorMapper::mapTo).collect(Collectors.toList());
+    public Page<VendorDTO> listVendors(Pageable pageable){ //Read All functionality
+        Page<Vendor> vendors = vendorService.findAll(pageable);
+        return vendors.map(vendorMapper::mapTo);
     }
 
     @GetMapping(path = "/vendors/{email}") //Read One functionality

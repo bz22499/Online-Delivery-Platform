@@ -3,6 +3,8 @@ package com.sep.onlinedeliverysystem.services.impl;
 import com.sep.onlinedeliverysystem.domain.entities.Vendor;
 import com.sep.onlinedeliverysystem.repositories.VendorRepository;
 import com.sep.onlinedeliverysystem.services.VendorService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -28,6 +30,9 @@ public class VendorServiceImpl implements VendorService {
     public List<Vendor> findAll() {
        return StreamSupport.stream(vendorRepository.findAll().spliterator(), false).collect(Collectors.toList()); //converting iterator to a list (easier to work with)
     }
+
+    @Override
+    public Page<Vendor> findAll(Pageable pageable) {return vendorRepository.findAll(pageable); }
 
     @Override
     public Optional<Vendor> findOne(String email) {

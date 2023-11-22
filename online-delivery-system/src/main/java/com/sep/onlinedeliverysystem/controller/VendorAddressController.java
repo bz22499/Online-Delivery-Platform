@@ -40,11 +40,11 @@ public class VendorAddressController {
     }
 
     @GetMapping(path = "/vendorAddresses/{id}") //Read One functionality
-    public ResponseEntity<UserAddressDTO> getAddress(@PathVariable("id") Long id){
-        Optional<UserAddress> foundAddress = userAddressService.findOne(id); //Use optional because either the address exists or it doesn't
+    public ResponseEntity<VendorAddressDTO> getAddress(@PathVariable("id") Long id){
+        Optional<VendorAddress> foundAddress = vendorAddressService.findOne(id); //Use optional because either the address exists or it doesn't
         return foundAddress.map(addressEntity -> { //for if user exists
-            UserAddressDTO userAddressDTO = addressMapper.mapTo(addressEntity);
-            return new ResponseEntity<>(userAddressDTO, HttpStatus.OK);
+            VendorAddressDTO vendorAddressDTO = vendorAddressMapper.mapTo(addressEntity);
+            return new ResponseEntity<>(vendorAddressDTO, HttpStatus.OK);
         }).orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND)); //for if user doesn't exist
     }
 
