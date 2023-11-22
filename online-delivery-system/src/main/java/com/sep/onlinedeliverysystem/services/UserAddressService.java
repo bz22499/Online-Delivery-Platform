@@ -16,7 +16,7 @@ public interface UserAddressService {
 
     boolean Exists(Long id);
 
-    UserAddress partialUpdate(Long id, UserAddress userAddress);
+    UserAddress partialUpdate(Long id, UserAddress userAddressEntity);
 
     void delete(Long id);
 }
