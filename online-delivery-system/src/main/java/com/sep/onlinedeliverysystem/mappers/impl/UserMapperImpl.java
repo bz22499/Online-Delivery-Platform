@@ -16,8 +16,8 @@ public class UserMapperImpl implements Mapper<User, UserDTO> {
     }
 
     @Override
-    public UserDTO mapTo(User userEntity) {
-        return modelMapper.map(userEntity, UserDTO.class);
+    public UserDTO mapTo(User user) {
+        return modelMapper.map(user, UserDTO.class);
     }
 
     @Override
