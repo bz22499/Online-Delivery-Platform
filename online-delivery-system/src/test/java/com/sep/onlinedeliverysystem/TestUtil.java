@@ -1,7 +1,6 @@
 package com.sep.onlinedeliverysystem;
 
-import com.sep.onlinedeliverysystem.domain.dto.UserAddressDTO;
-import com.sep.onlinedeliverysystem.domain.dto.UserDTO;
+import com.sep.onlinedeliverysystem.domain.dto.*;
 import com.sep.onlinedeliverysystem.domain.entities.*;
 
 public final class TestUtil {
@@ -107,6 +106,16 @@ public final class TestUtil {
         return vendor;
     }
 
+    public static VendorDTO vendorDTOBuild1(){
+        VendorDTO vendorDTO = VendorDTO.builder()
+                .email("restaurant2@foodmail.com")
+                .name("WeSellFoodDTO")
+                .description("Thai")
+                .rating(4.0F)
+                .build();
+        return vendorDTO;
+    }
+
     public static Vendor vendorBuild2(){
         Vendor vendor = Vendor.builder()
                 .email("food@foodmail.com")
@@ -129,6 +138,18 @@ public final class TestUtil {
 
     public static VendorAddress vendorAddressBuild1(final Vendor vendor){
         VendorAddress address = VendorAddress.builder()
+                .id(1L)
+                .vendor(vendor)
+                .street("Food Street")
+                .city("Bristol")
+                .postCode("W98 Z67")
+                .country("United Kingdom")
+                .build();
+        return address;
+    }
+
+    public static VendorAddressDTO vendorAddressDTOCreate1(final Vendor vendor){
+        VendorAddressDTO address = VendorAddressDTO.builder()
                 .id(1L)
                 .vendor(vendor)
                 .street("Food Street")
@@ -165,6 +186,17 @@ public final class TestUtil {
 
     public static MenuItem menuItemBuilder1(final Vendor vendor){
         MenuItem item = MenuItem.builder()
+                .id(1000L)
+                .name("Toast")
+                .description("2 slices of plain toast")
+                .price(1.99F)
+                .vendor(vendor)
+                .build();
+        return item;
+    }
+
+    public static MenuItemDTO menuItemDTOCreate1(final Vendor vendor){
+        MenuItemDTO item = MenuItemDTO.builder()
                 .id(1000L)
                 .name("Toast")
                 .description("2 slices of plain toast")
