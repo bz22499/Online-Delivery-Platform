@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sep.onlinedeliverysystem.TestUtil;
 import com.sep.onlinedeliverysystem.domain.dto.MenuItemDTO;
 import com.sep.onlinedeliverysystem.domain.entities.MenuItem;
+import com.sep.onlinedeliverysystem.domain.entities.Vendor;
 import com.sep.onlinedeliverysystem.services.MenuItemService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -37,7 +38,8 @@ public class MenuItemControllerIntegrationTests {
 
     @Test
     public void testThatCreateItemSuccessfullyReturnsHttp201Created() throws Exception {
-        MenuItem testItem1 = TestUtil.menuItemBuilder1(null);
+        Vendor testVendor = TestUtil.vendorBuild1();
+        MenuItem testItem1 = TestUtil.menuItemBuilder1(testVendor);
         String menuItemJson = objectMapper.writeValueAsString(testItem1);
         mockMvc.perform(
                 MockMvcRequestBuilders.post("/menuItems")
@@ -50,27 +52,29 @@ public class MenuItemControllerIntegrationTests {
 
     @Test
     public void testThatCreateItemEntitySuccessfullyReturnsSavedItem() throws Exception {
-        MenuItem testItem1 = TestUtil.menuItemBuilder1(null);
+        Vendor testVendor = TestUtil.vendorBuild1();
+        MenuItem testItem1 = TestUtil.menuItemBuilder1(testVendor);
         String menuItemJson = objectMapper.writeValueAsString(testItem1);
         mockMvc.perform(
                 MockMvcRequestBuilders.post("/menuItems")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(menuItemJson)
         ).andExpect(
-                MockMvcResultMatchers.jsonPath("$.name").value("toast")
+                MockMvcResultMatchers.jsonPath("$.name").value("Toast")
         );
     }
 
     @Test
     public void testThatCreateItemDTOSuccessfullyReturnssavedItem() throws Exception {
-        MenuItemDTO testItem1 = TestUtil.menuItemDTOCreate1(null);
+        Vendor testVendor = TestUtil.vendorBuild1();
+        MenuItemDTO testItem1 = TestUtil.menuItemDTOCreate1(testVendor);
         String menuItemJson = objectMapper.writeValueAsString(testItem1);
         mockMvc.perform(
                 MockMvcRequestBuilders.post("/menuItems")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(menuItemJson)
         ).andExpect(
-                MockMvcResultMatchers.jsonPath("$.name").value("toast")
+                MockMvcResultMatchers.jsonPath("$.name").value("Toast")
         );
     }
 
@@ -86,19 +90,21 @@ public class MenuItemControllerIntegrationTests {
 
     @Test
     public void testThatListItemSuccessfullyReturnsListOfmenuItems() throws Exception {
-        MenuItem testItem1 = TestUtil.menuItemBuilder1(null);
+        Vendor testVendor = TestUtil.vendorBuild1();
+        MenuItem testItem1 = TestUtil.menuItemBuilder1(testVendor);
         menuItemService.save(testItem1);
         mockMvc.perform(
                 MockMvcRequestBuilders.get("/menuItems")
                         .contentType(MediaType.APPLICATION_JSON)
         ).andExpect(
-                MockMvcResultMatchers.jsonPath("$[0].name").value("toast")
+                MockMvcResultMatchers.jsonPath("$[0].name").value("Toast")
         );
     }
 
     @Test
     public void testThatGetItemSuccessfullyReturnsHttpStatus200OkWhenItemExists() throws Exception {
-        MenuItem testItem1 = TestUtil.menuItemBuilder1(null);
+        Vendor testVendor = TestUtil.vendorBuild1();
+        MenuItem testItem1 = TestUtil.menuItemBuilder1(testVendor);
         menuItemService.save(testItem1);
         mockMvc.perform(
                 MockMvcRequestBuilders.get("/menuItems/" + testItem1.getId())
@@ -116,19 +122,21 @@ public class MenuItemControllerIntegrationTests {
 
     @Test
     public void testThatGetItemSuccessfullyReturnsAddressWhenItemExists() throws Exception {
-        MenuItem testItem1 = TestUtil.menuItemBuilder1(null);
+        Vendor testVendor = TestUtil.vendorBuild1();
+        MenuItem testItem1 = TestUtil.menuItemBuilder1(testVendor);
         menuItemService.save(testItem1);
         mockMvc.perform(
                 MockMvcRequestBuilders.get("/menuItems/" + testItem1.getId())
                         .contentType(MediaType.APPLICATION_JSON)
         ).andExpect(
-                MockMvcResultMatchers.jsonPath("$.name").value("toast")
+                MockMvcResultMatchers.jsonPath("$.name").value("Toast")
         );
     }
 
     @Test
     public void testThatFullUpdateItemSuccessfullyReturnsHttpStatus404NotFoundWhenItemDoesNotExist() throws Exception {
-        MenuItemDTO testItem1 = TestUtil.menuItemDTOCreate1(null);
+        Vendor testVendor = TestUtil.vendorBuild1();
+        MenuItemDTO testItem1 = TestUtil.menuItemDTOCreate1(testVendor);
         String menuItemDTOJson = objectMapper.writeValueAsString(testItem1);
         mockMvc.perform(
                 MockMvcRequestBuilders.put("/menuItems/123")
@@ -139,9 +147,10 @@ public class MenuItemControllerIntegrationTests {
 
     @Test
     public void testThatFullUpdateItemSuccessfullyReturnsHttpStatus200OKWhenItemExists() throws Exception {
-        MenuItem testmenuItem1 = TestUtil.menuItemBuilder1(null);
+        Vendor testVendor = TestUtil.vendorBuild1();
+        MenuItem testmenuItem1 = TestUtil.menuItemBuilder1(testVendor);
         MenuItem savedItem = menuItemService.save(testmenuItem1);
-        MenuItemDTO testmenuItemDTO1 = TestUtil.menuItemDTOCreate1(null);
+        MenuItemDTO testmenuItemDTO1 = TestUtil.menuItemDTOCreate1(testVendor);
         String menuItemDTOJson = objectMapper.writeValueAsString(testmenuItemDTO1);
         mockMvc.perform(
                 MockMvcRequestBuilders.put("/menuItems/" + savedItem.getId())
@@ -152,10 +161,11 @@ public class MenuItemControllerIntegrationTests {
 
     @Test
     public void testThatFullUpdateUpdatesExistingItem() throws Exception {
-        MenuItem testmenuItem1 = TestUtil.menuItemBuilder1(null);
+        Vendor testVendor = TestUtil.vendorBuild1();
+        MenuItem testmenuItem1 = TestUtil.menuItemBuilder1(testVendor);
         MenuItem savedItem = menuItemService.save(testmenuItem1);
 
-        MenuItem menuItemDTO = TestUtil.menuItemBuilder2(null);
+        MenuItem menuItemDTO = TestUtil.menuItemBuilder2(testVendor);
         menuItemDTO.setId(savedItem.getId());
         String menuItemUpdateDTOJson = objectMapper.writeValueAsString(menuItemDTO);
         mockMvc.perform(
@@ -171,10 +181,11 @@ public class MenuItemControllerIntegrationTests {
 
     @Test
     public void testThatPartialUpdateItemSuccessfullyReturnsHttpStatus200OKWhenKItemExists() throws Exception {
-        MenuItem testmenuItem = TestUtil.menuItemBuilder1(null);
+        Vendor testVendor = TestUtil.vendorBuild1();
+        MenuItem testmenuItem = TestUtil.menuItemBuilder1(testVendor);
         MenuItem savedItem = menuItemService.save(testmenuItem);
 
-        MenuItemDTO testmenuItemDTO = TestUtil.menuItemDTOCreate1(null);
+        MenuItemDTO testmenuItemDTO = TestUtil.menuItemDTOCreate1(testVendor);
         testmenuItemDTO.setId(savedItem.getId());
         testmenuItemDTO.setName("UPDATED!!!");
         String menuItemDTOJson = objectMapper.writeValueAsString(testmenuItemDTO);
@@ -187,10 +198,11 @@ public class MenuItemControllerIntegrationTests {
 
     @Test
     public void testThatPartialUpdateItemSuccessfullyReturnsUpdatedItem() throws Exception {
-        MenuItem testmenuItem = TestUtil.menuItemBuilder1(null);
+        Vendor testVendor = TestUtil.vendorBuild1();
+        MenuItem testmenuItem = TestUtil.menuItemBuilder1(testVendor);
         MenuItem savedItem = menuItemService.save(testmenuItem);
 
-        MenuItemDTO testmenuItemDTO = TestUtil.menuItemDTOCreate1(null);
+        MenuItemDTO testmenuItemDTO = TestUtil.menuItemDTOCreate1(testVendor);
         testmenuItemDTO.setId(savedItem.getId());
         testmenuItemDTO.setName("UPDATED!!!");
         String menuItemDTOJson = objectMapper.writeValueAsString(testmenuItemDTO);
@@ -217,7 +229,8 @@ public class MenuItemControllerIntegrationTests {
 
     @Test
     public void testThatDeleteItemReturnsHttpStatus204ForExistingItem() throws Exception{
-        MenuItem testmenuItem = TestUtil.menuItemBuilder1(null);
+        Vendor testVendor = TestUtil.vendorBuild1();
+        MenuItem testmenuItem = TestUtil.menuItemBuilder1(testVendor);
         MenuItem savedItem = menuItemService.save(testmenuItem);
         mockMvc.perform(
                 MockMvcRequestBuilders.delete("/menuItems/" + savedItem.getId())
