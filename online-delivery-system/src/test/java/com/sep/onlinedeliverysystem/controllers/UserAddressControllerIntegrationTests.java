@@ -4,6 +4,7 @@ package com.sep.onlinedeliverysystem.controllers;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sep.onlinedeliverysystem.TestUtil;
 import com.sep.onlinedeliverysystem.domain.dto.UserAddressDTO;
+import com.sep.onlinedeliverysystem.domain.entities.User;
 import com.sep.onlinedeliverysystem.domain.entities.UserAddress;
 import com.sep.onlinedeliverysystem.services.UserAddressService;
 import org.junit.jupiter.api.Test;
@@ -86,7 +87,9 @@ public class UserAddressControllerIntegrationTests {
 
     @Test
     public void testThatListAddressSuccessfullyReturnsListOfAddresses() throws Exception {
-        UserAddress testAddress1 = TestUtil.userAddressBuild1(null);
+        User testUser = TestUtil.userBuild1();
+
+        UserAddress testAddress1 = TestUtil.userAddressBuild1(testUser);
         userAddressService.save(testAddress1);
         mockMvc.perform(
                 MockMvcRequestBuilders.get("/addresses")

@@ -4,6 +4,7 @@ package com.sep.onlinedeliverysystem.controllers;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sep.onlinedeliverysystem.TestUtil;
 import com.sep.onlinedeliverysystem.domain.dto.VendorAddressDTO;
+import com.sep.onlinedeliverysystem.domain.entities.Vendor;
 import com.sep.onlinedeliverysystem.domain.entities.VendorAddress;
 import com.sep.onlinedeliverysystem.services.VendorAddressService;
 import org.junit.jupiter.api.Test;
@@ -37,7 +38,8 @@ public class VendorAddressControllerIntegrationTests {
 
     @Test
     public void testThatCreateAddressSuccessfullyReturnsHttp201Created() throws Exception {
-        VendorAddress testAddress1 = TestUtil.vendorAddressBuild1(null);
+        Vendor testVendor = TestUtil.vendorBuild1();
+        VendorAddress testAddress1 = TestUtil.vendorAddressBuild1(testVendor);
         String addressJson = objectMapper.writeValueAsString(testAddress1);
         mockMvc.perform(
                 MockMvcRequestBuilders.post("/vendorAddresses")
@@ -50,7 +52,8 @@ public class VendorAddressControllerIntegrationTests {
 
     @Test
     public void testThatCreateAddressEntitySuccessfullyReturnsSavedAddress() throws Exception {
-        VendorAddress testAddress1 = TestUtil.vendorAddressBuild1(null);
+        Vendor testVendor = TestUtil.vendorBuild1();
+        VendorAddress testAddress1 = TestUtil.vendorAddressBuild1(testVendor);
         String addressJson = objectMapper.writeValueAsString(testAddress1);
         mockMvc.perform(
                 MockMvcRequestBuilders.post("/vendorAddresses")
@@ -63,7 +66,8 @@ public class VendorAddressControllerIntegrationTests {
 
     @Test
     public void testThatCreateAddressDTOSuccessfullyReturnsSavedAddress() throws Exception {
-        VendorAddressDTO testAddress1 = TestUtil.vendorAddressDTOCreate1(null);
+        Vendor testVendor = TestUtil.vendorBuild1();
+        VendorAddressDTO testAddress1 = TestUtil.vendorAddressDTOCreate1(testVendor);
         String addressJson = objectMapper.writeValueAsString(testAddress1);
         mockMvc.perform(
                 MockMvcRequestBuilders.post("/vendorAddresses")
@@ -86,7 +90,8 @@ public class VendorAddressControllerIntegrationTests {
 
     @Test
     public void testThatListAddressSuccessfullyReturnsListOfAddresses() throws Exception {
-        VendorAddress testAddress1 = TestUtil.vendorAddressBuild1(null);
+        Vendor testVendor = TestUtil.vendorBuild1();
+        VendorAddress testAddress1 = TestUtil.vendorAddressBuild1(testVendor);
         vendorAddressService.save(testAddress1);
         mockMvc.perform(
                 MockMvcRequestBuilders.get("/vendorAddresses")
@@ -98,7 +103,8 @@ public class VendorAddressControllerIntegrationTests {
 
     @Test
     public void testThatGetAddressSuccessfullyReturnsHttpStatus200OkWhenAddressExists() throws Exception {
-        VendorAddress testAddress1 = TestUtil.vendorAddressBuild1(null);
+        Vendor testVendor = TestUtil.vendorBuild1();
+        VendorAddress testAddress1 = TestUtil.vendorAddressBuild1(testVendor);
         vendorAddressService.save(testAddress1);
         mockMvc.perform(
                 MockMvcRequestBuilders.get("/vendorAddresses/" + testAddress1.getId())
@@ -116,7 +122,8 @@ public class VendorAddressControllerIntegrationTests {
 
     @Test
     public void testThatGetAddressSuccessfullyReturnsAddressWhenAddressExists() throws Exception {
-        VendorAddress testAddress1 = TestUtil.vendorAddressBuild1(null);
+        Vendor testVendor = TestUtil.vendorBuild1();
+        VendorAddress testAddress1 = TestUtil.vendorAddressBuild1(testVendor);
         vendorAddressService.save(testAddress1);
         mockMvc.perform(
                 MockMvcRequestBuilders.get("/vendorAddresses/" + testAddress1.getId())
@@ -128,7 +135,8 @@ public class VendorAddressControllerIntegrationTests {
 
     @Test
     public void testThatFullUpdateAddressSuccessfullyReturnsHttpStatus404NotFoundWhenAddressDoesNotExist() throws Exception {
-        VendorAddressDTO testAddress1 = TestUtil.vendorAddressDTOCreate1(null);
+        Vendor testVendor = TestUtil.vendorBuild1();
+        VendorAddressDTO testAddress1 = TestUtil.vendorAddressDTOCreate1(testVendor);
         String addressDTOJson = objectMapper.writeValueAsString(testAddress1);
         mockMvc.perform(
                 MockMvcRequestBuilders.put("/vendorAddresses/123")
@@ -139,9 +147,10 @@ public class VendorAddressControllerIntegrationTests {
 
     @Test
     public void testThatFullUpdateAddressSuccessfullyReturnsHttpStatus200OKWhenAddressExists() throws Exception {
-        VendorAddress testvendorAddress1 = TestUtil.vendorAddressBuild1(null);
+        Vendor testVendor = TestUtil.vendorBuild1();
+        VendorAddress testvendorAddress1 = TestUtil.vendorAddressBuild1(testVendor);
         VendorAddress savedAddress = vendorAddressService.save(testvendorAddress1);
-        VendorAddressDTO testvendorAddressDTO1 = TestUtil.vendorAddressDTOCreate1(null);
+        VendorAddressDTO testvendorAddressDTO1 = TestUtil.vendorAddressDTOCreate1(testVendor);
         String addressDTOJson = objectMapper.writeValueAsString(testvendorAddressDTO1);
         mockMvc.perform(
                 MockMvcRequestBuilders.put("/vendorAddresses/" + savedAddress.getId())
@@ -152,10 +161,11 @@ public class VendorAddressControllerIntegrationTests {
 
     @Test
     public void testThatFullUpdateUpdatesExistingAddress() throws Exception {
-        VendorAddress testvendorAddress1 = TestUtil.vendorAddressBuild1(null);
+        Vendor testVendor = TestUtil.vendorBuild1();
+        VendorAddress testvendorAddress1 = TestUtil.vendorAddressBuild1(testVendor);
         VendorAddress savedAddress = vendorAddressService.save(testvendorAddress1);
 
-        VendorAddress addressDTO = TestUtil.vendorAddressBuild2(null);
+        VendorAddress addressDTO = TestUtil.vendorAddressBuild2(testVendor);
         addressDTO.setId(savedAddress.getId());
         String addressUpdateDTOJson = objectMapper.writeValueAsString(addressDTO);
         mockMvc.perform(
@@ -173,10 +183,11 @@ public class VendorAddressControllerIntegrationTests {
 
     @Test
     public void testThatPartialUpdateAddressSuccessfullyReturnsHttpStatus200OKWhenAddressExists() throws Exception {
-        VendorAddress testvendorAddress = TestUtil.vendorAddressBuild1(null);
+        Vendor testVendor = TestUtil.vendorBuild1();
+        VendorAddress testvendorAddress = TestUtil.vendorAddressBuild1(testVendor);
         VendorAddress savedAddress = vendorAddressService.save(testvendorAddress);
 
-        VendorAddressDTO testvendorAddressDTO = TestUtil.vendorAddressDTOCreate1(null);
+        VendorAddressDTO testvendorAddressDTO = TestUtil.vendorAddressDTOCreate1(testVendor);
         testvendorAddressDTO.setId(savedAddress.getId());
         testvendorAddressDTO.setStreet("UPDATED!!!");
         String addressDTOJson = objectMapper.writeValueAsString(testvendorAddressDTO);
@@ -189,10 +200,11 @@ public class VendorAddressControllerIntegrationTests {
 
     @Test
     public void testThatPartialUpdateAddressSuccessfullyReturnsUpdatedAddress() throws Exception {
-        VendorAddress testvendorAddress = TestUtil.vendorAddressBuild1(null);
+        Vendor testVendor = TestUtil.vendorBuild1();
+        VendorAddress testvendorAddress = TestUtil.vendorAddressBuild1(testVendor);
         VendorAddress savedAddress = vendorAddressService.save(testvendorAddress);
 
-        VendorAddressDTO testvendorAddressDTO = TestUtil.vendorAddressDTOCreate1(null);
+        VendorAddressDTO testvendorAddressDTO = TestUtil.vendorAddressDTOCreate1(testVendor);
         testvendorAddressDTO.setId(savedAddress.getId());
         testvendorAddressDTO.setStreet("UPDATED!!!");
         String addressDTOJson = objectMapper.writeValueAsString(testvendorAddressDTO);
@@ -219,7 +231,8 @@ public class VendorAddressControllerIntegrationTests {
 
     @Test
     public void testThatDeleteAddressReturnsHttpStatus204ForExistingAddress() throws Exception{
-        VendorAddress testvendorAddress = TestUtil.vendorAddressBuild1(null);
+        Vendor testVendor = TestUtil.vendorBuild1();
+        VendorAddress testvendorAddress = TestUtil.vendorAddressBuild1(testVendor);
         VendorAddress savedAddress = vendorAddressService.save(testvendorAddress);
         mockMvc.perform(
                 MockMvcRequestBuilders.delete("/vendorAddresses/" + savedAddress.getId())
