@@ -102,6 +102,7 @@ public final class TestUtil {
                 .name("WeSellFood")
                 .description("Thai")
                 .rating(4.0F)
+                .imageUrl(null)
                 .build();
         return vendor;
     }
@@ -112,6 +113,7 @@ public final class TestUtil {
                 .name("WeSellFoodDTO")
                 .description("Thai")
                 .rating(4.0F)
+                .imageUrl(null)
                 .build();
         return vendorDTO;
     }
@@ -122,6 +124,7 @@ public final class TestUtil {
                 .name("Trotty's Kitchen")
                 .description("Thai")
                 .rating(3.5F)
+                .imageUrl(null)
                 .build();
         return vendor;
     }
@@ -132,6 +135,7 @@ public final class TestUtil {
                 .name("ToastLovers")
                 .description("Toast")
                 .rating(5.0F)
+                .imageUrl(null)
                 .build();
         return vendor;
     }
