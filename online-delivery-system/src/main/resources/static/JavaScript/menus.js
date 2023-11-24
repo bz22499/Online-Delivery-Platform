@@ -1,6 +1,6 @@
 async function fetchRestaurants(page = 0, size = 10) {
     try {
-        const response = await fetch(`http://localhost:8080/vendors?page=${page}&size=${size}`); // Adjust the URL to your API endpoint
+        const response = await fetch(`http://localhost:8080/vendors?page=${page}&size=${size}`);
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
@@ -19,11 +19,11 @@ function populateGrid(pageData) {
         pageData.content.forEach((restaurant) => {
             const gridItem = document.createElement('div');
             gridItem.className = 'grid-item';
-            gridItem.textContent = restaurant.name; // Assuming 'name' is a property of restaurant
+            gridItem.textContent = restaurant.name;
 
             // Add click event to navigate to the menu page
             gridItem.addEventListener('click', () => {
-                window.location.href = `/menu-page?restaurantId=${restaurant.id}`; // Adjust URL as needed
+                window.location.href = `/menu-page?restaurantId=${restaurant.id}`;
             });
 
             gridContainer.appendChild(gridItem);
@@ -53,10 +53,10 @@ async function initPage() {
 }
 
 async function updatePage() {
-    const restaurants = await fetchRestaurants(currentPage - 1); // Adjust for zero-based page index
+    const restaurants = await fetchRestaurants(currentPage - 1);
     if (restaurants) {
         populateGrid(restaurants);
-        document.getElementById('current-page').textContent = currentPage; // Display is 1-based
+        document.getElementById('current-page').textContent = currentPage;
     }
 }
 

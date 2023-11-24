@@ -14,4 +14,5 @@ public class VendorDTO {
     private String name;
     private String description;
     private float rating;
+    private String imageUrl;
 }
