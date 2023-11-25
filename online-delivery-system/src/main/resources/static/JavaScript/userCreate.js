@@ -27,11 +27,13 @@ function createCustomer(){
             .then(response => response.json())
             .then(data => {
                 // Handle the response from the backend
-                console.log(data);
+                window.location.href = '/home';
             })
             .catch(error => {
                 console.error('Error:', error);
             });
+    }else{
+        alert("Form was not correctly filled in")
     }
 
 }
