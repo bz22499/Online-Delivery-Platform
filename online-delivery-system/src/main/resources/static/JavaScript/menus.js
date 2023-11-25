@@ -1,4 +1,4 @@
-async function fetchRestaurants(page = 0, size = 10) {
+async function fetchRestaurants(page = 0, size = 17) {
     try {
         const response = await fetch(`http://localhost:8080/vendors?page=${page}&size=${size}`);
         if (!response.ok) {
@@ -13,13 +13,28 @@ async function fetchRestaurants(page = 0, size = 10) {
 
 function populateGrid(pageData) {
     const gridContainer = document.querySelector('.grid-container');
-    gridContainer.innerHTML = ''; // Clear existing content
 
     if (pageData && pageData.content) {
         pageData.content.forEach((restaurant) => {
             const gridItem = document.createElement('div');
             gridItem.className = 'grid-item';
             gridItem.textContent = restaurant.name;
+
+            // Create image element
+            const image = document.createElement('img');
+            // Set the image source to the restaurant's image URL or to the default image
+            image.src = restaurant.imageUrl || 'images/logo_ld.jpeg';
+            image.alt = restaurant.name;
+            image.className = 'restaurant-image';
+
+            // Add the image to the grid item
+            gridItem.appendChild(image);
+
+            // Add restaurant name in a footer
+            const footer = document.createElement('div');
+            footer.className = 'grid-item-footer';
+            footer.textContent = restaurant.name;
+            gridItem.appendChild(footer);
 
             // Add click event to navigate to the menu page
             gridItem.addEventListener('click', () => {
@@ -31,34 +46,27 @@ function populateGrid(pageData) {
     }
 }
 
-let currentPage = 1;
+let currentPage = 0;
+let isLoading = false;
 
-async function initPage() {
-    const restaurants = await fetchRestaurants(currentPage);
-    if (restaurants) {
+async function loadMore() {
+    if (isLoading) return;
+    isLoading = true;
+
+    const restaurants = await fetchRestaurants(currentPage, 17);
+    if (restaurants && restaurants.content.length > 0) {
         populateGrid(restaurants);
-    }
-
-    document.getElementById('prev-page').addEventListener('click', () => {
-        if (currentPage > 1) {
-            currentPage--;
-            updatePage();
-        }
-    });
-
-    document.getElementById('next-page').addEventListener('click', () => {
         currentPage++;
-        updatePage();
-    });
-}
-
-async function updatePage() {
-    const restaurants = await fetchRestaurants(currentPage - 1);
-    if (restaurants) {
-        populateGrid(restaurants);
-        document.getElementById('current-page').textContent = currentPage;
     }
+
+    isLoading = false;
 }
 
-window.onload = initPage;
+window.addEventListener('scroll', () => {
+    if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 100 && !isLoading) {
+        loadMore();
+    }
+});
+
+window.onload = loadMore();
 
