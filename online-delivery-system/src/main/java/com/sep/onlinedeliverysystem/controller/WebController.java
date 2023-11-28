@@ -9,6 +9,12 @@ public class WebController {
     @GetMapping("/home")
     public String home(){ return "home"; }
 
+    @GetMapping("/vendor")
+    public String vendor(){
+        return "vendor";
+    }
+
+
     @GetMapping("/customerlogin")
     public String customerlogin(){ return "customerSignUp"; }
 
