@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 public class VendorDTO {
     private String email;
     private String name;
+    private String password;
     private String description;
     private float rating;
     private String imageUrl;
