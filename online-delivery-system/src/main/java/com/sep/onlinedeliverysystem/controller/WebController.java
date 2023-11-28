@@ -3,7 +3,6 @@ package com.sep.onlinedeliverysystem.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
 
 @Controller
 public class WebController {
@@ -11,13 +10,13 @@ public class WebController {
     public String home(){ return "home"; }
 
     @GetMapping("/customerlogin")
-    public String customerlogin(){ return "customer"; }
+    public String customerlogin(){ return "customerSignUp"; }
 
     @GetMapping("/driverlogin")
-    public String driverlogin(){ return "driver"; }
+    public String driverlogin(){ return "driverSignUp"; }
 
     @GetMapping("/restaurantlogin")
-    public String restaurant(){ return "restaurant"; }
+    public String restaurant(){ return "restaurantSignUp"; }
 
     @GetMapping("/login")
     public String login(){
