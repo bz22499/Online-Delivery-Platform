@@ -1,7 +1,7 @@
 package com.sep.onlinedeliverysystem.repositories;
 
 import com.sep.onlinedeliverysystem.TestUtil;
-import com.sep.onlinedeliverysystem.domain.entities.UserEntity;
+import com.sep.onlinedeliverysystem.domain.entities.User;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,20 +14,20 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
-public class UserEntityRepositoryIT {
+public class UserRepositoryIT {
 
-    private UserRepository test;
+    private UserRepository userTest;
 
     @Autowired
-    public UserEntityRepositoryIT(UserRepository test){
-        this.test = test;
+    public UserRepositoryIT(UserRepository userTest){
+        this.userTest = userTest;
     }
 
     @Test
     public void testSingleUserCreationAndFindId() {
-        UserEntity userEntity = TestUtil.userBuild1();
-        test.save(userEntity);
-        Optional<UserEntity> result = test.findById(userEntity.getEmail());
+        User userEntity = TestUtil.userBuild1();
+        userTest.save(userEntity);
+        Optional<User> result = userTest.findById(userEntity.getEmail());
         assertThat(result).isPresent();
         assertThat(result.get()).isEqualTo(userEntity);
     }
@@ -43,13 +43,13 @@ public class UserEntityRepositoryIT {
 
     @Test
     public void testMultipleUserCreationAndFind() {
-        UserEntity userEntity1 = TestUtil.userBuild1();
-        UserEntity userEntity2 = TestUtil.userBuild2();
-        UserEntity userEntity3 = TestUtil.userBuild3();
-        test.save(userEntity1);
-        test.save(userEntity2);
-        test.save(userEntity3);
-        Iterable<UserEntity> result = test.findAll();
+        User userEntity1 = TestUtil.userBuild1();
+        User userEntity2 = TestUtil.userBuild2();
+        User userEntity3 = TestUtil.userBuild3();
+        userTest.save(userEntity1);
+        userTest.save(userEntity2);
+        userTest.save(userEntity3);
+        Iterable<User> result = userTest.findAll();
         assertThat(result)
                 .hasSize(3)
                 .containsExactly(userEntity1, userEntity2, userEntity3);
@@ -57,21 +57,21 @@ public class UserEntityRepositoryIT {
 
     @Test
     public void testUserUpdate() {
-        UserEntity userEntity = TestUtil.userBuild1();
-        test.save(userEntity);
+        User userEntity = TestUtil.userBuild1();
+        userTest.save(userEntity);
         userEntity.setFirstName("Benedict");
-        test.save(userEntity);
-        Optional<UserEntity> result = test.findById(userEntity.getEmail());
+        userTest.save(userEntity);
+        Optional<User> result = userTest.findById(userEntity.getEmail());
         assertThat(result).isPresent();
         assertThat(result.get()).isEqualTo(userEntity);
     }
 
     @Test
     public void testUserDelete() {
-        UserEntity userEntity = TestUtil.userBuild1();
-        test.save(userEntity);
-        test.delete(userEntity);
-        Optional<UserEntity> result = test.findById(userEntity.getEmail());
+        User userEntity = TestUtil.userBuild1();
+        userTest.save(userEntity);
+        userTest.delete(userEntity);
+        Optional<User> result = userTest.findById(userEntity.getEmail());
         assertThat(result).isEmpty();
     }
 }

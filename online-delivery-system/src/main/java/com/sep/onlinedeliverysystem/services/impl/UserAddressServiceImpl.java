@@ -1,9 +1,8 @@
 package com.sep.onlinedeliverysystem.services.impl;
 
-import com.sep.onlinedeliverysystem.domain.entities.AddressEntity;
-import com.sep.onlinedeliverysystem.domain.entities.UserEntity;
+import com.sep.onlinedeliverysystem.domain.entities.UserAddress;
 import com.sep.onlinedeliverysystem.repositories.AddressRepository;
-import com.sep.onlinedeliverysystem.services.AddressService;
+import com.sep.onlinedeliverysystem.services.UserAddressService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,26 +11,26 @@ import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 @Service
-public class AddressServiceImpl implements AddressService {
+public class UserAddressServiceImpl implements UserAddressService {
 
     private AddressRepository addressRepository;
 
-    public AddressServiceImpl(AddressRepository addressRepository) {
+    public UserAddressServiceImpl(AddressRepository addressRepository) {
         this.addressRepository = addressRepository;
     }
 
     @Override
-    public AddressEntity save(AddressEntity addressEntity) {
-        return addressRepository.save(addressEntity);
+    public UserAddress save(UserAddress userAddress) {
+        return addressRepository.save(userAddress);
     }
 
     @Override
-    public List<AddressEntity> findAll() {
+    public List<UserAddress> findAll() {
         return StreamSupport.stream(addressRepository.findAll().spliterator(), false).collect(Collectors.toList()); //converting iterator to a list (easier to work with)
     }
 
     @Override
-    public Optional<AddressEntity> findOne(Long id) {
+    public Optional<UserAddress> findOne(Long id) {
         return addressRepository.findById(id);
     }
 
@@ -41,14 +40,14 @@ public class AddressServiceImpl implements AddressService {
     }
 
     @Override
-    public AddressEntity partialUpdate(Long id, AddressEntity addressEntity) {
-        addressEntity.setId(id);
+    public UserAddress partialUpdate(Long id, UserAddress userAddress) {
+        userAddress.setId(id);
 
         return addressRepository.findById(id).map(existingAddress ->{
-            Optional.ofNullable(addressEntity.getCity()).ifPresent(existingAddress::setCity);
-            Optional.ofNullable(addressEntity.getCountry()).ifPresent(existingAddress::setCountry);
-            Optional.ofNullable(addressEntity.getPostCode()).ifPresent(existingAddress::setPostCode);
-            Optional.ofNullable(addressEntity.getStreet()).ifPresent(existingAddress::setStreet);
+            Optional.ofNullable(userAddress.getCity()).ifPresent(existingAddress::setCity);
+            Optional.ofNullable(userAddress.getCountry()).ifPresent(existingAddress::setCountry);
+            Optional.ofNullable(userAddress.getPostCode()).ifPresent(existingAddress::setPostCode);
+            Optional.ofNullable(userAddress.getStreet()).ifPresent(existingAddress::setStreet);
             return addressRepository.save(existingAddress);
         }).orElseThrow(() -> new RuntimeException("Address doesn't exist"));
     }

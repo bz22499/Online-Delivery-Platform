@@ -1,10 +1,6 @@
 package com.sep.onlinedeliverysystem.domain.dto;
 
-
-import com.sep.onlinedeliverysystem.domain.entities.UserEntity;
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import com.sep.onlinedeliverysystem.domain.entities.Vendor;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,9 +10,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class AddressDTO {
+public class VendorAddressDTO {
     private Long id;
-    private UserDTO userDTO;
+    private Vendor vendor;
     private String street;
     private String city;
     private String postCode;
