@@ -27,6 +27,7 @@ function createItem(){
             .then(data => {
                 // Handle the response from the backend
                 window.location.href = '/vendor'; //refresh page
+                alert("Menu item submitted")
             })
             .catch(error => {
                 console.error('Error:', error);
