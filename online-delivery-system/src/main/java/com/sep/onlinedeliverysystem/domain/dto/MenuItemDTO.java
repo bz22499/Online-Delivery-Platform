@@ -1,6 +1,6 @@
 package com.sep.onlinedeliverysystem.domain.dto;
 
-
+import com.sep.onlinedeliverysystem.domain.entities.Vendor;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,9 +10,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class UserDTO {
-    private String email;
-    private String firstName;
-    private String lastName;
-    private String password;
+public class MenuItemDTO {
+    private Long id;
+    private String name;
+    private String description;
+    private float price;
+    private Vendor vendor;
 }

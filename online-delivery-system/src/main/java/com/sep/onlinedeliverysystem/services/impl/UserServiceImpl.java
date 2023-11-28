@@ -1,10 +1,8 @@
 package com.sep.onlinedeliverysystem.services.impl;
 
-import com.sep.onlinedeliverysystem.domain.dto.UserDTO;
-import com.sep.onlinedeliverysystem.domain.entities.UserEntity;
+import com.sep.onlinedeliverysystem.domain.entities.User;
 import com.sep.onlinedeliverysystem.repositories.UserRepository;
 import com.sep.onlinedeliverysystem.services.UserService;
-import org.hibernate.sql.model.jdbc.OptionalTableUpdateOperation;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,17 +20,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserEntity save(UserEntity userEntity) {
+    public User save(User userEntity) {
         return userRepository.save(userEntity);
     }
 
     @Override
-    public List<UserEntity> findAll() {
+    public List<User> findAll() {
        return StreamSupport.stream(userRepository.findAll().spliterator(), false).collect(Collectors.toList()); //converting iterator to a list (easier to work with)
     }
 
     @Override
-    public Optional<UserEntity> findOne(String email) {
+    public Optional<User> findOne(String email) {
         return userRepository.findById(email);
     }
 
@@ -42,7 +40,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserEntity partialUpdate(String email, UserEntity userEntity) {
+    public User partialUpdate(String email, User userEntity) {
         userEntity.setEmail(email);
 
         return userRepository.findById(email).map(existingUser ->{
