@@ -39,7 +39,7 @@ function createCustomer(){
 }
 
 function createVendor(){
-    let username = document.getElementById("username").value;
+    let name = document.getElementById("username").value;
     let password = document.getElementById("password").value
     let email = document.getElementById("email").value
     let checkPassword = document.getElementById("confirm-password").value
@@ -48,7 +48,7 @@ function createVendor(){
         valid = /\S+@\S+\.\S+/.test(email)
     }
 
-    if(username.toString() === "" || password.toString() === "" || checkPassword.toString() === ""){
+    if(name.toString() === "" || password.toString() === "" || checkPassword.toString() === ""){
         valid = false
     }
 
@@ -60,7 +60,7 @@ function createVendor(){
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ username:username,password:password,email:email})
+            body: JSON.stringify({ name:name,password:password,email:email})
         })
             .then(response => response.json())
             .then(data => {
