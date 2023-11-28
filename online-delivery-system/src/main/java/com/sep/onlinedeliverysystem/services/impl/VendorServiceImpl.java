@@ -52,6 +52,7 @@ public class VendorServiceImpl implements VendorService {
             Optional.ofNullable(vendorEntity.getDescription()).ifPresent(existingVendor::setDescription);
             Optional.ofNullable(vendorEntity.getRating()).ifPresent(existingVendor::setRating);
             Optional.ofNullable(vendorEntity.getImageUrl()).ifPresent(existingVendor::setImageUrl);
+            Optional.ofNullable(vendorEntity.getPassword()).ifPresent(existingVendor::setPassword);
             return vendorRepository.save(existingVendor);
         }).orElseThrow(() -> new RuntimeException("Vendor doesn't exist"));
     }

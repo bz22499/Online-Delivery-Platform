@@ -18,6 +18,7 @@ public class Vendor {
     @Id
     private String email;
     private String name;
+    private String password;
     private String description;
     private float rating;
     private String imageUrl;
