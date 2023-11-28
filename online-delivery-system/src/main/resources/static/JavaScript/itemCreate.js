@@ -1,30 +1,32 @@
-function createCustomer(){
+function createItem(){
     let name = document.getElementById("name").value;
     let description = document.getElementById("description").value;
     let price = document.getElementById("price").value
 
+    let valid = true
+
     if(valid){
-        valid = /\S+@\S+\.\S+/.test(email)
+        valid = /^(\$|)([1-9]\d{0,2}(\,\d{3})*|([1-9]\d*))(\.\d{2})?$/.test(price)
     }
 
-    if(firstName.toString() === "" || lastName.toString() === "" || password.toString() === "" || checkPassword.toString() === ""){
+    if(name.toString() === "" || description.toString() === "" || price.toString() === ""){
         valid = false
     }
 
 
     if(valid){
         // Send data to the backend
-        fetch('/users', {
+        fetch('/menuItems', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({firstName: firstName, lastName: lastName, password:password,email:email})
+            body: JSON.stringify({name: name, description: description, price: price})
         })
             .then(response => response.json())
             .then(data => {
                 // Handle the response from the backend
-                window.location.href = '/home';
+                window.location.href = '/vendor'; //refresh page
             })
             .catch(error => {
                 console.error('Error:', error);
