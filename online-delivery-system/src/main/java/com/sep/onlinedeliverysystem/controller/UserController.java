@@ -27,8 +27,10 @@ public class UserController {
 
     @PostMapping(path = "/users")
     public ResponseEntity<UserDTO> save(@RequestBody UserDTO user){ //Create functionality
+        System.out.println("Starting");
         UserEntity userEntity = userMapper.mapFrom(user);
         UserEntity savedUserEntity = userService.save(userEntity); //saves user DTO as entity into our database
+        System.out.println("GOT HERE");
         return new ResponseEntity<>(userMapper.mapTo(savedUserEntity), HttpStatus.CREATED); //returns our saved entity as a DTO
     }
 
