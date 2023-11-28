@@ -55,12 +55,13 @@ function createVendor(){
 
     if(valid){
         // Send data to the backend
-        fetch('/vendors/', {
+        fetch('/vendors', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ name:name,password:password,email:email})
+            body: JSON.stringify({ name:name,password:password,email:email, rating: null, imageUrl: null,
+                description: null})
         })
             .then(response => response.json())
             .then(data => {
