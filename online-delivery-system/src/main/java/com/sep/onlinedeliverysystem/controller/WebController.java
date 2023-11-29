@@ -10,6 +10,11 @@ public class WebController {
     @GetMapping("/home")
     public String home(){ return "home"; }
 
+    @GetMapping("/about")
+    public String about(){return "about-us";}
+    @GetMapping("/contact")
+    public String contact(){return "contactUs";}
+
     @GetMapping("/customerlogin")
     public String customerlogin(){ return "customer"; }
 
