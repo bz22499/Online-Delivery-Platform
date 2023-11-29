@@ -21,14 +21,13 @@ function createItem(){
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({name: name, description: description, price: price, id: 1234, vendor: {
-                null}})
+            body: JSON.stringify({name: name, description: description, price: price, vendor: "vendor1@example.com"})
         })
             .then(response => response.json())
             .then(data => {
                 // Handle the response from the backend
-                // alert("Menu item submitted")
-                // window.location.href = '/vendor'; //refresh page
+                window.location.href = '/vendor'; //refresh page
+                alert("Menu item submitted")
             })
             .catch(error => {
                 console.error('Error:', error);
