@@ -18,6 +18,9 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: online-delivery-system
 
     steps:
     - uses: actions/checkout@v3
@@ -27,9 +30,6 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
         cache: maven
-        
-    - name: Change to Maven Project Directory
-      run: cd online-delivery-system
       
     - name: Run Tests
       run: mvn test
