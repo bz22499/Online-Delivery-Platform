@@ -21,7 +21,7 @@ function createItem(){
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({name: name, description: description, price: price, vendor: "vendor1@example.com"})
+            body: JSON.stringify({name: name, description: description, price: price, vendorId: "vendor1@example.com"})
         })
             .then(response => response.json())
             .then(data => {
