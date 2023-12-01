@@ -51,6 +51,8 @@ public class VendorServiceImpl implements VendorService {
         return vendorRepository.findById(email).map(existingVendor ->{
             Optional.ofNullable(vendorEntity.getDescription()).ifPresent(existingVendor::setDescription);
             Optional.ofNullable(vendorEntity.getRating()).ifPresent(existingVendor::setRating);
+            Optional.ofNullable(vendorEntity.getImageUrl()).ifPresent(existingVendor::setImageUrl);
+            Optional.ofNullable(vendorEntity.getPassword()).ifPresent(existingVendor::setPassword);
             return vendorRepository.save(existingVendor);
         }).orElseThrow(() -> new RuntimeException("Vendor doesn't exist"));
     }
