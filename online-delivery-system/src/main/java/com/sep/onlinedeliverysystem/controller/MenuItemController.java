@@ -29,7 +29,7 @@ public class MenuItemController {
     @PostMapping(path = "/menuItems")
     public ResponseEntity<MenuItemDTO> save(@RequestBody MenuItemDTO menuItemDTO){ //Create functionality
         MenuItem menuItem = menuItemMapper.mapFrom(menuItemDTO);
-        MenuItem savedMenuItem = menuItemService.save(menuItem);
+        MenuItem savedMenuItem = menuItemService.save(menuItem, menuItemDTO.getVendorId());
         return new ResponseEntity<>(menuItemMapper.mapTo(savedMenuItem), HttpStatus.CREATED);
     }
 
@@ -65,7 +65,6 @@ public class MenuItemController {
         if(!menuItemService.Exists(id)){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-
         MenuItem menuItemEntity = menuItemMapper.mapFrom(menuItemDTO);
         MenuItem updatedMenuItem = menuItemService.partialUpdate(id, menuItemEntity);
         return new ResponseEntity<>(menuItemMapper.mapTo(updatedMenuItem), HttpStatus.OK);
