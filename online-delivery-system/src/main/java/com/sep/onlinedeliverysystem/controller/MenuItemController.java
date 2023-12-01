@@ -35,7 +35,6 @@ public class MenuItemController {
 
     @GetMapping(path = "/menuItems")
     public List<MenuItemDTO> listMenuItems(){ //Read All functionality
-        System.out.println("HELLO");
         List<MenuItem> menuItems = menuItemService.findAll();
         return menuItems.stream().map(menuItemMapper::mapTo).collect(Collectors.toList());
     }
