@@ -15,7 +15,7 @@ import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
-@Service
+@Service("vendorDetailsService")
 public class MyVendorDetailsService implements UserDetailsService {
     @Autowired
     private VendorRepository vendorRepository;
