@@ -11,6 +11,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.Collections;
 
@@ -20,7 +21,7 @@ import java.util.Collections;
 @Builder
 @Entity
 @Table(name = "vendors")
-public class Vendor implements UserDetails {
+public class Vendor implements UserDetails, Serializable {
     @Id
     private String email;
     private String name;
