@@ -20,7 +20,7 @@ public class WebController {
         this.vendorService = vendorService;
     }
 
-    @GetMapping("/home")
+    @GetMapping("")
     public String home(){ return "home"; }
 
     @GetMapping("/vendor")

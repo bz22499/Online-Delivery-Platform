@@ -1,6 +1,6 @@
 async function fetchRestaurants(page = 0, size = 17) {
     try {
-        const response = await fetch(`http://localhost:8080/vendors?page=${page}&size=${size}`);
+        const response = await fetch(`/vendors?page=${page}&size=${size}`);
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
