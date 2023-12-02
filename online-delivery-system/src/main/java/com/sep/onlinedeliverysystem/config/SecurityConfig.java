@@ -10,6 +10,8 @@ import org.springframework.security.config.annotation.authentication.configurati
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.password.NoOpPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
@@ -23,6 +25,11 @@ public class SecurityConfig extends GlobalAuthenticationConfigurerAdapter {
     private UserDetailsService vendorDetailsService;
 
     @Bean
+    public PasswordEncoder passwordEncoder() {
+        // Using NoOpPasswordEncoder for demonstration purposes only
+        return NoOpPasswordEncoder.getInstance();
+    }
+    @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests((authorize) ->
@@ -30,7 +37,7 @@ public class SecurityConfig extends GlobalAuthenticationConfigurerAdapter {
                 ).formLogin(
                         form -> form
                                 .loginPage("/login")
-                                .loginProcessingUrl("/login")
+                                .loginProcessingUrl("/login_process")
                                 .defaultSuccessUrl("/home/")
                                 .permitAll()
 //                ).logout(
@@ -43,15 +50,17 @@ public class SecurityConfig extends GlobalAuthenticationConfigurerAdapter {
 
     @Override
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
+
         auth
-                .authenticationProvider(authenticationProvider(vendorDetailsService))
-                .authenticationProvider(authenticationProvider(userDetailsService));
+                .authenticationProvider(authenticationProvider(vendorDetailsService, passwordEncoder()))
+                .authenticationProvider(authenticationProvider(userDetailsService, passwordEncoder()));
     }
 
     private DaoAuthenticationProvider authenticationProvider(
-            UserDetailsService userDetailsService) {
+            UserDetailsService userDetailsService, PasswordEncoder passwordEncoder) {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
         authProvider.setUserDetailsService(userDetailsService);
+        authProvider.setPasswordEncoder(passwordEncoder);
         return authProvider;
     }
 }

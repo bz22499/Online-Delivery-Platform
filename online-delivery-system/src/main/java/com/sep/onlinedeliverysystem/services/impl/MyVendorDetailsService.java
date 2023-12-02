@@ -1,34 +1,42 @@
 package com.sep.onlinedeliverysystem.services.impl;
 
 import com.sep.onlinedeliverysystem.domain.entities.Vendor;
-import com.sep.onlinedeliverysystem.repositories.UserRepository;
 import com.sep.onlinedeliverysystem.repositories.VendorRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
 import java.util.Optional;
-import java.util.Set;
 
 @Service("vendorDetailsService")
 public class MyVendorDetailsService implements UserDetailsService {
-    @Autowired
-    private VendorRepository vendorRepository;
+
+    private final VendorRepository vendorRepository;
+
+    public MyVendorDetailsService(VendorRepository vendorRepository) {
+        this.vendorRepository = vendorRepository;
+    }
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        Optional<Vendor> vendor = vendorRepository.findById(email);
-        if(vendor==null){
-            new UsernameNotFoundException("Vendor not exists by Email");
+        Optional<Vendor> vendorOptional = vendorRepository.findById(email);
+        Vendor vendor = vendorOptional
+                .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + email));
+
+        if (vendor == null) {
+            throw new UsernameNotFoundException("User not found with email: " + email);
         }
-        Set<GrantedAuthority> authorities = new HashSet<>();
-                authorities.add(new SimpleGrantedAuthority("VENDOR"));
-        return new org.springframework.security.core.userdetails.User(email,vendor.get().getPassword(), authorities);
+
+        return org.springframework.security.core.userdetails.User
+                .withUsername(vendor.getEmail())
+                .password(vendor.getPassword())
+                .authorities("VENDOR")
+                .accountExpired(!vendor.isAccountNonExpired())
+                .accountLocked(!vendor.isAccountNonLocked())
+                .credentialsExpired(!vendor.isCredentialsNonExpired())
+                .disabled(!vendor.isEnabled())
+                .build();
     }
 }
 
