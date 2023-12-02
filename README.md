@@ -39,7 +39,7 @@ As a **delivery driver**, I would like to receive a daily quota of deliveries to
 
 ## 1.6 Licence
 
-This project is licensed under MIT - see the [LICENSE](https://github.com/spe-uob/2023-OnlineDeliveryPlatform/blob/main/LICENSE) file for details.
+This project is licensed under MIT - see the [LICENSE](https://github.com/spe-uob/2023-OnlineDeliveryPlatform/blob/dev/LICENSE) file for details.
 
 ## 1.7 Acknowledgements
 

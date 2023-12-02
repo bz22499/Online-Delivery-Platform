@@ -1,6 +1,6 @@
-async function fetchRestaurants(page = 0, size = 17) {
+async function fetchRestaurants(page = 0, size = 18) {
     try {
-        const response = await fetch(`http://localhost:8080/vendors?page=${page}&size=${size}`);
+        const response = await fetch(`/vendors?page=${page}&size=${size}`);
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
@@ -27,23 +27,29 @@ function populateGrid(pageData) {
             image.alt = restaurant.name;
             image.className = 'restaurant-image';
 
-            // Add the image to the grid item
+            // Add image
             gridItem.appendChild(image);
 
-            // Add restaurant name in a footer
+            // Restaurant name footer
             const footer = document.createElement('div');
             footer.className = 'grid-item-footer';
             footer.textContent = restaurant.name;
             gridItem.appendChild(footer);
 
-            // Add click event to navigate to the menu page
+            // Nav to menu page
             gridItem.addEventListener('click', () => {
-                window.location.href = `/menu-page?restaurantId=${restaurant.id}`;
+                if (restaurant.email) {
+                    window.location.href = `/${encodeURIComponent(restaurant.email)}/menu-page`;
+                }
+                else {
+                    console.warn('Restaurant email is undefined:', restaurant);
+                }
             });
-
             gridContainer.appendChild(gridItem);
         });
+
     }
+
 }
 
 let currentPage = 0;
@@ -53,7 +59,7 @@ async function loadMore() {
     if (isLoading) return;
     isLoading = true;
 
-    const restaurants = await fetchRestaurants(currentPage, 17);
+    const restaurants = await fetchRestaurants(currentPage, 18);
     if (restaurants && restaurants.content.length > 0) {
         populateGrid(restaurants);
         currentPage++;
