@@ -19,18 +19,19 @@ import java.util.Optional;
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 public class MenuItemRepositoryIT {
 
-    private VendorRepository vendor;
+    @Autowired
+    private VendorRepository vendorRepository;
     private MenuItemRepository menuItemTest;
 
     @Autowired
-    public MenuItemRepositoryIT(MenuItemRepository menuItemTest, VendorRepository vendor){
+    public MenuItemRepositoryIT(MenuItemRepository menuItemTest){
         this.menuItemTest = menuItemTest;
-        this.vendor = vendor;
     }
 
     @Test
     public void testSingleMenuItemCreationAndFind(){
         Vendor vendor = TestUtil.vendorBuild1();
+        vendorRepository.save(vendor);
         MenuItem item = TestUtil.menuItemBuilder1(vendor);
         menuItemTest.save(item);
         Optional<MenuItem> result = menuItemTest.findById(item.getId());
@@ -41,6 +42,7 @@ public class MenuItemRepositoryIT {
     @Test
     public void testMultipleMenuItemCreationAndFind(){
         Vendor vendor = TestUtil.vendorBuild1();
+        vendorRepository.save(vendor);
         MenuItem item1 = TestUtil.menuItemBuilder1(vendor);
         MenuItem item2 = TestUtil.menuItemBuilder2(vendor);
         MenuItem item3 = TestUtil.menuItemBuilder3(vendor);
@@ -56,6 +58,7 @@ public class MenuItemRepositoryIT {
     @Test
     public void testMenuItemUpdate(){
         Vendor vendor = TestUtil.vendorBuild1();
+        vendorRepository.save(vendor);
         MenuItem item = TestUtil.menuItemBuilder1(vendor);
         menuItemTest.save(item);
         item.setPrice(19.99F);
@@ -68,6 +71,7 @@ public class MenuItemRepositoryIT {
     @Test
     public void testMenuItemDelete(){
         Vendor vendor = TestUtil.vendorBuild1();
+        vendorRepository.save(vendor);
         MenuItem item = TestUtil.menuItemBuilder1(vendor);
         menuItemTest.save(item);
         menuItemTest.delete(item);

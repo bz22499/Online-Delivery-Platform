@@ -24,13 +24,6 @@ public class MenuItemServiceImpl implements MenuItemService {
         this.menuItemRepository = menuItemRepository;
     }
 
-    @Override
-    public MenuItem save(MenuItem menuItemEntity, String vendorId) {
-        Vendor vendor = vendorRepository.findById(vendorId)
-                .orElseThrow(() -> new EntityNotFoundException("Vendor not found"));
-        menuItemEntity.setVendor(vendor);
-        return menuItemRepository.save(menuItemEntity);
-    }
 
     @Override
     public MenuItem save(MenuItem menuItemEntity) {

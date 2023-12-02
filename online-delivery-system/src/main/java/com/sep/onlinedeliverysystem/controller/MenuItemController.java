@@ -1,6 +1,7 @@
 package com.sep.onlinedeliverysystem.controller;
 import com.sep.onlinedeliverysystem.domain.dto.MenuItemDTO;
 import com.sep.onlinedeliverysystem.domain.entities.MenuItem;
+import com.sep.onlinedeliverysystem.domain.entities.Vendor;
 import com.sep.onlinedeliverysystem.mappers.Mapper;
 import com.sep.onlinedeliverysystem.services.MenuItemService;
 import org.springframework.http.HttpStatus;
@@ -29,7 +30,7 @@ public class MenuItemController {
     @PostMapping(path = "/menuItems")
     public ResponseEntity<MenuItemDTO> save(@RequestBody MenuItemDTO menuItemDTO){ //Create functionality
         MenuItem menuItem = menuItemMapper.mapFrom(menuItemDTO);
-        MenuItem savedMenuItem = menuItemService.save(menuItem, menuItemDTO.getVendorId());
+        MenuItem savedMenuItem = menuItemService.save(menuItem);
         return new ResponseEntity<>(menuItemMapper.mapTo(savedMenuItem), HttpStatus.CREATED);
     }
 

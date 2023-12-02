@@ -1,5 +1,6 @@
 package com.sep.onlinedeliverysystem.domain.dto;
 
+import com.sep.onlinedeliverysystem.domain.entities.Vendor;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,5 +15,5 @@ public class MenuItemDTO {
     private String name;
     private String description;
     private float price;
-    private String vendorId;
+    private Vendor vendor;
 }
