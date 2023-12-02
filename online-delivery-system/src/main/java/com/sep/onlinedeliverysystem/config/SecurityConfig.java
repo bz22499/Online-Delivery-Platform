@@ -33,13 +33,14 @@ public class SecurityConfig extends GlobalAuthenticationConfigurerAdapter {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests((authorize) ->
-                        authorize.requestMatchers("/vendor/**").hasRole("VENDOR")
+                        authorize
+                                .requestMatchers("/vendor/**").hasAuthority("VENDOR")
                                 .anyRequest().permitAll()
                 ).formLogin(
                         form -> form
                                 .loginPage("/login")
                                 .loginProcessingUrl("/login")
-                                .defaultSuccessUrl("/home/")
+                                .defaultSuccessUrl("/home")
                                 .permitAll()
 //                ).logout(
 //                        logout -> logout
