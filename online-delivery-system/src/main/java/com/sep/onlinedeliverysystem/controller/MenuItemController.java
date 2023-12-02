@@ -1,6 +1,7 @@
 package com.sep.onlinedeliverysystem.controller;
 import com.sep.onlinedeliverysystem.domain.dto.MenuItemDTO;
 import com.sep.onlinedeliverysystem.domain.entities.MenuItem;
+import com.sep.onlinedeliverysystem.domain.entities.Vendor;
 import com.sep.onlinedeliverysystem.mappers.Mapper;
 import com.sep.onlinedeliverysystem.services.MenuItemService;
 import org.springframework.http.HttpStatus;
@@ -65,7 +66,6 @@ public class MenuItemController {
         if(!menuItemService.Exists(id)){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-
         MenuItem menuItemEntity = menuItemMapper.mapFrom(menuItemDTO);
         MenuItem updatedMenuItem = menuItemService.partialUpdate(id, menuItemEntity);
         return new ResponseEntity<>(menuItemMapper.mapTo(updatedMenuItem), HttpStatus.OK);
