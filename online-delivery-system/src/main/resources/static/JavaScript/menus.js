@@ -1,4 +1,4 @@
-async function fetchRestaurants(page = 0, size = 17) {
+async function fetchRestaurants(page = 0, size = 18) {
     try {
         const response = await fetch(`/vendors?page=${page}&size=${size}`);
         if (!response.ok) {
@@ -59,7 +59,7 @@ async function loadMore() {
     if (isLoading) return;
     isLoading = true;
 
-    const restaurants = await fetchRestaurants(currentPage, 17);
+    const restaurants = await fetchRestaurants(currentPage, 18);
     if (restaurants && restaurants.content.length > 0) {
         populateGrid(restaurants);
         currentPage++;

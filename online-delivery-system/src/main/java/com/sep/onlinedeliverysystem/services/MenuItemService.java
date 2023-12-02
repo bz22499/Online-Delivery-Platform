@@ -9,7 +9,7 @@ import java.util.Optional;
 
 @Component
 public interface MenuItemService {
-    MenuItem save(MenuItem userEntity);
+    MenuItem save(MenuItem menuItemEntity);
 
     List<MenuItem> findAll();
 

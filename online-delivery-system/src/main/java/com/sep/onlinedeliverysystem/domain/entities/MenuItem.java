@@ -19,7 +19,7 @@ public class MenuItem {
     private String name;
     private String description;
     private float price;
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "vendorEmail", nullable = false)
     private Vendor vendor;
 }
