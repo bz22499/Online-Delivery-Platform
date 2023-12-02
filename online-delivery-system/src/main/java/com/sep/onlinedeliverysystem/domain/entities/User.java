@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
+import java.io.Serializable;
 import java.util.*;
 
 @Data
@@ -19,7 +20,7 @@ import java.util.*;
 @Builder
 @Entity
 @Table(name = "users")
-public class User implements UserDetails{
+public class User implements UserDetails, Serializable {
     @Id
     private String email;
     private String firstName;
