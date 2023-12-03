@@ -8,13 +8,15 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 @Entity
 @Table(name = "vendors")
-public class Vendor {
+public class Vendor implements Serializable {
     @Id
     private String email;
     private String name;
@@ -22,4 +24,8 @@ public class Vendor {
     private String description;
     private float rating;
     private String imageUrl;
+
+    public VendorDetailsEntity toVendorDetails() {
+        return new VendorDetailsEntity(this);
+    }
 }
