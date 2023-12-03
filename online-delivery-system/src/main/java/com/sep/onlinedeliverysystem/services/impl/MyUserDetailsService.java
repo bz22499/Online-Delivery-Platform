@@ -1,6 +1,7 @@
 package com.sep.onlinedeliverysystem.services.impl;
 
 import com.sep.onlinedeliverysystem.domain.entities.User;
+import com.sep.onlinedeliverysystem.domain.entities.UserDetailsEntity;
 import com.sep.onlinedeliverysystem.repositories.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -25,14 +26,17 @@ public class MyUserDetailsService implements UserDetailsService {
         User user = userOptional
                 .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + email));
 
+        UserDetailsEntity userDetails = user.toUserDetails();
+
+
         return org.springframework.security.core.userdetails.User
-                .withUsername(user.getUsername())
-                .password(user.getPassword())
+                .withUsername(userDetails.getUsername())
+                .password(userDetails.getPassword())
                 .authorities("USER") // Add roles or authorities as needed
-                .accountExpired(!user.isAccountNonExpired())
-                .accountLocked(!user.isAccountNonLocked())
-                .credentialsExpired(!user.isCredentialsNonExpired())
-                .disabled(!user.isEnabled())
+                .accountExpired(!userDetails.isAccountNonExpired())
+                .accountLocked(!userDetails.isAccountNonLocked())
+                .credentialsExpired(!userDetails.isCredentialsNonExpired())
+                .disabled(!userDetails.isEnabled())
                 .build();
     }
 }
