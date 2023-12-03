@@ -55,18 +55,6 @@ public class WebController {
         return "order";
     }
 
-    @GetMapping("/partner")
-    @ResponseBody
-    public String partner(){
-        return "partner";
-    }
-
-    @GetMapping("/signup")
-    @ResponseBody
-    public String signup(){
-        return "signup";
-    }
-
     @GetMapping("/{email}/menu-page")
     public String getMenuPage(@PathVariable("email") String email, Model model){
         Optional<Vendor> vendor = vendorService.findOne(email);
