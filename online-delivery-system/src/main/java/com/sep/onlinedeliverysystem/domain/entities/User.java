@@ -20,50 +20,14 @@ import java.util.*;
 @Builder
 @Entity
 @Table(name = "users")
-public class User implements UserDetails, Serializable {
+public class User implements Serializable {
     @Id
     private String email;
     private String firstName;
     private String lastName;
     private String password;
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        // Assuming all vendors have the same role for simplicity.
-        return Collections.singletonList(new SimpleGrantedAuthority("VENDOR"));
-    }
-
-    @Override
-    public String getPassword() {
-        return this.password;
-    }
-
-    @Override
-    public String getUsername() {
-        return this.email;
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        // You can implement your own logic here if needed.
-        return true;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        // You can implement your own logic here if needed.
-        return true;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        // You can implement your own logic here if needed.
-        return true;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        // You can implement your own logic here if needed.
-        return true;
+    public UserDetailsEntity toUserDetails() {
+        return new UserDetailsEntity(this);
     }
 }

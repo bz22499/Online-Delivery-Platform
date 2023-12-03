@@ -1,6 +1,7 @@
 package com.sep.onlinedeliverysystem.services.impl;
 
 import com.sep.onlinedeliverysystem.domain.entities.Vendor;
+import com.sep.onlinedeliverysystem.domain.entities.VendorDetailsEntity;
 import com.sep.onlinedeliverysystem.repositories.VendorRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -28,14 +29,16 @@ public class MyVendorDetailsService implements UserDetailsService {
             throw new UsernameNotFoundException("User not found with email: " + email);
         }
 
+        VendorDetailsEntity vendorDetails = vendor.toVendorDetails();
+
         return org.springframework.security.core.userdetails.User
                 .withUsername(vendor.getEmail())
                 .password(vendor.getPassword())
                 .authorities("VENDOR")
-                .accountExpired(!vendor.isAccountNonExpired())
-                .accountLocked(!vendor.isAccountNonLocked())
-                .credentialsExpired(!vendor.isCredentialsNonExpired())
-                .disabled(!vendor.isEnabled())
+                .accountExpired(!vendorDetails.isAccountNonExpired())
+                .accountLocked(!vendorDetails.isAccountNonLocked())
+                .credentialsExpired(!vendorDetails.isCredentialsNonExpired())
+                .disabled(!vendorDetails.isEnabled())
                 .build();
     }
 }
