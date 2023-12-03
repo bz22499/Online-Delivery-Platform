@@ -23,6 +23,9 @@ public class WebController {
     @GetMapping("")
     public String home(){ return "home"; }
 
+    @GetMapping("/home")
+    public String home2(){return "home";}
+
     @GetMapping("/vendor")
     public String vendor(){
         return "vendor";
