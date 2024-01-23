@@ -1,6 +1,6 @@
 async function fetchItems() {
     try {
-        const response = await fetch(`http://localhost:8080/menuItems`);
+        const response = await fetch(`/menuItems`);
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
