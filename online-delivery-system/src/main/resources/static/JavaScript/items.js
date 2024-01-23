@@ -1,6 +1,6 @@
-async function fetchItems() {
+async function fetchItems(vendorId) {
     try {
-        const response = await fetch(`/menuItems`);
+        const response = await fetch(`/menuItems/vendor/${vendorId}`);
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
@@ -29,8 +29,8 @@ function populateGrid(pageData) {
 
 
 
-async function load() {
-    const items = await fetchItems();
+async function load(vendorId) {
+    const items = await fetchItems(vendorId);
     if (items.length > 0) {
         populateGrid(items)
     }
@@ -38,7 +38,12 @@ async function load() {
 
 
 document.addEventListener('DOMContentLoaded', function () {
-    load()
+    const vendorInfoElement = document.getElementById('vendor-info');
+    const vendorId = vendorInfoElement.getAttribute('data-id');
+
+    if (vendorId) {
+        load(vendorId);
+    }
 });
 
 
