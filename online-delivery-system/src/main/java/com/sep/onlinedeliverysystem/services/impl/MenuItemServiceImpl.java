@@ -36,6 +36,11 @@ public class MenuItemServiceImpl implements MenuItemService {
     }
 
     @Override
+    public List<MenuItem> findByVendorEmail(String vendorId) {
+        return StreamSupport.stream(menuItemRepository.findByVendorEmail(vendorId).spliterator(), false).collect(Collectors.toList());
+    }
+
+    @Override
     public Optional<MenuItem> findOne(Long id) {
         return menuItemRepository.findById(id);
     }
