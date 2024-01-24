@@ -12,8 +12,12 @@
     <div id="vendor-info" th:attr="data-id=${id}"></div>
 </div>
 <div class="description" th:text="${description}"></div>
-
 <div class="grid-container"></div>
+<div class="basket">
+    <div class="basket-header">Basket</div>
+    <div class="basket-items"></div>
+    <button class="proceed-button">Checkout</button>
+</div>
 
 <script src="/JavaScript/items.js"></script>
 </body>
