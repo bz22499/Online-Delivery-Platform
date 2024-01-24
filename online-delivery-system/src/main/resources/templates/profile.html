@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>P2P Online Delivery Platform - Profile Page</title>
+    <link rel="stylesheet" href="/css/profile.css/">
+</head>
+<body>
+
+<header>
+    <h1>User Profile</h1>
+</header>
+
+<ul class="banner">
+    <li><img src="images/logo_ld_png.png"></li>
+    <li><a target="_parent" href="home">Home</a></li>
+    <li class="active"><a target="_parent" href="about">About Us</a></li>
+    <li><a target="_parent" href="order">Order</a></li>
+    <li><a target="_parent" href="contact">Contact</a></li>
+    <li class="right"><a target="_parent" href="login">Login</a></li>
+    <li class="right"><a target="_parent" href="customerlogin">Sign up</a></li>
+    <li class="right"><a target="_parent" href="restaurantlogin">Partner with us</a></li>
+</ul>
+
+<div id="profile-container">
+    <div id="profile-picture">
+        <input type="file" id="imageInput" accept="image/*" onchange="updateProfilePicture()">
+        <label><img src="/images" alt="Profile Picture" id="previewImage"></label>
+        <!--<img src="profile-picture.jpg" alt="Profile Picture">-->
+    </div>
+    <div id="user-details">
+        <h1>John Doe</h1>
+        <h2>Web Developer</h2>
+        <p>This is a paragraph for the description of the user</p>
+    </div>
+</div>
+
+<img src="images/background-aboutus.jpg" alt="" class="background-image">
+
+<script>
+    function updateProfilePicture() {
+        var input = doc.getElementById('imageInput');
+        var preview = doc.getElementById('previewImage');
+
+        var file = input.files[0];
+
+        if (file) {
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                preview.scr = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+    }
+</script>
+</body>
+</html>
