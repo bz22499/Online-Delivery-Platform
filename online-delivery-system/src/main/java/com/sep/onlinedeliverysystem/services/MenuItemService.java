@@ -13,6 +13,8 @@ public interface MenuItemService {
 
     List<MenuItem> findAll();
 
+    List<MenuItem> findByVendorEmail(String vendorId);
+
     Optional<MenuItem> findOne(Long id);
 
     boolean Exists(Long id);
