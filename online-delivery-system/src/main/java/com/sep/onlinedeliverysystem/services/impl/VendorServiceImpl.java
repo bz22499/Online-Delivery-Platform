@@ -36,11 +36,13 @@ public class VendorServiceImpl implements VendorService {
 
     @Override
     public List<Vendor> findAll() {
-       return StreamSupport.stream(vendorRepository.findAll().spliterator(), false).collect(Collectors.toList()); //converting iterator to a list (easier to work with)
+       return StreamSupport.stream(vendorRepository.findAll().spliterator(), false).collect(Collectors.toList());
     }
 
     @Override
-    public Page<Vendor> findAll(Pageable pageable) {return vendorRepository.findAll(pageable); }
+    public Page<Vendor> findAll(Pageable pageable) {
+        return vendorRepository.findAll(pageable);
+    }
 
     @Override
     public Optional<Vendor> findOne(String email) {
