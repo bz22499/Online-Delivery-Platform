@@ -49,6 +49,12 @@ public class MenuItemController {
         }).orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND)); //for if user doesn't exist
     }
 
+    @GetMapping(path = "/menuItems/vendor/{vendorId}") //Read All from Vendor functionality
+    public List<MenuItemDTO> listMenuItemsByVendor(@PathVariable String vendorId){
+        List<MenuItem> menuItems = menuItemService.findByVendorEmail(vendorId);
+        return menuItems.stream().map(menuItemMapper::mapTo).collect(Collectors.toList());
+    }
+
     @PutMapping(path = "/menuItems/{id}")
     public ResponseEntity<MenuItemDTO> fullUpdateMenuItem(@PathVariable("id") Long id, @RequestBody MenuItemDTO menuItemDTO){ //Full Update functionality
         if(!menuItemService.Exists(id)){

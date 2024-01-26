@@ -59,6 +59,7 @@ public class WebController {
     public String getMenuPage(@PathVariable("email") String email, Model model){
         Optional<Vendor> vendor = vendorService.findOne(email);
         if(vendor.isPresent()){
+            model.addAttribute("id", vendor.get().getEmail());
             model.addAttribute("name", vendor.get().getName());
             model.addAttribute("description", vendor.get().getDescription());
             model.addAttribute("rating", vendor.get().getRating());
