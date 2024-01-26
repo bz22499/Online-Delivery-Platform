@@ -33,7 +33,7 @@ public class OrderController {
     @PostMapping(path = "/orders")
     public ResponseEntity<OrderDTO> save(@RequestBody OrderDTO orderDTO){ //Create functionality
         Order orderEntity = orderMapper.mapFrom(orderDTO);
-        Order savedOrderEntity = orderService.save(orderEntity); //saves vendor DTO as entity into our database
+        Order savedOrderEntity = orderService.save(orderEntity); //saves order DTO as entity into our database
         return new ResponseEntity<>(orderMapper.mapTo(savedOrderEntity), HttpStatus.CREATED); //returns our saved entity as a DTO
     }
 
@@ -52,6 +52,8 @@ public class OrderController {
         }).orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
+
+    // PROBABLY WON'T USE UPDATE METHODS
     @PutMapping(path = "/orders/{id}")
     public ResponseEntity<OrderDTO> fullUpdateOrder(@PathVariable("id") Long id, OrderDTO orderDTO){
         if(!orderService.Exists(id)){
