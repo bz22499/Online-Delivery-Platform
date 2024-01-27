@@ -8,7 +8,6 @@ import com.sep.onlinedeliverysystem.domain.entities.MenuItem;
 import com.sep.onlinedeliverysystem.domain.entities.Vendor;
 import com.sep.onlinedeliverysystem.repositories.VendorRepository;
 import com.sep.onlinedeliverysystem.services.MenuItemService;
-import org.checkerframework.checker.units.qual.A;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,7 +70,7 @@ public class MenuItemControllerIntegrationTests {
     }
 
     @Test
-    public void testThatCreateItemDTOSuccessfullyReturnssavedItem() throws Exception {
+    public void testThatCreateItemDTOSuccessfullyReturnsSavedItem() throws Exception {
         Vendor testVendor = TestUtil.vendorBuild1();
         vendorRepository.save(testVendor);
         MenuItemDTO testItem1 = TestUtil.menuItemDTOCreate1(testVendor);
@@ -96,7 +95,7 @@ public class MenuItemControllerIntegrationTests {
     }
 
     @Test
-    public void testThatListItemSuccessfullyReturnsListOfmenuItems() throws Exception {
+    public void testThatListItemSuccessfullyReturnsListOfMenuItems() throws Exception {
         Vendor testVendor = TestUtil.vendorBuild1();
         vendorRepository.save(testVendor);
         MenuItem testItem1 = TestUtil.menuItemBuilder1(testVendor);
@@ -130,7 +129,7 @@ public class MenuItemControllerIntegrationTests {
     }
 
     @Test
-    public void testThatGetItemSuccessfullyReturnsAddressWhenItemExists() throws Exception {
+    public void testThatGetItemSuccessfullyReturnsItemWhenItemExists() throws Exception {
         Vendor testVendor = TestUtil.vendorBuild1();
         vendorRepository.save(testVendor);
         MenuItem testItem1 = TestUtil.menuItemBuilder1(testVendor);
@@ -254,5 +253,19 @@ public class MenuItemControllerIntegrationTests {
         ).andExpect(MockMvcResultMatchers.status().isNoContent());
     }
 
-
+    @Test
+    public void deleteItemDeletesItem() throws Exception {
+        Vendor testVendor = TestUtil.vendorBuild1();
+        vendorRepository.save(testVendor);
+        MenuItem testmenuItem = TestUtil.menuItemBuilder1(testVendor);
+        MenuItem savedItem = menuItemService.save(testmenuItem);
+        mockMvc.perform(
+                MockMvcRequestBuilders.delete("/menuItems/" + savedItem.getId())
+                        .contentType(MediaType.APPLICATION_JSON)
+        );
+        mockMvc.perform(
+                MockMvcRequestBuilders.get("/menuItems/" + savedItem.getId())
+                        .contentType(MediaType.APPLICATION_JSON)
+        ).andExpect(MockMvcResultMatchers.status().isNotFound());
+    }
 }

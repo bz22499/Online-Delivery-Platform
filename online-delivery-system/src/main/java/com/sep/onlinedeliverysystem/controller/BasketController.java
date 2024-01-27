@@ -23,7 +23,7 @@ public class BasketController {
     }
 
     @PostMapping(path = "/baskets")
-    public ResponseEntity<BasketDTO> save(BasketDTO basketDTO) {
+    public ResponseEntity<BasketDTO> save(@RequestBody BasketDTO basketDTO) {
         Basket basketEntity = basketMapper.mapFrom(basketDTO);
         Basket savedBasket = basketService.save(basketEntity);
         return new ResponseEntity<>(basketMapper.mapTo(savedBasket), HttpStatus.CREATED);

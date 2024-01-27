@@ -3,11 +3,9 @@ package com.sep.onlinedeliverysystem.controllers;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sep.onlinedeliverysystem.TestUtil;
 import com.sep.onlinedeliverysystem.domain.entities.Order;
-import com.sep.onlinedeliverysystem.repositories.OrderRepository;
 import com.sep.onlinedeliverysystem.services.OrderService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.internal.matchers.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -17,7 +15,8 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.hasSize;
+
 
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
@@ -66,11 +65,25 @@ public class OrderControllerIT {
     }
 
     @Test
+    public void listOrdersReturnsOrders() throws Exception {
+        Order order1 = TestUtil.orderBuilder();
+        orderService.save(order1);
+        Order order2 = TestUtil.orderBuilder();
+        orderService.save(order2);
+        Order order3 = TestUtil.orderBuilder();
+        orderService.save(order3);
+        mockMvc.perform(
+                MockMvcRequestBuilders.get("/orders")
+                        .contentType(MediaType.APPLICATION_JSON)
+        ).andExpect(MockMvcResultMatchers.jsonPath("$", hasSize(3)));
+    }
+
+    @Test
     public void getOrderReturns200OkWhenOrderExists() throws Exception {
         Order order = TestUtil.orderBuilder();
         orderService.save(order);
         mockMvc.perform(
-                MockMvcRequestBuilders.get("/orders")
+                MockMvcRequestBuilders.get("/orders/" + order.getId())
                         .contentType(MediaType.APPLICATION_JSON)
         ).andExpect(MockMvcResultMatchers.status().isOk());
     }
@@ -134,6 +147,23 @@ public class OrderControllerIT {
                 MockMvcRequestBuilders.delete("/orders/" + savedOrder.getId().toString())
                         .contentType(MediaType.APPLICATION_JSON)
         ).andExpect(MockMvcResultMatchers.status().isNoContent());
+    }
+
+    @Test
+    public void deleteOrderDeletesOrder() throws Exception {
+        Order order = TestUtil.orderBuilder();
+        Order savedOrder = orderService.save(order);
+        mockMvc.perform(
+                MockMvcRequestBuilders.delete("/orders/" + savedOrder.getId().toString())
+                        .contentType(MediaType.APPLICATION_JSON)
+        );
+        mockMvc.perform(
+                MockMvcRequestBuilders.get("/orders/")
+                        .contentType(MediaType.APPLICATION_JSON)
+        );
+        mockMvc.perform(
+                MockMvcRequestBuilders.get("/orders/" + order.getId())
+        ).andExpect(MockMvcResultMatchers.status().isNotFound());
     }
 }
 
