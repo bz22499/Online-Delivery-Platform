@@ -50,7 +50,7 @@ public class MenuItemController {
     }
 
     @GetMapping(path = "/menuItems/vendor/{vendorId}") //Read All from Vendor functionality
-    public List<MenuItemDTO> listMenuItemsByVendor(@PathVariable String vendorId){
+    public List<MenuItemDTO> listMenuItemsByVendor(@PathVariable("vendorId") String vendorId){
         List<MenuItem> menuItems = menuItemService.findByVendorEmail(vendorId);
         return menuItems.stream().map(menuItemMapper::mapTo).collect(Collectors.toList());
     }
