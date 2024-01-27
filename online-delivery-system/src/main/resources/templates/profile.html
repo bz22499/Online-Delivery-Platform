@@ -15,7 +15,8 @@
 <ul class="banner">
     <li><img src="images/logo_ld_png.png"></li>
     <li><a target="_parent" href="home">Home</a></li>
-    <li class="active"><a target="_parent" href="about">About Us</a></li>
+    <!--<li class="active"><a target="_parent" href="about">About Us</a></li>-->
+    <li><a target="_parent" href="about">About</a></li>
     <li><a target="_parent" href="order">Order</a></li>
     <li><a target="_parent" href="contact">Contact</a></li>
     <li class="right"><a target="_parent" href="login">Login</a></li>
@@ -26,33 +27,64 @@
 <div id="profile-container">
     <div id="profile-picture">
         <input type="file" id="imageInput" accept="image/*" onchange="updateProfilePicture()">
-        <label><img src="/images" alt="Profile Picture" id="previewImage"></label>
+        <label for="imageInput"><img src="/images" alt="Profile Picture" id="previewImage"></label>
         <!--<img src="profile-picture.jpg" alt="Profile Picture">-->
     </div>
     <div id="user-details">
-        <h1>John Doe</h1>
-        <h2>Web Developer</h2>
-        <p>This is a paragraph for the description of the user</p>
+        <h1 contenteditable="true" id="userName">Anthony Price</h1>
+        <h2 contenteditable="true" id="userJob">Web Developer</h2>
+        <p contenteditable="true" id="userDescription">This is a paragraph for the description of the user</p>
+        <button onclick="saveProfile()">Save Profile</button>
+        <button class="subscription-button">View subscription</button>
+        <button class="logout-button">Logout</button>
     </div>
 </div>
+
 
 <img src="images/background-aboutus.jpg" alt="" class="background-image">
 
 <script>
     function updateProfilePicture() {
-        var input = doc.getElementById('imageInput');
-        var preview = doc.getElementById('previewImage');
+        var input = document.getElementById('imageInput');
+        var preview = document.getElementById('previewImage');
 
         var file = input.files[0];
 
         if (file) {
             var reader = new FileReader();
             reader.onload = function(e) {
-                preview.scr = e.target.result;
+                preview.src = e.target.result;
             };
             reader.readAsDataURL(file);
         }
     }
+
+    function saveProfile() {
+        var userName = document.getElementById('username').innerText;
+        var userJob = document.getElementById('userJob').innerText;
+        var userDescription = document.getElementById('userDescription').innerText;
+        var profileData = {
+            userName: userName,
+            userJob: userJob,
+            userDescription: userDescription,
+            profilePicture: document.getElementById('previewImage').src
+        };
+
+        localStorage.setItem('userProfile', JSON.stringify(profileData));
+        alert('Profile saved!');
+    }
+
+    window.onload = function () {
+        var storedProfile = localStorage.getItem('userProfile');
+        if (storedProfile) {
+            var profileData = JSON.parse(storedProfile);
+            document.getElementById('userName').innerText = profileData.userName;
+            document.getElementById('userJob').innerText = profileData.userJob;
+            document.getElementById('userDescription').innerText = profileData.userDescription;
+            document.getElementById('previewImage').innerText = profileData.profilePicture;
+        }
+    };
+
 </script>
 </body>
 </html>
