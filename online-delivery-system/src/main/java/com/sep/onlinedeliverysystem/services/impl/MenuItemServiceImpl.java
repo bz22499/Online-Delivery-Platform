@@ -16,10 +16,8 @@ import java.util.stream.StreamSupport;
 public class MenuItemServiceImpl implements MenuItemService {
 
     private MenuItemRepository menuItemRepository;
-    private VendorRepository vendorRepository;
 
-    public MenuItemServiceImpl(MenuItemRepository menuItemRepository, VendorRepository vendorRepository) {
-        this.vendorRepository = vendorRepository;
+    public MenuItemServiceImpl(MenuItemRepository menuItemRepository) {
         this.menuItemRepository = menuItemRepository;
     }
 
