@@ -55,6 +55,12 @@ public class MenuItemController {
         return menuItems.stream().map(menuItemMapper::mapTo).collect(Collectors.toList());
     }
 
+    @GetMapping(path = "/menuItems/vendor/{vendorId}") //Read All from Vendor functionality
+    public List<MenuItemDTO> listMenuItemsByVendor(@PathVariable String vendorId){
+        List<MenuItem> menuItems = menuItemService.findByVendorEmail(vendorId);
+        return menuItems.stream().map(menuItemMapper::mapTo).collect(Collectors.toList());
+    }
+
     @PutMapping(path = "/menuItems/{id}")
     public ResponseEntity<MenuItemDTO> fullUpdateMenuItem(@PathVariable("id") Long id, @RequestBody MenuItemDTO menuItemDTO){ //Full Update functionality
         if(!menuItemService.Exists(id)){
@@ -81,5 +87,4 @@ public class MenuItemController {
         menuItemService.delete(id);
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
-
 }

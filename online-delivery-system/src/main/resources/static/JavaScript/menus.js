@@ -11,6 +11,19 @@ async function fetchRestaurants(page = 0, size = 18) {
     }
 }
 
+async function fetchAllRestaurants(){
+    try {
+        const response = await fetch(`/vendors`);
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Error fetching restaurant data:', error);
+    }
+}
+
 function populateGrid(pageData) {
     const gridContainer = document.querySelector('.grid-container');
 
@@ -52,14 +65,21 @@ function populateGrid(pageData) {
 
 }
 
+
+// Get query parameters from the URL
+var urlParams = new URLSearchParams(window.location.search);
+// Retrieve data from query parameters
+var address = urlParams.get('address');
+
 let currentPage = 0;
 let isLoading = false;
 
 async function loadMore() {
+
     if (isLoading) return;
     isLoading = true;
 
-    const restaurants = await fetchRestaurants(currentPage, 18);
+    const restaurants = await fetchRestaurants();
     if (restaurants && restaurants.content.length > 0) {
         populateGrid(restaurants);
         currentPage++;
@@ -75,4 +95,5 @@ window.addEventListener('scroll', () => {
 });
 
 window.onload = loadMore();
+
 

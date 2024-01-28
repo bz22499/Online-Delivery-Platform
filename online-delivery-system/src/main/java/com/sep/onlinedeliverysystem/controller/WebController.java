@@ -69,5 +69,4 @@ public class WebController {
             return "notFound";
         }
     }
-
 }
