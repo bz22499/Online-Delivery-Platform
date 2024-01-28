@@ -44,7 +44,7 @@ public class BasketController {
         }).orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-    @GetMapping(path = "/baskets/order/{orderId}")
+    @GetMapping(path = "/baskets/orders/{orderId}")
     public List<BasketDTO> listBasketsByOrder(@PathVariable("orderId") String stringId) {
         Long id = Long.parseLong(stringId);
         List<Basket> baskets = basketService.findByOrder(id);
@@ -64,7 +64,7 @@ public class BasketController {
     }
 
     @DeleteMapping(path = "/baskets/{id}")
-    public ResponseEntity deletBasket(@PathVariable("id") Long id) {
+    public ResponseEntity deleteBasket(@PathVariable("id") Long id) {
         basketService.delete(id);
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }

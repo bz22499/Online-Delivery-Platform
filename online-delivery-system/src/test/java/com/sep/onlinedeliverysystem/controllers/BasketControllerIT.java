@@ -17,9 +17,6 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-
-import javax.swing.plaf.PanelUI;
-
 import static org.hamcrest.Matchers.hasSize;
 
 @SpringBootTest
@@ -44,8 +41,8 @@ public class BasketControllerIT {
     public void createBasketReturnsHttp201Created() throws Exception {
         // Create Basket (needs order)
         Order testOrder = TestUtil.orderBuilder();
-        Order savedOrder = orderRepository.save(testOrder);
-        Basket testBasket = TestUtil.basketBuilder(savedOrder);
+        orderRepository.save(testOrder);
+        Basket testBasket = TestUtil.basketBuilder(testOrder);
         String basketJson = objectMapper.writeValueAsString(testBasket);
         mockMvc.perform(
                 MockMvcRequestBuilders.post("/baskets")
@@ -93,6 +90,37 @@ public class BasketControllerIT {
         basketService.save(basket3);
         mockMvc.perform(
                 MockMvcRequestBuilders.get("/baskets")
+                        .contentType(MediaType.APPLICATION_JSON)
+        ).andExpect(
+                MockMvcResultMatchers.jsonPath("$", hasSize(3))
+        );
+    }
+
+    @Test
+    public void listBasketsByOrderReturnsHttp200Ok() throws Exception {
+        // Order must exist
+        Order testOrder = TestUtil.orderBuilder();
+        orderRepository.save(testOrder); // this generates the id for order object
+        mockMvc.perform(
+                MockMvcRequestBuilders.get("/baskets/orders/" + testOrder.getId())
+                        .contentType(MediaType.APPLICATION_JSON)
+        ).andExpect(
+                MockMvcResultMatchers.status().isOk()
+        );
+    }
+
+    @Test
+    public void listBasketsByOrderReturnsBaskets() throws Exception {
+        Order testOrder = TestUtil.orderBuilder();
+        orderRepository.save(testOrder);
+        Basket basket1 = TestUtil.basketBuilder(testOrder);
+        basketService.save(basket1);
+        Basket basket2 = TestUtil.basketBuilder(testOrder);
+        basketService.save(basket2);
+        Basket basket3 = TestUtil.basketBuilder(testOrder);
+        basketService.save(basket3);
+        mockMvc.perform(
+                MockMvcRequestBuilders.get("/baskets/orders/" + testOrder.getId())
                         .contentType(MediaType.APPLICATION_JSON)
         ).andExpect(
                 MockMvcResultMatchers.jsonPath("$", hasSize(3))
