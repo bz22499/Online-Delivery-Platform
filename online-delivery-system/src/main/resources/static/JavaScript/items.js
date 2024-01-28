@@ -24,7 +24,6 @@ function populateGrid(pageData) {
         footer.textContent = item.price;
         gridItem.appendChild(footer);
 
-
         gridItem.addEventListener('click', function() {
             addOrUpdateBasketItem(item);
         });
