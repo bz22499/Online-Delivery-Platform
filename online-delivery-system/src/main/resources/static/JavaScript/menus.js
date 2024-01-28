@@ -1,4 +1,4 @@
-async function fetchRestaurants(page =, size = 18) {
+async function fetchRestaurants(page =1, size = 18) {
     try {
         const response = await fetch(`/vendors?page=${page}&size=${size}`);
         if (!response.ok) {
