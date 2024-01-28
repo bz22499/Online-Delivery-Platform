@@ -109,6 +109,20 @@ public class MenuItemControllerIntegrationTests {
     }
 
     @Test
+    public void testThatListItemsByVendorSuccessfullyReturnsListOfMenuItems() throws Exception {
+        Vendor testVendor = TestUtil.vendorBuild1();
+        vendorRepository.save(testVendor);
+        MenuItem testItem1 = TestUtil.menuItemBuilder1(testVendor);
+        menuItemService.save(testItem1);
+        mockMvc.perform(
+                MockMvcRequestBuilders.get("/menuItems/vendor/restaurant@foodmail.com")
+                        .contentType(MediaType.APPLICATION_JSON)
+        ).andExpect(
+                MockMvcResultMatchers.jsonPath("$[0].name").value("Toast")
+        );
+    }
+
+    @Test
     public void testThatGetItemSuccessfullyReturnsHttpStatus200OkWhenItemExists() throws Exception {
         Vendor testVendor = TestUtil.vendorBuild1();
         vendorRepository.save(testVendor);

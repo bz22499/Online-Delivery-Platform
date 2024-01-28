@@ -81,5 +81,4 @@ public class MenuItemController {
         menuItemService.delete(id);
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
-
 }
