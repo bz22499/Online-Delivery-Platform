@@ -46,7 +46,7 @@ public class MenuItemController {
         return foundMenuItem.map(menuItemEntity -> { //for if user exists
             MenuItemDTO menuItemDTO = menuItemMapper.mapTo(menuItemEntity);
             return new ResponseEntity<>(menuItemDTO, HttpStatus.OK);
-        }).orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND)); //for if user doesn't exist
+        }).orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND)); //for if item doesn't exist
     }
 
     @GetMapping(path = "/menuItems/vendor/{vendorId}") //Read All from Vendor functionality
@@ -60,7 +60,6 @@ public class MenuItemController {
         if(!menuItemService.Exists(id)){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-
         menuItemDTO.setId(id);
         MenuItem menuItemEntity = menuItemMapper.mapFrom(menuItemDTO);
         MenuItem savedMenuItem = menuItemService.save(menuItemEntity); //can reuse our create functionality to overwrite current item's info
