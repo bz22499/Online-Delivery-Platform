@@ -1,3 +1,9 @@
+let basket = {
+    order: 1,
+    basketId: null,
+    items: []
+};
+
 async function fetchItems(vendorId) {
     try {
         const response = await fetch(`/menuItems/vendor/${vendorId}`);
@@ -12,40 +18,49 @@ async function fetchItems(vendorId) {
 }
 
 function populateGrid(pageData) {
+    // Make grid
     const gridContainer = document.querySelector('.grid-container');
     const basketItems = document.querySelector('.basket-items');
     pageData.forEach((item) => {
+        // Make grid item
         const gridItem = document.createElement('div');
         gridItem.className = 'grid-item';
-        gridItem.textContent = item.name;
+        gridItem.textContent = item.name; // display menuItem name
 
         const footer = document.createElement('div');
-        footer.className = 'grid-item-footer';
+        footer.className = 'grid-item-footer'; // footer for grid item that displays the price
         footer.textContent = item.price;
-        gridItem.appendChild(footer);
+        gridItem.appendChild(footer); // append footer to grid item
 
-        gridItem.addEventListener('click', function() {
-            addOrUpdateBasketItem(item);
+        gridItem.addEventListener('click', function() { // make each grid item a button
+            addOrUpdateBasketItem(item); // update basket functionality
         });
 
-        gridContainer.appendChild(gridItem);
+        gridContainer.appendChild(gridItem); // add every grid item to the grid container
     });
 }
 
 function addOrUpdateBasketItem(item) {
-    let basketItem = document.querySelector(`.basket-item[data-id='${item.id}']`);
-    if (!basketItem) {
-        basketItem = createBasketItem(item);
-        document.querySelector('.basket-items').appendChild(basketItem);
-    } else {
+    let basketItem = document.querySelector(`.basket-item[data-id='${item.id}']`); // has item id as identifier
+    if (!basketItem) { // if not yet in the basket
+        basketItem = createBasketItem(item); // create the item to be displayed in bsket
+        document.querySelector('.basket-items').appendChild(basketItem); // add basket item (identified by menuItem id)
+        basket.items.push({ // initialise basket item object
+            basket: null,
+            menuItem: item,
+            quantity: 1
+        });
+    } else { // if in the basket just add one to the quantity
+        const basketItemData = basket.items.find(basketItem => basketItem.menuItem.id === item.id);
         updateItemQuantity(basketItem, 1);
+        basketItemData.quantity++;
     }
 }
 
 function createBasketItem(item) {
     const basketItem = document.createElement('div');
     basketItem.className = 'basket-item';
-    basketItem.setAttribute('data-id', item.id);
+    basketItem.setAttribute('data-id', item.id); // used menuItem id as identifier
 
     const itemName = document.createElement('span');
     itemName.textContent = item.name;
@@ -53,10 +68,10 @@ function createBasketItem(item) {
 
     const priceDisplay = document.createElement('span');
     priceDisplay.className = 'item-price';
-    priceDisplay.textContent = `£${item.price.toFixed(2)}`; // Assuming price is a number
+    priceDisplay.textContent = `£${item.price.toFixed(2)}`; // assuming price is a number
     basketItem.appendChild(priceDisplay);
 
-    basketItem.price = item.price; // Store the unit price for future calculations
+    basketItem.price = item.price; // store the unit price for calculations
 
     const quantityControl = createQuantityControl();
     basketItem.appendChild(quantityControl);
@@ -64,7 +79,7 @@ function createBasketItem(item) {
     return basketItem;
 }
 
-function createQuantityControl() {
+function createQuantityControl() { // the buttons we see when an item is adde to a basket
     const quantityControl = document.createElement('div');
     quantityControl.className = 'quantity-control';
 
@@ -87,41 +102,79 @@ function createQuantityControl() {
     return quantityControl;
 }
 
-function updateItemQuantity(basketItem, change) {
-    const quantityDisplay = basketItem.querySelector('.quantity');
-    let quantity = parseInt(quantityDisplay.textContent);
-    quantity = Math.max(0, quantity + change);
-    quantityDisplay.textContent = quantity;
+function updateItemQuantity(basketItem, change) { // called when item has already been created
+    const itemId = parseInt(basketItem.getAttribute('data-id'));
+    const basketItemData = basket.items.find(item => item.menuItem.id === itemId);
 
-    // Update price display
-    const priceDisplay = basketItem.querySelector('.item-price');
-    const newPrice = basketItem.price * quantity;
-    priceDisplay.textContent = `£${newPrice.toFixed(2)}`;
+    // update basketItem (qty)
+    if (basketItemData) {
+        basketItemData.quantity = Math.max(0, basketItemData.quantity + change);
 
-    if (quantity === 0) {
-        basketItem.remove();
+        if (basketItemData.quantity === 0) {
+            // remove item from basket.items array
+            basket.items = basket.items.filter(item => item.menuItem.id !== itemId);
+
+            // remove item element from the DOM
+            basketItem.remove();
+        } else {
+            // update price display
+            const priceDisplay = basketItem.querySelector('.item-price');
+            const newPrice = basketItem.price * basketItemData.quantity;
+            priceDisplay.textContent = `£${newPrice.toFixed(2)}`;
+        }
     }
 }
 
-async function load(vendorId) {
+async function load(vendorId) { // get items by vendor (if there is at least 1 item)
     const items = await fetchItems(vendorId);
     if (items.length > 0) {
         populateGrid(items)
     }
 }
 
-
 document.addEventListener('DOMContentLoaded', function () {
-    const vendorInfoElement = document.getElementById('vendor-info');
-    const vendorId = vendorInfoElement.getAttribute('data-id');
+    const vendorInfoElement = document.getElementById('vendor-info'); // given in html
+    const vendorId = vendorInfoElement.getAttribute('data-id'); // specific field in vendor-info
     if (vendorId) {
         load(vendorId);
     }
-    const proceedButton = document.querySelector('.proceed-button');
-    if (proceedButton) { // Check if button exists to avoid null reference errors
-        proceedButton.addEventListener('click', function() {
-            console.log("Button clicked")
-            // window.location.href = '/checkout'; // Navigate to checkout page
+    const proceedButton = document.querySelector('.proceed-button'); // create basket button and funcionality
+    if (proceedButton) { // check if button exists to avoid null reference
+        proceedButton.addEventListener('click', async function () {
+            const response = await fetch("/baskets", { // post to baskets
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(basket)
+            }).then(response => {
+                if (response.ok) {
+                    return response.json()
+                }
+                else {
+                    throw new Error(`HTTP error. Status: ${response.status}`)
+                }
+            }).then(savedBasket => { // from saved basket, post basketItems
+                for (let bi of basket.items) {
+                    fetch("/basketItems", {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            basket: savedBasket,
+                            menuItem: bi.menuItem, // this data is maintained from first load function
+                            quantity: bi.quantity
+                        })
+                    })
+                }
+            })
+                .then(data => alert("Basket submitted"))
+                .catch(error => {
+                    console.error("Error creating basket: ", error)
+                    alert("Failed to create basket")
+                })
         });
     }
+
 });
