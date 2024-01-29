@@ -5,7 +5,6 @@ import com.sep.onlinedeliverysystem.domain.entities.Vendor;
 import com.sep.onlinedeliverysystem.repositories.MenuItemRepository;
 import com.sep.onlinedeliverysystem.repositories.VendorRepository;
 import com.sep.onlinedeliverysystem.services.MenuItemService;
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,10 +16,8 @@ import java.util.stream.StreamSupport;
 public class MenuItemServiceImpl implements MenuItemService {
 
     private MenuItemRepository menuItemRepository;
-    private VendorRepository vendorRepository;
 
-    public MenuItemServiceImpl(MenuItemRepository menuItemRepository, VendorRepository vendorRepository) {
-        this.vendorRepository = vendorRepository;
+    public MenuItemServiceImpl(MenuItemRepository menuItemRepository) {
         this.menuItemRepository = menuItemRepository;
     }
 
