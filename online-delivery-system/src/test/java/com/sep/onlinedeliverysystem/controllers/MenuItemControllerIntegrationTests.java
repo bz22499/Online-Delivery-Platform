@@ -8,7 +8,6 @@ import com.sep.onlinedeliverysystem.domain.entities.MenuItem;
 import com.sep.onlinedeliverysystem.domain.entities.Vendor;
 import com.sep.onlinedeliverysystem.repositories.VendorRepository;
 import com.sep.onlinedeliverysystem.services.MenuItemService;
-import org.checkerframework.checker.units.qual.A;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,7 +70,7 @@ public class MenuItemControllerIntegrationTests {
     }
 
     @Test
-    public void testThatCreateItemDTOSuccessfullyReturnssavedItem() throws Exception {
+    public void testThatCreateItemDTOSuccessfullyReturnsSavedItem() throws Exception {
         Vendor testVendor = TestUtil.vendorBuild1();
         vendorRepository.save(testVendor);
         MenuItemDTO testItem1 = TestUtil.menuItemDTOCreate1(testVendor);
@@ -144,7 +143,7 @@ public class MenuItemControllerIntegrationTests {
     }
 
     @Test
-    public void testThatGetItemSuccessfullyReturnsAddressWhenItemExists() throws Exception {
+    public void testThatGetItemSuccessfullyReturnsItemWhenItemExists() throws Exception {
         Vendor testVendor = TestUtil.vendorBuild1();
         vendorRepository.save(testVendor);
         MenuItem testItem1 = TestUtil.menuItemBuilder1(testVendor);
@@ -174,10 +173,10 @@ public class MenuItemControllerIntegrationTests {
     public void testThatFullUpdateItemSuccessfullyReturnsHttpStatus200OKWhenItemExists() throws Exception {
         Vendor testVendor = TestUtil.vendorBuild1();
         vendorRepository.save(testVendor);
-        MenuItem testmenuItem1 = TestUtil.menuItemBuilder1(testVendor);
-        MenuItem savedItem = menuItemService.save(testmenuItem1);
-        MenuItemDTO testmenuItemDTO1 = TestUtil.menuItemDTOCreate1(testVendor);
-        String menuItemDTOJson = objectMapper.writeValueAsString(testmenuItemDTO1);
+        MenuItem testmMenuItem1 = TestUtil.menuItemBuilder1(testVendor);
+        MenuItem savedItem = menuItemService.save(testmMenuItem1);
+        MenuItemDTO testMenuItemDTO1 = TestUtil.menuItemDTOCreate1(testVendor);
+        String menuItemDTOJson = objectMapper.writeValueAsString(testMenuItemDTO1);
         mockMvc.perform(
                 MockMvcRequestBuilders.put("/menuItems/" + savedItem.getId())
                         .contentType(MediaType.APPLICATION_JSON)
@@ -189,9 +188,8 @@ public class MenuItemControllerIntegrationTests {
     public void testThatFullUpdateUpdatesExistingItem() throws Exception {
         Vendor testVendor = TestUtil.vendorBuild1();
         vendorRepository.save(testVendor);
-        MenuItem testmenuItem1 = TestUtil.menuItemBuilder1(testVendor);
-        MenuItem savedItem = menuItemService.save(testmenuItem1);
-
+        MenuItem testMenuItem1 = TestUtil.menuItemBuilder1(testVendor);
+        MenuItem savedItem = menuItemService.save(testMenuItem1);
         MenuItem menuItemDTO = TestUtil.menuItemBuilder2(testVendor);
         menuItemDTO.setId(savedItem.getId());
         String menuItemUpdateDTOJson = objectMapper.writeValueAsString(menuItemDTO);
@@ -230,7 +228,6 @@ public class MenuItemControllerIntegrationTests {
         vendorRepository.save(testVendor);
         MenuItem testmenuItem = TestUtil.menuItemBuilder1(testVendor);
         MenuItem savedItem = menuItemService.save(testmenuItem);
-
         MenuItemDTO testmenuItemDTO = TestUtil.menuItemDTOCreate1(testVendor);
         testmenuItemDTO.setId(savedItem.getId());
         testmenuItemDTO.setName("UPDATED!!!");
@@ -242,7 +239,7 @@ public class MenuItemControllerIntegrationTests {
         ).andExpect(
                 MockMvcResultMatchers.jsonPath("$.id").value(savedItem.getId())
         ).andExpect(
-                MockMvcResultMatchers.jsonPath("$.description").value(testmenuItemDTO.getDescription())
+                MockMvcResultMatchers.jsonPath("$.description").value(savedItem.getDescription())
         ).andExpect(
                 MockMvcResultMatchers.jsonPath("$.name").value("UPDATED!!!")
         );
@@ -268,5 +265,19 @@ public class MenuItemControllerIntegrationTests {
         ).andExpect(MockMvcResultMatchers.status().isNoContent());
     }
 
-
+    @Test
+    public void deleteItemDeletesItem() throws Exception {
+        Vendor testVendor = TestUtil.vendorBuild1();
+        vendorRepository.save(testVendor);
+        MenuItem testmenuItem = TestUtil.menuItemBuilder1(testVendor);
+        MenuItem savedItem = menuItemService.save(testmenuItem);
+        mockMvc.perform(
+                MockMvcRequestBuilders.delete("/menuItems/" + savedItem.getId())
+                        .contentType(MediaType.APPLICATION_JSON)
+        );
+        mockMvc.perform(
+                MockMvcRequestBuilders.get("/menuItems/" + savedItem.getId())
+                        .contentType(MediaType.APPLICATION_JSON)
+        ).andExpect(MockMvcResultMatchers.status().isNotFound());
+    }
 }

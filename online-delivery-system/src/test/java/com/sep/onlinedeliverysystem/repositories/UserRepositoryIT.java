@@ -32,15 +32,6 @@ public class UserRepositoryIT {
         assertThat(result.get()).isEqualTo(userEntity);
     }
 
-//    @Test
-//    public void testSingleUserCreationAndFindEmail() {
-//        User user = TestUtil.userBuild1();
-//        test.save(user);
-//        Optional<User> result = test.findSingleEmail(user.getEmail());
-//        assertThat(result).isPresent();
-//        assertThat(result.get()).isEqualTo(user);
-//    }
-
     @Test
     public void testMultipleUserCreationAndFind() {
         User userEntity1 = TestUtil.userBuild1();

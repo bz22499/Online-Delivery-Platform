@@ -15,22 +15,21 @@ function populateGrid(pageData) {
     const gridContainer = document.querySelector('.grid-container');
     const basketItems = document.querySelector('.basket-items');
     pageData.forEach((item) => {
-            const gridItem = document.createElement('div');
-            gridItem.className = 'grid-item';
-            gridItem.textContent = item.name;
+        const gridItem = document.createElement('div');
+        gridItem.className = 'grid-item';
+        gridItem.textContent = item.name;
 
-            const footer = document.createElement('div');
-            footer.className = 'grid-item-footer';
-            footer.textContent = item.price;
-            gridItem.appendChild(footer);
-
+        const footer = document.createElement('div');
+        footer.className = 'grid-item-footer';
+        footer.textContent = item.price;
+        gridItem.appendChild(footer);
 
         gridItem.addEventListener('click', function() {
             addOrUpdateBasketItem(item);
         });
 
-            gridContainer.appendChild(gridItem);
-        });
+        gridContainer.appendChild(gridItem);
+    });
 }
 
 function addOrUpdateBasketItem(item) {
@@ -126,11 +125,3 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 });
-
-
-
-
-
-
-
-
