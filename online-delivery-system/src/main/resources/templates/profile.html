@@ -60,7 +60,7 @@
     }
 
     function saveProfile() {
-        var userName = document.getElementById('username').innerText;
+        var userName = document.getElementById('userName').innerText;
         var userJob = document.getElementById('userJob').innerText;
         var userDescription = document.getElementById('userDescription').innerText;
         var profileData = {
@@ -70,18 +70,27 @@
             profilePicture: document.getElementById('previewImage').src
         };
 
-        localStorage.setItem('userProfile', JSON.stringify(profileData));
-        alert('Profile saved!');
+        // Convert the profileData object to a JSON string
+        var profileDataString = JSON.stringify(profileData);
+
+        // Store the JSON string in the local storage
+        localStorage.setItem('userProfile', profileDataString);
+
+        // Inform the user that the profile has been saved
+        alert("Profile saved!");
     }
 
     window.onload = function () {
         var storedProfile = localStorage.getItem('userProfile');
         if (storedProfile) {
+            // Parse the stored JSON string back into an object
             var profileData = JSON.parse(storedProfile);
+
+            // Set the values on the page based on the stored profile data
             document.getElementById('userName').innerText = profileData.userName;
             document.getElementById('userJob').innerText = profileData.userJob;
             document.getElementById('userDescription').innerText = profileData.userDescription;
-            document.getElementById('previewImage').innerText = profileData.profilePicture;
+            document.getElementById('previewImage').src = profileData.profilePicture;
         }
     };
 
