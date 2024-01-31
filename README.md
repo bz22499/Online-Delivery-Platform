@@ -2,7 +2,8 @@
   <h1 align="center">Online Delivery Platform</h1>
   <h3>A green approach to food delivery</h3>
 </div>
-![logo](https://github.com/spe-uob/2023-OnlineDeliveryPlatform/assets/101518538/ef59d61c-bc92-4906-b9f0-ac904db7219c)
+![logo](https://github.com/spe-uob/2023-OnlineDeliveryPlatform/assets/101518538/eb3658fd-582e-4f9e-9ecb-2a9198b1868b)
+
 
 <div align="center">
   <a><img alt="Backend" src="https://img.shields.io/badge/Backend-Java-%23ff0000"></a>
