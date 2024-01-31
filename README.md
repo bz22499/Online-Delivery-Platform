@@ -1,3 +1,5 @@
+![logo](https://github.com/spe-uob/2023-OnlineDeliveryPlatform/assets/101518538/ef59d61c-bc92-4906-b9f0-ac904db7219c)
+
 <div align="center">
   <h1 align="center">Online Delivery Platform</h1>
   <h3>A green approach to food delivery</h3>
