@@ -27,13 +27,22 @@
 <div id="profile-container">
     <div id="profile-picture">
         <input type="file" id="imageInput" accept="image/*" onchange="updateProfilePicture()">
-        <label for="imageInput"><img src="/images" alt="Profile Picture" id="previewImage"></label>
+        <label for="imageInput"><img src="/images" alt="Press To Enter Profile Picture" id="previewImage"></label>
         <!--<img src="profile-picture.jpg" alt="Profile Picture">-->
     </div>
     <div id="user-details">
-        <h1 contenteditable="true" id="userName">Anthony Price</h1>
-        <h2 contenteditable="true" id="userJob">Web Developer</h2>
-        <p contenteditable="true" id="userDescription">This is a paragraph for the description of the user</p>
+        <div class="editable" id="userName">
+            <h1 contenteditable="true">Anthony Price</h1>
+            <button onclick="editDetails('userName')">Edit</button>
+        </div>
+        <div class="editable" id="userJob">
+            <h2 contenteditable="true">Web Developer</h2>
+            <button onclick="editDetails('userJob')">Edit</button>
+        </div>
+        <div class="editable" id="userDescription">
+            <p contenteditable="true">This is a paragraph for the description of the user</p>
+            <button onclick="editDetails('userDescription')">Edit</button>
+        </div>
         <button onclick="saveProfile()">Save Profile</button>
         <button class="subscription-button">View subscription</button>
         <button class="logout-button">Logout</button>
@@ -74,14 +83,26 @@
         var profileDataString = JSON.stringify(profileData);
 
         // Store the JSON string in the local storage
-        localStorage.setItem('userProfile', profileDataString);
+        sessionStorage.setItem('userProfile', profileDataString);
 
         // Inform the user that the profile has been saved
         alert("Profile saved!");
     }
+    function editDetails(elementId) {
+        var editableElement = document.getElementById(elementId);
+        var content = editableElement.querySelector('[contenteditable="true"]').innerText;
 
-    window.onload = function () {
-        var storedProfile = localStorage.getItem('userProfile');
+        // Store the current content in sessionStorage for use on the editing page
+        sessionStorage.setItem('editContent', content);
+
+        //check if the content is non-empty before redirecting
+        if (content.trim() !== "") {
+            window.location.href = '/templates/edit-details.html';
+        }
+    }
+
+    /*window.onload = function () {
+        var storedProfile = sessionStorage.getItem('userProfile');
         if (storedProfile) {
             // Parse the stored JSON string back into an object
             var profileData = JSON.parse(storedProfile);
@@ -92,7 +113,21 @@
             document.getElementById('userDescription').innerText = profileData.userDescription;
             document.getElementById('previewImage').src = profileData.profilePicture;
         }
-    };
+    };*/
+
+    document.addEventListener('DOMContentLoaded', function() {
+        var storedProfile = sessionStorage.getItem('userProfile');
+        if (storedProfile) {
+            // Parse the stored JSON string back into an object
+            var profileData = JSON.parse(storedProfile);
+
+            // Set the values on the page based on the stored profile data
+            document.getElementById('userName').innerText = profileData.userName;
+            document.getElementById('userJob').innerText = profileData.userJob;
+            document.getElementById('userDescription').innerText = profileData.userDescription;
+            document.getElementById('previewImage').src = profileData.profilePicture;
+        }
+    });
 
 </script>
 </body>
