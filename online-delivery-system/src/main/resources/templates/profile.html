@@ -30,23 +30,31 @@
         <label for="imageInput"><img src="/images" alt="Press To Enter Profile Picture" id="previewImage"></label>
         <!--<img src="profile-picture.jpg" alt="Profile Picture">-->
     </div>
+
     <div id="user-details">
-        <div class="editable" id="userName">
-            <h1 contenteditable="true">Anthony Price</h1>
-            <button onclick="editDetails('userName')">Edit</button>
-        </div>
-        <div class="editable" id="userJob">
-            <h2 contenteditable="true">Web Developer</h2>
-            <button onclick="editDetails('userJob')">Edit</button>
-        </div>
-        <div class="editable" id="userDescription">
-            <p contenteditable="true">This is a paragraph for the description of the user</p>
-            <button onclick="editDetails('userDescription')">Edit</button>
-        </div>
-        <button onclick="saveProfile()">Save Profile</button>
-        <button class="subscription-button">View subscription</button>
-        <button class="logout-button">Logout</button>
+        <h1 id="name">Anthony Price</h1>
+        <h2 id="job">Software Developer</h2>
+        <p id="description">Passionate about coding and technology.</p>
+
+        <button onclick="editProfile()">Edit Profile</button>
+        <button class="subscription-button" id="view-subscription">View subscription</button>
+        <button class="logout-button" id="logout">Logout</button>
     </div>
+
+    <form id="edit-form">
+        <label for="new-name">Name:</label>
+        <input type="text" id="new-name" required>
+
+        <label for="new-job">Job:</label>
+        <input type="text" id="new-job" required>
+
+        <label for="new-description">Description:</label>
+        <textarea id="new-description" rows="4" required></textarea>
+
+        <button type="button" onclick="saveProfile()">Save</button>
+        <button type="button" onclick="saveProfile()">Return</button>
+        <button type="button" onclick="cancelEdit()">Cancel</button>
+    </form>
 </div>
 
 
@@ -67,15 +75,60 @@
             reader.readAsDataURL(file);
         }
     }
+    function editProfile() {
+        document.getElementById('name').style.display = 'none';
+        document.getElementById('job').style.display = 'none';
+        document.getElementById('description').style.display = 'none';
+        document.getElementById('view-subscription').style.display = 'none';
+        document.getElementById('logout').style.display = 'none';
+
+        document.getElementById('edit-form').style.display = 'block';
+
+        // Set the current values in the form fields
+        document.getElementById('new-name').value = document.getElementById('name').innerText;
+        document.getElementById('new-job').value = document.getElementById('job').innerText;
+        document.getElementById('new-description').value = document.getElementById('description').innerText;
+
+
+        // Hide buttons in the user-details div
+        document.querySelector('#user-details button').style.display = 'none';
+
+        /*// Show the edit-form and set current values
+        document.getElementById('edit-form').style.display = 'block';
+        document.getElementById('new-name').value = document.getElementById('name').innerText;
+        document.getElementById('new-job').value = document.getElementById('job').innerText;
+        document.getElementById('new-description').value = document.getElementById('description').innerText;*/
+    }
+
+    function cancelEdit() {
+        document.getElementById('name').style.display = 'block';
+        document.getElementById('job').style.display = 'block';
+        document.getElementById('description').style.display = 'block';
+
+        document.getElementById('edit-form').style.display = 'none';
+    }
 
     function saveProfile() {
-        var userName = document.getElementById('userName').innerText;
-        var userJob = document.getElementById('userJob').innerText;
-        var userDescription = document.getElementById('userDescription').innerText;
+        /*const newName = document.getElementById('new-name').value;
+        const newJob = document.getElementById('new-job').value;
+        const newDescription = document.getElementById('new-description').value;
+
+        // Update profile information
+        document.getElementById('name').innerText = newName;
+        document.getElementById('job').innerText = newJob;
+        document.getElementById('description').innerText = newDescription;
+
+        //show buttons in the user-details div after saving
+        document.querySelector('#user-details button').style.display = 'block';
+
+        document.getElementById('edit-form').style.display = 'none';*/
+        var name = document.getElementById('name').innerText;
+        var job = document.getElementById('job').innerText;
+        var description = document.getElementById('description').innerText;
         var profileData = {
-            userName: userName,
-            userJob: userJob,
-            userDescription: userDescription,
+            name: name,
+            job: job,
+            description: description,
             profilePicture: document.getElementById('previewImage').src
         };
 
@@ -87,48 +140,8 @@
 
         // Inform the user that the profile has been saved
         alert("Profile saved!");
+
     }
-    function editDetails(elementId) {
-        var editableElement = document.getElementById(elementId);
-        var content = editableElement.querySelector('[contenteditable="true"]').innerText;
-
-        // Store the current content in sessionStorage for use on the editing page
-        sessionStorage.setItem('editContent', content);
-
-        //check if the content is non-empty before redirecting
-        if (content.trim() !== "") {
-            window.location.href = '/templates/edit-details.html';
-        }
-    }
-
-    /*window.onload = function () {
-        var storedProfile = sessionStorage.getItem('userProfile');
-        if (storedProfile) {
-            // Parse the stored JSON string back into an object
-            var profileData = JSON.parse(storedProfile);
-
-            // Set the values on the page based on the stored profile data
-            document.getElementById('userName').innerText = profileData.userName;
-            document.getElementById('userJob').innerText = profileData.userJob;
-            document.getElementById('userDescription').innerText = profileData.userDescription;
-            document.getElementById('previewImage').src = profileData.profilePicture;
-        }
-    };*/
-
-    document.addEventListener('DOMContentLoaded', function() {
-        var storedProfile = sessionStorage.getItem('userProfile');
-        if (storedProfile) {
-            // Parse the stored JSON string back into an object
-            var profileData = JSON.parse(storedProfile);
-
-            // Set the values on the page based on the stored profile data
-            document.getElementById('userName').innerText = profileData.userName;
-            document.getElementById('userJob').innerText = profileData.userJob;
-            document.getElementById('userDescription').innerText = profileData.userDescription;
-            document.getElementById('previewImage').src = profileData.profilePicture;
-        }
-    });
-
 </script>
 </body>
 </html>
