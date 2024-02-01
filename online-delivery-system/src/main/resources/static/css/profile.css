@@ -53,6 +53,10 @@ header {
     padding: 20px;
 }
 
+#edit-form {
+    padding: 20px;
+}
+
 h1, h2 {
     margin-bottom: 10px;
 }
@@ -64,6 +68,25 @@ p {
 
 button {
     margin: 8px auto;
+}
+
+#profile-container {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+#profile-image {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+#edit-form {
+    display: none;
+    label {
+        margin: 8px auto;
+    }
 }
 
 .background-image{
