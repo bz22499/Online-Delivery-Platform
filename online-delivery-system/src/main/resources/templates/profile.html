@@ -15,7 +15,6 @@
 <ul class="banner">
     <li><img src="images/logo_ld_png.png"></li>
     <li><a target="_parent" href="home">Home</a></li>
-    <!--<li class="active"><a target="_parent" href="about">About Us</a></li>-->
     <li><a target="_parent" href="about">About</a></li>
     <li><a target="_parent" href="order">Order</a></li>
     <li><a target="_parent" href="contact">Contact</a></li>
@@ -28,7 +27,6 @@
     <div id="profile-picture">
         <input type="file" id="imageInput" accept="image/*" onchange="updateProfilePicture()">
         <label for="imageInput"><img src="/images" alt="Press To Enter Profile Picture" id="previewImage"></label>
-        <!--<img src="profile-picture.jpg" alt="Profile Picture">-->
     </div>
 
     <div id="user-details">
@@ -36,23 +34,23 @@
         <h2 id="job">Software Developer</h2>
         <p id="description">Passionate about coding and technology.</p>
 
-        <button onclick="editProfile()">Edit Profile</button>
+        <button class="edit-profile" onclick="editProfile()">Edit Profile</button>
         <button class="subscription-button" id="view-subscription">View subscription</button>
         <button class="logout-button" id="logout">Logout</button>
     </div>
 
     <form id="edit-form">
         <label for="new-name">Name:</label>
-        <input type="text" id="new-name" required>
+        <input type="text" id="new-name" required><br>
 
         <label for="new-job">Job:</label>
-        <input type="text" id="new-job" required>
+        <input type="text" id="new-job" required><br>
 
         <label for="new-description">Description:</label>
-        <textarea id="new-description" rows="4" required></textarea>
+        <textarea id="new-description" rows="4" required></textarea><br>
 
         <button type="button" onclick="saveProfile()">Save</button>
-        <button type="button" onclick="saveProfile()">Return</button>
+        <button type="button" onclick="returnToProfile()">Return</button>
         <button type="button" onclick="cancelEdit()">Cancel</button>
     </form>
 </div>
@@ -91,40 +89,28 @@
 
 
         // Hide buttons in the user-details div
-        document.querySelector('#user-details button').style.display = 'none';
-
-        /*// Show the edit-form and set current values
-        document.getElementById('edit-form').style.display = 'block';
-        document.getElementById('new-name').value = document.getElementById('name').innerText;
-        document.getElementById('new-job').value = document.getElementById('job').innerText;
-        document.getElementById('new-description').value = document.getElementById('description').innerText;*/
+        document.querySelector('#user-details button').style.display = 'inline-block';
     }
 
-    function cancelEdit() {
+    function returnToProfile() {
         document.getElementById('name').style.display = 'block';
         document.getElementById('job').style.display = 'block';
         document.getElementById('description').style.display = 'block';
+        document.getElementById('view-subscription').style.display = 'inline-block';
+        document.getElementById('logout').style.display = 'inline-block';
+        //document.getElementById('edit-profile').style.display = 'block';
 
         document.getElementById('edit-form').style.display = 'none';
     }
 
+    function cancelEdit() {
+        returnToProfile();
+    }
+
     function saveProfile() {
-        /*const newName = document.getElementById('new-name').value;
-        const newJob = document.getElementById('new-job').value;
-        const newDescription = document.getElementById('new-description').value;
-
-        // Update profile information
-        document.getElementById('name').innerText = newName;
-        document.getElementById('job').innerText = newJob;
-        document.getElementById('description').innerText = newDescription;
-
-        //show buttons in the user-details div after saving
-        document.querySelector('#user-details button').style.display = 'block';
-
-        document.getElementById('edit-form').style.display = 'none';*/
-        var name = document.getElementById('name').innerText;
-        var job = document.getElementById('job').innerText;
-        var description = document.getElementById('description').innerText;
+        var name = document.getElementById('new-name').value;
+        var job = document.getElementById('new-job').value;
+        var description = document.getElementById('new-description').value;
         var profileData = {
             name: name,
             job: job,
@@ -136,11 +122,17 @@
         var profileDataString = JSON.stringify(profileData);
 
         // Store the JSON string in the local storage
-        sessionStorage.setItem('userProfile', profileDataString);
+        localStorage.setItem('userProfile', profileDataString);
 
         // Inform the user that the profile has been saved
         alert("Profile saved!");
 
+        //update the displayed details
+        document.getElementById('name').innerText = name;
+        document.getElementById('job').innerText = job;
+        document.getElementById('description').innerText = description;
+
+        returnToProfile();
     }
 </script>
 </body>
