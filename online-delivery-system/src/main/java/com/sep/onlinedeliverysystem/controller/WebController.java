@@ -8,6 +8,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.security.Principal;
 import java.util.Optional;
 
 @Controller
@@ -69,4 +71,38 @@ public class WebController {
             return "notFound";
         }
     }
+
+    @GetMapping("/vendoritems") //Read all from current user functionality
+    public String getVendorItemsPage(Principal principal, Model model) {
+        if (principal != null) {
+            String loggedInUserEmail = principal.getName(); // Retrieves the email/id of the currently logged-in user
+            Optional<Vendor> vendor = vendorService.findOne(loggedInUserEmail);
+
+            if (vendor.isPresent()) {
+                model.addAttribute("id", vendor.get().getEmail());
+                model.addAttribute("name", vendor.get().getName());
+                model.addAttribute("description", vendor.get().getDescription());
+                model.addAttribute("rating", vendor.get().getRating());
+                return "vendoritems";
+            } else {
+                return "notFound";
+            }
+        } else {
+            // Handle the case when no user is logged in
+            return "login"; // Redirect to the login page
+        }
+    }
+
+//    @GetMapping("/FILLER") //to get the current logged-in user/vendor
+//    public ResponseEntity<Map<String, String>> getCurrentUserEmail(Principal principal) {
+//        UserDetails userDetails = (UserDetails) ((Authentication) principal).getPrincipal();
+//
+//        // Get the email from UserDetails
+//        String vendorEmail = userDetails.getUsername();
+//
+//        Map<String, String> response = new HashMap<>();
+//        response.put("email", vendorEmail);
+//
+//        return ResponseEntity.ok(response);
+//    }
 }
