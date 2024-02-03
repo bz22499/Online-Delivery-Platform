@@ -53,8 +53,16 @@ header {
     padding: 20px;
 }
 
-#edit-form {
-    padding: 20px;
+#edit-form input,
+#edit-form textarea {
+    display: block;
+    margin-bottom: 15px;
+    margin-left: 15px;
+}
+
+#edit-form button,
+#edit-form label {
+    margin-left: 15px;
 }
 
 h1, h2 {
@@ -62,7 +70,7 @@ h1, h2 {
 }
 
 p {
-    margin: 0;
+    margin-bottom: 15px;
     line-height: 1.5;
 }
 
