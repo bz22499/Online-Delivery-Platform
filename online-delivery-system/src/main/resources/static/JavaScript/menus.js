@@ -79,7 +79,7 @@ async function loadMore() {
     if (isLoading) return;
     isLoading = true;
 
-    const restaurants = await fetchRestaurants();
+    const restaurants = await fetchRestaurants(currentPage,18);
     if (restaurants && restaurants.content.length > 0) {
         populateGrid(restaurants);
         currentPage++;
