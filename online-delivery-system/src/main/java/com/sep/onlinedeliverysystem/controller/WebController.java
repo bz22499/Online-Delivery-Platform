@@ -55,6 +55,11 @@ public class WebController {
         return "order";
     }
 
+    @GetMapping("/profile")
+    public String profile(){
+        return "profile";
+    }
+
     @GetMapping("/{email}/menu-page")
     public String getMenuPage(@PathVariable("email") String email, Model model){
         Optional<Vendor> vendor = vendorService.findOne(email);
