@@ -1,9 +1,10 @@
+![logo_hd](https://github.com/spe-uob/2023-OnlineDeliveryPlatform/assets/123550614/fb0e871f-75ca-479e-91f9-f0560a2a5793)
+
+
 <div align="center">
   <h1 align="center">Online Delivery Platform</h1>
   <h3>A green approach to food delivery</h3>
 </div>
-![logo](https://github.com/spe-uob/2023-OnlineDeliveryPlatform/assets/101518538/eb3658fd-582e-4f9e-9ecb-2a9198b1868b)
-
 
 <div align="center">
   <a><img alt="Backend" src="https://img.shields.io/badge/Backend-Java-%23ff0000"></a>
