@@ -23,7 +23,15 @@
 - [Team](#team)
 ---
 ## Project Overview
-[]
+### Sustainable Delivery Options
+Meals are delivered using bicycles and electric cars, significantly reducing CO2 emissions associated with traditional delivery methods.
+
+### Reusable Containers
+To combat the issue of single-use plastics, the idea is to deliver food in reusable containers, encouraging a circular economy and reducing waste.
+Support for Local Chefs and Producers: Offer a platform that highlights local talent, allowing chefs and food producers to reach a wider audience while ensuring that customers enjoy the freshest ingredients.
+
+### Customizable Subscriptions
+Users have the flexibility to choose from various subscription plans that fit their lifestyle. Whether it's a meal a day or a special weekend treat.
 
 ## Features
 Our delivery app aims to create a seamless experience for customers, chefs, and delivery drivers alike. 
