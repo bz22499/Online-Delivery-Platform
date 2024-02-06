@@ -2,7 +2,9 @@ function createItem(){
     let name = document.getElementById("name").value;
     let description = document.getElementById("description").value;
     let price = document.getElementById("price").value
-    let vendorId = "restaurant1@example.com";
+    
+    const vendorInfoElement = document.getElementById('vendor-info');
+    let vendorId = vendorInfoElement.getAttribute('data-id');
 
     let valid = true
 
