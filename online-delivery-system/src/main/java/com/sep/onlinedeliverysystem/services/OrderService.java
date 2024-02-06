@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.Optional;
 
 public interface OrderService {
+    Order create();
+
     Order save(Order orderEntity);
 
     List<Order> findAll();
