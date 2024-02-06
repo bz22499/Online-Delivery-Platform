@@ -1,4 +1,4 @@
-async function fetchRestaurants(page =1, size = 18) {
+async function fetchRestaurants(page =0, size = 18) {
     try {
         const response = await fetch(`/vendors?page=${page}&size=${size}`);
         if (!response.ok) {
@@ -11,6 +11,7 @@ async function fetchRestaurants(page =1, size = 18) {
     }
 }
 
+// Luke's bit
 async function fetchAllRestaurants(){
     try {
         const response = await fetch(`/vendors`);
@@ -65,7 +66,7 @@ function populateGrid(pageData) {
 
 }
 
-
+// Luke's bit
 // Get query parameters from the URL
 var urlParams = new URLSearchParams(window.location.search);
 // Retrieve data from query parameters
