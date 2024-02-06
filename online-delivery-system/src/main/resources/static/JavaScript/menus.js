@@ -11,6 +11,16 @@ async function fetchRestaurants(page =0, size = 18) {
     }
 }
 
+async function createOrder() {
+   fetch(`/orders`, {
+       method: 'POST',
+       headers: {
+           'Content-Type': 'application/json'
+       }
+   })
+       .then(response => console.log(response.json()))
+}
+
 // Luke's bit
 async function fetchAllRestaurants(){
     try {
@@ -96,5 +106,6 @@ window.addEventListener('scroll', () => {
 });
 
 window.onload = loadMore();
+window.onload = createOrder()
 
 
