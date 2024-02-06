@@ -1,0 +1,28 @@
+.order-list {
+    width: 100%;
+    padding: 20px;
+}
+
+.order-item {
+    background-color: #f0f0f0;
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.order-item h3 {
+    margin: 0;
+}
+
+.order-item button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.order-item button:hover {
+    background-color: #45a049;
+}
