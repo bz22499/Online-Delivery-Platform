@@ -23,7 +23,16 @@ function populateGrid(pageData) {
         footer.textContent = item.price;
         gridItem.appendChild(footer);
 
+        const deleteButton = document.createElement('div');
+        deleteButton.className = 'grid-item-delete';
+        gridItem.appendChild(deleteButton);
+        gridItem.id="grid-item-delete";
+
         gridContainer.appendChild(gridItem);
+
+        //need to append a delete button here
+
+
     });
 }
 
@@ -51,3 +60,4 @@ document.addEventListener('DOMContentLoaded', async function () {
 
     load();
 });
+
