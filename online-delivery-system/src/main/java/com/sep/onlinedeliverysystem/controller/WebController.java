@@ -32,10 +32,28 @@ public class WebController {
     @GetMapping("/home")
     public String home2(){return "home";}
 
-    @GetMapping("/vendor")
-    public String vendor(){
-        return "vendor";
+
+    @GetMapping("/vendor") //Read all from current user functionality
+    public String getVendorPage(Principal principal, Model model) {
+        if (principal != null) {
+            String loggedInUserEmail = principal.getName(); // Retrieves the email/id of the currently logged-in user
+            Optional<Vendor> vendor = vendorService.findOne(loggedInUserEmail);
+
+            if (vendor.isPresent()) {
+                model.addAttribute("id", vendor.get().getEmail());
+                model.addAttribute("name", vendor.get().getName());
+                model.addAttribute("description", vendor.get().getDescription());
+                model.addAttribute("rating", vendor.get().getRating());
+                return "vendor";
+            } else {
+                return "notFound";
+            }
+        } else {
+            // Handle the case when no user is logged in
+            return "login"; // Redirect to the login page
+        }
     }
+
 
     @GetMapping("/about")
     public String about(){return "about-us";}
