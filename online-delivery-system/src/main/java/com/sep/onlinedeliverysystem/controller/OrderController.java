@@ -36,6 +36,14 @@ public class OrderController {
         return new ResponseEntity<>(orderMapper.mapTo(savedOrderEntity), HttpStatus.CREATED); //returns our saved entity as a DTO
     }
 
+    // Unused save functionality in case it is needed later
+//    @PostMapping(path = "/orders")
+//    public ResponseEntity<OrderDTO> save(@RequestBody OrderDTO orderDTO){ //Create functionality
+//        Order orderEntity = orderMapper.mapFrom(orderDTO);
+//        Order savedOrderEntity = orderService.save(orderEntity); //saves order DTO as entity into our database
+//        return new ResponseEntity<>(orderMapper.mapTo(savedOrderEntity), HttpStatus.CREATED); //returns our saved entity as a DTO
+//    }
+
     @GetMapping(path = "/orders")
     public List<OrderDTO> listOrders(){ //Read All functionality
         List<Order> orderList = orderService.findAll();

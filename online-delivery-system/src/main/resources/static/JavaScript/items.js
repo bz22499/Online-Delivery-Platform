@@ -1,5 +1,5 @@
 let basket = {
-    order: 1,
+    order: sessionStorage.getItem('orderId'),
     basketId: null,
     items: []
 };
@@ -20,7 +20,6 @@ async function fetchItems(vendorId) {
 function populateGrid(pageData) {
     // Make grid
     const gridContainer = document.querySelector('.grid-container');
-    const basketItems = document.querySelector('.basket-items');
     pageData.forEach((item) => {
         // Make grid item
         const gridItem = document.createElement('div');
@@ -43,7 +42,7 @@ function populateGrid(pageData) {
 function addOrUpdateBasketItem(item) {
     let basketItem = document.querySelector(`.basket-item[data-id='${item.id}']`); // has item id as identifier
     if (!basketItem) { // if not yet in the basket
-        basketItem = createBasketItem(item); // create the item to be displayed in bsket
+        basketItem = createBasketItem(item); // create the item to be displayed in basket
         document.querySelector('.basket-items').appendChild(basketItem); // add basket item (identified by menuItem id)
         basket.items.push({ // initialise basket item object
             basket: null,
@@ -57,7 +56,7 @@ function addOrUpdateBasketItem(item) {
     }
 }
 
-function createBasketItem(item) {
+function createBasketItem(item) { // makes item a basket item
     const basketItem = document.createElement('div');
     basketItem.className = 'basket-item';
     basketItem.setAttribute('data-id', item.id); // used menuItem id as identifier
@@ -79,7 +78,7 @@ function createBasketItem(item) {
     return basketItem;
 }
 
-function createQuantityControl() { // the buttons we see when an item is adde to a basket
+function createQuantityControl() { // the buttons we see when an item is added to a basket
     const quantityControl = document.createElement('div');
     quantityControl.className = 'quantity-control';
 
@@ -110,8 +109,12 @@ function updateItemQuantity(basketItem, change) { // called when item has alread
     if (basketItemData) {
         basketItemData.quantity = Math.max(0, basketItemData.quantity + change);
 
+        // find quantity display
+        const quantityDisplay = basketItem.querySelector('.quantity');
+        quantityDisplay.textContent = basketItemData.quantity; //update to refelect change
+
         if (basketItemData.quantity === 0) {
-            // remove item from basket.items array
+            // remove item from basket items array and display
             basket.items = basket.items.filter(item => item.menuItem.id !== itemId);
 
             // remove item element from the DOM
@@ -178,3 +181,4 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
 });
+

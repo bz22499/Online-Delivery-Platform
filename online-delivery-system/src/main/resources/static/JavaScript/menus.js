@@ -12,13 +12,22 @@ async function fetchRestaurants(page =0, size = 18) {
 }
 
 async function createOrder() {
-   fetch(`/orders`, {
-       method: 'POST',
-       headers: {
-           'Content-Type': 'application/json'
-       }
-   })
-       .then(response => console.log(response.json()))
+    try {
+        const response = await fetch(`/orders`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const order = await response.json();
+        sessionStorage.setItem('orderId', order.id);
+    } catch (error) {
+        console.log('Error creating order: ', error)
+    }
+
 }
 
 // Luke's bit
