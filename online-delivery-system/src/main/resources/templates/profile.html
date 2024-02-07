@@ -40,6 +40,7 @@
     </div>
 
     <form id="edit-form">
+        <h1 id="edit-profile" style="display: none">Edit Profile</h1>
         <label for="new-name">Name:</label>
         <input type="text" id="new-name" required><br>
 
@@ -50,7 +51,7 @@
         <textarea id="new-description" rows="4" required></textarea><br>
 
         <button type="button" onclick="saveProfile()">Save</button>
-        <button type="button" onclick="returnToProfile()">Return</button>
+        <button type="button" id="edit-profile-header" style="display: none" onclick="returnToProfile()">Return</button>
         <button type="button" onclick="cancelEdit()">Cancel</button>
     </form>
 </div>
@@ -81,6 +82,8 @@
         document.getElementById('logout').style.display = 'none';
 
         document.getElementById('edit-form').style.display = 'block';
+        document.getElementById('edit-profile-header').style.display = 'inline-block';
+        document.getElementById('edit-profile').style.display = 'inline-block';
 
         // Set the current values in the form fields
         document.getElementById('new-name').value = document.getElementById('name').innerText;
@@ -89,7 +92,7 @@
 
 
         // Hide buttons in the user-details div
-        document.querySelector('#user-details button').style.display = 'inline-block';
+        document.querySelector('#user-details button').style.display = 'none';
     }
 
     function returnToProfile() {
@@ -101,6 +104,8 @@
         //document.getElementById('edit-profile').style.display = 'block';
 
         document.getElementById('edit-form').style.display = 'none';
+        document.getElementById('edit-profile-header').style.display = 'none';
+        document.getElementById('edit-profile').style.display = 'none';
     }
 
     function cancelEdit() {
