@@ -66,12 +66,9 @@ public class OrderControllerIT {
 
     @Test
     public void listOrdersReturnsOrders() throws Exception {
-        Order order1 = TestUtil.orderBuilder();
-        orderService.save(order1);
-        Order order2 = TestUtil.orderBuilder();
-        orderService.save(order2);
-        Order order3 = TestUtil.orderBuilder();
-        orderService.save(order3);
+        orderService.create();
+        orderService.create();
+        orderService.create();
         mockMvc.perform(
                 MockMvcRequestBuilders.get("/orders")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -80,10 +77,9 @@ public class OrderControllerIT {
 
     @Test
     public void getOrderReturns200OkWhenOrderExists() throws Exception {
-        Order order = TestUtil.orderBuilder();
-        orderService.save(order);
+        Order savedOrder = orderService.create();
         mockMvc.perform(
-                MockMvcRequestBuilders.get("/orders/" + order.getId())
+                MockMvcRequestBuilders.get("/orders/" + savedOrder.getId())
                         .contentType(MediaType.APPLICATION_JSON)
         ).andExpect(MockMvcResultMatchers.status().isOk());
     }
@@ -98,8 +94,7 @@ public class OrderControllerIT {
 
     @Test
     public void getOrderReturnsOrderWhenExists() throws Exception {
-        Order order = TestUtil.orderBuilder();
-        orderService.save(order);
+        orderService.create();
         mockMvc.perform(
                 MockMvcRequestBuilders.get("/orders/1")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -141,8 +136,7 @@ public class OrderControllerIT {
 
     @Test
     public void deleteOrderReturns204WhenOrderExists() throws Exception {
-        Order order = TestUtil.orderBuilder();
-        Order savedOrder = orderService.save(order);
+        Order savedOrder = orderService.create();
         mockMvc.perform(
                 MockMvcRequestBuilders.delete("/orders/" + savedOrder.getId().toString())
                         .contentType(MediaType.APPLICATION_JSON)
@@ -151,8 +145,7 @@ public class OrderControllerIT {
 
     @Test
     public void deleteOrderDeletesOrder() throws Exception {
-        Order order = TestUtil.orderBuilder();
-        Order savedOrder = orderService.save(order);
+        Order savedOrder = orderService.create();
         mockMvc.perform(
                 MockMvcRequestBuilders.delete("/orders/" + savedOrder.getId().toString())
                         .contentType(MediaType.APPLICATION_JSON)
@@ -162,7 +155,7 @@ public class OrderControllerIT {
                         .contentType(MediaType.APPLICATION_JSON)
         );
         mockMvc.perform(
-                MockMvcRequestBuilders.get("/orders/" + order.getId())
+                MockMvcRequestBuilders.get("/orders/" + savedOrder.getId())
         ).andExpect(MockMvcResultMatchers.status().isNotFound());
     }
 }
