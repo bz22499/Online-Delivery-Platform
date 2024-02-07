@@ -32,7 +32,8 @@ function populateGrid(pageData) {
 
         deleteButton.addEventListener('click', function() {
             // Your JavaScript function here
-            alert("You clicked the child div!");
+
+            alert(deleteButton);
             // Call any JavaScript function or perform any action you want here
         });
 
