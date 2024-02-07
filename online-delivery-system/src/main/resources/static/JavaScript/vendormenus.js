@@ -26,12 +26,15 @@ function populateGrid(pageData) {
         const deleteButton = document.createElement('div');
         deleteButton.className = 'grid-item-delete';
         gridItem.appendChild(deleteButton);
-        gridItem.id="grid-item-delete";
 
         gridContainer.appendChild(gridItem);
 
-        //need to append a delete button here
 
+        deleteButton.addEventListener('click', function() {
+            // Your JavaScript function here
+            alert("You clicked the child div!");
+            // Call any JavaScript function or perform any action you want here
+        });
 
     });
 }
@@ -60,4 +63,3 @@ document.addEventListener('DOMContentLoaded', async function () {
 
     load();
 });
-
