@@ -10,9 +10,11 @@ import org.springframework.security.config.annotation.authentication.configurati
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
@@ -25,16 +27,18 @@ public class SecurityConfig extends GlobalAuthenticationConfigurerAdapter {
     private UserDetailsService vendorDetailsService;
 
     @Bean
-    public PasswordEncoder passwordEncoder() {
-        // Using NoOpPasswordEncoder for demonstration purposes only
-        return NoOpPasswordEncoder.getInstance();
+    public PasswordEncoder passwordEncoder() {    //Alternate between NoOp and BCrypt when you need to check passwords in the database
+        return NoOpPasswordEncoder.getInstance(); //ONLY USE THIS WHEN YOU DON'T HAVE REAL USERS
+//        return new BCryptPasswordEncoder();
     }
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests((authorize) ->
                         authorize
-                                .requestMatchers("/vendor/**").hasAuthority("VENDOR")
+//                                .requestMatchers("/vendor/**").hasAuthority("VENDOR") //old
+                                .requestMatchers("/profile/**").hasAuthority("USER")
+                                .requestMatchers("/vendoritems/**", "/vendor/**").hasAuthority("VENDOR")
                                 .anyRequest().permitAll()
                 ).formLogin(
                         form -> form
@@ -42,10 +46,10 @@ public class SecurityConfig extends GlobalAuthenticationConfigurerAdapter {
                                 .loginProcessingUrl("/login")
                                 .defaultSuccessUrl("/home")
                                 .permitAll()
-//                ).logout(
-//                        logout -> logout
-//                                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-//                                .permitAll()
+                ).logout(
+                        logout -> logout
+                                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                                .permitAll()
                 );
         return http.build();
     }
