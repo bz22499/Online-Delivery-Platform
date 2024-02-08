@@ -24,8 +24,6 @@ function deleteItemForVendor(itemId){
             }
         })
         .then(data => {
-            // Optionally handle the data returned from the server
-            alert("delete successful")
         })
         .catch(error => {
             // Handle errors that occur during the request
@@ -56,8 +54,6 @@ function populateGrid(pageData) {
         deleteButton.addEventListener('click', function() {
             // Your JavaScript function here
             const parentNode = deleteButton.parentNode;
-
-            alert(item.id);
             deleteItemForVendor(item.id);
 
             gridContainer.removeChild(parentNode);
