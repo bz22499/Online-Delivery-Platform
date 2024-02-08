@@ -12,7 +12,7 @@ async function fetchItemsForLoggedInVendor(vendorId) {
 }
 
 function deleteItemForVendor(itemId){
-    fetch('/menuItems/' + itemId, {
+    fetch('/menuItems/' + itemId.toString(), {
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json'
@@ -61,7 +61,7 @@ function populateGrid(pageData) {
             alert(item.id);
             deleteItemForVendor(item.id);
 
-
+            gridContainer.removeChild(parentNode);
             // Call any JavaScript function or perform any action you want here
         });
 
