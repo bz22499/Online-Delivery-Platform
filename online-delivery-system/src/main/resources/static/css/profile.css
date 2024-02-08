@@ -53,24 +53,15 @@ header {
     padding: 20px;
 }
 
-#edit-profile{
-    display: block;
-    margin-left: 15px;
-    margin-bottom: 15px;
-}
-
 #edit-form input,
 #edit-form textarea {
     display: block;
     margin-bottom: 15px;
     margin-left: 15px;
 }
-#edit-form label {
-    display: block;
-    margin-left: 15px;
-}
 
-#edit-form button{
+#edit-form button,
+#edit-form label {
     margin-left: 15px;
 }
 
