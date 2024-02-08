@@ -114,4 +114,5 @@ public class BasketItemRepositoryIT {
         Optional<BasketItem> result = basketItemRepository.findById(basket.getId());
         assertThat(result).isEmpty();
     }
+    
 }
