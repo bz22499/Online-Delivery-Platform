@@ -14,4 +14,5 @@ public interface BasketItemService {
     boolean Exists(Long id);
     BasketItem partialUpdate(Long id, BasketItem basketEntity);
     void delete(Long id);
+    void deleteByMenuItemId(Long id);
 }
