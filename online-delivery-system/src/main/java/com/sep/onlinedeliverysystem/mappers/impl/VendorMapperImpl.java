@@ -15,8 +15,12 @@ public class VendorMapperImpl implements Mapper<Vendor, VendorDTO> {
     }
 
     @Override
-    public VendorDTO mapTo(Vendor vendor) { return modelMapper.map(vendor, VendorDTO.class); }
+    public VendorDTO mapTo(Vendor vendor) {
+        return modelMapper.map(vendor, VendorDTO.class);
+    }
 
     @Override
-    public Vendor mapFrom(VendorDTO vendorDTO) { return modelMapper.map(vendorDTO, Vendor.class); }
+    public Vendor mapFrom(VendorDTO vendorDTO) {
+        return modelMapper.map(vendorDTO, Vendor.class);
+    }
 }
