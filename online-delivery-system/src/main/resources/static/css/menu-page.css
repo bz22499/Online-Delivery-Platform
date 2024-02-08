@@ -56,6 +56,19 @@
     text-align: center;
 }
 
+.grid-item-delete{
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: red;
+    padding-bottom:20px;
+    padding-left:40px;
+    cursor:pointer;
+}
+.grid-item-delete:hover {
+    background-color: firebrick;
+}
+
 .basket {
     position: fixed;
     right: 0;
