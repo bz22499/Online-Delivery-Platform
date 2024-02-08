@@ -56,7 +56,6 @@ function populateGrid(pageData) {
         deleteButton.addEventListener('click', function() {
             // Your JavaScript function here
             const parentNode = deleteButton.parentNode;
-            const itemId = parentNode.id;
 
             alert(item.id);
             deleteItemForVendor(item.id);
