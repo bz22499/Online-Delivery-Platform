@@ -78,4 +78,20 @@ public class MenuItemRepositoryIT {
         Optional<MenuItem> result = menuItemTest.findById(item.getId());
         assertThat(result).isEmpty();
     }
+
+    @Test
+    public void testFindByVendor(){
+        Vendor vendor = TestUtil.vendorBuild1();
+        vendorRepository.save(vendor);
+        MenuItem item1 = TestUtil.menuItemBuilder1(vendor);
+        MenuItem item2 = TestUtil.menuItemBuilder2(vendor);
+        MenuItem item3 = TestUtil.menuItemBuilder3(vendor);
+        menuItemTest.save(item1);
+        menuItemTest.save(item2);
+        menuItemTest.save(item3);
+        Iterable<MenuItem> result = menuItemTest.findByVendorEmail(vendor.getEmail());
+        assertThat(result)
+                .hasSize(3)
+                .containsExactly(item1, item2, item3);
+    }
 }

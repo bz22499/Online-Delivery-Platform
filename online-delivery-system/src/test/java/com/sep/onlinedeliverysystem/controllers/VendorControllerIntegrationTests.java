@@ -90,7 +90,7 @@ public class VendorControllerIntegrationTests {
     }
 
     @Test
-    public void testThatGetUserSuccessfullyReturnsUserWhenUserExists() throws Exception {
+    public void testThatGetVendorSuccessfullyReturnsVendorWhenVendorExists() throws Exception {
         Vendor testVendor1 = TestUtil.vendorBuild1();
         vendorService.save(testVendor1);
         mockMvc.perform(

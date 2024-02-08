@@ -30,7 +30,8 @@
     </div>
 
     <div id="user-details">
-        <h1 id="name">Anthony Price</h1>
+        <h1 class="firstName" th:text="${firstName}">John</h1>
+        <h1 class="lastName" th:text="${lastName}">Doe</h1>
         <h2 id="job">Software Developer</h2>
         <p id="description">Passionate about coding and technology.</p>
 
@@ -40,8 +41,11 @@
     </div>
 
     <form id="edit-form">
-        <label for="new-name">Name:</label>
-        <input type="text" id="new-name" required><br>
+        <label for="new-firstName">First name:</label>
+        <input type="text" id="new-firstName" required><br>
+
+        <label for="new-lastName">Last name:</label>
+        <input type="text" id="new-lastName" required><br>
 
         <label for="new-job">Job:</label>
         <input type="text" id="new-job" required><br>
@@ -58,82 +62,6 @@
 
 <img src="images/background-aboutus.jpg" alt="" class="background-image">
 
-<script>
-    function updateProfilePicture() {
-        var input = document.getElementById('imageInput');
-        var preview = document.getElementById('previewImage');
-
-        var file = input.files[0];
-
-        if (file) {
-            var reader = new FileReader();
-            reader.onload = function(e) {
-                preview.src = e.target.result;
-            };
-            reader.readAsDataURL(file);
-        }
-    }
-    function editProfile() {
-        document.getElementById('name').style.display = 'none';
-        document.getElementById('job').style.display = 'none';
-        document.getElementById('description').style.display = 'none';
-        document.getElementById('view-subscription').style.display = 'none';
-        document.getElementById('logout').style.display = 'none';
-
-        document.getElementById('edit-form').style.display = 'block';
-
-        // Set the current values in the form fields
-        document.getElementById('new-name').value = document.getElementById('name').innerText;
-        document.getElementById('new-job').value = document.getElementById('job').innerText;
-        document.getElementById('new-description').value = document.getElementById('description').innerText;
-
-
-        // Hide buttons in the user-details div
-        document.querySelector('#user-details button').style.display = 'inline-block';
-    }
-
-    function returnToProfile() {
-        document.getElementById('name').style.display = 'block';
-        document.getElementById('job').style.display = 'block';
-        document.getElementById('description').style.display = 'block';
-        document.getElementById('view-subscription').style.display = 'inline-block';
-        document.getElementById('logout').style.display = 'inline-block';
-        //document.getElementById('edit-profile').style.display = 'block';
-
-        document.getElementById('edit-form').style.display = 'none';
-    }
-
-    function cancelEdit() {
-        returnToProfile();
-    }
-
-    function saveProfile() {
-        var name = document.getElementById('new-name').value;
-        var job = document.getElementById('new-job').value;
-        var description = document.getElementById('new-description').value;
-        var profileData = {
-            name: name,
-            job: job,
-            description: description,
-            profilePicture: document.getElementById('previewImage').src
-        };
-
-        // Convert the profileData object to a JSON string
-        var profileDataString = JSON.stringify(profileData);
-
-        // Store the JSON string in the local storage
-        localStorage.setItem('userProfile', profileDataString);
-
-        // Inform the user that the profile has been saved
-        alert("Profile saved!");
-
-        //update the displayed details
-        document.getElementById('name').innerText = name;
-        document.getElementById('job').innerText = job;
-        document.getElementById('description').innerText = description;
-
-        returnToProfile();
-    }
-</script>
+<script src="/JavaScript/profile.js"></script>
 </body>
 </html>

@@ -3,6 +3,9 @@ package com.sep.onlinedeliverysystem;
 import com.sep.onlinedeliverysystem.domain.dto.*;
 import com.sep.onlinedeliverysystem.domain.entities.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public final class TestUtil {
     private TestUtil(){
 
@@ -192,17 +195,6 @@ public final class TestUtil {
         return address;
     }
 
-    public static MenuItem menuItemBuilder1(final Vendor vendor){
-        MenuItem item = MenuItem.builder()
-                .id(1000L)
-                .name("Toast")
-                .description("2 slices of plain toast")
-                .price(1.99F)
-                .vendor(vendor)
-                .build();
-        return item;
-    }
-
     public static MenuItemDTO menuItemDTOCreate1(final Vendor vendor){
         MenuItemDTO item = MenuItemDTO.builder()
                 .id(1000L)
@@ -214,9 +206,18 @@ public final class TestUtil {
         return item;
     }
 
+    public static MenuItem menuItemBuilder1(final Vendor vendor){
+        MenuItem item = MenuItem.builder()
+                .name("Toast")
+                .description("2 slices of plain toast")
+                .price(1.99F)
+                .vendor(vendor)
+                .build();
+        return item;
+    }
+
     public static MenuItem menuItemBuilder2(final Vendor vendor){
         MenuItem item = MenuItem.builder()
-                .id(1001L)
                 .name("CS Nachos")
                 .description("Chicken, cheese, mild salsa, nachos")
                 .price(8.99F)
@@ -227,12 +228,32 @@ public final class TestUtil {
 
     public static MenuItem menuItemBuilder3(final Vendor vendor){
         MenuItem item = MenuItem.builder()
-                .id(1003L)
                 .name("Marmite pasta")
                 .description("Marmite!")
                 .price(99.99F)
                 .vendor(vendor)
                 .build();
         return item;
+    }
+
+    public static Order orderBuilder(){
+        Order order = Order.builder().build();
+        return order;
+    }
+
+    public static Basket basketBuilder(final Order order){
+        Basket basket = Basket.builder()
+                .order(order)
+                .build();
+        return basket;
+    }
+
+    public static BasketItem basketItemBuilder(final Basket basket, final MenuItem menuItem, final int qty){
+        BasketItem basketItem = BasketItem.builder()
+                .basket(basket)
+                .menuItem(menuItem)
+                .quantity(qty)
+                .build();
+        return basketItem;
     }
 }

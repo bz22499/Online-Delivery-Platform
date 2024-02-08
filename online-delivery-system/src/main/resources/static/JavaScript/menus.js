@@ -1,6 +1,39 @@
-async function fetchRestaurants(page = 0, size = 18) {
+async function fetchRestaurants(page =0, size = 18) {
     try {
         const response = await fetch(`/vendors?page=${page}&size=${size}`);
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Error fetching restaurant data:', error);
+    }
+}
+
+async function createOrder() {
+    try {
+        const response = await fetch(`/orders`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const order = await response.json();
+        sessionStorage.setItem('orderId', order.id);
+    } catch (error) {
+        console.log('Error creating order: ', error)
+    }
+
+}
+
+// Luke's bit
+async function fetchAllRestaurants(){
+    try {
+        const response = await fetch(`/vendors`);
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
@@ -52,14 +85,21 @@ function populateGrid(pageData) {
 
 }
 
+// Luke's bit
+// Get query parameters from the URL
+var urlParams = new URLSearchParams(window.location.search);
+// Retrieve data from query parameters
+var address = urlParams.get('address');
+
 let currentPage = 0;
 let isLoading = false;
 
 async function loadMore() {
+
     if (isLoading) return;
     isLoading = true;
 
-    const restaurants = await fetchRestaurants(currentPage, 18);
+    const restaurants = await fetchRestaurants(currentPage,18);
     if (restaurants && restaurants.content.length > 0) {
         populateGrid(restaurants);
         currentPage++;
@@ -75,4 +115,6 @@ window.addEventListener('scroll', () => {
 });
 
 window.onload = loadMore();
+window.onload = createOrder()
+
 
