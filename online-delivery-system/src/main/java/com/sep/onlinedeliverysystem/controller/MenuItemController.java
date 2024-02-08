@@ -78,6 +78,8 @@ public class MenuItemController {
 
     @DeleteMapping(path = "/menuItems/{id}")
     public ResponseEntity deleteMenuItem(@PathVariable("id") Long id){
+        System.out.println("GOT HERE");
+        System.out.println(id);
         menuItemService.delete(id);
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
