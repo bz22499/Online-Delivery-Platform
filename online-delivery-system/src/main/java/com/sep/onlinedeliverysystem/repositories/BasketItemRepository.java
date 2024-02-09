@@ -10,5 +10,5 @@ import java.util.List;
 public interface BasketItemRepository extends CrudRepository<BasketItem, Long> {
     List<BasketItem> findByBasketId(Long basketId);
 
-    void deleteBasketItemByMenuItemId(Long id);
+    void deleteByMenuItemId(Long id);
 }

@@ -114,5 +114,28 @@ public class BasketItemRepositoryIT {
         Optional<BasketItem> result = basketItemRepository.findById(basket.getId());
         assertThat(result).isEmpty();
     }
-    
+
+    @Test
+        public void deleteByMenuItemId(){
+        Order order = TestUtil.orderBuilder();
+        orderRepository.save(order);
+        Basket basket = TestUtil.basketBuilder(order);
+        basketRepository.save(basket);
+
+        Vendor vendor = TestUtil.vendorBuild1();
+        vendorRepository.save(vendor);
+        MenuItem menuItem = TestUtil.menuItemBuilder1(vendor);
+        menuItemRepository.save(menuItem);
+        BasketItem basketItem = TestUtil.basketItemBuilder(basket, menuItem, 1);
+        basketItemRepository.save(basketItem);
+
+        basketItemRepository.deleteByMenuItemId(basketItem.getMenuItem().getId());
+
+        Optional<BasketItem> result = basketItemRepository.findById(basket.getId());
+        assertThat(result).isEmpty();
+
+
+
+    }
+
 }
