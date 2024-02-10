@@ -54,8 +54,4 @@ public class BasketItemServiceImpl implements BasketItemService {
         basketItemRepository.deleteById(id);
     }
 
-    @Override
-    public void deleteByMenuItemId(Long id){
-        basketItemRepository.deleteByMenuItemId(id);
-    }
 }
