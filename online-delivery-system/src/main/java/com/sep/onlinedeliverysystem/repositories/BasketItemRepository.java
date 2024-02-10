@@ -9,6 +9,4 @@ import java.util.List;
 @Repository
 public interface BasketItemRepository extends CrudRepository<BasketItem, Long> {
     List<BasketItem> findByBasketId(Long basketId);
-
-    void deleteByMenuItemId(Long id);
 }
