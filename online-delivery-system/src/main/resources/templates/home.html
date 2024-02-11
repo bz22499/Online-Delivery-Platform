@@ -1,64 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <title>P2P Online Delivery Platform - Home</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="/css/home.css" />
-    </head>
-    <body>
-        <ul class="banner">
-            <li><img src="/images/logo_ld_png.png"></li>
-            <li class="active"><a target="_parent" href="home">Home</a></li>
-            <li><a target="_parent" href="about">About Us</a></li>
-            <li><a target="_parent" href="order">Order</a></li>
-            <li><a target="_parent" href="contact">Contact</a></li>
-            <li class="right"><a target="_parent" href="profile">Profile</a></li>
-            <li class="right"><a target="_parent" href="login">Login</a></li>
-            <li class="right"><a target="_parent" href="customerlogin">Sign up</a></li>
-            <li class="right"><a target="_parent" href="restaurantlogin">Partner with us</a></li>
-        </ul>
+<head>
+    <meta charset="utf-8" />
+    <title>P2P Online Delivery Platform - Home</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/home.css" />
+</head>
+<body>
+<ul class="banner">
+    <li><img src="/images/logo_ld_png.png"></li>
+    <li class="active"><a target="_parent" href="home">Home</a></li>
+    <li><a target="_parent" href="about">About Us</a></li>
+    <li><a target="_parent" href="order">Order</a></li>
+    <li><a target="_parent" href="contact">Contact</a></li>
+    <li class="right"><a target="_parent" href="profile" th:if="${loggedIn}">Profile</a></li>
+    <li class="right"><a target="_parent" href="login" th:unless="${loggedIn}">Login</a></li>
+    <li class="right"><a target="_parent" href="customerlogin" th:unless="${loggedIn}">Sign up</a></li>
+    <li class="right"><a target="_parent" href="restaurantlogin" th:unless="${loggedIn}">Partner with us</a></li>
+</ul>
 
+<form class="locationInput">
+    <img src="images/wix1.png" alt="" style="width:100%;">
+    <input type="text" placeholder="Search.." id="search-input">
+</form>
 
-        <form class="locationInput">
-            <img src="images/wix1.png" alt="" style="width:100%;">
-            <input type="text" placeholder="Search.." id="search-input">
-        </form>
+<script>
+    const searchInput = document.getElementById('search-input');
 
+    searchInput.addEventListener('keydown', function(event) {
+        if (event.key === 'Enter') {
+            event.preventDefault();
+            performSearch();
+        }
+    });
 
-        <script>
-            const searchInput = document.getElementById('search-input');
+    function performSearch() {
 
-            searchInput.addEventListener('keydown', function(event) {
-                if (event.key === 'Enter') {
-                    event.preventDefault();
-                    performSearch();
-                }
-            });
+        var newPageUrl = "/order";
 
-            function performSearch() {
+        // Data to be transferred
+        var dataToTransfer = {
+            address: searchInput.value
+        };
 
-                var newPageUrl = "/order";
+        var postCode = /^[A-Z]{1,2}[0-9R][0-9A-Z]? ?[0-9][A-Z]{2}$/i;
 
-                // Data to be transferred
-                var dataToTransfer = {
-                    address: searchInput.value
-                };
+        if (postCode.test(searchInput.value)) {
+            // Append data as query parameters to the URL
+            newPageUrl += '?' + new URLSearchParams(dataToTransfer).toString();
+            window.location.href = newPageUrl;
+        } else {
+            alert("Please enter a valid UK postal code.");
+        }
 
-                var postCode = /^[A-Z]{1,2}[0-9R][0-9A-Z]? ?[0-9][A-Z]{2}$/i;
+    }
+</script>
 
-                if (postCode.test(searchInput.value)) {
-                    // Append data as query parameters to the URL
-                    newPageUrl += '?' + new URLSearchParams(dataToTransfer).toString();
-                    window.location.href = newPageUrl;
-                } else {
-                    alert("Please enter a valid UK postal code.");
-                }
-
-            }
-        </script>
-
-
-
-    </body>
+</body>
 </html>
