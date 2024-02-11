@@ -6,6 +6,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -22,4 +25,7 @@ public class MenuItem {
     @ManyToOne
     @JoinColumn(name = "vendorEmail", nullable = false)
     private Vendor vendor;
+
+    @OneToMany(mappedBy = "menuItem", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<BasketItem> basketItems = new ArrayList<>();
 }
