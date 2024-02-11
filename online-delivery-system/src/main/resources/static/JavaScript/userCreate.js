@@ -14,7 +14,14 @@ function createCustomer(){
     if(firstName.toString() === "" || lastName.toString() === "" || password.toString() === "" || checkPassword.toString() === ""){
         valid = false
     }
-    
+
+
+    if(valid){
+        valid = checkEmailAddressNotUsed(email);
+        if(!valid){
+            alert("email address already in use");
+        }
+    }
 
     if(valid){
         // Send data to the backend
@@ -52,6 +59,15 @@ function createVendor(){
         valid = false
     }
 
+
+    if(valid){
+        valid = checkEmailAddressNotUsed(email);
+        if(!valid){
+            alert("email address already in use");
+        }
+    }else{
+        alert("Form was not correctly filled in")
+    }
 
 
     if(valid){
