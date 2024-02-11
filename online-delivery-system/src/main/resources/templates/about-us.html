@@ -9,9 +9,11 @@
     <body>
         <ul class="banner">
             <li><img src="/images/logo_ld_png.png"></li>
-            <li class="active"><a target="_parent" href="home">Home</a></li>
-            <li><a target="_parent" href="about">About Us</a></li>
-            <li><a target="_parent" href="order">Order</a></li>
+            <li><a target="_parent" href="home" th:unless="${loggedInVendor}">Home</a></li>
+            <li class="active"><a target="_parent" href="vendor" th:if="${loggedInVendor}">Add Items</a></li>
+            <li><a target="_parent" href="vendoritems" th:if="${loggedInVendor}">Edit Items</a></li>
+            <li class="active"><a target="_parent" href="about">About Us</a></li>
+            <li><a target="_parent" href="order" th:unless="${loggedInVendor}">Order</a></li>
             <li><a target="_parent" href="contact">Contact</a></li>
             <li class="right"><a target="_parent" href="profile" th:if="${loggedIn}">Profile</a></li>
             <li class="right"><a target="_parent" href="login" th:unless="${loggedIn}">Login</a></li>

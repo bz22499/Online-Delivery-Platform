@@ -71,19 +71,8 @@ public class WebController {
     public String restaurant(){ return "restaurantSignUp"; }
 
     @GetMapping("/login")
-    public String login(Principal principal) {
-        if (principal != null) {
-            String loggedInUserEmail = principal.getName(); // Retrieves the email/id of the currently logged-in user
-            Optional<Vendor> vendor = vendorService.findOne(loggedInUserEmail);
-            if (vendor.isPresent()) {
-                return "redirect:/vendor"; // Redirect to vendor home if user is a vendor
-            } else {
-                return "redirect:/home"; // Redirect to home if not a vendor
-            }
-        } else {
-            return "login"; // If no user is logged in, show login page
-        }
-    }
+    public String login() {return "login";}
+
     @GetMapping("/order")
     public String order(){
         return "order";
