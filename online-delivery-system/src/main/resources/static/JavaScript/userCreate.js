@@ -15,12 +15,13 @@ function createCustomer(){
         valid = false
     }
 
-
     if(valid){
         valid = checkEmailAddressNotUsed(email);
         if(!valid){
             alert("email address already in use");
         }
+    }else{
+        alert("Form was not correctly filled in")
     }
 
     if(valid){
@@ -41,8 +42,6 @@ function createCustomer(){
                 console.error('Error:', error);
             });
     }
-}else{
-    alert("Form was not correctly filled in")
 }
 
 function createVendor(){
