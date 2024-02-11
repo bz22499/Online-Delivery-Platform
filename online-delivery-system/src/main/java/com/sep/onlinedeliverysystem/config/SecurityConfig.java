@@ -1,5 +1,8 @@
 package com.sep.onlinedeliverysystem.config;
 
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -9,12 +12,19 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.authentication.configuration.GlobalAuthenticationConfigurerAdapter;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+
+import java.io.IOException;
+import java.util.Set;
 
 @Configuration
 @EnableWebSecurity
@@ -36,7 +46,6 @@ public class SecurityConfig extends GlobalAuthenticationConfigurerAdapter {
         http.csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests((authorize) ->
                         authorize
-//                                .requestMatchers("/vendor/**").hasAuthority("VENDOR") //old
                                 .requestMatchers("/profile/**").hasAuthority("USER")
                                 .requestMatchers("/vendoritems/**", "/vendor/**").hasAuthority("VENDOR")
                                 .anyRequest().permitAll()
@@ -44,7 +53,7 @@ public class SecurityConfig extends GlobalAuthenticationConfigurerAdapter {
                         form -> form
                                 .loginPage("/login")
                                 .loginProcessingUrl("/login")
-                                .defaultSuccessUrl("/home")
+                                .successHandler(successHandler())
                                 .permitAll()
                 ).logout(
                         logout -> logout
@@ -68,5 +77,20 @@ public class SecurityConfig extends GlobalAuthenticationConfigurerAdapter {
         authProvider.setUserDetailsService(userDetailsService);
         authProvider.setPasswordEncoder(passwordEncoder);
         return authProvider;
+    }
+
+    @Bean
+    public AuthenticationSuccessHandler successHandler() {
+        return new SimpleUrlAuthenticationSuccessHandler() {
+            @Override
+            protected void handle(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
+                Set<String> roles = AuthorityUtils.authorityListToSet(authentication.getAuthorities());
+                if (roles.contains("VENDOR")) {
+                    response.sendRedirect("/vendor");
+                } else {
+                    response.sendRedirect("/home");
+                }
+            }
+        };
     }
 }

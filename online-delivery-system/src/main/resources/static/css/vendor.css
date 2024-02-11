@@ -42,7 +42,18 @@ ul.banner li a:hover{
     background-color: gray;
 }
 
+ul.banner li.right a {
+    display: block;
+    color: white;
+    background-color: black;
+    border-radius: 10px;
+    padding: 5px 16px;
+    margin: 8px 10px;
+}
 
+ul.banner li.right {
+    float: right;
+}
 
 .item-container {
     position: absolute;
