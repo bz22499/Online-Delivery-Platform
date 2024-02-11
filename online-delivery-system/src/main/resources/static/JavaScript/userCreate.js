@@ -14,7 +14,7 @@ function createCustomer(){
     if(firstName.toString() === "" || lastName.toString() === "" || password.toString() === "" || checkPassword.toString() === ""){
         valid = false
     }
-
+    
 
     if(valid){
         // Send data to the backend
@@ -33,9 +33,9 @@ function createCustomer(){
             .catch(error => {
                 console.error('Error:', error);
             });
-    }else{
-        alert("Form was not correctly filled in")
     }
+}else{
+    alert("Form was not correctly filled in")
 }
 
 function createVendor(){
@@ -51,6 +51,7 @@ function createVendor(){
     if(name.toString() === "" || password.toString() === "" || checkPassword.toString() === ""){
         valid = false
     }
+
 
 
     if(valid){
@@ -71,7 +72,42 @@ function createVendor(){
             .catch(error => {
                 console.error('Error:', error);
             });
-    }else{
-        alert("Form was not correctly filled in")
     }
+}
+
+function checkEmailAddressNotUsed(email){
+    fetch('/users'+email)
+        .then(response => {
+            // Check if the response is successful
+            if (!response.ok) {
+                // Check if the response status is NOT_FOUND (404)
+                if (response.status === 404) {
+                    //user does not exist so check next
+                } else {
+                    throw new Error('Network response was not ok');
+                }
+            }else{
+                return false;
+            }
+        })
+
+    fetch('/vendors'+email)
+        .then(response => {
+            // Check if the response is successful
+            if (!response.ok) {
+                // Check if the response status is NOT_FOUND (404)
+                if (response.status === 404) {
+                    //vendor does not exist so check next
+                } else {
+                    throw new Error('Network response was not ok');
+                }
+            }else{
+                return false;
+            }
+        })
+
+    // TODO: Once we have driver controller, check email address for drivers also!!!
+
+    //if it gets here it means all fetch requests had response status not found hence email address is not used
+    return true;
 }
