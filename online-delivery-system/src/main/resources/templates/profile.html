@@ -13,14 +13,15 @@
 </header>
 
 <ul class="banner">
-    <li><img src="images/logo_ld_png.png"></li>
-    <li><a target="_parent" href="home">Home</a></li>
-    <li><a target="_parent" href="about">About</a></li>
+    <li><img src="/images/logo_ld_png.png"></li>
+    <li class="active"><a target="_parent" href="home">Home</a></li>
+    <li><a target="_parent" href="about">About Us</a></li>
     <li><a target="_parent" href="order">Order</a></li>
     <li><a target="_parent" href="contact">Contact</a></li>
-    <li class="right"><a target="_parent" href="login">Login</a></li>
-    <li class="right"><a target="_parent" href="customerlogin">Sign up</a></li>
-    <li class="right"><a target="_parent" href="restaurantlogin">Partner with us</a></li>
+    <li class="right"><a target="_parent" href="profile" th:if="${loggedIn}">Profile</a></li>
+    <li class="right"><a target="_parent" href="login" th:unless="${loggedIn}">Login</a></li>
+    <li class="right"><a target="_parent" href="customerlogin" th:unless="${loggedIn}">Sign up</a></li>
+    <li class="right"><a target="_parent" href="restaurantlogin" th:unless="${loggedIn}">Partner with us</a></li>
 </ul>
 
 <div id="profile-container">
