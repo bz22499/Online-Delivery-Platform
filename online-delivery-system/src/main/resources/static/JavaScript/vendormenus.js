@@ -11,6 +11,27 @@ async function fetchItemsForLoggedInVendor(vendorId) {
     }
 }
 
+function deleteItemForVendor(itemId){
+    fetch('/menuItems/' + itemId.toString(), {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+        })
+        .then(data => {
+        })
+        .catch(error => {
+            // Handle errors that occur during the request
+            alert('There was a problem with your fetch operation:' + error.toString());
+        });
+}
+
+
 function populateGrid(pageData) {
     const gridContainer = document.querySelector('.grid-container');
     pageData.forEach((item) => {
@@ -23,7 +44,22 @@ function populateGrid(pageData) {
         footer.textContent = item.price;
         gridItem.appendChild(footer);
 
+        const deleteButton = document.createElement('div');
+        deleteButton.className = 'grid-item-delete';
+        gridItem.appendChild(deleteButton);
+
         gridContainer.appendChild(gridItem);
+
+
+        deleteButton.addEventListener('click', function() {
+            // Your JavaScript function here
+            const parentNode = deleteButton.parentNode;
+            deleteItemForVendor(item.id);
+
+            gridContainer.removeChild(parentNode);
+            // Call any JavaScript function or perform any action you want here
+        });
+
     });
 }
 
