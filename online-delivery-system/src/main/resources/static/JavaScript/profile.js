@@ -15,7 +15,6 @@ function updateProfilePicture() {
 function editProfile() {
     document.getElementById('firstName').style.display = 'none';
     document.getElementById('lastName').style.display = 'none';
-    document.getElementById('job').style.display = 'none';
     document.getElementById('description').style.display = 'none';
     document.getElementById('view-subscription').style.display = 'none';
     document.getElementById('logout').style.display = 'none';
@@ -25,9 +24,6 @@ function editProfile() {
     // Set the current values in the form fields
     document.getElementById('new-firstName').value = document.getElementById('firstName').innerText;
     document.getElementById('new-lastName').value = document.getElementById('lastName').innerText;
-    document.getElementById('new-job').value = document.getElementById('job').innerText;
-    document.getElementById('new-description').value = document.getElementById('description').innerText;
-
 
     // Hide buttons in the user-details div
     document.querySelector('#user-details button').style.display = 'inline-block';
@@ -36,7 +32,6 @@ function editProfile() {
 function returnToProfile() {
     document.getElementById('firstName').style.display = 'block';
     document.getElementById('lastName').style.display = 'block';
-    document.getElementById('job').style.display = 'block';
     document.getElementById('description').style.display = 'block';
     document.getElementById('view-subscription').style.display = 'inline-block';
     document.getElementById('logout').style.display = 'inline-block';
@@ -52,13 +47,9 @@ function cancelEdit() {
 function saveProfile() {
     var firstName = document.getElementById('new-firstName').value;
     var lastName = document.getElementById('new-lastName').value;
-    var job = document.getElementById('new-job').value;
-    var description = document.getElementById('new-description').value;
     var profileData = {
         firstName: firstName,
-        lastName: lastName,
-        job: job,
-        description: description,
+
         profilePicture: document.getElementById('previewImage').src
     };
 
@@ -72,9 +63,9 @@ function saveProfile() {
     alert("Profile saved!");
 
     //update the displayed details
-    document.getElementById('name').innerText = name;
-    document.getElementById('job').innerText = job;
-    document.getElementById('description').innerText = description;
+    document.getElementById('firstName').innerText = firstName;
+    document.getElementById('lastName').innerText = lastName;
+
 
     returnToProfile()
 }

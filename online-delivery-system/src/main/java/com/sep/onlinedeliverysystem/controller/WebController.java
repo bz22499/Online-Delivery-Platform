@@ -86,7 +86,6 @@ public class WebController {
             Optional<Vendor> vendor = vendorService.findOne(loggedInUserEmail);
 
             if (user.isPresent()) {
-                System.out.println("GOT HERE");
                 model.addAttribute("id", user.get().getEmail());
                 model.addAttribute("firstName", user.get().getFirstName());
                 model.addAttribute("lastName", user.get().getLastName());
