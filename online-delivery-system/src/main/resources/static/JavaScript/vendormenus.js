@@ -31,6 +31,10 @@ function deleteItemForVendor(itemId){
         });
 }
 
+function editItemForVendor(itemId){
+    alert("The item with id " + itemId + " will now be edited");
+}
+
 
 function populateGrid(pageData) {
     const gridContainer = document.querySelector('.grid-container');
@@ -38,38 +42,68 @@ function populateGrid(pageData) {
         const gridItem = document.createElement('div');
         gridItem.className = 'grid-item';
 
+        //content contains the content of each menu item
+        const gridItemContent = document.createElement('div');
+
+
         const gridTitle = document.createElement('div')
         gridTitle.className='grid-item-title'
         gridTitle.textContent = item.name;
-        gridItem.appendChild(gridTitle)
+        gridItemContent.appendChild(gridTitle)
 
         const description = document.createElement('div');
         description.className = 'grid-item-description';
         description.textContent = item.description;
-        gridItem.appendChild(description);
+        gridItemContent.appendChild(description);
 
         const footer = document.createElement('div');
         footer.className = 'grid-item-footer';
         footer.textContent = "£" + item.price;
-        gridItem.appendChild(footer);
+        gridItemContent.appendChild(footer);
 
         const deleteButton = document.createElement('div');
-        deleteButton.className = 'grid-item-delete';
-        gridItem.appendChild(deleteButton);
+        deleteButton.className = 'grid-item-delete'
+        gridItemContent.appendChild(deleteButton);
 
         const editButton = document.createElement('div');
         editButton.className = 'grid-item-edit';
-        gridItem.appendChild(editButton);
+        gridItemContent.appendChild(editButton);
 
+        gridItem.appendChild(gridItemContent);
+
+        //elements inside the form will be fields that can be changed upon clicking the edit button
+        const gridItemForm = document.createElement('div');
+
+        const formItemName = document.createElement('input');
+        formItemName.value=item.name
+
+        const formItemDescription = document.createElement('input');
+        formItemDescription.value=item.description
+
+        const formItemPrice = document.createElement('input')
+        formItemPrice.value=item.price;
+
+        gridItemForm.appendChild(formItemName);
+        gridItemForm.appendChild(formItemDescription)
+        gridItemForm.appendChild(formItemPrice)
+
+        gridItem.appendChild(gridItemForm)
 
         gridContainer.appendChild(gridItem);
 
+        gridItemForm.hidden=true;
 
         deleteButton.addEventListener('click', function() {
             const parentNode = deleteButton.parentNode;
             deleteItemForVendor(item.id);
 
             gridContainer.removeChild(parentNode);
+        });
+
+        editButton.addEventListener('click', function (){
+            editItemForVendor(item.id);
+            gridItemContent.hidden = true;
+            gridItemForm.hidden=false;
         });
 
     });
