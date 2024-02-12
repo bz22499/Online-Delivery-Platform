@@ -31,6 +31,14 @@ function deleteItemForVendor(itemId){
         });
 }
 
+function submitFormClicked(){
+
+}
+
+function cancelFormClicked(){
+
+}
+
 function editItemForVendor(itemId){
     alert("The item with id " + itemId + " will now be edited");
 }
@@ -72,20 +80,35 @@ function populateGrid(pageData) {
         gridItem.appendChild(gridItemContent);
 
         //elements inside the form will be fields that can be changed upon clicking the edit button
-        const gridItemForm = document.createElement('div');
+        const gridItemForm = document.createElement('form');
+        gridItemForm.className = "grid-item-form"
 
         const formItemName = document.createElement('input');
         formItemName.value=item.name
+        gridItemForm.appendChild(formItemName);
 
         const formItemDescription = document.createElement('input');
         formItemDescription.value=item.description
+        gridItemForm.appendChild(formItemDescription)
 
         const formItemPrice = document.createElement('input')
         formItemPrice.value=item.price;
-
-        gridItemForm.appendChild(formItemName);
-        gridItemForm.appendChild(formItemDescription)
         gridItemForm.appendChild(formItemPrice)
+
+        const submitForm = document.createElement('button');
+        submitForm.id = 'submit-form-button'
+        submitForm.type = "button"
+        submitForm.onclick = submitFormClicked()
+        submitForm.textContent = "SUBMIT"
+        gridItemForm.appendChild(submitForm);
+
+        const cancelForm = document.createElement('button');
+        cancelForm.id = 'cancel-form-button'
+        cancelForm.type = "button"
+        cancelForm.onclick = cancelFormClicked()
+        cancelForm.textContent = "CANCEL";
+        gridItemForm.appendChild(cancelForm);
+
 
         gridItem.appendChild(gridItemForm)
 

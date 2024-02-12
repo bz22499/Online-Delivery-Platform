@@ -190,3 +190,13 @@ ul.banner li a:hover{
 .basket-items {
     height: calc(100% - 100px); /* Adjust the value based on actual header and button height */
 }
+
+.grid-item-form{
+    width: 100%;
+}
+.grid-item-form input{
+    height: 30px;
+    margin: 10px auto 10px auto;
+    display: block;
+    width: 80%;
+}
