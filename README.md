@@ -14,6 +14,7 @@
 ## Contents
 - [Project Overview](#project-overview)
 - [Features](#features)
+- [Build instructions](#run-the-app-locally)
 - [Tech Stack](#tech-stack)
 - [User Stories](#user-stories)
 - [Stakeholders](#stake-holders)
@@ -41,6 +42,90 @@ Customers can browse through an array of restaurants, view menus, and place orde
 For chefs, the platform offers the ability to upload and manage menus, update food item availability via a stock management system, and communicate estimated preparation times to drivers. Chefs also receive orders complete with customer preferences and dietary needs.
 
 Delivery drivers are assigned orders based on their proximity to the pick-up location, ensuring efficiency. They receive unique pick-up and drop-off numbers for verification purposes and can use a temporary messaging system for coordinating with chefs and customers. This holistic approach aims to streamline the food ordering and delivery process for all parties involved.
+
+## Run the app locally
+#### 1. Clone the repository
+Navigate to the desired directory, open a terminal, and paste the following command
+```console
+git clone git@github.com:spe-uob/2023-OnlineDeliveryPlatform.git
+```
+
+#### 2. Change into the new project directory 
+Navigate to the project directory using
+```console
+cd 2023-OnlineDeliveryPlatform/online-delivery-system
+```
+
+#### 3. Ensure you have the correct version of Java installed
+The app runs on Java 17. Ensure you have the correct version of Java installed by running
+```console
+java --version
+```
+If you don't have the correct version, you can download it directly from the [Oracle website](https://www.oracle.com/java/technologies/downloads/#java17).
+
+#### 4. Build the project
+You will need to use Maven to build the project. You can check if Maven is already installed in your computer by running the following command
+###### MacOS and Windows
+```console
+mvn -v
+```
+###### Linux
+```console
+mvn -version
+```
+
+If Maven is installed, you will see the version information. Otherwise, you can follow the installation instructions below for your respective OS.
+##### MacOS
+First, ensure either [Homebrew](https://brew.sh/) or [Macports](https://www.macports.org/install.php) are installed by following the instructions on their respective websites.
+###### Using Homebrew
+```console
+brew install maven
+```
+###### Using MacPorts
+```console
+sudo port install maven
+```
+
+##### Linux
+###### For Debian/Ubuntu distributions run
+```console
+sudo apt install maven
+```
+###### For Fedora distributions use
+```console
+sudo dnf install maven
+```
+For other distributions, use the package manager accordingly or download the binary from the [Apache Maven Project Website](https://maven.apache.org/download.cgi).
+
+##### Windows
+- Download the Maven zip file from the [Apache Maven Project Website](https://maven.apache.org/download.cgi).
+- Unzip the distribution archive to the directory you wish to install Maven. The subdirectory apache-maven-x.x.x will be created from the archive.
+- Add the bin directory of the created directory (apache-maven-x.x.x\bin) to the PATH environment variable.
+
+
+Once Maven is installed, navigate to the project directory and run the followning command on the terminal to install all the dependencies
+```console
+mvn clean install
+```
+or 
+```console
+./mvnw clean install
+```
+Once finished, you can run the application with
+```console
+mvn spring-boot:run
+```
+or 
+```console
+./mvnw spring-boot:run
+```
+You should see a message signaling that the app has been sucessfully built by Maven.
+
+#### 5. Access the application
+Once the application is running, you can access it by opening a web browser and navigating to:
+```url
+http://localhost:8080
+```
 
 ## Tech Stack
 #### Backend
