@@ -39,6 +39,11 @@ function populateGrid(pageData) {
         gridItem.className = 'grid-item';
         gridItem.textContent = item.name;
 
+        const description = document.createElement('div');
+        description.className = 'grid-item-description';
+        description.textContent = item.description;
+        gridItem.appendChild(description);
+
         const footer = document.createElement('div');
         footer.className = 'grid-item-footer';
         footer.textContent = item.price;
@@ -57,12 +62,10 @@ function populateGrid(pageData) {
 
 
         deleteButton.addEventListener('click', function() {
-            // Your JavaScript function here
             const parentNode = deleteButton.parentNode;
             deleteItemForVendor(item.id);
 
             gridContainer.removeChild(parentNode);
-            // Call any JavaScript function or perform any action you want here
         });
 
     });
