@@ -1,4 +1,4 @@
-function createCustomer(){
+async function createCustomer(){
     let firstName = document.getElementById("firstName").value;
     let lastName = document.getElementById("lastName").value;
     let password = document.getElementById("password").value
@@ -15,6 +15,14 @@ function createCustomer(){
         valid = false
     }
 
+    if(valid){
+        valid = await checkEmailAddressNotUsed(email);
+        if(!valid){
+            alert("email address already in use");
+        }
+    }else{
+        alert("Form was not correctly filled in")
+    }
 
     if(valid){
         // Send data to the backend
@@ -33,12 +41,10 @@ function createCustomer(){
             .catch(error => {
                 console.error('Error:', error);
             });
-    }else{
-        alert("Form was not correctly filled in")
     }
 }
 
-function createVendor(){
+async function createVendor(){
     let name = document.getElementById("username").value;
     let password = document.getElementById("password").value
     let email = document.getElementById("email").value
@@ -50,6 +56,16 @@ function createVendor(){
 
     if(name.toString() === "" || password.toString() === "" || checkPassword.toString() === ""){
         valid = false
+    }
+
+
+    if(valid){
+        valid = await checkEmailAddressNotUsed(email);
+        if(!valid){
+            alert("email address already in use");
+        }
+    }else{
+        alert("Form was not correctly filled in")
     }
 
 
@@ -71,7 +87,37 @@ function createVendor(){
             .catch(error => {
                 console.error('Error:', error);
             });
-    }else{
-        alert("Form was not correctly filled in")
+    }
+}
+
+async function checkEmailAddressNotUsed(email) {
+    let valid = true;
+
+    try {
+        const response1 = await fetch('users/' + email);
+        if (!response1.ok) {
+            if (response1.status !== 404) {
+                throw new Error('Network response was not ok');
+            }
+        } else {
+            valid = false;
+        }
+
+        const response2 = await fetch('vendors/' + email);
+        if (!response2.ok) {
+            if (response2.status !== 404) {
+                throw new Error('Network response was not ok');
+            }
+        } else {
+            valid = false;
+        }
+
+        // TODO: Once we have driver controller, check email address for drivers also!!!
+
+        //if it gets here it means all fetch requests had response status not found hence email address is not used
+        return valid;
+    } catch (error) {
+        console.error('Error:', error);
+        return valid;
     }
 }
