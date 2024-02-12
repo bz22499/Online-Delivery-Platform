@@ -14,6 +14,12 @@ function updateProfilePicture() {
 }
 
 function editProfile() {
+
+    // Clear the password-related input fields
+    document.getElementById('current-password').value = '';
+    document.getElementById('new-password').value = '';
+    document.getElementById('confirm-password').value = '';
+
     document.querySelector('.firstName').style.display = 'none';
     document.querySelector('.lastName').style.display = 'none';
     document.getElementById('view-subscription').style.display = 'none';
@@ -48,6 +54,7 @@ function cancelEdit() {
 
 function saveProfile() {
     var userId = document.getElementById('userId').value;
+    var currentPassword = document.getElementById('current-password').value;
     var firstName = document.getElementById('new-firstName').value;
     var lastName = document.getElementById('new-lastName').value;
     var newPassword = document.getElementById('new-password').value;
@@ -61,17 +68,18 @@ function saveProfile() {
 
     var requestBody = {
         firstName: firstName,
-        lastName: lastName
+        lastName: lastName,
+        currentPassword: currentPassword
     };
 
     // Only include the password fields if they are not empty and not whitespace
-    if (newPassword.trim() !== '') {
-        requestBody.password = newPassword;
+    if (newPassword.trim() !== '' && confirmPassword.trim() !== '') {
+        requestBody.newPassword = newPassword;
     }
 
-    // Make a request to update the user's profile
-    fetch(`/users/${userId}`, {
-        method: 'PATCH', // Use PATCH instead of PUT
+    // Make a request to update the user's profile including the password
+    fetch(`/users/${userId}/profile`, {
+        method: 'PATCH',
         headers: {
             'Content-Type': 'application/json'
         },
@@ -83,6 +91,9 @@ function saveProfile() {
                 document.querySelector('.firstName').innerText = firstName;
                 document.querySelector('.lastName').innerText = lastName;
                 returnToProfile();
+            } else if (response.status === 401) {
+                // Unauthorized, display invalid password alert
+                alert("Invalid password");
             } else {
                 throw new Error('Failed to update profile');
             }

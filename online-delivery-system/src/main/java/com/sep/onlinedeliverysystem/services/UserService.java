@@ -19,4 +19,6 @@ public interface UserService {
     User partialUpdate(String email, User userEntity);
 
     void delete(String email);
+
+    boolean updateProfile(String email, String currentPassword, String newFirstName, String newLastName, String newPassword);
 }

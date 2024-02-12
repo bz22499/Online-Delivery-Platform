@@ -42,7 +42,7 @@
 
     <form id="edit-form">
 
-        <!--This is here so we can use the id in the js-->
+        <!--This is here so that we can use the id in the js-->
         <input type="hidden" id="userId" th:value="${id}">
 
         <label for="new-firstName">First name:</label>
@@ -50,6 +50,9 @@
 
         <label for="new-lastName">Last name:</label>
         <input type="text" id="new-lastName" required><br>
+
+        <label for="current-password">Current Password:</label>
+        <input type="password" id="current-password" required><br>
 
         <label for="new-password">New Password:</label>
         <input type="password" id="new-password" required><br>

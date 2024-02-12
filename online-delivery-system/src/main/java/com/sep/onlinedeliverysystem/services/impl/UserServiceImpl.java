@@ -3,17 +3,10 @@ package com.sep.onlinedeliverysystem.services.impl;
 import com.sep.onlinedeliverysystem.domain.entities.User;
 import com.sep.onlinedeliverysystem.repositories.UserRepository;
 import com.sep.onlinedeliverysystem.services.UserService;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -61,5 +54,26 @@ public class UserServiceImpl implements UserService {
     @Override
     public void delete(String email) {
         userRepository.deleteById(email);
+    }
+
+    @Override
+    public boolean updateProfile(String email, String currentPassword, String newFirstName, String newLastName, String newPassword) {
+        Optional<User> userOptional = userRepository.findById(email);
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
+            // Check if the current password matches
+            if (currentPassword.equals(user.getPassword())) {
+                // Update the first name and last name fields
+                user.setFirstName(newFirstName);
+                user.setLastName(newLastName);
+                // Update the password if a new password is provided
+                if (newPassword != null && !newPassword.isEmpty()) {
+                    user.setPassword(newPassword);
+                }
+                userRepository.save(user);
+                return true;
+            }
+        }
+        return false;
     }
 }
