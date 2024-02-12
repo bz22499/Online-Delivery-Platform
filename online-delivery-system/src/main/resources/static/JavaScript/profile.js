@@ -47,36 +47,43 @@ function cancelEdit() {
 }
 
 function saveProfile() {
-    // Get the current user's ID from the hidden input field
     var userId = document.getElementById('userId').value;
-
-    // Get the updated first and last names from the input fields
     var firstName = document.getElementById('new-firstName').value;
     var lastName = document.getElementById('new-lastName').value;
+    var newPassword = document.getElementById('new-password').value;
+    var confirmPassword = document.getElementById('confirm-password').value;
+
+    // Ensure both password fields match
+    if (newPassword !== confirmPassword) {
+        alert("Passwords do not match");
+        return;
+    }
+
+    var requestBody = {
+        firstName: firstName,
+        lastName: lastName
+    };
+
+    // Only include the password fields if they are not empty and not whitespace
+    if (newPassword.trim() !== '') {
+        requestBody.password = newPassword;
+    }
 
     // Make a request to update the user's profile
     fetch(`/users/${userId}`, {
-        method: 'PUT',
+        method: 'PATCH', // Use PATCH instead of PUT
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({
-            firstName: firstName,
-            lastName: lastName
-            // Add other fields if needed
-        })
+        body: JSON.stringify(requestBody)
     })
         .then(response => {
             if (response.ok) {
-                // Profile update successful
                 alert("Profile updated successfully");
-                // Update displayed details if needed
                 document.querySelector('.firstName').innerText = firstName;
                 document.querySelector('.lastName').innerText = lastName;
-                // Return to profile view
                 returnToProfile();
             } else {
-                // Handle profile update failure
                 throw new Error('Failed to update profile');
             }
         })
