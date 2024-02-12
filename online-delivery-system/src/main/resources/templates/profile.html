@@ -18,7 +18,7 @@
     <li><a target="_parent" href="about">About Us</a></li>
     <li><a target="_parent" href="order">Order</a></li>
     <li><a target="_parent" href="contact">Contact</a></li>
-    <li  class="active" class="right"><a target="_parent" href="profile" th:if="${loggedIn}">Profile</a></li>
+    <li class="active right"><a target="_parent" href="profile" th:if="${loggedIn}">Profile</a></li>
     <li class="right"><a target="_parent" href="login" th:unless="${loggedIn}">Login</a></li>
     <li class="right"><a target="_parent" href="customerlogin" th:unless="${loggedIn}">Sign up</a></li>
     <li class="right"><a target="_parent" href="restaurantlogin" th:unless="${loggedIn}">Partner with us</a></li>
@@ -27,14 +27,12 @@
 <div id="profile-container">
     <div id="profile-picture">
         <input type="file" id="imageInput" accept="image/*" onchange="updateProfilePicture()">
-        <label for="imageInput"><img src="/images" alt="Press To Enter Profile Picture" id="previewImage"></label>
+        <label for="imageInput"><img src="/images/logo_ld_png.png" alt="Press To Enter Profile Picture" id="previewImage"></label>
     </div>
 
     <div id="user-details">
-        <h1 id="firstName" th:text="${firstName}">Anthony</h1>
-        <h1 id="lastName" th:text="${lastName}">Price</h1>
-        <h2 id="job">Software Developer</h2>
-        <p id="description">Passionate about coding and technology.</p>
+        <h1 class="firstName" th:text="${firstName}">John</h1>
+        <h1 class="lastName" th:text="${lastName}">Doe</h1>
 
         <button class="edit-profile" onclick="editProfile()">Edit Profile</button>
         <button class="subscription-button" id="view-subscription">View subscription</button>
@@ -43,17 +41,15 @@
     </div>
 
     <form id="edit-form">
+
+        <!--This is here so we can use the id in the js-->
+        <input type="hidden" id="userId" th:value="${id}">
+
         <label for="new-firstName">First name:</label>
         <input type="text" id="new-firstName" required><br>
 
         <label for="new-lastName">Last name:</label>
         <input type="text" id="new-lastName" required><br>
-
-        <label for="new-job">Job:</label>
-        <input type="text" id="new-job" required><br>
-
-        <label for="new-description">Description:</label>
-        <textarea id="new-description" rows="4" required></textarea><br>
 
         <button type="button" onclick="saveProfile()">Save</button>
         <button type="button" onclick="returnToProfile()">Return</button>
