@@ -48,6 +48,11 @@ function populateGrid(pageData) {
         deleteButton.className = 'grid-item-delete';
         gridItem.appendChild(deleteButton);
 
+        const editButton = document.createElement('div');
+        editButton.className = 'grid-item-edit';
+        gridItem.appendChild(editButton);
+
+
         gridContainer.appendChild(gridItem);
 
 
