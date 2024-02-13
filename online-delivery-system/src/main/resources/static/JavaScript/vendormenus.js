@@ -11,6 +11,19 @@ async function fetchItemsForLoggedInVendor(vendorId) {
     }
 }
 
+async function fetchVendorFromVendorId(vendorId){
+    try {
+        const response = await fetch(`/vendors/${vendorId}`);
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Error fetching item data:', error);
+    }
+}
+
 function deleteItemForVendor(itemId){
     fetch('/menuItems/' + itemId.toString(), {
         method: 'DELETE',
@@ -31,8 +44,48 @@ function deleteItemForVendor(itemId){
         });
 }
 
-function submitFormClicked(name, price, description,itemID){
-    alert(name +" "+ price + " "+description + " "+ itemID);
+async function submitFormClicked(name, price, description,itemID){
+    const vendorInfoElement = document.getElementById('vendor-info');
+    const vendorId = vendorInfoElement.getAttribute('data-id');
+    const vendor = await fetchVendorFromVendorId(vendorId);
+
+    alert(name +" "+ price + " "+description + " "+ itemID + " " + vendorId);
+    let valid = true
+
+    if(valid){
+        valid = /^(\$|)([0-9]\d{0,2}(\,\d{3})*|([0-9]\d*))(\.\d{2})?$/.test(price)
+    }
+
+    if(name.toString() === "" || description.toString() === "" || price.toString() === ""){
+        valid = false
+    }
+
+    const menuItemDTO = {
+        id: 1,
+        name: name,
+        description: description,
+        price: price,
+        vendor: vendor
+    };
+
+    fetch('menuItems/' + itemID, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(menuItemDTO)
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .catch(error => {
+            console.error('There was a problem with the fetch operation:', error);
+        });
+
+
 
 }
 
