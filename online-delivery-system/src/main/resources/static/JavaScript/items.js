@@ -38,7 +38,7 @@ function populateGrid(pageData) {
 
         const footer = document.createElement('div');
         footer.className = 'grid-item-footer'; // footer for grid item that displays the price
-        footer.textContent = item.price;
+        footer.textContent = "£"+item.price;
         gridItem.appendChild(footer); // append footer to grid item
 
         gridItem.addEventListener('click', function() { // make each grid item a button
