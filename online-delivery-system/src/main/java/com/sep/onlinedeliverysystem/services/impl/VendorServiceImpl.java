@@ -1,5 +1,6 @@
 package com.sep.onlinedeliverysystem.services.impl;
 
+import com.sep.onlinedeliverysystem.domain.entities.User;
 import com.sep.onlinedeliverysystem.domain.entities.Vendor;
 import com.sep.onlinedeliverysystem.repositories.VendorRepository;
 import com.sep.onlinedeliverysystem.services.VendorService;
@@ -70,5 +71,26 @@ public class VendorServiceImpl implements VendorService {
     @Override
     public void delete(String email) {
         vendorRepository.deleteById(email);
+    }
+
+    @Override
+    public boolean updateProfile(String email, String currentPassword, String newName, String newDescription, String newPassword) {
+        Optional<Vendor> vendorOptional = vendorRepository.findById(email);
+        if (vendorOptional.isPresent()) {
+            Vendor vendor = vendorOptional.get();
+            // Check if the current password matches
+            if (currentPassword.equals(vendor.getPassword())) {
+                // Update the first name and last name fields
+                vendor.setName(newName);
+                vendor.setDescription(newDescription);
+                // Update the password if a new password is provided
+                if (newPassword != null && !newPassword.isEmpty()) {
+                    vendor.setPassword(newPassword);
+                }
+                vendorRepository.save(vendor);
+                return true;
+            }
+        }
+        return false;
     }
 }
