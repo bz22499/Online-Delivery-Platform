@@ -85,8 +85,6 @@ async function submitFormClicked(name, price, description,itemID){
             console.error('There was a problem with the fetch operation:', error);
         });
 
-
-
 }
 
 function cancelFormClicked(gridItemForm,gridItemContent){
@@ -153,7 +151,7 @@ function populateGrid(pageData) {
         const submitForm = document.createElement('button');
         submitForm.id = 'submit-form-button'
         submitForm.type = "button"
-        submitForm.onclick = function () {submitFormClicked(formItemName.value,formItemPrice.value,formItemDescription.value,item.id)}
+        submitForm.onclick = async function () {await submitFormClicked(formItemName.value,formItemPrice.value,formItemDescription.value,item.id); cancelFormClicked(gridItemForm,gridItemContent)}
         submitForm.textContent = "SUBMIT"
         gridItemForm.appendChild(submitForm);
 
