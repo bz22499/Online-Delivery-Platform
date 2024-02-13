@@ -31,12 +31,14 @@ function deleteItemForVendor(itemId){
         });
 }
 
-function submitFormClicked(){
+function submitFormClicked(name, price, description,itemID){
+    alert(name +" "+ price + " "+description + " "+ itemID);
 
 }
 
-function cancelFormClicked(){
-
+function cancelFormClicked(gridItemForm,gridItemContent){
+    gridItemForm.hidden = true;
+    gridItemContent.hidden = false;
 }
 
 function editItemForVendor(itemId){
@@ -98,14 +100,14 @@ function populateGrid(pageData) {
         const submitForm = document.createElement('button');
         submitForm.id = 'submit-form-button'
         submitForm.type = "button"
-        submitForm.onclick = submitFormClicked()
+        submitForm.onclick = function () {submitFormClicked(formItemName.value,formItemPrice.value,formItemDescription.value,item.id)}
         submitForm.textContent = "SUBMIT"
         gridItemForm.appendChild(submitForm);
 
         const cancelForm = document.createElement('button');
         cancelForm.id = 'cancel-form-button'
         cancelForm.type = "button"
-        cancelForm.onclick = cancelFormClicked()
+        cancelForm.onclick = function () {cancelFormClicked(gridItemForm,gridItemContent)}
         cancelForm.textContent = "CANCEL";
         gridItemForm.appendChild(cancelForm);
 
@@ -117,9 +119,9 @@ function populateGrid(pageData) {
         gridItemForm.hidden=true;
 
         deleteButton.addEventListener('click', function() {
-            const parentNode = deleteButton.parentNode;
+            const parentNode = gridItem;
             deleteItemForVendor(item.id);
-
+            alert("GOT HERE")
             gridContainer.removeChild(parentNode);
         });
 

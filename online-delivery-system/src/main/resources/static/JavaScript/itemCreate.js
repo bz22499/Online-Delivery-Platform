@@ -9,7 +9,7 @@ function createItem(){
     let valid = true
 
     if(valid){
-        valid = /^(\$|)([1-9]\d{0,2}(\,\d{3})*|([1-9]\d*))(\.\d{2})?$/.test(price)
+        valid = /^(\$|)([0-9]\d{0,2}(\,\d{3})*|([0-9]\d*))(\.\d{2})?$/.test(price)
     }
 
     if(name.toString() === "" || description.toString() === "" || price.toString() === ""){
