@@ -107,6 +107,28 @@ public class WebController {
         }
     }
 
+    @GetMapping("/vendorProfile")
+    public String vendorProfile(Principal principal, Model model) {
+        if (principal != null) {
+            String loggedInUserEmail = principal.getName(); // Retrieves the email/id of the currently logged-in user
+            Optional<Vendor> vendor = vendorService.findOne(loggedInUserEmail);
+            if(vendor.isPresent()){
+                model.addAttribute("id", vendor.get().getEmail());
+                model.addAttribute("name", vendor.get().getName());
+                model.addAttribute("description", vendor.get().getDescription());
+                model.addAttribute("rating", vendor.get().getRating());
+                model.addAttribute("password", vendor.get().getPassword());
+                return "vendorProfile";
+            }
+            else {
+                return "notFound";
+            } 
+        } else {
+            // Handle the case when no user is logged in
+            return "login"; // Redirect to the login page
+        }
+    }
+
     @GetMapping("/{email}/menu-page")
     public String getMenuPage(@PathVariable("email") String email, Model model){
         Optional<Vendor> vendor = vendorService.findOne(email);

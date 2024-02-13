@@ -1,6 +1,8 @@
 package com.sep.onlinedeliverysystem.controller;
 
+import com.sep.onlinedeliverysystem.domain.dto.UserDTO;
 import com.sep.onlinedeliverysystem.domain.dto.VendorDTO;
+import com.sep.onlinedeliverysystem.domain.entities.User;
 import com.sep.onlinedeliverysystem.domain.entities.Vendor;
 import com.sep.onlinedeliverysystem.mappers.Mapper;
 import com.sep.onlinedeliverysystem.services.VendorService;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -78,5 +81,32 @@ public class VendorController {
     public ResponseEntity deleteVendor(@PathVariable("email") String email){
         vendorService.delete(email);
         return new ResponseEntity(HttpStatus.NO_CONTENT);
+    }
+
+    @PatchMapping(path = "/vendors/{email}/vendorProfile")
+    public ResponseEntity updateProfile(@PathVariable("email") String email, @RequestBody Map<String, String> requestBody) {
+        String currentPassword = requestBody.get("currentPassword");
+        String newName = requestBody.get("name");
+        String newDescription = requestBody.get("description");
+        String newPassword = requestBody.get("newPassword");
+
+        if (!vendorService.Exists(email)) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        // Attempt to update the profile
+        boolean updated = vendorService.updateProfile(email, currentPassword, newName, newDescription, newPassword);
+
+        if (updated) {
+            // If profile updated successfully, return the updated user DTO
+            Optional<Vendor> updatedVendorOptional = vendorService.findOne(email);
+            if (updatedVendorOptional.isPresent()) {
+                VendorDTO updatedVendorDTO = vendorMapper.mapTo(updatedVendorOptional.get());
+                return new ResponseEntity<>(updatedVendorDTO, HttpStatus.OK);
+            }
+        }
+
+        // If the profile update failed (due to incorrect current password), return UNAUTHORIZED
+        return new ResponseEntity<>("Current password is incorrect", HttpStatus.UNAUTHORIZED);
     }
 }

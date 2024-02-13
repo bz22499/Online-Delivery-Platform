@@ -23,4 +23,7 @@ public interface VendorService {
     Vendor partialUpdate(String email, Vendor vendorEntity);
 
     void delete(String email);
+
+    boolean updateProfile(String email, String currentPassword, String newFirstName, String newLastName, String newPassword);
+
 }
