@@ -44,12 +44,10 @@ function deleteItemForVendor(itemId){
         });
 }
 
-async function submitFormClicked(name, price, description,itemID){
+async function submitFormClicked(name, price, description,itemID,itemTitle,itemDescription,itemFooter){
     const vendorInfoElement = document.getElementById('vendor-info');
     const vendorId = vendorInfoElement.getAttribute('data-id');
     const vendor = await fetchVendorFromVendorId(vendorId);
-
-    alert(name +" "+ price + " "+description + " "+ itemID + " " + vendorId);
     let valid = true
 
     if(valid){
@@ -85,17 +83,16 @@ async function submitFormClicked(name, price, description,itemID){
             console.error('There was a problem with the fetch operation:', error);
         });
 
+    itemTitle.textContent = name;
+    itemFooter.textContent = "£"+ price;
+    itemDescription.textContent = description;
+
 }
 
 function cancelFormClicked(gridItemForm,gridItemContent){
     gridItemForm.hidden = true;
     gridItemContent.hidden = false;
 }
-
-function editItemForVendor(itemId){
-    alert("The item with id " + itemId + " will now be edited");
-}
-
 
 function populateGrid(pageData) {
     const gridContainer = document.querySelector('.grid-container');
@@ -151,7 +148,7 @@ function populateGrid(pageData) {
         const submitForm = document.createElement('button');
         submitForm.id = 'submit-form-button'
         submitForm.type = "button"
-        submitForm.onclick = async function () {await submitFormClicked(formItemName.value,formItemPrice.value,formItemDescription.value,item.id); cancelFormClicked(gridItemForm,gridItemContent)}
+        submitForm.onclick = async function () {await submitFormClicked(formItemName.value,formItemPrice.value,formItemDescription.value,item.id,gridTitle,description,footer); cancelFormClicked(gridItemForm,gridItemContent)}
         submitForm.textContent = "SUBMIT"
         gridItemForm.appendChild(submitForm);
 
@@ -172,12 +169,10 @@ function populateGrid(pageData) {
         deleteButton.addEventListener('click', function() {
             const parentNode = gridItem;
             deleteItemForVendor(item.id);
-            alert("GOT HERE")
             gridContainer.removeChild(parentNode);
         });
 
         editButton.addEventListener('click', function (){
-            editItemForVendor(item.id);
             gridItemContent.hidden = true;
             gridItemForm.hidden=false;
         });
