@@ -200,3 +200,8 @@ ul.banner li a:hover{
     display: block;
     width: 80%;
 }
+
+.grid-item-form button{
+    margin: auto;
+    display: block;
+}
