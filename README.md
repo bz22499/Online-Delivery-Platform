@@ -75,7 +75,7 @@ mvn -version
 ```
 
 If Maven is installed, you will see the version information. Otherwise, you can follow the installation instructions below for your respective OS.
-##### MacOS
+#### MacOS
 First, ensure either [Homebrew](https://brew.sh/) or [Macports](https://www.macports.org/install.php) are installed by following the instructions on their respective websites.
 ###### Using Homebrew
 ```console
@@ -86,7 +86,7 @@ brew install maven
 sudo port install maven
 ```
 
-##### Linux
+#### Linux
 ###### For Debian/Ubuntu distributions run
 ```console
 sudo apt install maven
@@ -97,7 +97,7 @@ sudo dnf install maven
 ```
 For other distributions, use the package manager accordingly or download the binary from the [Apache Maven Project Website](https://maven.apache.org/download.cgi).
 
-##### Windows
+#### Windows
 - Download the Maven zip file from the [Apache Maven Project Website](https://maven.apache.org/download.cgi).
 - Unzip the distribution archive to the directory you wish to install Maven. The subdirectory apache-maven-x.x.x will be created from the archive.
 - Add the bin directory of the created directory (apache-maven-x.x.x\bin) to the PATH environment variable.
