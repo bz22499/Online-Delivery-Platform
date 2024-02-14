@@ -47,7 +47,7 @@ public class SecurityConfig extends GlobalAuthenticationConfigurerAdapter {
                 .authorizeHttpRequests((authorize) ->
                         authorize
                                 .requestMatchers("/profile/**").hasAuthority("USER")
-                                .requestMatchers("/vendoritems/**", "/vendor/**").hasAuthority("VENDOR")
+                                .requestMatchers("/vendoritems/**", "/vendor/**", "/vendorProfile/**").hasAuthority("VENDOR")
                                 .anyRequest().permitAll()
                 ).formLogin(
                         form -> form
