@@ -15,13 +15,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
-public class VendorAddressRepositoryIT {
+public class VendorAddressRepositoryIntegrationTests {
 
     private VendorRepository vendor;
     private VendorAddressRepository vendorAddressTest;
 
     @Autowired
-    public VendorAddressRepositoryIT(VendorAddressRepository vendorAddressTest, VendorRepository vendor){
+    public VendorAddressRepositoryIntegrationTests(VendorAddressRepository vendorAddressTest, VendorRepository vendor){
         this.vendorAddressTest = vendorAddressTest;
         this.vendor = vendor;
     }

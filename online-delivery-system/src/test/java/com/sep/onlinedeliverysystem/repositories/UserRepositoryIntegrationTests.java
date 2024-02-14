@@ -14,12 +14,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
-public class UserRepositoryIT {
+public class UserRepositoryIntegrationTests {
 
     private UserRepository userTest;
 
     @Autowired
-    public UserRepositoryIT(UserRepository userTest){
+    public UserRepositoryIntegrationTests(UserRepository userTest){
         this.userTest = userTest;
     }
 

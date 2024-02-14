@@ -9,7 +9,6 @@ import com.sep.onlinedeliverysystem.repositories.MenuItemRepository;
 import com.sep.onlinedeliverysystem.repositories.OrderRepository;
 import com.sep.onlinedeliverysystem.repositories.VendorRepository;
 import com.sep.onlinedeliverysystem.services.BasketItemService;
-import org.checkerframework.checker.index.qual.PolyUpperBound;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +27,7 @@ import static org.hamcrest.Matchers.hasSize;
 @ExtendWith(SpringExtension.class)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 @AutoConfigureMockMvc
-public class BasketItemControllerIT {
+public class BasketItemControllerIntegrationTests {
     @Autowired
     private OrderRepository orderRepository;
     private BasketRepository basketRepository;
@@ -39,7 +38,7 @@ public class BasketItemControllerIT {
     private ObjectMapper objectMapper;
 
     @Autowired
-    public BasketItemControllerIT(BasketItemService basketItemService, MockMvc mockMvc, ObjectMapper objectMapper, BasketRepository basketRepository, VendorRepository vendorRepository, MenuItemRepository menuItemRepository) {
+    public BasketItemControllerIntegrationTests(BasketItemService basketItemService, MockMvc mockMvc, ObjectMapper objectMapper, BasketRepository basketRepository, VendorRepository vendorRepository, MenuItemRepository menuItemRepository) {
         this.basketRepository = basketRepository;
         this.vendorRepository = vendorRepository;
         this.menuItemRepository = menuItemRepository;
