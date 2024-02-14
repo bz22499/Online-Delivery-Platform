@@ -1,18 +1,3 @@
-function updateProfilePicture() {
-    var input = document.getElementById('imageInput');
-    var preview = document.getElementById('previewImage');
-
-    var file = input.files[0];
-
-    if (file) {
-        var reader = new FileReader();
-        reader.onload = function(e) {
-            preview.src = e.target.result;
-        };
-        reader.readAsDataURL(file);
-    }
-}
-
 function editProfile() {
 
     // Clear the password-related input fields
@@ -52,7 +37,7 @@ function cancelEdit() {
 }
 
 function saveProfile() {
-    var userId = document.getElementById('userId').value;
+    var vendorId = document.getElementById('vendorId').value;
     var currentPassword = document.getElementById('current-password').value;
     var name = document.getElementById('new-name').value;
     var description = document.getElementById('new-description').value;
@@ -77,7 +62,7 @@ function saveProfile() {
     }
 
     // Make a request to update the user's profile including the password
-    fetch(`/vendors/${userId}/profile`, {
+    fetch(`/vendors/${vendorId}/vendorProfile`, {
         method: 'PATCH',
         headers: {
             'Content-Type': 'application/json'
@@ -99,6 +84,6 @@ function saveProfile() {
         })
         .catch(error => {
             console.error('Error updating profile:', error);
-            alert("Failed to update profile");
+            alert("Failed to update profile 123456");
         });
 }
