@@ -74,4 +74,31 @@ public class UserController {
         userService.delete(email);
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
+
+    @PatchMapping(path = "/users/{email}/profile")
+    public ResponseEntity updateProfile(@PathVariable("email") String email, @RequestBody Map<String, String> requestBody) {
+        String currentPassword = requestBody.get("currentPassword");
+        String newFirstName = requestBody.get("firstName");
+        String newLastName = requestBody.get("lastName");
+        String newPassword = requestBody.get("newPassword");
+
+        if (!userService.Exists(email)) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        // Attempt to update the profile
+        boolean updated = userService.updateProfile(email, currentPassword, newFirstName, newLastName, newPassword);
+
+        if (updated) {
+            // If profile updated successfully, return the updated user DTO
+            Optional<User> updatedUserOptional = userService.findOne(email);
+            if (updatedUserOptional.isPresent()) {
+                UserDTO updatedUserDTO = userMapper.mapTo(updatedUserOptional.get());
+                return new ResponseEntity<>(updatedUserDTO, HttpStatus.OK);
+            }
+        }
+
+        // If the profile update failed (due to incorrect current password), return UNAUTHORIZED
+        return new ResponseEntity<>("Current password is incorrect", HttpStatus.UNAUTHORIZED);
+    }
 }
