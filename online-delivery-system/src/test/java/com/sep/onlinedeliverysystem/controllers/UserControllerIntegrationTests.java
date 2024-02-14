@@ -243,5 +243,30 @@ public class UserControllerIntegrationTests {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.firstName").value("UpdatedFirstName"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.lastName").value("UpdatedLastName"));
     }
+
+    @Test
+    public void testThatUpdateProfileReturnsUnauthorizedForIncorrectCurrentPassword() throws Exception {
+        // Prepare test data
+        User testUserEntity1 = TestUtil.userBuild1();
+        userService.save(testUserEntity1);
+        String email = testUserEntity1.getEmail();
+
+        // Prepare request body with incorrect current password
+        Map<String, String> requestBody = new HashMap<>();
+        requestBody.put("currentPassword", "incorrectPassword");
+        requestBody.put("firstName", "UpdatedFirstName");
+        requestBody.put("lastName", "UpdatedLastName");
+        requestBody.put("newPassword", "newPassword");
+
+        // Convert request body to JSON
+        String requestBodyJson = objectMapper.writeValueAsString(requestBody);
+
+        // Perform the request
+        mockMvc.perform(
+                        MockMvcRequestBuilders.patch("/users/" + email + "/profile")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(requestBodyJson)
+                ).andExpect(MockMvcResultMatchers.status().isUnauthorized());
+    }
 }
 
