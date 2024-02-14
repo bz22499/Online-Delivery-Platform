@@ -230,5 +230,26 @@ public class VendorControllerIntegrationTests {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.description").value("UpdatedDescription"));
     }
 
+    @Test
+    public void testThatUpdateProfileReturnsUnauthorizedForIncorrectCurrentPassword() throws Exception {
+        Vendor testVendorEntity1 = TestUtil.vendorBuild1();
+        vendorService.save(testVendorEntity1);
+        String email = testVendorEntity1.getEmail();
 
+        // Make request body with incorrect current password
+        Map<String, String> requestBody = new HashMap<>();
+        requestBody.put("currentPassword", "incorrectPassword");
+        requestBody.put("name", "UpdatedVendorName");
+        requestBody.put("description", "UpdatedDescription");
+        requestBody.put("newPassword", "newPassword");
+
+        // Convert request body to JSON
+        String requestBodyJson = objectMapper.writeValueAsString(requestBody);
+
+        mockMvc.perform(
+                MockMvcRequestBuilders.patch("/vendors/" + email + "/vendorProfile")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(requestBodyJson)
+        ).andExpect(MockMvcResultMatchers.status().isUnauthorized());
+    }
 }
