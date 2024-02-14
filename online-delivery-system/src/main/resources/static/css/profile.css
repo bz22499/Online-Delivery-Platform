@@ -92,9 +92,10 @@ button {
 
 #edit-form {
     display: none;
-    label {
-        margin: 8px auto;
-    }
+}
+
+#edit-form label {
+    margin: 8px auto;
 }
 
 .background-image{
