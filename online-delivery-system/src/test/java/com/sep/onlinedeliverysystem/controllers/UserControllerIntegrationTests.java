@@ -218,12 +218,11 @@ public class UserControllerIntegrationTests {
 
     @Test
     public void testThatUpdateProfileSuccessfullyReturnsHttpStatus200Ok() throws Exception {
-        // Prepare test data
         User testUserEntity1 = TestUtil.userBuild1();
         userService.save(testUserEntity1);
         String email = testUserEntity1.getEmail();
 
-        // Prepare request body
+        // make request body
         Map<String, String> requestBody = new HashMap<>();
         requestBody.put("currentPassword", "password");
         requestBody.put("firstName", "UpdatedFirstName");
@@ -233,7 +232,6 @@ public class UserControllerIntegrationTests {
         // Convert request body to JSON
         String requestBodyJson = objectMapper.writeValueAsString(requestBody);
 
-        // Perform the request
         mockMvc.perform(
                         MockMvcRequestBuilders.patch("/users/" + email + "/profile")
                                 .contentType(MediaType.APPLICATION_JSON)
@@ -246,12 +244,11 @@ public class UserControllerIntegrationTests {
 
     @Test
     public void testThatUpdateProfileReturnsUnauthorizedForIncorrectCurrentPassword() throws Exception {
-        // Prepare test data
         User testUserEntity1 = TestUtil.userBuild1();
         userService.save(testUserEntity1);
         String email = testUserEntity1.getEmail();
 
-        // Prepare request body with incorrect current password
+        // Make request body with incorrect current password
         Map<String, String> requestBody = new HashMap<>();
         requestBody.put("currentPassword", "incorrectPassword");
         requestBody.put("firstName", "UpdatedFirstName");
@@ -261,7 +258,6 @@ public class UserControllerIntegrationTests {
         // Convert request body to JSON
         String requestBodyJson = objectMapper.writeValueAsString(requestBody);
 
-        // Perform the request
         mockMvc.perform(
                         MockMvcRequestBuilders.patch("/users/" + email + "/profile")
                                 .contentType(MediaType.APPLICATION_JSON)

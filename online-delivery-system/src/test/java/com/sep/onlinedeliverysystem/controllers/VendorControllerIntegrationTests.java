@@ -20,6 +20,9 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
@@ -200,4 +203,32 @@ public class VendorControllerIntegrationTests {
                         .contentType(MediaType.APPLICATION_JSON)
         ).andExpect(MockMvcResultMatchers.status().isNoContent());
     }
+
+    @Test
+    public void testThatUpdateProfileSuccessfullyReturnsHttpStatus200Ok() throws Exception {
+        Vendor testVendorEntity1 = TestUtil.vendorBuild1();
+        vendorService.save(testVendorEntity1);
+        String email = testVendorEntity1.getEmail();
+
+        // Make request body
+        Map<String, String> requestBody = new HashMap<>();
+        requestBody.put("currentPassword", "password");
+        requestBody.put("name", "UpdatedVendorName");
+        requestBody.put("description", "UpdatedDescription");
+        requestBody.put("newPassword", "newPassword");
+
+        // Convert request body to JSON
+        String requestBodyJson = objectMapper.writeValueAsString(requestBody);
+
+        mockMvc.perform(
+                        MockMvcRequestBuilders.patch("/vendors/" + email + "/vendorProfile")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(requestBodyJson)
+                ).andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.email").value(email))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.name").value("UpdatedVendorName"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.description").value("UpdatedDescription"));
+    }
+
+
 }
