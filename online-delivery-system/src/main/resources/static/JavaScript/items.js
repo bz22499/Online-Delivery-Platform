@@ -24,11 +24,21 @@ function populateGrid(pageData) {
         // Make grid item
         const gridItem = document.createElement('div');
         gridItem.className = 'grid-item';
-        gridItem.textContent = item.name; // display menuItem name
+
+        const gridTitle = document.createElement('div')
+        gridTitle.className='grid-item-title'
+        gridTitle.textContent = item.name;
+        gridItem.appendChild(gridTitle)
+
+
+        const description = document.createElement('div');
+        description.className = 'grid-item-description';
+        description.textContent = item.description;
+        gridItem.appendChild(description);
 
         const footer = document.createElement('div');
         footer.className = 'grid-item-footer'; // footer for grid item that displays the price
-        footer.textContent = item.price;
+        footer.textContent = "£"+item.price;
         gridItem.appendChild(footer); // append footer to grid item
 
         gridItem.addEventListener('click', function() { // make each grid item a button

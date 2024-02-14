@@ -76,16 +76,14 @@ ul.banner li a:hover{
     padding: 40px;
     margin-right: 400px;
 }
+
+
 .grid-item {
     background-color: rgba(255, 255, 255, 0.8);
     border: 1px solid rgba(0, 0, 0, 0.8);
-    /*padding: 20px;*/
-    font-size: 30px;
-    text-align: center;
-    height: 100px;
+    height: 200px;
     overflow: hidden;
     position: relative;
-    padding-top: 25%;
 }
 
 .grid-item img {
@@ -98,14 +96,28 @@ ul.banner li a:hover{
     left: 0;
 }
 
-.grid-item-footer {
-    background-color: white;
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    padding: 10px 0;
-    font-size: 1rem;
+.grid-item-title{
+    padding: 30px 10px 10px 20px;
     text-align: center;
+    position: relative;
+    font-size: 3rem;
+    color: black;
+}
+
+.grid-item-description{
+    text-align: center;
+    font-size: 1.5rem;
+    position: relative;
+    color: black;
+    padding-bottom: 5px;
+}
+
+.grid-item-footer {
+    text-align: center;
+    position: absolute;
+    font-size: 1rem;
+    width: 100%;
+    bottom: 0;
 }
 
 .grid-item-delete{
@@ -120,6 +132,22 @@ ul.banner li a:hover{
 .grid-item-delete:hover {
     background-color: firebrick;
 }
+
+.grid-item-edit{
+    position: absolute;
+    top: 0;
+    right: 40px;
+    background-color: green;
+    padding-bottom:20px;
+    padding-left:40px;
+    cursor:pointer;
+}
+
+.grid-item-edit:hover{
+    background-color: #4CAF50;
+}
+
+
 
 .basket {
     position: fixed;
@@ -161,4 +189,19 @@ ul.banner li a:hover{
 /* Adjust the height of basket items to make sure there is space for the button */
 .basket-items {
     height: calc(100% - 100px); /* Adjust the value based on actual header and button height */
+}
+
+.grid-item-form{
+    width: 100%;
+}
+.grid-item-form input{
+    height: 30px;
+    margin: 10px auto 10px auto;
+    display: block;
+    width: 80%;
+}
+
+.grid-item-form button{
+    margin: auto;
+    display: block;
 }
