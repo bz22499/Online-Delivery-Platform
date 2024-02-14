@@ -66,26 +66,32 @@ async function submitFormClicked(name, price, description,itemID,itemTitle,itemD
         vendor: vendor
     };
 
-    fetch('menuItems/' + itemID, {
-        method: 'PUT',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(menuItemDTO)
-    })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
+    if(valid){
+        fetch('menuItems/' + itemID, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(menuItemDTO)
         })
-        .catch(error => {
-            console.error('There was a problem with the fetch operation:', error);
-        });
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .catch(error => {
+                console.error('There was a problem with the fetch operation:', error);
+            });
 
-    itemTitle.textContent = name;
-    itemFooter.textContent = "£"+ price;
-    itemDescription.textContent = description;
+        itemTitle.textContent = name;
+        itemFooter.textContent = "£"+ price;
+        itemDescription.textContent = description;
+    }else{
+        alert("FORM INCORRECTLY FILLED OUT")
+    }
+
+
 
 }
 
@@ -116,7 +122,7 @@ function populateGrid(pageData) {
 
         const footer = document.createElement('div');
         footer.className = 'grid-item-footer';
-        footer.textContent = "£" + item.price;
+        footer.textContent = "£" + item.price.toFixed(2);
         gridItemContent.appendChild(footer);
 
         const deleteButton = document.createElement('div');
@@ -142,7 +148,7 @@ function populateGrid(pageData) {
         gridItemForm.appendChild(formItemDescription)
 
         const formItemPrice = document.createElement('input')
-        formItemPrice.value=item.price;
+        formItemPrice.value=item.price.toFixed(2);
         gridItemForm.appendChild(formItemPrice)
 
         const submitForm = document.createElement('button');
