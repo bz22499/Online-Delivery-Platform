@@ -17,7 +17,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
-public class BasketItemRepositoryIT {
+public class BasketItemRepositoryIntegrationTests {
     private VendorRepository vendorRepository;
     private MenuItemRepository menuItemRepository;
     private OrderRepository orderRepository;
@@ -25,7 +25,7 @@ public class BasketItemRepositoryIT {
     private BasketItemRepository basketItemRepository;
 
     @Autowired
-    public BasketItemRepositoryIT(BasketItemRepository basketItemRepository, BasketRepository basketRepository, OrderRepository orderRepository, VendorRepository vendorRepository, MenuItemRepository menuItemRepository){
+    public BasketItemRepositoryIntegrationTests(BasketItemRepository basketItemRepository, BasketRepository basketRepository, OrderRepository orderRepository, VendorRepository vendorRepository, MenuItemRepository menuItemRepository){
         this.vendorRepository = vendorRepository;
         this.menuItemRepository = menuItemRepository;
         this.orderRepository = orderRepository;

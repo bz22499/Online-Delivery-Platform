@@ -4,7 +4,6 @@ import com.sep.onlinedeliverysystem.TestUtil;
 import com.sep.onlinedeliverysystem.domain.entities.*;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
@@ -17,12 +16,12 @@ import java.util.Optional;
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
-public class BasketRepositoryIT {
+public class BasketRepositoryIntegrationTests {
     private OrderRepository orderRepository;
     private BasketRepository basketRepository;
 
     @Autowired
-    public BasketRepositoryIT(BasketRepository basketRepository, OrderRepository orderRepository){
+    public BasketRepositoryIntegrationTests(BasketRepository basketRepository, OrderRepository orderRepository){
         this.orderRepository = orderRepository;
         this.basketRepository = basketRepository;
     }
