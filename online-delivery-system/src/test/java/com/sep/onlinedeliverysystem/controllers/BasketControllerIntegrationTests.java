@@ -23,7 +23,7 @@ import static org.hamcrest.Matchers.hasSize;
 @ExtendWith(SpringExtension.class)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 @AutoConfigureMockMvc
-public class BasketControllerIT {
+public class BasketControllerIntegrationTests {
     @Autowired
     private OrderRepository orderRepository;
     private BasketService basketService;
@@ -31,7 +31,7 @@ public class BasketControllerIT {
     private ObjectMapper objectMapper;
 
     @Autowired
-    public BasketControllerIT(MockMvc mockMvc, BasketService basketService) {
+    public BasketControllerIntegrationTests(MockMvc mockMvc, BasketService basketService) {
         this.mockMvc = mockMvc;
         this.basketService = basketService;
         this.objectMapper = new ObjectMapper();

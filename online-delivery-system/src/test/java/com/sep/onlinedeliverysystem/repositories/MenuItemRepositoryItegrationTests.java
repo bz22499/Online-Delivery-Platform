@@ -17,14 +17,14 @@ import java.util.Optional;
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
-public class MenuItemRepositoryIT {
+public class MenuItemRepositoryItegrationTests {
 
     @Autowired
     private VendorRepository vendorRepository;
     private MenuItemRepository menuItemTest;
 
     @Autowired
-    public MenuItemRepositoryIT(MenuItemRepository menuItemTest){
+    public MenuItemRepositoryItegrationTests(MenuItemRepository menuItemTest){
         this.menuItemTest = menuItemTest;
     }
 
