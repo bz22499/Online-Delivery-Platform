@@ -12,6 +12,10 @@ async function fetchRestaurants(page =0, size = 18) {
 }
 
 async function createOrder() {
+    const existingOrder = sessionStorage.getItem('orderId') // check if order has already been created for the session. If so, don't proceed with order creation
+    if (existingOrder) {
+        return;
+    }
     try {
         const response = await fetch(`/orders`, {
             method: 'POST',
