@@ -14,12 +14,12 @@ import java.util.Optional;
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
 @DirtiesContext(classMode =  DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
-public class VendorRepositoryIT {
+public class VendorRepositoryIntegrationTests {
 
     private VendorRepository vendorTest;
 
     @Autowired
-    public VendorRepositoryIT(VendorRepository vendorTest) { this.vendorTest = vendorTest; }
+    public VendorRepositoryIntegrationTests(VendorRepository vendorTest) { this.vendorTest = vendorTest; }
 
     @Test
     public void testSingleVendorCreationAndFind(){

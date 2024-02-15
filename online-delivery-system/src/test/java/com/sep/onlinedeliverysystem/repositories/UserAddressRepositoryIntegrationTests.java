@@ -16,13 +16,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
-public class UserAddressRepositoryIT {
+public class UserAddressRepositoryIntegrationTests {
 
     private UserRepository user;
     private AddressRepository userAddressTest;
 
     @Autowired
-    public UserAddressRepositoryIT(AddressRepository test, UserRepository user){
+    public UserAddressRepositoryIntegrationTests(AddressRepository test, UserRepository user){
         this.userAddressTest = test;
         this.user = user;
     }

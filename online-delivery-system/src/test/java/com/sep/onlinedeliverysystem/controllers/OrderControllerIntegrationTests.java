@@ -22,13 +22,13 @@ import static org.hamcrest.Matchers.hasSize;
 @ExtendWith(SpringExtension.class)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 @AutoConfigureMockMvc
-public class OrderControllerIT {
+public class OrderControllerIntegrationTests {
     private OrderService orderService;
     private MockMvc mockMvc;
     private ObjectMapper objectMapper;
 
     @Autowired
-    public OrderControllerIT(OrderService orderService, MockMvc mockMvc){
+    public OrderControllerIntegrationTests(OrderService orderService, MockMvc mockMvc){
         this.orderService = orderService;
         this.mockMvc = mockMvc;
         this.objectMapper = new ObjectMapper();
