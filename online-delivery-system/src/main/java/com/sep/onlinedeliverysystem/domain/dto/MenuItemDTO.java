@@ -15,5 +15,8 @@ public class MenuItemDTO {
     private String name;
     private String description;
     private float price;
+    @Builder.Default // add this so we don't have to change all the front end related to the creation of menu items
+    private boolean delete = false;
     private Vendor vendor;
+
 }

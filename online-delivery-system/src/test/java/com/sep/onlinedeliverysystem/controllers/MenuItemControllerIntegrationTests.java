@@ -109,7 +109,7 @@ public class MenuItemControllerIntegrationTests {
     }
 
     @Test
-    public void testThatListItemsByVendorSuccessfullyReturnsListOfMenuItems() throws Exception {
+    public void testThatListItemsByVendorAndDeleteFalseSuccessfullyReturnsListOfMenuItems() throws Exception {
         Vendor testVendor = TestUtil.vendorBuild1();
         vendorRepository.save(testVendor);
         MenuItem testItem1 = TestUtil.menuItemBuilder1(testVendor);
