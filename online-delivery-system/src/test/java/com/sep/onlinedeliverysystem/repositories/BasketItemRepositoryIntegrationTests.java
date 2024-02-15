@@ -116,12 +116,11 @@ public class BasketItemRepositoryIntegrationTests {
     }
 
     @Test
-        public void deleteByMenuItemId(){
+        public void deleteWhenMenuItemIsDeleted(){
         Order order = TestUtil.orderBuilder();
         orderRepository.save(order);
         Basket basket = TestUtil.basketBuilder(order);
         basketRepository.save(basket);
-
         Vendor vendor = TestUtil.vendorBuild1();
         vendorRepository.save(vendor);
         MenuItem menuItem = TestUtil.menuItemBuilder1(vendor);
