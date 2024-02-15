@@ -11,6 +11,3 @@
 ### Tasks
 Add task number to link other issues
 
-### Label
-
-### Assignees
