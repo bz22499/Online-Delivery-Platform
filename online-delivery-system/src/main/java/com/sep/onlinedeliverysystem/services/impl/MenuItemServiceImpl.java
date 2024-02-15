@@ -53,6 +53,7 @@ public class MenuItemServiceImpl implements MenuItemService {
             Optional.ofNullable(menuItemEntity.getDescription()).ifPresent(existingMenuItem::setDescription);
             Optional.ofNullable(menuItemEntity.getPrice()).ifPresent(existingMenuItem::setPrice);
             Optional.ofNullable(menuItemEntity.getName()).ifPresent(existingMenuItem::setName);
+            existingMenuItem.setDelete(menuItemEntity.isDelete());
             return menuItemRepository.save(existingMenuItem);
         }).orElseThrow(() -> new RuntimeException("Item doesn't exist"));
     }
