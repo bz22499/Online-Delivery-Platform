@@ -94,4 +94,39 @@ public class MenuItemRepositoryItegrationTests {
                 .hasSize(3)
                 .containsExactly(item1, item2, item3);
     }
+
+    @Test
+    public void testFindByDeleteFalse(){
+        Vendor vendor = TestUtil.vendorBuild1();
+        vendorRepository.save(vendor);
+        MenuItem item1 = TestUtil.menuItemBuilder1(vendor);
+        MenuItem item2 = TestUtil.menuItemBuilder2(vendor);
+        MenuItem item3 = TestUtil.menuItemBuilder3(vendor);
+        menuItemTest.save(item1);
+        menuItemTest.save(item2);
+        menuItemTest.save(item3);
+        Iterable<MenuItem> result = menuItemTest.findByDeleteIsFalse();
+        assertThat(result)
+                .hasSize(3)
+                .containsExactly(item1, item2, item3);
+    }
+
+    @Test
+    public void testFindDeleteTrue(){
+        Vendor vendor = TestUtil.vendorBuild1();
+        vendorRepository.save(vendor);
+        MenuItem item1 = TestUtil.menuItemBuilder1(vendor);
+        item1.setDelete(true);
+        MenuItem item2 = TestUtil.menuItemBuilder2(vendor);
+        item2.setDelete(true);
+        MenuItem item3 = TestUtil.menuItemBuilder3(vendor);
+        item3.setDelete(true);
+        menuItemTest.save(item1);
+        menuItemTest.save(item2);
+        menuItemTest.save(item3);
+        Iterable<MenuItem> result = menuItemTest.findByDeleteIsTrue();
+        assertThat(result)
+                .hasSize(3)
+                .containsExactly(item1, item2, item3);
+    }
 }
