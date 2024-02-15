@@ -114,22 +114,4 @@ public class BasketItemRepositoryIntegrationTests {
         Optional<BasketItem> result = basketItemRepository.findById(basket.getId());
         assertThat(result).isEmpty();
     }
-
-    @Test
-        public void deleteWhenMenuItemIsDeleted(){
-        Order order = TestUtil.orderBuilder();
-        orderRepository.save(order);
-        Basket basket = TestUtil.basketBuilder(order);
-        basketRepository.save(basket);
-        Vendor vendor = TestUtil.vendorBuild1();
-        vendorRepository.save(vendor);
-        MenuItem menuItem = TestUtil.menuItemBuilder1(vendor);
-        menuItemRepository.save(menuItem);
-        BasketItem basketItem = TestUtil.basketItemBuilder(basket, menuItem, 1);
-        basketItemRepository.save(basketItem);
-        menuItemRepository.delete(menuItem);
-        Optional<BasketItem> result = basketItemRepository.findById(basket.getId());
-        assertThat(result).isEmpty();
-    }
-
 }

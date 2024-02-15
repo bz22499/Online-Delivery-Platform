@@ -1,9 +1,7 @@
 package com.sep.onlinedeliverysystem.services.impl;
 
 import com.sep.onlinedeliverysystem.domain.entities.MenuItem;
-import com.sep.onlinedeliverysystem.domain.entities.Vendor;
 import com.sep.onlinedeliverysystem.repositories.MenuItemRepository;
-import com.sep.onlinedeliverysystem.repositories.VendorRepository;
 import com.sep.onlinedeliverysystem.services.MenuItemService;
 import org.springframework.stereotype.Service;
 
@@ -62,5 +60,20 @@ public class MenuItemServiceImpl implements MenuItemService {
     @Override
     public void delete(Long id) {
         menuItemRepository.deleteById(id);
+    }
+
+    @Override
+    public List<MenuItem> findByDeleteIsFalse() {
+        return StreamSupport.stream(menuItemRepository.findByDeleteIsFalse().spliterator(), false).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<MenuItem> findByDeleteIsTrue() {
+        return StreamSupport.stream(menuItemRepository.findByDeleteIsTrue().spliterator(), false).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<MenuItem> findByDeleteIsFalseAndVendorEmail(String vendorId) {
+        return StreamSupport.stream(menuItemRepository.findByDeleteIsFalseAndVendorEmail(vendorId).spliterator(), false).collect(Collectors.toList());
     }
 }

@@ -11,4 +11,5 @@ public interface MenuItemRepository extends CrudRepository<MenuItem, Long> {
     List<MenuItem> findByVendorEmail(String vendorId);
     List<MenuItem> findByDeleteIsFalse();
     List<MenuItem> findByDeleteIsTrue();
+    List<MenuItem> findByDeleteIsFalseAndVendorEmail(String vendorId);
 }
