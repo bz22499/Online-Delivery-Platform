@@ -58,6 +58,7 @@ public class DriverServiceImpl implements DriverService {
         return driverRepository.findById(email).map(existingDriver ->{
             Optional.ofNullable(driverEntity.getRating()).ifPresent(existingDriver::setRating);
             Optional.ofNullable(driverEntity.getPassword()).ifPresent(existingDriver::setPassword);
+            Optional.ofNullable(driverEntity.getName()).ifPresent(existingDriver::setName);
             return driverRepository.save(existingDriver);
         }).orElseThrow(() -> new RuntimeException("Driver doesn't exist"));
     }
