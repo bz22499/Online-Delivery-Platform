@@ -22,10 +22,9 @@ public class MenuItem {
     private String name;
     private String description;
     private float price;
+    @Builder.Default
+    private boolean delete = false;
     @ManyToOne
     @JoinColumn(name = "vendorEmail", nullable = false)
     private Vendor vendor;
-
-    @OneToMany(mappedBy = "menuItem", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<BasketItem> basketItems = new ArrayList<>();
 }

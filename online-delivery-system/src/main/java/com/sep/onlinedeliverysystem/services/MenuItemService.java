@@ -20,4 +20,9 @@ public interface MenuItemService {
     MenuItem partialUpdate(Long id, MenuItem menuItemEntity);
 
     void delete(Long id);
+
+    List<MenuItem> findByDeleteIsFalse();
+
+    List<MenuItem> findByDeleteIsTrue();
+    List<MenuItem> findByDeleteIsFalseAndVendorEmail(String vendorId);
 }

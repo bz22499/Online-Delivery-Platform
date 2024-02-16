@@ -1,3 +1,12 @@
+---
+name: Bug
+about: Bug Report
+title: "[BUG]"
+labels: ''
+assignees: ''
+
+---
+
 # Bug Report
 ### Describe the bug
 

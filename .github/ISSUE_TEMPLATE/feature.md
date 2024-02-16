@@ -1,3 +1,12 @@
+---
+name: Feature
+about: New feature
+title: "[FEATURE]"
+labels: ''
+assignees: ''
+
+---
+
 # New Feature
 
 ### Describe feature
@@ -13,8 +22,3 @@
 ### Branch
 
 ### Tasks
-Add task number to link other issues
-
-### Label
-
-### Assignees
