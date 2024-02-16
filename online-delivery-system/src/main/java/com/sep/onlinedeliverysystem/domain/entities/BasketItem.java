@@ -24,7 +24,6 @@ public class BasketItem {
     private Basket basket;
 
     @ManyToOne
-    @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "menuItemId", nullable = false)
     private MenuItem menuItem;
 
