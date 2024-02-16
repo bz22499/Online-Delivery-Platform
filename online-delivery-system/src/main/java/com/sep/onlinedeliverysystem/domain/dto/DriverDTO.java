@@ -9,11 +9,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class VendorDTO {
+public class DriverDTO {
     private String email;
     private String name;
     private String password;
-    private String description;
     private float rating;
-    private String imageUrl;
 }

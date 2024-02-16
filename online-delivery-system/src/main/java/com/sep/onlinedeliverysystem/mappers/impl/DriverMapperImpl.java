@@ -1,26 +1,26 @@
 package com.sep.onlinedeliverysystem.mappers.impl;
 
-import com.sep.onlinedeliverysystem.domain.dto.VendorDTO;
-import com.sep.onlinedeliverysystem.domain.entities.Vendor;
+import com.sep.onlinedeliverysystem.domain.dto.DriverDTO;
+import com.sep.onlinedeliverysystem.domain.entities.Driver;
 import com.sep.onlinedeliverysystem.mappers.Mapper;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
 @Component
-public class VendorMapperImpl implements Mapper<Vendor, VendorDTO> {
+public class DriverMapperImpl implements Mapper<Driver, DriverDTO> {
     private ModelMapper modelMapper;
 
-    public VendorMapperImpl(ModelMapper modelMapper) {
+    public DriverMapperImpl(ModelMapper modelMapper) {
         this.modelMapper = modelMapper;
     }
 
     @Override
-    public VendorDTO mapTo(Vendor vendor) {
-        return modelMapper.map(vendor, VendorDTO.class);
+    public DriverDTO mapTo(Driver driver) {
+        return modelMapper.map(driver, DriverDTO.class);
     }
 
     @Override
-    public Vendor mapFrom(VendorDTO vendorDTO) {
-        return modelMapper.map(vendorDTO, Vendor.class);
+    public Driver mapFrom(DriverDTO driverDTO) {
+        return modelMapper.map(driverDTO, Driver.class);
     }
 }

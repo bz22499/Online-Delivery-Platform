@@ -1,9 +1,10 @@
 package com.sep.onlinedeliverysystem.services.impl;
 
+import com.sep.onlinedeliverysystem.domain.entities.Driver;
 import com.sep.onlinedeliverysystem.domain.entities.User;
 import com.sep.onlinedeliverysystem.domain.entities.Vendor;
-import com.sep.onlinedeliverysystem.repositories.VendorRepository;
-import com.sep.onlinedeliverysystem.services.VendorService;
+import com.sep.onlinedeliverysystem.repositories.DriverRepository;
+import com.sep.onlinedeliverysystem.services.DriverService;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -22,75 +23,47 @@ import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 @Service
-public class VendorServiceImpl implements VendorService {
+public class DriverServiceImpl implements DriverService {
 
-    private VendorRepository vendorRepository;
+    private DriverRepository driverRepository;
 
-    public VendorServiceImpl(VendorRepository vendorRepository) {
-        this.vendorRepository = vendorRepository;
+    public DriverServiceImpl(DriverRepository driverRepository) {
+        this.driverRepository = driverRepository;
     }
 
     @Override
-    public Vendor save(Vendor vendorEntity) {
-        return vendorRepository.save(vendorEntity);
+    public Driver save(Driver driverEntity) {
+        return driverRepository.save(driverEntity);
     }
 
     @Override
-    public List<Vendor> findAll() {
-       return StreamSupport.stream(vendorRepository.findAll().spliterator(), false).collect(Collectors.toList());
+    public List<Driver> findAll() {
+       return StreamSupport.stream(driverRepository.findAll().spliterator(), false).collect(Collectors.toList());
     }
 
     @Override
-    public Page<Vendor> findAll(Pageable pageable) {
-        return vendorRepository.findAll(pageable);
-    }
-
-    @Override
-    public Optional<Vendor> findOne(String email) {
-        return vendorRepository.findById(email);
+    public Optional<Driver> findOne(String email) {
+        return driverRepository.findById(email);
     }
 
     @Override
     public boolean Exists(String email) {
-        return vendorRepository.existsById(email);
+        return driverRepository.existsById(email);
     }
 
     @Override
-    public Vendor partialUpdate(String email, Vendor vendorEntity) {
-        vendorEntity.setEmail(email);
+    public Driver partialUpdate(String email, Driver driverEntity) {
+        driverEntity.setEmail(email);
 
-        return vendorRepository.findById(email).map(existingVendor ->{
-            Optional.ofNullable(vendorEntity.getDescription()).ifPresent(existingVendor::setDescription);
-            Optional.ofNullable(vendorEntity.getRating()).ifPresent(existingVendor::setRating);
-            Optional.ofNullable(vendorEntity.getImageUrl()).ifPresent(existingVendor::setImageUrl);
-            Optional.ofNullable(vendorEntity.getPassword()).ifPresent(existingVendor::setPassword);
-            return vendorRepository.save(existingVendor);
-        }).orElseThrow(() -> new RuntimeException("Vendor doesn't exist"));
+        return driverRepository.findById(email).map(existingDriver ->{
+            Optional.ofNullable(driverEntity.getRating()).ifPresent(existingDriver::setRating);
+            Optional.ofNullable(driverEntity.getPassword()).ifPresent(existingDriver::setPassword);
+            return driverRepository.save(existingDriver);
+        }).orElseThrow(() -> new RuntimeException("Driver doesn't exist"));
     }
 
     @Override
     public void delete(String email) {
-        vendorRepository.deleteById(email);
-    }
-
-    @Override
-    public boolean updateProfile(String email, String currentPassword, String newName, String newDescription, String newPassword) {
-        Optional<Vendor> vendorOptional = vendorRepository.findById(email);
-        if (vendorOptional.isPresent()) {
-            Vendor vendor = vendorOptional.get();
-            // Check if the current password matches
-            if (currentPassword.equals(vendor.getPassword())) {
-                // Update the first name and last name fields
-                vendor.setName(newName);
-                vendor.setDescription(newDescription);
-                // Update the password if a new password is provided
-                if (newPassword != null && !newPassword.isEmpty()) {
-                    vendor.setPassword(newPassword);
-                }
-                vendorRepository.save(vendor);
-                return true;
-            }
-        }
-        return false;
+        driverRepository.deleteById(email);
     }
 }

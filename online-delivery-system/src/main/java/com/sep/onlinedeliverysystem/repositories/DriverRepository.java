@@ -1,9 +1,8 @@
 package com.sep.onlinedeliverysystem.repositories;
 
-import com.sep.onlinedeliverysystem.domain.entities.Vendor;
+import com.sep.onlinedeliverysystem.domain.entities.Driver;
 import org.springframework.data.repository.CrudRepository;
-import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface VendorRepository extends CrudRepository<Vendor, String>, PagingAndSortingRepository<Vendor, String> {}
+public interface DriverRepository extends CrudRepository<Driver, String> {}
