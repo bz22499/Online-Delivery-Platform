@@ -25,11 +25,17 @@ async function fetchVendorFromVendorId(vendorId){
 }
 
 function deleteItemForVendor(itemId){
+    // Define the info/piece of body that will be sent to back end (payload)
+    const payload = {
+        delete: true
+    }
+
     fetch('/menuItems/' + itemId.toString(), {
-        method: 'DELETE',
+        method: 'PATCH',
         headers: {
             'Content-Type': 'application/json'
         },
+        body: JSON.stringify(payload)
     })
         .then(response => {
             if (!response.ok) {
@@ -59,7 +65,6 @@ async function submitFormClicked(name, price, description,itemID,itemTitle,itemD
     }
 
     const menuItemDTO = {
-        id: 1,
         name: name,
         description: description,
         price: price,

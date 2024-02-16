@@ -49,9 +49,9 @@ public class MenuItemController {
         }).orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND)); //for if item doesn't exist
     }
 
-    @GetMapping(path = "/menuItems/vendor/{vendorId}") //Read All from Vendor functionality
+    @GetMapping(path = "/menuItems/vendor/{vendorId}") //Read All from Vendor that are not Soft deleted functionality
     public List<MenuItemDTO> listMenuItemsByVendor(@PathVariable("vendorId") String vendorId){
-        List<MenuItem> menuItems = menuItemService.findByVendorEmail(vendorId);
+        List<MenuItem> menuItems = menuItemService.findByDeleteIsFalseAndVendorEmail(vendorId);
         return menuItems.stream().map(menuItemMapper::mapTo).collect(Collectors.toList());
     }
 
