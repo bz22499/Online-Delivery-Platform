@@ -18,6 +18,9 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
@@ -63,10 +66,10 @@ public class UserControllerIntegrationTests {
 
     @Test
     public void testThatListUserSuccessfullyReturnsHttpStatus200Ok() throws Exception {
-           mockMvc.perform(
-                   MockMvcRequestBuilders.get("/users")
-                           .contentType(MediaType.APPLICATION_JSON)
-           ).andExpect(MockMvcResultMatchers.status().isOk());
+        mockMvc.perform(
+                MockMvcRequestBuilders.get("/users")
+                        .contentType(MediaType.APPLICATION_JSON)
+        ).andExpect(MockMvcResultMatchers.status().isOk());
     }
 
     @Test
@@ -195,7 +198,7 @@ public class UserControllerIntegrationTests {
     }
 
     @Test
-    public void testThatDeleteUserReturnsHttpStatus204ForNonExistingUser() throws Exception{
+    public void testThatDeleteUserReturnsHttpStatus204ForNonExistingUser() throws Exception {
         mockMvc.perform(
                 MockMvcRequestBuilders.delete("/users/incorrectemail")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -203,7 +206,7 @@ public class UserControllerIntegrationTests {
     }
 
     @Test
-    public void testThatDeleteUserReturnsHttpStatus204ForExistingUser() throws Exception{
+    public void testThatDeleteUserReturnsHttpStatus204ForExistingUser() throws Exception {
         User testUserEntity1 = TestUtil.userBuild1();
         User savedUser = userService.save(testUserEntity1);
         mockMvc.perform(
@@ -211,4 +214,55 @@ public class UserControllerIntegrationTests {
                         .contentType(MediaType.APPLICATION_JSON)
         ).andExpect(MockMvcResultMatchers.status().isNoContent());
     }
+
+
+    @Test
+    public void testThatUpdateProfileSuccessfullyReturnsHttpStatus200Ok() throws Exception {
+        User testUserEntity1 = TestUtil.userBuild1();
+        userService.save(testUserEntity1);
+        String email = testUserEntity1.getEmail();
+
+        // make request body
+        Map<String, String> requestBody = new HashMap<>();
+        requestBody.put("currentPassword", "password");
+        requestBody.put("firstName", "UpdatedFirstName");
+        requestBody.put("lastName", "UpdatedLastName");
+        requestBody.put("newPassword", "newPassword");
+
+        // Convert request body to JSON
+        String requestBodyJson = objectMapper.writeValueAsString(requestBody);
+
+        mockMvc.perform(
+                        MockMvcRequestBuilders.patch("/users/" + email + "/profile")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(requestBodyJson)
+                ).andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.email").value(email))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.firstName").value("UpdatedFirstName"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.lastName").value("UpdatedLastName"));
+    }
+
+    @Test
+    public void testThatUpdateProfileReturnsUnauthorizedForIncorrectCurrentPassword() throws Exception {
+        User testUserEntity1 = TestUtil.userBuild1();
+        userService.save(testUserEntity1);
+        String email = testUserEntity1.getEmail();
+
+        // Make request body with incorrect current password
+        Map<String, String> requestBody = new HashMap<>();
+        requestBody.put("currentPassword", "incorrectPassword");
+        requestBody.put("firstName", "UpdatedFirstName");
+        requestBody.put("lastName", "UpdatedLastName");
+        requestBody.put("newPassword", "newPassword");
+
+        // Convert request body to JSON
+        String requestBodyJson = objectMapper.writeValueAsString(requestBody);
+
+        mockMvc.perform(
+                        MockMvcRequestBuilders.patch("/users/" + email + "/profile")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(requestBodyJson)
+                ).andExpect(MockMvcResultMatchers.status().isUnauthorized());
+    }
 }
+
