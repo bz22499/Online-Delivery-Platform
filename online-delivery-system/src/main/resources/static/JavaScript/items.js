@@ -190,5 +190,12 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
+    const loginButton = document.querySelector('.login-button');
+    if (loginButton) {
+        loginButton.addEventListener('click', function () {
+            window.location.href = "/login";
+        });
+    }
+
 });
 
