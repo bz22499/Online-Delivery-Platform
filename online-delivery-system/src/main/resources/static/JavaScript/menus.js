@@ -89,6 +89,36 @@ function populateGrid(pageData) {
 
 }
 
+// get all the baskets for current order ID
+async function fetchBasketsForOrder(orderId) {
+    try {
+        const response = await fetch(`/baskets/orders/${orderId}`);
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return await response.json();
+    } catch (error) {
+        console.error('Error fetching baskets:', error);
+        return null;
+    }
+}
+
+// populate the dropdown button
+function populateBasketsDropdown(baskets) {
+    const dropdown = document.getElementById('basketsDropdown');
+    dropdown.innerHTML = ''; // Clear previous contents
+    if (baskets && baskets.length) {
+        baskets.forEach(basket => {
+            const basketElement = document.createElement('div');
+            basketElement.textContent = `Basket ID: ${basket.id}, Total Price: ${basket.totalPrice}`;
+            // Add more details as needed
+            dropdown.appendChild(basketElement);
+        });
+    } else {
+        dropdown.textContent = 'No active baskets';
+    }
+}
+
 // Luke's bit
 // Get query parameters from the URL
 var urlParams = new URLSearchParams(window.location.search);
@@ -120,5 +150,19 @@ window.addEventListener('scroll', () => {
 
 window.onload = loadMore();
 window.onload = createOrder()
+
+document.getElementById('viewBasketsButton').addEventListener('click', async function() {
+    const orderId = sessionStorage.getItem('orderId');
+    if (!orderId) {
+        alert('No order found.');
+        return;
+    }
+    const baskets = await fetchBasketsForOrder(orderId);
+    if (baskets) {
+        populateBasketsDropdown(baskets);
+    }
+    const dropdown = document.getElementById('basketsDropdown');
+    dropdown.style.display = dropdown.style.display === 'none' ? 'block' : 'none'; // toggle display
+});
 
 
