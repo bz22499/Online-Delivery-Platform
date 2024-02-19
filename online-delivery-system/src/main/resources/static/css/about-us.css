@@ -2,7 +2,6 @@ body{
     margin: 0;
     padding: 0;
     background-color:aliceblue;
-    font-family: Georgia, 'Times New Roman', Times, serif;
 }
 
 ul.banner {
@@ -11,46 +10,46 @@ ul.banner {
     margin: 0;
     padding: 0;
     overflow: hidden;
-    background-color: whitesmoke;
+    background-color: #dfdfdf;
     top: 0;
     width: 100%;
-    position: fixed;
-  }
+    position: sticky;
+}
 
 ul.banner img{
-  height: 19px;
-  padding: 14px;
-  float: left;
-}  
-  
- ul.banner li {
+    height: 19px;
+    padding: 14px;
     float: left;
-  }
+}
 
-  ul.banner li.right {
+ul.banner li {
+    float: left;
+}
+
+ul.banner li.right {
     float: right;
-  }
-  
- ul.banner li a {
+}
+
+ul.banner li a {
     display: block;
     color: black;
     text-align: center;
     padding: 14px 16px;
     text-decoration: none;
-  }
+}
 
 ul.banner li.active a{
     background-color: rgb(196, 194, 188);
 }
 
-  ul.banner li.right a {
+ul.banner li.right a {
     display: block;
     color: white;
     background-color: black;
     border-radius: 10px;
     padding: 5px 16px;
     margin: 8px 10px;
-  }
+}
 
 ul.banner li a:hover{
     background-color: gray;
