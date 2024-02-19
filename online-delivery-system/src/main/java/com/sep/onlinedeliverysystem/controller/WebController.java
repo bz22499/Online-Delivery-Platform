@@ -78,6 +78,16 @@ public class WebController {
         return "order";
     }
 
+    @GetMapping("/checkout")
+    public String checkout(Principal principal){
+        if (principal != null) {
+            return "checkout";
+        }
+        else{
+            return "login";
+        }
+    }
+
     @GetMapping("/profile")
     public String profile(Principal principal, Model model) {
         if (principal != null) {
