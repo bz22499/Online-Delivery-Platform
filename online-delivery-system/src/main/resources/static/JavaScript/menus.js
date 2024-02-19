@@ -60,7 +60,7 @@ function populateGrid(pageData) {
             // Create image element
             const image = document.createElement('img');
             // Set the image source to the restaurant's image URL or to the default image
-            image.src = restaurant.imageUrl || 'images/logo_ld.jpeg';
+            image.src = restaurant.imageUrl || '/images/chickenImage.webp';
             image.alt = restaurant.name;
             image.className = 'restaurant-image';
 

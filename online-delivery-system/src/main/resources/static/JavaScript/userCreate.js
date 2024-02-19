@@ -35,8 +35,8 @@ async function createCustomer(){
         })
             .then(response => response.json())
             .then(data => {
-                // Handle the response from the backend
-                window.location.href = '/home';
+                // Authentication
+                authenticateUser(email, password, false);
             })
             .catch(error => {
                 console.error('Error:', error);
@@ -81,13 +81,39 @@ async function createVendor(){
         })
             .then(response => response.json())
             .then(data => {
-                // Handle the response from the backend
-                window.location.href = '/home';
+                // Authentication
+                authenticateUser(email, password, true)
             })
             .catch(error => {
                 console.error('Error:', error);
             });
     }
+}
+
+function authenticateUser(email, password, isVendor) {
+    fetch('/login?username=' + encodeURIComponent(email) + '&password=' + encodeURIComponent(password), {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({})
+    })
+        .then(response => {
+            if(response.ok) {
+                // Redirect the user after successful authentication
+                if(isVendor) {
+                    window.location.href = '/vendor';
+                } else {
+                    window.location.href = '/home';
+                }
+            } else {
+                // Handle authentication failure (will never happen lets be honest)
+                alert("Authentication failed. Please try again.");
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
 }
 
 async function checkEmailAddressNotUsed(email) {
