@@ -186,6 +186,21 @@ ul.banner li a:hover{
     background-color: #45a049; /* Darker shade for hover effect */
 }
 
+.login-button {
+    background-color: #4CAF50; /* Green background */
+    color: white;
+    padding: 15px 20px;
+    margin: 20px 0;
+    border: none;
+    cursor: pointer;
+    width: 100%; /* Make the button expand to the full width of the basket */
+    box-sizing: border-box; /* Include padding and border in the width */
+}
+
+.login-button:hover {
+    background-color: #45a049; /* Darker shade for hover effect */
+}
+
 /* Adjust the height of basket items to make sure there is space for the button */
 .basket-items {
     height: calc(100% - 100px); /* Adjust the value based on actual header and button height */
