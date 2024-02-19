@@ -56,6 +56,7 @@ public class SecurityConfig extends GlobalAuthenticationConfigurerAdapter {
                         authorize
                                 .requestMatchers("/profile/**").hasAuthority("USER")
                                 .requestMatchers("/vendoritems/**", "/vendor/**", "/vendorProfile/**").hasAuthority("VENDOR")
+                                .requestMatchers("/home").hasAnyAuthority("USER", "ROLE_ANONYMOUS") // Deny access to /home for vendors
                                 .anyRequest().permitAll()
                 ).formLogin(
                         form -> form
