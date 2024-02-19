@@ -16,11 +16,15 @@
         <li class="right"><a target="_parent" href="login" th:unless="${loggedIn}">Login</a></li>
         <li class="right"><a target="_parent" href="customerlogin" th:unless="${loggedIn}">Sign up</a></li>
         <li class="right"><a target="_parent" href="restaurantlogin" th:unless="${loggedIn}">Partner with us</a></li>
+        <li id="viewBasketsButton" class="right"><a href="#">View Baskets</a></li> <!--- baskets dropdown button --->
     </ul>
 
 <!--    <div class="locationInput">-->
 <!--        <input type="text" name="search" placeholder="Search..">-->
 <!--    </div>-->
+
+<div id="basketsDropdown" class="basketsDropdown-content" style="display:none;"> <!--- baskets div --->
+</div>
 
 <!--    <div style="padding:20px;margin-top:160px;">-->
 <!--        <ul class="cuisineList">-->
