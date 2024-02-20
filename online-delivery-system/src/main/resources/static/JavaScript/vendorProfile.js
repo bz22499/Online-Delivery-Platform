@@ -7,7 +7,6 @@ function editProfile() {
 
     document.querySelector('.name').style.display = 'none';
     document.querySelector('.description').style.display = 'none';
-    document.getElementById('view-subscription').style.display = 'none';
     document.getElementById('logout').style.display = 'none';
 
     document.getElementById('edit-form').style.display = 'block';
@@ -23,7 +22,6 @@ function editProfile() {
 function returnToProfile() {
     document.querySelector('.name').style.display = 'block';
     document.querySelector('.description').style.display = 'block';
-    document.getElementById('view-subscription').style.display = 'inline-block';
     document.getElementById('logout').style.display = 'inline-block';
 
     document.getElementById('edit-form').style.display = 'none';
