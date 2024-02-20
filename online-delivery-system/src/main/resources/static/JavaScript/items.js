@@ -4,6 +4,7 @@ let basket = {
     items: []
 };
 
+// fetch items from vendor
 async function fetchItems(vendorId) {
     try {
         const response = await fetch(`/menuItems/vendor/${vendorId}`);
@@ -17,6 +18,8 @@ async function fetchItems(vendorId) {
     }
 }
 
+
+// populate grid with given menu items
 function populateGrid(pageData) {
     // Make grid
     const gridContainer = document.querySelector('.grid-container');
@@ -50,10 +53,10 @@ function populateGrid(pageData) {
 }
 
 function addOrUpdateBasketItem(item) {
-    let basketItem = document.querySelector(`.basket-item[data-id='${item.id}']`); // has item id as identifier
+    let basketItem = document.querySelector(`.basket-item[data-id='${item.id}']`); // has item id as identifier in html template
     if (!basketItem) { // if not yet in the basket
         basketItem = createBasketItem(item); // create the item to be displayed in basket
-        document.querySelector('.basket-items').appendChild(basketItem); // add basket item (identified by menuItem id)
+        document.querySelector('.basket-items').appendChild(basketItem); // add basket item to html template
         basket.items.push({ // initialise basket item object
             basket: null,
             menuItem: item,
@@ -62,14 +65,14 @@ function addOrUpdateBasketItem(item) {
     } else { // if in the basket just add one to the quantity
         const basketItemData = basket.items.find(basketItem => basketItem.menuItem.id === item.id);
         updateItemQuantity(basketItem, 1);
-        basketItemData.quantity++;
     }
 }
 
+// basket item creation
 function createBasketItem(item) { // makes item a basket item
     const basketItem = document.createElement('div');
     basketItem.className = 'basket-item';
-    basketItem.setAttribute('data-id', item.id); // used menuItem id as identifier
+    basketItem.setAttribute('data-id', item.id); // set item id as id of new element in dom
 
     const itemName = document.createElement('span');
     itemName.textContent = item.name;
@@ -77,7 +80,7 @@ function createBasketItem(item) { // makes item a basket item
 
     const priceDisplay = document.createElement('span');
     priceDisplay.className = 'item-price';
-    priceDisplay.textContent = `£${item.price.toFixed(2)}`; // assuming price is a number
+    priceDisplay.textContent = `£${item.price.toFixed(2)}`; // display total price (initialised to item.price)
     basketItem.appendChild(priceDisplay);
 
     basketItem.price = item.price; // store the unit price for calculations
@@ -87,6 +90,7 @@ function createBasketItem(item) { // makes item a basket item
 
     return basketItem;
 }
+
 
 function createQuantityControl() { // the buttons we see when an item is added to a basket
     const quantityControl = document.createElement('div');
@@ -112,22 +116,22 @@ function createQuantityControl() { // the buttons we see when an item is added t
 }
 
 function updateItemQuantity(basketItem, change) { // called when item has already been created
-    const itemId = parseInt(basketItem.getAttribute('data-id'));
-    const basketItemData = basket.items.find(item => item.menuItem.id === itemId);
+    const itemId = parseInt(basketItem.getAttribute('data-id')); // retrieve item id from dom and parse as int
+    const basketItemData = basket.items.find(item => item.menuItem.id === itemId); // search basket.items for basket that contains menuItem.id
 
     // update basketItem (qty)
-    if (basketItemData) {
-        basketItemData.quantity = Math.max(0, basketItemData.quantity + change);
+    if (basketItemData) { // if find succeded to find said basket item
+        basketItemData.quantity = Math.max(0, basketItemData.quantity + change); // ensure quantity isn't negative
 
         // find quantity display
         const quantityDisplay = basketItem.querySelector('.quantity');
-        quantityDisplay.textContent = basketItemData.quantity; //update to refelect change
+        quantityDisplay.textContent = basketItemData.quantity; //update basket item quantity val
 
         if (basketItemData.quantity === 0) {
-            // remove item from basket items array and display
+            // remove item from displayed basket items by filtering all basket items different to removed item
             basket.items = basket.items.filter(item => item.menuItem.id !== itemId);
 
-            // remove item element from the DOM
+            // remove item from the DOM
             basketItem.remove();
         } else {
             // update price display
@@ -145,7 +149,21 @@ async function load(vendorId) { // get items by vendor (if there is at least 1 i
     }
 }
 
-document.addEventListener('DOMContentLoaded', function () {
+// cache created baskets to improve speed of dropdown in order page
+function basketCache(basket, basketItems) {
+    let restaurantName = document.querySelector('.name')
+    let baskets = sessionStorage.getItem('baskets'); // get baskets from session storage
+    // parse baskets if they exist or initialise o.w.
+    if (baskets) {
+       baskets = JSON.parse(baskets);
+    } else {
+        baskets = {}; // this is an empty object (like a dict)
+    }
+    baskets[basket.id] = {items: basketItems, restName: restaurantName}
+    sessionStorage.setItem('baskets', JSON.stringify(baskets));
+}
+
+document.addEventListener('DOMContentLoaded', function () { // wait until DOM is fully loaded
     const vendorInfoElement = document.getElementById('vendor-info'); // given in html
     const vendorId = vendorInfoElement.getAttribute('data-id'); // specific field in vendor-info
     if (vendorId) {
@@ -153,7 +171,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
     const proceedButton = document.querySelector('.proceed-button'); // create basket button and funcionality
     if (proceedButton) { // check if button exists to avoid null reference
-        proceedButton.addEventListener('click', async function () {
+        proceedButton.addEventListener('click', async function () { // checks if proceed is clicked
             const response = await fetch("/baskets", { // post to baskets
                 method: 'POST',
                 headers: {
@@ -168,6 +186,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     throw new Error(`HTTP error. Status: ${response.status}`)
                 }
             }).then(savedBasket => { // from saved basket, post basketItems
+                basketCache(savedBasket, basket.items) // cache the basket and basketItems
                 for (let bi of basket.items) {
                     fetch("/basketItems", {
                         method: 'POST',

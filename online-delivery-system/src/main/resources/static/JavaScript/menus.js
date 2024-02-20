@@ -90,7 +90,7 @@ function populateGrid(pageData) {
 }
 
 // get all the baskets for current order ID
-async function fetchBasketsForOrder(orderId) {
+async function fetchBasketsByOrder(orderId) {
     try {
         const response = await fetch(`/baskets/orders/${orderId}`);
         if (!response.ok) {
@@ -103,17 +103,37 @@ async function fetchBasketsForOrder(orderId) {
     }
 }
 
+function calculateTotal(items) {
+    let total = 0;
+    for (const item of items) {
+        total = item.quantity * item.menuItem.price
+    }
+    return total
+}
+
+function getBasketItemsFromCache(basketId) {
+    const basketsString = sessionStorage.getItem('baskets')
+    const baskets = JSON.parse(basketsString)
+    return {items: baskets[basketId].items, restName: baskets[basketId].restName};
+}
+
+
 // populate the dropdown button
-function populateBasketsDropdown(baskets) {
-    const dropdown = document.getElementById('basketsDropdown');
-    dropdown.innerHTML = ''; // Clear previous contents
-    if (baskets && baskets.length) {
-        baskets.forEach(basket => {
-            const basketElement = document.createElement('div');
-            basketElement.textContent = `Basket ID: ${basket.id}, Total Price: ${basket.totalPrice}`;
-            // Add more details as needed
-            dropdown.appendChild(basketElement);
-        });
+async function populateBasketsDropdown(baskets) {
+    const dropdown = document.getElementById('basketsDropdown'); // given in html (this is the dropdown button)
+    if (baskets && baskets.length) { // check initialisation
+        for (const basket of baskets) { // display info for all baskets in cache (all created baskets)
+            try {
+                let basketData = getBasketItemsFromCache(basket.id);
+                let totalPrice= calculateTotal(basketData.items);
+                const basketElement = document.createElement('div');
+                basketElement.textContent = `Restaurant: ${basketData.restName}, Total: £${totalPrice.toFixed(2)}`;
+                dropdown.appendChild(basketElement);
+            } catch (error) {
+                console.error('Error populating baskets dropdown:', error);
+            }
+        }
+
     } else {
         dropdown.textContent = 'No active baskets';
     }
@@ -142,27 +162,30 @@ async function loadMore() {
     isLoading = false;
 }
 
+window.onload = loadMore();
+createOrder();
 window.addEventListener('scroll', () => {
     if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 100 && !isLoading) {
         loadMore();
     }
 });
 
-window.onload = loadMore();
-window.onload = createOrder()
-
-document.getElementById('viewBasketsButton').addEventListener('click', async function() {
-    const orderId = sessionStorage.getItem('orderId');
-    if (!orderId) {
-        alert('No order found.');
-        return;
-    }
-    const baskets = await fetchBasketsForOrder(orderId);
-    if (baskets) {
-        populateBasketsDropdown(baskets);
-    }
-    const dropdown = document.getElementById('basketsDropdown');
-    dropdown.style.display = dropdown.style.display === 'none' ? 'block' : 'none'; // toggle display
+document.addEventListener('DOMContentLoaded', function () {
+    document.getElementById('viewBasketsButton').addEventListener('click', async function() {
+        const orderId = sessionStorage.getItem('orderId');
+        if (!orderId) {
+            alert('No order found.');
+            return;
+        }
+        const baskets = await fetchBasketsByOrder(orderId);
+        if (baskets) {
+            populateBasketsDropdown(baskets);
+        }
+        const dropdown = document.getElementById('basketsDropdown');
+        dropdown.style.display = dropdown.style.display === 'none' ? 'block' : 'none'; // toggle display
+    });
 });
+
+
 
 

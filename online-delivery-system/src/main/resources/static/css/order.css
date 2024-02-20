@@ -3,6 +3,11 @@
      margin: 0;
  }
 
+ .cuisineBanner {
+     padding:20px;
+     margin-top:160px
+ }
+
  ul.banner {
      z-index:1;
      list-style-type: none;
