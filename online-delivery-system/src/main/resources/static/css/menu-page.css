@@ -1,13 +1,17 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+
 ul.banner {
-    z-index:1;
+    z-index: 1;
     list-style-type: none;
     margin: 0;
     padding: 0;
     overflow: hidden;
     background-color: #dedede;
-    top: 0;
     width: 100%;
-    position: fixed;
+    position: sticky;
 }
 
 ul.banner img{
