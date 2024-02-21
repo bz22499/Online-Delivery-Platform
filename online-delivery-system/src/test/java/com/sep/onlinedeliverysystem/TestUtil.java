@@ -11,6 +11,36 @@ public final class TestUtil {
 
     }
 
+    public static Driver driverBuild1() {
+        Driver driverEntity = Driver.builder()
+            .email("jiahao@bristol.com")
+            .name("Jia")
+            .rating(0)
+            .password("password")
+            .build();
+        return driverEntity;
+    }
+
+    public static Driver driverBuild2() {
+        Driver driverEntity = Driver.builder()
+            .email("jiahao@gmail.com")
+            .name("jiahao")
+            .password("pard")
+            .build();
+        return driverEntity;
+    }
+
+    public static DriverDTO driverDTOCreate1() {
+        DriverDTO driverDTO = DriverDTO.builder()
+            .email("j@1.com")
+            .name("peter")
+            .password("peter")
+            .build();
+        return driverDTO;
+    }
+
+    
+
     public static User userBuild1() {
         User userEntity = User.builder()
             .email("luke@trottmail.com")

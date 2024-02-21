@@ -1,13 +1,17 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+
 ul.banner {
-    z-index:1;
+    z-index: 1;
     list-style-type: none;
     margin: 0;
     padding: 0;
     overflow: hidden;
-    background-color: whitesmoke;
-    top: 0;
+    background-color: #dedede;
     width: 100%;
-    position: fixed;
+    position: sticky;
 }
 
 ul.banner img{
@@ -79,11 +83,14 @@ ul.banner li a:hover{
 
 
 .grid-item {
-    background-color: rgba(255, 255, 255, 0.8);
-    border: 1px solid rgba(0, 0, 0, 0.8);
+    background-color: lawngreen;
+    border: 4px solid rgba(0, 0, 0, 0.8);
     height: 200px;
-    overflow: hidden;
-    position: relative;
+    position: relative;border-radius: 75px;
+}
+.grid-item:hover{
+    background-color: forestgreen;
+    color: white;
 }
 
 .grid-item img {
@@ -101,14 +108,12 @@ ul.banner li a:hover{
     text-align: center;
     position: relative;
     font-size: 3rem;
-    color: black;
 }
 
 .grid-item-description{
     text-align: center;
     font-size: 1.5rem;
     position: relative;
-    color: black;
     padding-bottom: 5px;
 }
 
@@ -183,6 +188,21 @@ ul.banner li a:hover{
 }
 
 .proceed-button:hover {
+    background-color: #45a049; /* Darker shade for hover effect */
+}
+
+.login-button {
+    background-color: #4CAF50; /* Green background */
+    color: white;
+    padding: 15px 20px;
+    margin: 20px 0;
+    border: none;
+    cursor: pointer;
+    width: 100%; /* Make the button expand to the full width of the basket */
+    box-sizing: border-box; /* Include padding and border in the width */
+}
+
+.login-button:hover {
     background-color: #45a049; /* Darker shade for hover effect */
 }
 

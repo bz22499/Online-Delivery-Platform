@@ -10,7 +10,7 @@
         <ul class="banner">
             <li><img src="/images/logo_ld_png.png"></li>
             <li><a target="_parent" href="home" th:unless="${loggedInVendor}">Home</a></li>
-            <li class="active"><a target="_parent" href="vendor" th:if="${loggedInVendor}">Add Items</a></li>
+            <li><a target="_parent" href="vendor" th:if="${loggedInVendor}">Add Items</a></li>
             <li><a target="_parent" href="vendoritems" th:if="${loggedInVendor}">Edit Items</a></li>
             <li class="active"><a target="_parent" href="about">About Us</a></li>
             <li><a target="_parent" href="order" th:unless="${loggedInVendor}">Order</a></li>

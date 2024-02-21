@@ -211,5 +211,12 @@ document.addEventListener('DOMContentLoaded', function () { // wait until DOM is
         });
     }
 
+    const loginButton = document.querySelector('.login-button');
+    if (loginButton) {
+        loginButton.addEventListener('click', function () {
+            window.location.href = "/login";
+        });
+    }
+
 });
 

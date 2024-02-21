@@ -18,7 +18,7 @@
   <li><a target="_parent" href="vendoritems">Edit Items</a></li>
   <li><a target="_parent" href="about">About Us</a></li>
   <li><a target="_parent" href="contact">Contact</a></li>
-  <li class="active right"><a target="_parent" href="profile">Profile</a></li>
+  <li class="active right"><a target="_parent" href="vendorProfile">Profile</a></li>
 </ul>
 
 <div id="profile-container">
@@ -32,7 +32,6 @@
     <h1 class="description" th:text="${description}">blah blah blah</h1>
 
     <button class="edit-profile" onclick="editProfile()">Edit Profile</button>
-    <button class="subscription-button" id="view-subscription">View subscription</button>
     <button class="logout-button" id="logout" onclick="window.location.href='/logout'">Logout</button>
 
   </div>
