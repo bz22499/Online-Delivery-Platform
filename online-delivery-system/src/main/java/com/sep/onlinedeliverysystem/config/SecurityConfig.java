@@ -7,8 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.authentication.configuration.GlobalAuthenticationConfigurerAdapter;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -36,11 +38,17 @@ public class SecurityConfig extends GlobalAuthenticationConfigurerAdapter {
     @Autowired
     private UserDetailsService vendorDetailsService;
 
+    @Autowired
+    public SecurityConfig(UserDetailsService userDetailsService) {
+        this.userDetailsService = userDetailsService;
+    }
+
     @Bean
     public PasswordEncoder passwordEncoder() {    //Alternate between NoOp and BCrypt when you need to check passwords in the database
         return NoOpPasswordEncoder.getInstance(); //ONLY USE THIS WHEN YOU DON'T HAVE REAL USERS
 //        return new BCryptPasswordEncoder();
     }
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf(csrf -> csrf.disable())
@@ -48,6 +56,7 @@ public class SecurityConfig extends GlobalAuthenticationConfigurerAdapter {
                         authorize
                                 .requestMatchers("/profile/**", "/checkout/**").hasAuthority("USER")
                                 .requestMatchers("/vendoritems/**", "/vendor/**", "/vendorProfile/**").hasAuthority("VENDOR")
+                                .requestMatchers("/home").hasAnyAuthority("USER", "ROLE_ANONYMOUS") // Deny access to /home for vendors
                                 .anyRequest().permitAll()
                 ).formLogin(
                         form -> form
@@ -92,5 +101,11 @@ public class SecurityConfig extends GlobalAuthenticationConfigurerAdapter {
                 }
             }
         };
+    }
+
+    @Bean
+    @Qualifier("customAuthenticationManager")
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
+        return configuration.getAuthenticationManager();
     }
 }
