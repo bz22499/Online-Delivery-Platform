@@ -84,60 +84,85 @@ ul.cuisineList{
      position: relative;
 }
 
-  ul.cuisineList li {
-     display: inline;
+ ul.cuisineList li {display: inline;
      color: black;
      text-align: center;
      padding: 14px 16px;
      text-decoration: none;
-  }
+ }
 
-    ul.cuisineList li .button{
-    background-color: #04AA6D;
-    border: none;
-    color: white;
-    padding: 15px 32px;
-    text-align: center;
-    text-decoration: none;
-    cursor: pointer;
-  }
+ ul.cuisineList li .button {
+     background-color: #04AA6D;
+     border: none;
+     color: white;
+     padding: 15px 32px;
+     text-align: center;
+     text-decoration: none;
+     cursor: pointer;
+ }
 
-  .grid-container {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 30px;
-    padding: 40px;
-    margin: 40px;
-  }
-  .grid-item {
-    background-color: rgba(255, 255, 255, 0.8);
-    border: 1px solid rgba(0, 0, 0, 0.8);
-    /*padding: 20px;*/
-    font-size: 30px;
-    text-align: center;
-    height: 100px;
-    overflow: hidden;
-    position: relative;
-    padding-top: 25%;
-  }
+ .grid-container {
+     display: grid;
+     grid-template-columns: repeat(3, 1fr);
+     gap: 30px;
+     padding: 40px;
+     margin: 40px;
+ }
 
-  .grid-item img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
-    position: absolute;
-    top: 0;
-    left: 0;
-  }
+ .grid-item {
+     border-radius: 7px;
+     background-color: rgba(255, 255, 255, 0.8);
+     border: 1px solid rgba(0, 0, 0, 0.8);
+     /*padding: 20px;*/
+     font-size: 30px;
+     text-align: center;
+     height: 100px;
+     overflow: hidden;
+     position: relative;
+     padding-top: 25%;
+ }
 
-  .grid-item-footer {
-    background-color: white;
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    padding: 10px 0;
-    font-size: 1rem;
-    text-align: center;
-  }
+ .grid-item img {
+     width: 100%; /* Make the image fill the width of the parent div */
+     height: 100%; /* Maintain aspect ratio */
+     display: block; /* Make the image a block element */
+     position: absolute; /* Position the image relative to the parent div */
+     top: 0; /* Position the image at the top */
+     left: 0; /* Position the image at the left */
+     transition: transform 0.3s ease;
+     overflow: hidden;
+ }
+
+ .grid-item:hover img{
+     transform: scale(1.3); /* Zoom in the image by 10% */
+ }
+
+ .grid-item div{
+     position: absolute; /* Position the overlay relative to the container */
+     bottom: 70%; /* Position the overlay around three-quarters of the height */
+     height: auto;
+     text-align: center; /* Center the content horizontally */
+     background-color: rgba(0, 0, 0, 0.75);
+     color: white;
+     font-size: 75%;
+     padding: 5px;
+     width: auto;
+ }
+
+ .grid-item .grid-item-footer{
+     border-top-right-radius: 10px; /* Curved top-right corner */
+     border-bottom-right-radius: 10px; /* Curved bottom-right corner */
+ }
+
+ .grid-item .rating{
+     border-top-left-radius: 10px; /* Curved top-right corner */
+     border-bottom-left-radius: 10px; /* Curved bottom-right corner */
+     right: -100%;
+     overflow: hidden;
+     transition: right 0.3s ease;
+ }
+
+ .grid-item:hover .rating{
+     right: 0;
+ }
 

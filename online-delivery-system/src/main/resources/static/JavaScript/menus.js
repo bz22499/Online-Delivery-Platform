@@ -55,12 +55,11 @@ function populateGrid(pageData) {
         pageData.content.forEach((restaurant) => {
             const gridItem = document.createElement('div');
             gridItem.className = 'grid-item';
-            gridItem.textContent = restaurant.name;
 
             // Create image element
             const image = document.createElement('img');
             // Set the image source to the restaurant's image URL or to the default image
-            image.src = restaurant.imageUrl || 'images/logo_ld.jpeg';
+            image.src = restaurant.imageUrl || 'images/wix1.png';
             image.alt = restaurant.name;
             image.className = 'restaurant-image';
 
@@ -72,6 +71,12 @@ function populateGrid(pageData) {
             footer.className = 'grid-item-footer';
             footer.textContent = restaurant.name;
             gridItem.appendChild(footer);
+
+            const rating = document.createElement('div');
+            rating.className = 'rating';
+            rating.textContent = restaurant.rating.toFixed(2);
+            gridItem.appendChild(rating);
+
 
             // Nav to menu page
             gridItem.addEventListener('click', () => {
