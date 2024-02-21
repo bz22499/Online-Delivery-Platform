@@ -10,10 +10,10 @@ ul.banner {
     margin: 0;
     padding: 0;
     overflow: hidden;
-    background-color: whitesmoke;
+    background-color: #dfdfdf;
     top: 0;
     width: 100%;
-    position: fixed;
+    position: sticky;
 }
 
 ul.banner img{
@@ -24,6 +24,10 @@ ul.banner img{
 
 ul.banner li {
     float: left;
+}
+
+ul.banner li.right {
+    float: right;
 }
 
 ul.banner li a {
@@ -38,10 +42,6 @@ ul.banner li.active a{
     background-color: rgb(196, 194, 188);
 }
 
-ul.banner li a:hover{
-    background-color: gray;
-}
-
 ul.banner li.right a {
     display: block;
     color: white;
@@ -51,8 +51,8 @@ ul.banner li.right a {
     margin: 8px 10px;
 }
 
-ul.banner li.right {
-    float: right;
+ul.banner li a:hover{
+    background-color: gray;
 }
 
 .item-container {

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Menu</title>
-    <link rel="stylesheet" th:href="@{/css/menu-page.css}"/>
+    <link rel="stylesheet" href="css/menu-page.css"/>
 </head>
 <body>
 <ul class="banner">
@@ -14,13 +14,14 @@
     <li><a target="_parent" href="contact">Contact</a></li>
     <li class="right"><a target="_parent" href="vendorProfile">Profile</a></li>
 </ul>
-<div class="header">
+
+<div class="header" style="display: none">
     <div class="name" th:text="${name}">Restaurant Name</div>
     <div class="rating" th:text="${rating}">4.5/5</div>
     <div id="vendor-info" th:attr="data-id=${id}"></div>
 </div>
-<div class="description" th:text="${description}"></div>
-<div class="grid-container"></div>
+
+<div class="grid-container" style="margin-top: 30px"></div>
 
 <script src="/JavaScript/vendormenus.js"></script>
 </body>
