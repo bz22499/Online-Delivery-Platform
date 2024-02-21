@@ -6,14 +6,22 @@ function createItem(){
     const vendorInfoElement = document.getElementById('vendor-info');
     let vendorId = vendorInfoElement.getAttribute('data-id');
 
-    let valid = true
+    let valid = /^(\$|)([0-9]\d{0,2}(\,\d{3})*|([0-9]\d*))(\.\d{2})?$/.test(price)
 
-    if(valid){
-        valid = /^(\$|)([0-9]\d{0,2}(\,\d{3})*|([0-9]\d*))(\.\d{2})?$/.test(price)
+    if(!valid){
+        alert("Price was not in correct format") //if it is not valid explain why
+    }else{
+        if(price > 10000){
+            valid = false
+            alert("Price of item exceeded maximum price of 10000")
+        }
     }
 
-    if(name.toString() === "" || description.toString() === "" || price.toString() === ""){
-        valid = false
+    if(valid){
+        if(name.toString() === "" || description.toString() === "" || price.toString() === ""){
+            valid = false
+            alert("A field was left empty");
+        }
     }
 
     if(valid){
@@ -55,7 +63,5 @@ function createItem(){
                 console.error('Error fetching vendor:', error);
                 alert("Failed to fetch vendor details");
             });
-    } else {
-        alert("Form was not correctly filled in");
     }
 }
