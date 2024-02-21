@@ -1,3 +1,5 @@
+let isFetchingBaskets = false;
+
 // get all the baskets for current order ID
 async function fetchBasketsByOrder(orderId) {
     try {
@@ -24,21 +26,56 @@ async function displayBaskets(baskets) {
     container.innerHTML = ''; // Clear existing content
     if (baskets && baskets.length) {
         baskets.forEach(basket => {
-            const basketDiv = document.createElement('div');
-            basketDiv.className = 'basket';
+            // Create a section for each basket
+            const section = document.createElement('section');
+            section.className = 'basket-section';
 
-            const itemsList = document.createElement('ul');
+            // Heading for the basket (e.g., restaurant name)
+            const heading = document.createElement('h2');
             let basketData = getBasketItemsFromCache(basket.id);
+            heading.textContent = basketData.restName; // Assuming restName is the restaurant's name
+            section.appendChild(heading);
+
+            // Create a table for the items
+            const table = document.createElement('table');
+            table.className = 'basket-table';
+
+            // Table header
+            const thead = document.createElement('thead');
+            const headerRow = document.createElement('tr');
+            const itemNameHeader = document.createElement('th');
+            itemNameHeader.textContent = 'Item Name';
+            const quantityHeader = document.createElement('th');
+            quantityHeader.textContent = 'Quantity';
+            headerRow.appendChild(itemNameHeader);
+            headerRow.appendChild(quantityHeader);
+            thead.appendChild(headerRow);
+            table.appendChild(thead);
+
+            // Table body for items
+            const tbody = document.createElement('tbody');
+
             basketData.items.forEach(item => {
-                const itemLi = document.createElement('li');
-                // Directly display item name and quantity
-                itemLi.textContent = `${item.menuItem.name} - Quantity: ${item.quantity}`;
-                itemsList.appendChild(itemLi);
+                const row = document.createElement('tr');
+
+                const nameCell = document.createElement('td');
+                nameCell.textContent = item.menuItem.name; // Assuming the structure is as given
+                row.appendChild(nameCell);
+
+                const quantityCell = document.createElement('td');
+                quantityCell.textContent = item.quantity;
+                row.appendChild(quantityCell);
+
+                tbody.appendChild(row);
             });
 
-            basketDiv.appendChild(itemsList);
-            container.appendChild(basketDiv);
+            table.appendChild(tbody);
+            section.appendChild(table);
+            container.appendChild(section);
         });
+    } else {
+        // Display message if no baskets are found
+        container.textContent = 'No baskets found.';
     }
 }
 

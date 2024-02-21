@@ -1,3 +1,5 @@
+let isFetchingBaskets = false;
+
 async function fetchRestaurants(page =0, size = 18) {
     try {
         const response = await fetch(`/vendors?page=${page}&size=${size}`);
@@ -33,6 +35,14 @@ async function createOrder() {
         console.log('Error creating order: ', error)
     }
 
+}
+
+async function preloadBaskets() {
+    const orderId = sessionStorage.getItem('orderId');
+    if (orderId) {
+        const baskets = await fetchBasketsByOrder(orderId);
+        sessionStorage.setItem('basketIDs', JSON.stringify(baskets))
+    }
 }
 
 
@@ -128,11 +138,33 @@ function getBasketItemsFromCache(basketId) {
     return {items: baskets[basketId].items, restName: baskets[basketId].restName};
 }
 
+async function preloadBaskets() {
+    isFetchingBaskets = true;
+    const orderId = sessionStorage.getItem('orderId');
+    if (orderId) {
+        try {
+            const baskets = await fetchBasketsByOrder(orderId);
+            sessionStorage.setItem('basketIDs', JSON.stringify(baskets));
+        } finally {
+            isFetchingBaskets = false;
+            if (document.getElementById('basketsDropdown').style.display === 'block') {
+                populateBasketsDropdown();
+            }
+        }
+    } else {
+        isFetchingBaskets = false;
+    }
+}
+
 
 // populate the dropdown button
-async function populateBasketsDropdown(baskets) {
+async function populateBasketsDropdown() {
     const dropdown = document.getElementById('basketsDropdown'); // given in html (this is the dropdown button)
     dropdown.innerHTML = ''; // had to clear previous items because it grows infinitely otherwise
+
+    const basketsString = sessionStorage.getItem('basketIDs');
+    const baskets = JSON.parse(basketsString);
+
     if (baskets && baskets.length) { // check initialisation
         for (const basket of baskets) { // display info for all baskets in cache (all created baskets)
             try {
@@ -186,8 +218,13 @@ async function loadMore() {
 }
 
 
-window.onload = loadMore();
-createOrder();
+window.onload = async () => {
+    await loadMore();
+    createOrder();
+    await preloadBaskets();
+}
+
+
 window.addEventListener('scroll', () => {
     if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 100 && !isLoading) {
         loadMore();
@@ -197,17 +234,13 @@ window.addEventListener('scroll', () => {
 
 document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('viewBasketsButton').addEventListener('click', async function(event) {
-        event.preventDefault(); // to stop auto-scroll when clickin view basket (from gpt)
-        const orderId = sessionStorage.getItem('orderId');
-        if (!orderId) {
-            alert('No order found.');
-            return;
-        }
-        const baskets = await fetchBasketsByOrder(orderId);
-        if (baskets) {
-            populateBasketsDropdown(baskets);
-        }
+        event.preventDefault(); // to stop auto-scroll when clicking view basket (from gpt)
         const dropdown = document.getElementById('basketsDropdown');
+        if (isFetchingBaskets) {
+            dropdown.innerHTML = 'Loading baskets...'
+        } else {
+            populateBasketsDropdown()
+        }
         dropdown.style.display = dropdown.style.display === 'none' ? 'block' : 'none'; // toggle display
     });
 });
