@@ -9,7 +9,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.security.Principal;
 import java.util.Optional;
@@ -163,6 +162,11 @@ public class WebController {
             // Handle the case when no user is logged in
             return "login"; // Redirect to the login page
         }
+    }
+
+    @GetMapping("/baskets-overview")
+    public String getBasketsPage() {
+        return "baskets-overview";
     }
 
 //    @GetMapping("/FILLER") //to get the current logged-in user/vendor

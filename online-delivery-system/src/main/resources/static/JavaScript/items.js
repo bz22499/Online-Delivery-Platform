@@ -151,7 +151,8 @@ async function load(vendorId) { // get items by vendor (if there is at least 1 i
 
 // cache created baskets to improve speed of dropdown in order page
 function basketCache(basket, basketItems) {
-    let restaurantName = document.querySelector('.name')
+    let restaurantNameDiv = document.querySelector('.name')
+    let restaurantName = restaurantNameDiv.textContent
     let baskets = sessionStorage.getItem('baskets'); // get baskets from session storage
     // parse baskets if they exist or initialise o.w.
     if (baskets) {
@@ -160,6 +161,7 @@ function basketCache(basket, basketItems) {
         baskets = {}; // this is an empty object (like a dict)
     }
     baskets[basket.id] = {items: basketItems, restName: restaurantName}
+    console.log(restaurantName)
     sessionStorage.setItem('baskets', JSON.stringify(baskets));
 }
 

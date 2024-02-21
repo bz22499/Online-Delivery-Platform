@@ -118,8 +118,8 @@ function calculateTotal(items) {
 
 
 function getBasketItemsFromCache(basketId) {
-    const basketsString = sessionStorage.getItem('baskets')
-    const baskets = JSON.parse(basketsString)
+    const basketsString = sessionStorage.getItem('baskets');
+    const baskets = JSON.parse(basketsString);
     return {items: baskets[basketId].items, restName: baskets[basketId].restName};
 }
 
@@ -141,9 +141,19 @@ async function populateBasketsDropdown(baskets) {
             }
         }
 
+        const editButton = document.createElement('button');
+        editButton.textContent = 'Edit baskets';
+        editButton.className = 'edit-baskets-button';
+        editButton.addEventListener('click', function () {
+            window.location.href = `/baskets-overview`
+        });
+        dropdown.appendChild(editButton)
+
     } else {
         dropdown.textContent = 'No active baskets';
     }
+
+
 }
 
 
