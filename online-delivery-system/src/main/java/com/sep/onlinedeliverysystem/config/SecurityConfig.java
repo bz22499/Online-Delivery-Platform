@@ -36,6 +36,10 @@ public class SecurityConfig extends GlobalAuthenticationConfigurerAdapter {
     @Autowired
     private UserDetailsService vendorDetailsService;
 
+    @Qualifier("driverDetailsService")
+    @Autowired
+    private UserDetailsService driverDetailsService;
+
     @Bean
     public PasswordEncoder passwordEncoder() {    //Alternate between NoOp and BCrypt when you need to check passwords in the database
         return NoOpPasswordEncoder.getInstance(); //ONLY USE THIS WHEN YOU DON'T HAVE REAL USERS
@@ -48,6 +52,7 @@ public class SecurityConfig extends GlobalAuthenticationConfigurerAdapter {
                         authorize
                                 .requestMatchers("/profile/**").hasAuthority("USER")
                                 .requestMatchers("/vendoritems/**", "/vendor/**", "/vendorProfile/**").hasAuthority("VENDOR")
+                                .requestMatchers("/driverMain/**").hasAuthority("DRIVER")
                                 .anyRequest().permitAll()
                 ).formLogin(
                         form -> form
@@ -68,7 +73,8 @@ public class SecurityConfig extends GlobalAuthenticationConfigurerAdapter {
 
         auth
                 .authenticationProvider(authenticationProvider(vendorDetailsService, passwordEncoder()))
-                .authenticationProvider(authenticationProvider(userDetailsService, passwordEncoder()));
+                .authenticationProvider(authenticationProvider(userDetailsService, passwordEncoder()))
+                .authenticationProvider(authenticationProvider(driverDetailsService, passwordEncoder()));
     }
 
     private DaoAuthenticationProvider authenticationProvider(
@@ -87,7 +93,9 @@ public class SecurityConfig extends GlobalAuthenticationConfigurerAdapter {
                 Set<String> roles = AuthorityUtils.authorityListToSet(authentication.getAuthorities());
                 if (roles.contains("VENDOR")) {
                     response.sendRedirect("/vendor");
-                } else {
+                }else if (roles.contains("VENDOR")) {
+                    response.sendRedirect("/driverMain");
+                }else {
                     response.sendRedirect("/home");
                 }
             }

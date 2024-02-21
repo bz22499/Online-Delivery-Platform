@@ -78,6 +78,9 @@ public class WebController {
         return "order";
     }
 
+    @GetMapping("/driverMain")
+    public String driverMain(){return "driverMain"; }
+
     @GetMapping("/profile")
     public String profile(Principal principal, Model model) {
         if (principal != null) {
@@ -164,17 +167,4 @@ public class WebController {
             return "login"; // Redirect to the login page
         }
     }
-
-//    @GetMapping("/FILLER") //to get the current logged-in user/vendor
-//    public ResponseEntity<Map<String, String>> getCurrentUserEmail(Principal principal) {
-//        UserDetails userDetails = (UserDetails) ((Authentication) principal).getPrincipal();
-//
-//        // Get the email from UserDetails
-//        String vendorEmail = userDetails.getUsername();
-//
-//        Map<String, String> response = new HashMap<>();
-//        response.put("email", vendorEmail);
-//
-//        return ResponseEntity.ok(response);
-//    }
 }
