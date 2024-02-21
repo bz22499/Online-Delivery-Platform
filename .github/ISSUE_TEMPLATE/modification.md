@@ -13,8 +13,6 @@ assignees: ''
 
 ### Explain why code should be modified
 
-### List the files that will be modified
-
 ### Branch
 
 ### Tasks

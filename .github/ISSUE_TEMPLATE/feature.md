@@ -15,10 +15,8 @@ assignees: ''
 - [ ] Front-End
 - [ ] Back-End
 
-### List added files (if any)
-
-### List modified files (if any)
-
 ### Branch
 
 ### Tasks
+
+### Aditional info
