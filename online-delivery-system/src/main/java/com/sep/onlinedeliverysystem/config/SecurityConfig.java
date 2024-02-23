@@ -102,7 +102,7 @@ public class SecurityConfig extends GlobalAuthenticationConfigurerAdapter {
                 Set<String> roles = AuthorityUtils.authorityListToSet(authentication.getAuthorities());
                 if (roles.contains("VENDOR")) {
                     response.sendRedirect("/vendor");
-                }else if (roles.contains("VENDOR")) {
+                }else if (roles.contains("DRIVER")) {
                     response.sendRedirect("/driverMain");
                 }else {
                     response.sendRedirect("/home");

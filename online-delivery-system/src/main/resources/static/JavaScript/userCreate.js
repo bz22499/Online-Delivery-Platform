@@ -36,7 +36,7 @@ async function createCustomer(){
             .then(response => response.json())
             .then(data => {
                 // Authentication
-                authenticateUser(email, password, false);
+                authenticateUser(email, password, false, false);
             })
             .catch(error => {
                 console.error('Error:', error);
@@ -82,7 +82,7 @@ async function createVendor(){
             .then(response => response.json())
             .then(data => {
                 // Authentication
-                authenticateUser(email, password, true)
+                authenticateUser(email, password, true, false)
             })
             .catch(error => {
                 console.error('Error:', error);
@@ -90,7 +90,53 @@ async function createVendor(){
     }
 }
 
-function authenticateUser(email, password, isVendor) {
+async function createDriver(){
+    let name = document.getElementById("username").value;
+    let password = document.getElementById("password").value
+    let email = document.getElementById("email").value
+    let checkPassword = document.getElementById("confirm-password").value
+
+    let valid = checkPassword === password
+
+    if(valid){
+        valid = /\S+@\S+\.\S+/.test(email)
+    }
+
+    if(name.toString() === "" || password.toString() === "" || checkPassword.toString() === ""){
+        valid = false
+    }
+
+    if(valid){
+        valid = await checkEmailAddressNotUsed(email);
+        if(!valid){
+            alert("email address already in use");
+        }
+    } else {
+        alert("Form was not correctly filled in")
+    }
+
+    if(valid){
+        // Send data to the backend
+        alert('registration complete')
+        fetch('/drivers', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({name:name, password:password,email:email})
+        })
+            .then(response => response.json())
+            .then(data => {
+                // Authentication
+                authenticateUser(email, password, false, true);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    }
+}
+
+function authenticateUser(email, password, isVendor, isDriver) {
     fetch('/login?username=' + encodeURIComponent(email) + '&password=' + encodeURIComponent(password), {
         method: 'POST',
         headers: {
@@ -103,6 +149,8 @@ function authenticateUser(email, password, isVendor) {
                 // Redirect the user after successful authentication
                 if(isVendor) {
                     window.location.href = '/vendor';
+                } else if (isDriver) {
+                    window.location.href = '/driverMain';
                 } else {
                     window.location.href = '/home';
                 }
