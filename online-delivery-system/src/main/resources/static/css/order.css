@@ -117,7 +117,7 @@ ul.cuisineList{
  .grid-item {
      border-radius: 7px;
      background-color: rgba(255, 255, 255, 0.8);
-     border: 1px solid rgba(0, 0, 0, 0.8);
+     border: 2px solid rgba(0, 0, 0, 1);
      /*padding: 20px;*/
      font-size: 30px;
      text-align: center;
@@ -125,6 +125,11 @@ ul.cuisineList{
      overflow: hidden;
      position: relative;
      padding-top: 25%;
+     transition: transform 0.3s ease;
+ }
+
+ .grid-item:hover {
+     transform: scale(1.05);
  }
 
  .grid-item img {
@@ -157,6 +162,7 @@ ul.cuisineList{
  .grid-item .grid-item-footer{
      border-top-right-radius: 10px;
      border-bottom-right-radius: 10px;
+     left: 0;
  }
 
  .grid-item .rating{

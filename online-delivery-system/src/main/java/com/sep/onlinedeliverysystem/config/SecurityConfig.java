@@ -38,6 +38,10 @@ public class SecurityConfig extends GlobalAuthenticationConfigurerAdapter {
     @Autowired
     private UserDetailsService vendorDetailsService;
 
+    @Qualifier("driverDetailsService")
+    @Autowired
+    private UserDetailsService driverDetailsService;
+
     @Autowired
     public SecurityConfig(UserDetailsService userDetailsService) {
         this.userDetailsService = userDetailsService;
@@ -56,6 +60,7 @@ public class SecurityConfig extends GlobalAuthenticationConfigurerAdapter {
                         authorize
                                 .requestMatchers("/profile/**", "/checkout/**").hasAuthority("USER")
                                 .requestMatchers("/vendoritems/**", "/vendor/**", "/vendorProfile/**").hasAuthority("VENDOR")
+                                .requestMatchers("/driverMain/**").hasAuthority("DRIVER")
                                 .requestMatchers("/home").hasAnyAuthority("USER", "ROLE_ANONYMOUS") // Deny access to /home for vendors
                                 .anyRequest().permitAll()
                 ).formLogin(
@@ -77,7 +82,8 @@ public class SecurityConfig extends GlobalAuthenticationConfigurerAdapter {
 
         auth
                 .authenticationProvider(authenticationProvider(vendorDetailsService, passwordEncoder()))
-                .authenticationProvider(authenticationProvider(userDetailsService, passwordEncoder()));
+                .authenticationProvider(authenticationProvider(userDetailsService, passwordEncoder()))
+                .authenticationProvider(authenticationProvider(driverDetailsService, passwordEncoder()));
     }
 
     private DaoAuthenticationProvider authenticationProvider(
@@ -96,7 +102,9 @@ public class SecurityConfig extends GlobalAuthenticationConfigurerAdapter {
                 Set<String> roles = AuthorityUtils.authorityListToSet(authentication.getAuthorities());
                 if (roles.contains("VENDOR")) {
                     response.sendRedirect("/vendor");
-                } else {
+                }else if (roles.contains("DRIVER")) {
+                    response.sendRedirect("/driverMain");
+                }else {
                     response.sendRedirect("/home");
                 }
             }

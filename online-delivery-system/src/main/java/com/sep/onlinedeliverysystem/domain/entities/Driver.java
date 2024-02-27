@@ -22,4 +22,9 @@ public class Driver implements Serializable {
     private String name;
     private String password;
     private float rating;
+
+    public DriverDetailsEntity toDriverDetails() {
+        return new DriverDetailsEntity(this);
+    }
+
 }

@@ -101,6 +101,9 @@ public class WebController {
         return "order";
     }
 
+    @GetMapping("/driverMain")
+    public String driverMain(){return "driverMain"; }
+
     @GetMapping("/checkout")
     public String checkout(Principal principal){
         if (principal != null) {
