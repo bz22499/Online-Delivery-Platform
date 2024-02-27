@@ -165,7 +165,7 @@ async function populateBasketsDropdown() {
         }
 
         const editButton = document.createElement('button');
-        editButton.textContent = 'Edit baskets';
+        editButton.textContent = 'View baskets';
         editButton.className = 'edit-baskets-button';
         editButton.addEventListener('click', function () {
             window.location.href = `/baskets-overview`
