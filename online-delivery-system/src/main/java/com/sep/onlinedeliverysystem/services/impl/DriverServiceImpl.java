@@ -67,4 +67,9 @@ public class DriverServiceImpl implements DriverService {
     public void delete(String email) {
         driverRepository.deleteById(email);
     }
+
+    @Override
+    public boolean updateProfile(String email, String currentPassword, String newName, String newDescription, String newPassword) {
+        return false;
+    }
 }
