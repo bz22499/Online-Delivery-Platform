@@ -35,7 +35,7 @@ function cancelEdit() {
 }
 
 function saveProfile() {
-    var driverId = document.getElementById('driveerId').value;
+    var driverId = document.getElementById('driverId').value;
     var currentPassword = document.getElementById('current-password').value;
     var name = document.getElementById('new-name').value;
     var description = document.getElementById('new-description').value;
