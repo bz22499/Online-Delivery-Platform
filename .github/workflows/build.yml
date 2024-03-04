@@ -2,7 +2,7 @@ name: Build
 
 on:
   push:
-    branches: [ "dev" ]
+    branches: ["dev"]
 
 jobs:
   build:
@@ -20,10 +20,16 @@ jobs:
           java-version: "17"
           distribution: "temurin"
           cache: maven
-  
+
       - name: Build with Maven
         run: mvn -B package --file pom.xml
-  
+
       - name: Prepare deployment
         run: |
-          cp target/*.jar ..
+          zip -j deployment-package.zip target/*.jar
+
+      - name: Upload deployment package
+        uses: actions/upload-artifact@v2
+        with:
+          name: deployment-package
+          path: deployment-package.zip
