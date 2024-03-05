@@ -6,22 +6,18 @@ function editProfile() {
     document.getElementById('confirm-password').value = '';
 
     document.querySelector('.name').style.display = 'none';
-    document.querySelector('.description').style.display = 'none';
     document.getElementById('logout').style.display = 'none';
 
     document.getElementById('edit-form').style.display = 'block';
 
     // Set the current values in the form fields
     document.getElementById('new-name').value = document.querySelector('.name').innerText;
-    document.getElementById('new-description').value = document.querySelector('.description').innerText;
-
     // Hide buttons in the user-details div
     document.querySelector('#user-details button.edit-profile').style.display = 'none';
 }
 
 function returnToProfile() {
     document.querySelector('.name').style.display = 'block';
-    document.querySelector('.description').style.display = 'block';
     document.getElementById('logout').style.display = 'inline-block';
 
     document.getElementById('edit-form').style.display = 'none';
@@ -38,7 +34,6 @@ function saveProfile() {
     var driverId = document.getElementById('driverId').value;
     var currentPassword = document.getElementById('current-password').value;
     var name = document.getElementById('new-name').value;
-    var description = document.getElementById('new-description').value;
     var newPassword = document.getElementById('new-password').value;
     var confirmPassword = document.getElementById('confirm-password').value;
 
@@ -50,7 +45,6 @@ function saveProfile() {
 
     var requestBody = {
         name: name,
-        description: description,
         currentPassword: currentPassword
     };
 
@@ -71,7 +65,6 @@ function saveProfile() {
             if (response.ok) {
                 alert("Profile updated successfully");
                 document.querySelector('.name').innerText = name;
-                document.querySelector('.description').innerText = description;
                 returnToProfile();
             } else if (response.status === 401) {
                 // Unauthorized, display invalid password alert

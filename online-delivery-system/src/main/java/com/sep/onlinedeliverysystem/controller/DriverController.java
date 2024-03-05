@@ -81,7 +81,6 @@ public class DriverController {
     public ResponseEntity updateProfile(@PathVariable("email") String email, @RequestBody Map<String, String> requestBody) {
         String currentPassword = requestBody.get("currentPassword");
         String newName = requestBody.get("name");
-        String newDescription = requestBody.get("description");
         String newPassword = requestBody.get("newPassword");
 
         if (!driverService.Exists(email)) {
@@ -89,7 +88,7 @@ public class DriverController {
         }
 
         // Attempt to update the profile
-        boolean updated = driverService.updateProfile(email, currentPassword, newName, newDescription, newPassword);
+        boolean updated = driverService.updateProfile(email, currentPassword, newName, newPassword);
 
         if (updated) {
             // If profile updated successfully, return the updated user DTO

@@ -175,7 +175,6 @@ public class WebController {
             if (driver.isPresent()) {
                 model.addAttribute("id", driver.get().getEmail());
                 model.addAttribute("name", driver.get().getName());
-                //model.addAttribute("description", driver.get().getDescription());
                 model.addAttribute("rating", driver.get().getRating());
                 model.addAttribute("password", driver.get().getPassword());
                 return "driverProfile";
