@@ -76,6 +76,11 @@ public class WebController {
         return "contactUs";
     }
 
+    @GetMapping("/distanceCalculator")
+    public String calculateDistance() {
+        return "distance_calculator";
+    }
+
     @GetMapping("/customerlogin")
     public String customerlogin() {
         return "customerSignUp";
