@@ -1,6 +1,8 @@
 package com.sep.onlinedeliverysystem.controller;
 import com.sep.onlinedeliverysystem.domain.dto.DriverDTO;
+import com.sep.onlinedeliverysystem.domain.dto.VendorDTO;
 import com.sep.onlinedeliverysystem.domain.entities.Driver;
+import com.sep.onlinedeliverysystem.domain.entities.Vendor;
 import com.sep.onlinedeliverysystem.mappers.Mapper;
 import com.sep.onlinedeliverysystem.services.DriverService;
 import org.springframework.http.HttpStatus;
@@ -73,5 +75,31 @@ public class DriverController {
     public ResponseEntity deleteDriver(@PathVariable("email") String email){
         driverService.delete(email);
         return new ResponseEntity(HttpStatus.NO_CONTENT);
+    }
+
+    @PatchMapping(path = "/drivers/{email}/driverProfile")
+    public ResponseEntity updateProfile(@PathVariable("email") String email, @RequestBody Map<String, String> requestBody) {
+        String currentPassword = requestBody.get("currentPassword");
+        String newName = requestBody.get("name");
+        String newPassword = requestBody.get("newPassword");
+
+        if (!driverService.Exists(email)) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        // Attempt to update the profile
+        boolean updated = driverService.updateProfile(email, currentPassword, newName, newPassword);
+
+        if (updated) {
+            // If profile updated successfully, return the updated user DTO
+            Optional<Driver> updatedDriverOptional = driverService.findOne(email);
+            if (updatedDriverOptional.isPresent()) {
+                DriverDTO updatedDriverDTO = driverMapper.mapTo(updatedDriverOptional.get());
+                return new ResponseEntity<>(updatedDriverDTO, HttpStatus.OK);
+            }
+        }
+
+        // If the profile update failed (due to incorrect current password), return UNAUTHORIZED
+        return new ResponseEntity<>("Current password is incorrect", HttpStatus.UNAUTHORIZED);
     }
 }
