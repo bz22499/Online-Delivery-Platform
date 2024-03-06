@@ -3,8 +3,13 @@
      margin: 0;
  }
 
+ .cuisineBanner {
+     padding:20px;
+     margin-top:160px
+ }
+
  ul.banner {
-      z-index:1;
+     z-index:1;
      list-style-type: none;
      margin: 0;
      padding: 0;
@@ -171,4 +176,26 @@ ul.cuisineList{
  .grid-item:hover .rating{
      right: 0; /* when hovered have banner come into frame*/
  }
+
+ ul.banner #viewBasketsButton a {
+     background-color: #04AA6D; /* Green background */
+     color: white; /* White text */
+     padding: 5px 16px;
+     margin: 8px 10px;
+     border-radius: 10px; /* Optional: adds rounded corners */
+ }
+
+ .basketsDropdown-content {
+     display: none;
+     position: fixed; /* Changed to fixed to stick to the viewport */
+     right: 0; /* Align to the right side of the viewport */
+     top: 50px; /* Adjust based on your banner's height */
+     background-color: darkgray;
+     min-width: 160px;
+     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+     padding: 12px 16px;
+     z-index: 2; /* Ensure it's above other content */
+ }
+
+
 
