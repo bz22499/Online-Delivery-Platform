@@ -240,4 +240,9 @@ public class WebController {
             return "redirect:/login";
         }
     }
+
+    @GetMapping("/baskets-overview")
+    public String getBasketsPage() {
+        return "baskets-overview";
+    }
 }
