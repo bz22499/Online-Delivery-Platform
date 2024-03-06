@@ -181,6 +181,9 @@ document.addEventListener('DOMContentLoaded', function () {
                         })
                     })
                 }
+                //redirect to check out page
+                window.location.href = '/checkout';
+
             })
                 .then(data => alert("Basket submitted"))
                 .catch(error => {

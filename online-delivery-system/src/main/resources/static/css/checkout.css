@@ -1,0 +1,27 @@
+.checkout-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin-top: 50px;
+}
+
+.basket-summary {
+    margin-bottom: 20px;
+}
+
+.total-cost {
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.pay-button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
