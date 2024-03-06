@@ -2,7 +2,7 @@
 
 
 <div align="center">
-  <h1 align="center">Online Delivery Platform</h1>
+  <h1 align="center"><a href="http://onlinedeliveryservice.eu-west-2.elasticbeanstalk.com/order" /a> Online Delivery Platform</h1>
   <h3>A green approach to food delivery</h3>
 </div>
 
