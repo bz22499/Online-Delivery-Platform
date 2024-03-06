@@ -67,4 +67,28 @@ public class DriverServiceImpl implements DriverService {
     public void delete(String email) {
         driverRepository.deleteById(email);
     }
+
+    @Override
+    /*public boolean updateProfile(String email, String currentPassword, String newName, String newPassword) {
+        return false;
+    }*/
+
+    public boolean updateProfile(String email, String currentPassword, String newName, String newPassword) {
+        Optional<Driver> driverOptional = driverRepository.findById(email);
+        if (driverOptional.isPresent()) {
+            Driver driver = driverOptional.get();
+            // Check if the current password matches
+            if (currentPassword.equals(driver.getPassword())) {
+                // Update the first name and last name fields
+                driver.setName(newName);
+                // Update the password if a new password is provided
+                if (newPassword != null && !newPassword.isEmpty()) {
+                    driver.setPassword(newPassword);
+                }
+                driverRepository.save(driver);
+                return true;
+            }
+        }
+        return false;
+    }
 }

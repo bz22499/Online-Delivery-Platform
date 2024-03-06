@@ -60,7 +60,7 @@ public class SecurityConfig extends GlobalAuthenticationConfigurerAdapter {
                         authorize
                                 .requestMatchers("/profile/**", "/checkout/**").hasAuthority("USER")
                                 .requestMatchers("/vendoritems/**", "/vendor/**", "/vendorProfile/**").hasAuthority("VENDOR")
-                                .requestMatchers("/driverMain/**").hasAuthority("DRIVER")
+                                .requestMatchers("/driverMain/**", "/driverProfile").hasAuthority("DRIVER")
                                 .requestMatchers("/home").hasAnyAuthority("USER", "ROLE_ANONYMOUS") // Deny access to /home for vendors
                                 .anyRequest().permitAll()
                 ).formLogin(
