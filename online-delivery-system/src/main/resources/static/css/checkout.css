@@ -1,31 +1,3 @@
-/*.checkout-container {
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 20px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    margin-top: 50px;
-}
-
-.basket-summary {
-    margin-bottom: 20px;
-}
-
-.total-cost {
-    font-weight: bold;
-    margin-bottom: 20px;
-}
-
-.pay-button {
-    background-color: #4CAF50;
-    color: white;
-    padding: 10px 15px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-}*/
-
 .checkout-container {
     max-width: 600px;
     margin: 0 auto;
@@ -33,6 +5,7 @@
     border: 1px solid #ddd;
     border-radius: 8px;
     margin-top: 50px;
+    background-color: #fff; /* Add a background color for better visibility */
 }
 
 .basket-summary {
@@ -44,6 +17,7 @@
     margin-bottom: 20px;
 }
 
+/* Style the "Pay Now" button */
 .pay-button {
     background-color: #4CAF50;
     color: white;
@@ -52,9 +26,6 @@
     border-radius: 5px;
     cursor: pointer;
     font-size: 16px;
-}
-
-/* Add a new class for the baskets container */
-.baskets-container {
-    margin-top: 20px;
+    width: 100%; /* Make the button full-width */
+    margin-top: 20px; /* Add space between total cost and the button */
 }
