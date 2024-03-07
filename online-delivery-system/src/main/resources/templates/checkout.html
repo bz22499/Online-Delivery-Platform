@@ -10,11 +10,10 @@
     <h2>Your Basket</h2>
 
     <div class="address-selection">
-        <label for="address-select">Select Devery Address: </label>
+        <label for="address-select">Select Delivery Address: </label>
         <select id="address-select" class="address-select" onchange="updateDeliveryAddress(this.value)">
             <option value="" selected disabled>Select an address
-                <!-- Add saved addresses dynamically if available -->
-                <!-- Example addresses, replace them with actual saved addresses from your system -->
+                <!-- Example addresses, replace them with actual saved addresses -->
                 <option value="address1">123 Main St, Cityville</option>
                 <option value="address2">456 Oak St, Townsville</option>
         </select>
@@ -24,10 +23,8 @@
 
     <div id="baskets-container" class="baskets-container"></div>
 
-    <!-- Display the total cost underneath all items -->
     <div class="total-cost"></div>
 
-    <!-- "Pay Now" button at the bottom -->
     <button class="pay-button">Pay Now</button>
 </div>
 

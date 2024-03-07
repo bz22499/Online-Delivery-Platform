@@ -99,9 +99,6 @@ function calculateTotalCost(baskets) {
 
 function updateDeliveryAddress(selectedAddress) {
     console.log("Selected address:", selectedAddress);
-
-    // Add logic to update the delivery address as needed
-    // For example, you can store the selected address in a variable or perform additional actions.
 }
 
 document.addEventListener("DOMContentLoaded", async () => {
@@ -114,4 +111,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (baskets) {
         displayBaskets(baskets);
     }
+
+    const payButton = document.querySelector(".pay-button");
+    payButton.addEventListener("click", () => {
+        alert("Getting redirected to payment");
+    });
 });

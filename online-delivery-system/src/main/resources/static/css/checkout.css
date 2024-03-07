@@ -2,10 +2,11 @@
     max-width: 600px;
     margin: 0 auto;
     padding: 20px;
-    border: 1px solid #1B1B1B;
-    border-radius: 8px;
     margin-top: 50px;
-    background-color: #fff;
+    background-color: #ffffff;
+    border-radius: 8px;
+    border: 1px solid #9a9999;
+    box-shadow: 0 0 10px #a4a6a6;
 }
 
 .basket-summary {
@@ -18,7 +19,7 @@
 }
 
 .pay-button {
-    background-color: #F9E450;
+    background-color: #6ff950;
     border: 2px solid #1B1B1B;
     box-sizing: border-box;
     border-radius: 16px;
@@ -37,12 +38,19 @@
 }
 
 .pay-button:hover {
-    background: #FFBB38;
+    background: #5cff38;
     border: 4px solid #1B1B1B;
-    box-shadow: 0px 0px 0px 4px #C1BFFA;
+    box-shadow: 0px 0px 0px 4px #3a9320;
 }
 
-/* Add styling for the address selection */
+.baskets-container {
+    background-color: #ffffff;
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px solid #9a9999;
+    box-shadow: 0 0 10px #a4a6a6;
+}
+
 .address-section {
     margin-top: 20px;
 }
@@ -57,13 +65,11 @@
     background-color: #fff;
 }
 
-/* Add styling for the heading */
 h2 {
     font-size: 2rem;
     font-weight: 800;
 }
 
-/* Additional styling for other form elements */
 label {
     font-weight: 600;
     margin-top: 10px;
@@ -80,12 +86,11 @@ input {
 textarea:focus,
 input:focus {
     outline: none;
-    background: #F9E450;
+    background: #59d93c;
     border: 3px solid #1B1B1B;
     border-radius: 16px;
 }
 
-/* Additional styling for expiration and cvc input fields */
 .exp-cvc {
     display: flex;
     justify-content: space-between;
@@ -99,9 +104,8 @@ input:focus {
     width: 48%;
 }
 
-/* Add styling for the submit button */
 #submit {
-    background-color: #F9E450;
+    background-color: #39ef07;
     border: 2px solid #1B1B1B;
     box-sizing: border-box;
     border-radius: 16px;
@@ -119,8 +123,8 @@ input:focus {
 }
 
 #submit:hover {
-    background: #FFBB38;
+    background: #1faf07;
     border: 4px solid #1B1B1B;
-    box-shadow: 0px 0px 0px 4px #C1BFFA;
+    box-shadow: 0px 0px 0px 4px #bffabb;
 }
 
