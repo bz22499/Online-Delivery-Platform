@@ -9,6 +9,17 @@
 <div class="checkout-container">
     <h2>Your Basket</h2>
 
+    <div class="address-selection">
+        <label for="address-select">Select Devery Address: </label>
+        <select id="address-select" class="address-select" onchange="updateDeliveryAddress(this.value)">
+            <option value="" selected disabled>Select an address
+                <!-- Add saved addresses dynamically if available -->
+                <!-- Example addresses, replace them with actual saved addresses from your system -->
+                <option value="address1">123 Main St, Cityville</option>
+                <option value="address2">456 Oak St, Townsville</option>
+        </select>
+    </div>
+
     <div class="basket-summary"></div>
 
     <div id="baskets-container" class="baskets-container"></div>

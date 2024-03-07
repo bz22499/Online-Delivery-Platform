@@ -97,6 +97,13 @@ function calculateTotalCost(baskets) {
     return totalCost.toFixed(2); //Round to 2 dp
 }
 
+function updateDeliveryAddress(selectedAddress) {
+    console.log("Selected address:", selectedAddress);
+
+    // Add logic to update the delivery address as needed
+    // For example, you can store the selected address in a variable or perform additional actions.
+}
+
 document.addEventListener("DOMContentLoaded", async () => {
     const orderId = sessionStorage.getItem("orderId");
     if (!orderId) {
