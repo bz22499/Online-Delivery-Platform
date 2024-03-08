@@ -87,4 +87,16 @@ public class UserAddressController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
+
+    @PatchMapping("/addresses/user/{email}")
+    public ResponseEntity<UserAddressDTO> partialUpdateAddressByUserEmail(@PathVariable String email, @RequestBody UserAddressDTO address) {
+        Optional<UserAddress> userAddressOptional = userAddressService.findByUserEmail(email);
+        if (userAddressOptional.isPresent()) {
+            UserAddress userAddress = addressMapper.mapFrom(address);
+            UserAddress updatedAddress = userAddressService.partialUpdate(address.getId(), userAddress);
+            return new ResponseEntity<>(addressMapper.mapTo(updatedAddress), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
 }

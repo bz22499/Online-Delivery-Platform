@@ -112,8 +112,10 @@ function editAddress() {
     document.getElementById('address-fields').style.display = 'block';
 
     // Fetch current address data and populate the fields
-    var email = document.getElementById('user-email').innerText; // Assuming the user's email is stored in an element with ID 'user-email'
-    fetch(`/addresses/user/${email}`)
+    var email = document.getElementById('userId').value;
+    fetch(`/addresses/user/${email}`, {
+        method: 'GET'
+    })
         .then(response => response.json())
         .then(data => {
             if (data) {
@@ -134,9 +136,7 @@ function saveAddress() {
     var city = document.getElementById('city').value;
     var postCode = document.getElementById('postCode').value;
     var country = document.getElementById('country').value;
-
-    // Get the user's email (assuming it's available in the DOM)
-    var email = document.getElementById('user-email').innerText;
+    var email = document.getElementById('userId').value;
 
     // Make a request to fetch user data
     fetch(`/users/${email}`, {
@@ -144,37 +144,56 @@ function saveAddress() {
     })
         .then(response => response.json())
         .then(user => {
-            // construct the address object with the user data
+            // Construct the address object with the user data
             var addressData = {
+                user: user,
                 street: street,
                 city: city,
                 postCode: postCode,
                 country: country,
-                user: user  // Include the entire user object
             };
 
-            // Make a request to save/update the user address
-            return fetch(`/addresses`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(addressData)
-            });
-        })
-        .then(response => {
-            if (response.ok) {
-                alert("Address updated successfully");
-                // Hide the address fields
-                document.getElementById('address-fields').style.display = 'none';
-                // Show the "Edit Address" button
-                document.getElementById('edit-address-btn').style.display = 'block';
-            } else {
-                throw new Error('Failed to update address');
-            }
+            // Check if there's an existing address for the user
+            fetch(`/addresses/user/${email}`)
+                .then(response => {
+                    if (response.ok) {
+                        // Address exists, perform a PATCH request to update the existing address
+                        return fetch(`/addresses/user/${email}`, {
+                            method: 'PATCH',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify(addressData)
+                        });
+                    } else {
+                        // No address exists, perform a POST request to create a new address
+                        return fetch(`/addresses`, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify(addressData)
+                        });
+                    }
+                })
+                .then(response => {
+                    if (response.ok) {
+                        alert("Address updated successfully");
+                        // Hide the address fields
+                        document.getElementById('address-fields').style.display = 'none';
+                        // Show the "Edit Address" button
+                        document.getElementById('edit-address-btn').style.display = 'block';
+                    } else {
+                        throw new Error('Failed to update address');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error updating address:', error);
+                    alert("Failed to update address");
+                });
         })
         .catch(error => {
-            console.error('Error updating address:', error);
-            alert("Failed to update address");
+            console.error('Error fetching user data:', error);
+            alert("Failed to fetch user data");
         });
 }
