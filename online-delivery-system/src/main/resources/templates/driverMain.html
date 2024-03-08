@@ -1,7 +1,13 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Driver page</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>driver pick order page</title>
+<style>
+    body { font-family: Arial, sans-serif; }
+    .order { margin-bottom: 15px; padding: 10px; border: 1px solid #ddd; }
+</style>
     <link rel="stylesheet" type="text/css" href="/css/driver-main.css">
 </head>
 <body>
@@ -27,33 +33,43 @@
     <li class="right"><a target="_parent" href="restaurantlogin" th:unless="${loggedIn}">Partner with us</a></li>
 </ul>
 
-    <header>
-        <h1>Driver</h1>
-        <nav>
-            <a href="#">main</a> | 
-            <a href="#">Order history</a>
-        </nav>
-    </header>
+<h1>waiting list</h1>
 
-    <section class="order-list">
-        <div class="order-item">
-            <h2>Order #1234</h2>
-            <p>Restaurant: hamburger</p>
-            <p>Address: Bristol</p>
-            <button>Check the details</button>
-        </div>
-        <!-- Other order... -->
-    </section>
+<div id="orders">
 
-    <section class="order-details">
-        <h2>Order details</h2>
-        <!-- Order details -->
-    </section>
+</div>
 
-    <section class="map">
-        <h2>Map localation</h2>
-        <img src="../../../../../map.png" alt="Map location example">
-    </section>
+<script>
+
+const orders = [
+    { id: 1, customer: "Jia", address: "BS1 5JA", items: "Burger" },
+    { id: 2, customer: "hao", address: "BS8 1JR", items: "Pizza" },
+    // more order
+];
+
+function displayOrders() {
+    const ordersContainer = document.getElementById('orders');
+    ordersContainer.innerHTML = '';
+    orders.forEach(order => {
+        const orderDiv = document.createElement('div');
+        orderDiv.className = 'order';
+        orderDiv.innerHTML = `
+            <h3>order #${order.id}</h3>
+            <p><strong>customer:</strong> ${order.customer}</p>
+            <p><strong>address:</strong> ${order.address}</p>
+            <p><strong>order detail:</strong> ${order.items}</p>
+            <button onclick="acceptOrder(${order.id})">pick up</button>
+        `;
+        ordersContainer.appendChild(orderDiv);
+    });
+}
+
+function acceptOrder(orderId) {
+    console.log("accept order", orderId);
+}
+
+displayOrders();
+</script>
 
     <footer>
         <p>Copyright © Rider Delivery System</p>
