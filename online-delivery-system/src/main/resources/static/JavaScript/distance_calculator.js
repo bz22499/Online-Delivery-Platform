@@ -8,13 +8,13 @@ function calculateDistance() {
     var postcode1 = document.getElementById("postcode1").value.trim();
     var postcode2 = document.getElementById("postcode2").value.trim();
 
-    // Make sure both postcodes are provided
+    // mmake sure both postcodes are provided
     if (!postcode1 || !postcode2) {
         alert("Please enter both postcodes.");
         return;
     }
 
-    // Validate postcodes
+    // validate postcodes
     if (!isValidPostcode(postcode1) || !isValidPostcode(postcode2)) {
         alert("Please enter valid UK postcodes.");
         return;
@@ -25,7 +25,7 @@ function calculateDistance() {
         postcode2: postcode2
     };
 
-    // Make API request to calculate distance
+    // Make request to calculate distance
     fetch(`/calculate-distance`, {
         method: 'POST',
         headers: {

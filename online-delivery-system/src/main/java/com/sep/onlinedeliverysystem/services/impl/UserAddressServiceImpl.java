@@ -1,7 +1,9 @@
 package com.sep.onlinedeliverysystem.services.impl;
 
+import com.sep.onlinedeliverysystem.domain.entities.User;
 import com.sep.onlinedeliverysystem.domain.entities.UserAddress;
 import com.sep.onlinedeliverysystem.repositories.AddressRepository;
+import com.sep.onlinedeliverysystem.repositories.UserRepository;
 import com.sep.onlinedeliverysystem.services.UserAddressService;
 import org.springframework.stereotype.Service;
 
@@ -14,9 +16,11 @@ import java.util.stream.StreamSupport;
 public class UserAddressServiceImpl implements UserAddressService {
 
     private AddressRepository addressRepository;
+    private UserRepository userRepository;
 
-    public UserAddressServiceImpl(AddressRepository addressRepository) {
+    public UserAddressServiceImpl(AddressRepository addressRepository, UserRepository userRepository) {
         this.addressRepository = addressRepository;
+        this.userRepository = userRepository;
     }
 
     @Override
@@ -55,5 +59,15 @@ public class UserAddressServiceImpl implements UserAddressService {
     @Override
     public void delete(Long id) {
         addressRepository.deleteById(id);
+    }
+
+    @Override
+    public Optional<UserAddress> findByUserEmail(String email) {
+        Optional<User> user = userRepository.findById(email);
+        if (user.isPresent()) {
+            return addressRepository.findByUser(user.get());
+        } else {
+            return Optional.empty(); // Return empty optional if user with given email does not exist
+        }
     }
 }

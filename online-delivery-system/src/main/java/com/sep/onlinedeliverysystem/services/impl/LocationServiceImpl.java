@@ -10,6 +10,7 @@ import org.springframework.web.client.RestTemplate;
 @Service
 public class LocationServiceImpl implements LocationService {
 
+    //API key for LocationIQ
     private final String LOCATIONIQ_API_KEY = "pk.958aa9e2459c09b2d67d8ba92c9d0afb";
 
     @Override
@@ -19,7 +20,9 @@ public class LocationServiceImpl implements LocationService {
         if (coords1 == null || coords2 == null) {
             throw new IllegalArgumentException("Invalid postcodes provided");
         }
-        String[] parts1 = coords1.split(",");
+
+        //split the coords into lat & lon
+        String[] parts1 = coords1.split(","); //makes an array with lat and lon
         String[] parts2 = coords2.split(",");
         double lat1 = Double.parseDouble(parts1[0]);
         double lon1 = Double.parseDouble(parts1[1]);
@@ -42,7 +45,7 @@ public class LocationServiceImpl implements LocationService {
                 String longitude = rootNode.get(0).get("lon").asText();
                 return latitude + "," + longitude;
             } catch (Exception e) {
-                // Handle parsing exception
+                // exception handling
                 e.printStackTrace();
                 return null;
             }

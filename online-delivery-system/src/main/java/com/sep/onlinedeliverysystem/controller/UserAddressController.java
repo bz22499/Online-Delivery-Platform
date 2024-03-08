@@ -77,4 +77,14 @@ public class UserAddressController {
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 
+    @GetMapping("/addresses/user/{email}")
+    public ResponseEntity<UserAddressDTO> getAddressByUserEmail(@PathVariable String email) {
+        Optional<UserAddress> userAddressOptional = userAddressService.findByUserEmail(email);
+        if (userAddressOptional.isPresent()) {
+            UserAddressDTO userAddressDTO = addressMapper.mapTo(userAddressOptional.get());
+            return new ResponseEntity<>(userAddressDTO, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
 }
