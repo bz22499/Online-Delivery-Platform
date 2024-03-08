@@ -3,7 +3,7 @@ version: 0.2
 phases:
   install:
     runtime-versions:
-      java: coretto17
+      java: corretto17
     pre_build:
       commands:
         - echo "Moving to application directory."
@@ -17,10 +17,3 @@ phases:
     post_build:
       commands:
         - echo "Build completed."
-        - echo "Moving JAR to root."
-        - cp target/*.jar ../online-delivery-system.jar
-
-    artifacts:
-      files:
-        - online-delivery-system.jar
-      base-directory: online-delivery-system/target
