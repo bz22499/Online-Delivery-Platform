@@ -54,14 +54,23 @@ async function submitFormClicked(name, price, description,itemID,itemTitle,itemD
     const vendorInfoElement = document.getElementById('vendor-info');
     const vendorId = vendorInfoElement.getAttribute('data-id');
     const vendor = await fetchVendorFromVendorId(vendorId);
-    let valid = true
 
-    if(valid){
-        valid = /^(\$|)([0-9]\d{0,2}(\,\d{3})*|([0-9]\d*))(\.\d{2})?$/.test(price)
+    let valid = /^(\$|)([0-9]\d{0,2}(\,\d{3})*|([0-9]\d*))(\.\d{2})?$/.test(price)
+
+    if(!valid){
+        alert("Price was not in correct format") //if it is not valid explain why
+    }else{
+        if(price > 10000){
+            valid = false
+            alert("Price of item exceeded maximum price of 10000")
+        }
     }
 
-    if(name.toString() === "" || description.toString() === "" || price.toString() === ""){
-        valid = false
+    if(valid){
+        if(name.toString() === "" || description.toString() === "" || price.toString() === ""){
+            valid = false
+            alert("A field was left empty");
+        }
     }
 
     const menuItemDTO = {

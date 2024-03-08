@@ -20,4 +20,5 @@ public interface DriverService {
 
     void delete(String email);
 
+    boolean updateProfile(String email, String currentPassword, String newName, String newPassword);
 }

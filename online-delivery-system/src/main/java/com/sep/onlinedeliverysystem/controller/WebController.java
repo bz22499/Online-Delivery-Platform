@@ -1,7 +1,9 @@
 package com.sep.onlinedeliverysystem.controller;
 
+import com.sep.onlinedeliverysystem.domain.entities.Driver;
 import com.sep.onlinedeliverysystem.domain.entities.User;
 import com.sep.onlinedeliverysystem.domain.entities.Vendor;
+import com.sep.onlinedeliverysystem.services.DriverService;
 import com.sep.onlinedeliverysystem.services.UserService;
 import com.sep.onlinedeliverysystem.services.VendorService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -22,13 +24,15 @@ import java.util.Optional;
 public class WebController {
 
     private final VendorService vendorService;
+    private final DriverService driverService;
     private final UserService userService;
 
     private AuthenticationManager authenticationManager;
 
     @Autowired
-    public WebController(VendorService vendorService, UserService userService, @Qualifier("customAuthenticationManager") AuthenticationManager authenticationManager) {
+    public WebController(VendorService vendorService, DriverService driverService, UserService userService, @Qualifier("customAuthenticationManager") AuthenticationManager authenticationManager) {
         this.vendorService = vendorService;
+        this.driverService = driverService;
         this.userService = userService;
         this.authenticationManager = authenticationManager;
     }
@@ -106,6 +110,9 @@ public class WebController {
         return "order";
     }
 
+    @GetMapping("/driverMain")
+    public String driverMain(){return "driverMain"; }
+
     @GetMapping("/checkout")
     public String checkout(Principal principal){
         if (principal != null) {
@@ -156,6 +163,26 @@ public class WebController {
                 model.addAttribute("rating", vendor.get().getRating());
                 model.addAttribute("password", vendor.get().getPassword());
                 return "vendorProfile";
+            } else {
+                return "notFound";
+            }
+        } else {
+            // Handle the case when no user is logged in
+            return "login"; // Redirect to the login page
+        }
+    }
+
+    @GetMapping("/driverProfile")
+    public String driverProfile(Principal principal, Model model) {
+        if (principal != null) {
+            String loggedInUserEmail = principal.getName(); // Retrieves the email/id of the currently logged-in user
+            Optional<Driver> driver = driverService.findOne(loggedInUserEmail);
+            if (driver.isPresent()) {
+                model.addAttribute("id", driver.get().getEmail());
+                model.addAttribute("name", driver.get().getName());
+                model.addAttribute("rating", driver.get().getRating());
+                model.addAttribute("password", driver.get().getPassword());
+                return "driverProfile";
             } else {
                 return "notFound";
             }
@@ -217,5 +244,10 @@ public class WebController {
         } catch (Exception e) {
             return "redirect:/login";
         }
+    }
+
+    @GetMapping("/baskets-overview")
+    public String getBasketsPage() {
+        return "baskets-overview";
     }
 }
