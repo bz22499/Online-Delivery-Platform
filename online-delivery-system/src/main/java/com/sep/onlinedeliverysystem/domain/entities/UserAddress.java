@@ -14,10 +14,11 @@ import lombok.NoArgsConstructor;
 @Table(name = "user_addresses")
 public class UserAddress {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "address_id_uuid")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_email")
+
+    @ManyToOne
+    @JoinColumn(name = "user_email", nullable = false)
     private User user;
     private String street;
     private String city;
