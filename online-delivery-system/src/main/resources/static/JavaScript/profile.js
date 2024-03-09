@@ -152,11 +152,16 @@ function saveAddress() {
                 postCode: postCode,
                 country: country,
             };
+            alert(JSON.stringify(user));
 
             // Check if there's an existing address for the user
-            fetch(`/addresses/user/${email}`)
+            fetch(`/addresses/user/${email}`, {
+                method: 'GET'
+            })
                 .then(response => {
                     if (response.ok) {
+                        alert("patch");
+
                         // Address exists, perform a PATCH request to update the existing address
                         return fetch(`/addresses/user/${email}`, {
                             method: 'PATCH',
@@ -166,6 +171,7 @@ function saveAddress() {
                             body: JSON.stringify(addressData)
                         });
                     } else {
+                        alert("post");
                         // No address exists, perform a POST request to create a new address
                         return fetch(`/addresses`, {
                             method: 'POST',

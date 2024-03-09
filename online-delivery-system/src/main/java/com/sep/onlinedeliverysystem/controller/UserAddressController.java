@@ -30,6 +30,7 @@ public class UserAddressController {
     public ResponseEntity<UserAddressDTO> save(@RequestBody UserAddressDTO address){ //Create functionality
         UserAddress userAddress = addressMapper.mapFrom(address);
         UserAddress savedUserAddress = userAddressService.save(userAddress);
+        System.out.println(address.getUserDTO().getEmail());
         return new ResponseEntity<>(addressMapper.mapTo(savedUserAddress), HttpStatus.CREATED);
     }
 
