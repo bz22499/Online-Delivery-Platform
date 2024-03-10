@@ -16,7 +16,7 @@ public class VendorAddress {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "vendor_address_id")
     private Long id;
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "vendor_email", nullable = false)
     private Vendor vendor;
     private String street;

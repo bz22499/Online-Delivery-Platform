@@ -19,4 +19,7 @@ public interface VendorAddressService {
     VendorAddress partialUpdate(Long id, VendorAddress vendorAddressEntity);
 
     void delete(Long id);
+
+    Optional<VendorAddress> findByVendorEmail(String email);
+
 }

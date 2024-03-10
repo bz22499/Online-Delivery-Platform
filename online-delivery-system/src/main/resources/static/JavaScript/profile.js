@@ -132,10 +132,12 @@ function editAddress() {
             }
         })
         .then(addressData => {
-            document.getElementById('street').value = addressData.street;
-            document.getElementById('city').value = addressData.city;
-            document.getElementById('postCode').value = addressData.postCode;
-            document.getElementById('country').value = addressData.country;
+            if (addressData) {
+                document.getElementById('street').value = addressData.street;
+                document.getElementById('city').value = addressData.city;
+                document.getElementById('postCode').value = addressData.postCode;
+                document.getElementById('country').value = addressData.country;
+            }
         })
         .catch(error => {
             console.error('Error fetching user address:', error);

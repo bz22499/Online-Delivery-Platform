@@ -82,6 +82,128 @@ function saveProfile() {
         })
         .catch(error => {
             console.error('Error updating profile:', error);
-            alert("Failed to update profile 123456");
+            alert("Failed to update profile");
+        });
+}
+
+function cancelEditAddress() {
+    document.getElementById('address-fields').style.display = 'none';
+    document.getElementById('edit-address-btn').style.display = 'block';
+}
+
+function editAddress() {
+    // Hide the "Edit Address" button
+    document.getElementById('edit-address-btn').style.display = 'none';
+
+    // Show the address fields
+    document.getElementById('address-fields').style.display = 'block';
+
+    // Fetch current address data and populate the fields
+    var email = document.getElementById('vendorId').value;
+    fetch(`/vendorAddresses/vendor/${email}`, {
+        method: 'GET'
+    })
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            } else if (response.status === 404) {
+                // Address not found, do nothing
+                return null;
+            } else {
+                throw new Error('Failed to fetch address data');
+            }
+        })
+        .then(addressData => {
+            // Check if addressData is null before accessing its properties
+            if (addressData) {
+                document.getElementById('street').value = addressData.street;
+                document.getElementById('city').value = addressData.city;
+                document.getElementById('postCode').value = addressData.postCode;
+                document.getElementById('country').value = addressData.country;
+            }
+        })
+        .catch(error => {
+            console.error('Error fetching vendor address:', error);
+            alert("Failed to fetch address data");
+        });
+}
+
+
+function saveAddress() {
+    // Get address input data
+    var street = document.getElementById('street').value;
+    var city = document.getElementById('city').value;
+    var postCode = document.getElementById('postCode').value;
+    var country = document.getElementById('country').value;
+    var email = document.getElementById('vendorId').value;
+
+    // Make a request to fetch vendor data
+    fetch(`/vendors/${email}`, {
+        method: 'GET'
+    })
+        .then(response => response.json())
+        .then(vendor => {
+            // Construct the address object with the vendor data
+            var addressData = {
+                vendor: vendor,
+                street: street,
+                city: city,
+                postCode: postCode,
+                country: country,
+            };
+            // Check if there's an existing address for the vendor
+            fetch(`/vendorAddresses/vendor/${email}`, {
+                method: 'GET'
+            })
+                .then(response => {
+                    if (response.ok) {
+                        alert("patch");
+
+                        // Add the id to the addressData object (needed because it won't be generated this time; we're patching not posting)
+                        return response.json().then(existingAddress => {
+                            addressData.id = existingAddress.id;
+
+                            // Perform a PATCH request to update the existing address
+                            return fetch(`/vendorAddresses/vendor/${email}`, {
+                                method: 'PATCH',
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                },
+                                body: JSON.stringify(addressData)
+                            });
+                        });
+                    } else if (response.status === 404) {
+                        alert("post");
+                        // No address exists, perform a POST request to create a new address
+                        return fetch(`/vendorAddresses`, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify(addressData)
+                        });
+                    } else {
+                        throw new Error('Failed to fetch address data');
+                    }
+                })
+                .then(response => {
+                    if (response.ok) {
+                        alert("Address updated successfully");
+                        // Hide the address fields
+                        document.getElementById('address-fields').style.display = 'none';
+                        // Show the "Edit Address" button
+                        document.getElementById('edit-address-btn').style.display = 'block';
+                    } else {
+                        throw new Error('Failed to update address');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error updating address:', error);
+                    alert("Failed to update address");
+                });
+        })
+        .catch(error => {
+            console.error('Error fetching vendor data:', error);
+            alert("Failed to fetch vendor data");
         });
 }

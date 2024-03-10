@@ -36,6 +36,26 @@
 
   </div>
 
+  <button id="edit-address-btn" onclick="editAddress()">Edit Address</button>
+
+  <div id="address-fields" style="display: none;">
+
+    <label for="street">Street:</label>
+    <input type="text" id="street" required><br>
+
+    <label for="city">City:</label>
+    <input type="text" id="city" required><br>
+
+    <label for="postCode">Post Code:</label>
+    <input type="text" id="postCode" required><br>
+
+    <label for="country">Country:</label>
+    <input type="text" id="country" required><br>
+
+    <button type="button" onclick="saveAddress()">Save Address</button>
+    <button type="button" onclick="cancelEditAddress()">Cancel</button>
+  </div>
+
   <form id="edit-form">
 
     <!--This is here so that we can use the id in the js-->
