@@ -117,8 +117,9 @@ function uploadImage(file){
 
     var mimeType = file.type;
     var fileExtension = mimeTypeExtensions[mimeType] || '';
+    var fileName = vendorId+fileExtension
 
-    formData.append('file', file, vendorId + fileExtension);
+    formData.append('file', file, fileName);
 
     var xhr = new XMLHttpRequest();
     xhr.open('POST', '/upload', true)
@@ -132,4 +133,34 @@ function uploadImage(file){
         }
     };
     xhr.send(formData);
+
+    updateURLOnDataBase(fileName)
+}
+
+function updateURLOnDataBase(fileName){
+    var vendorId = document.getElementById('vendorId').value;
+
+    var requestBody = {
+        imageUrl: fileName
+    };
+
+    fetch(`/vendors/${vendorId}`, {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(requestBody)
+    })
+        .then(response => {
+            if (response.ok) {
+
+            } else {
+                throw new Error('Failed to update profile');
+            }
+        })
+        .catch(error => {
+            console.error('Error updating profile:', error);
+            alert("Failed to update profile 123456");
+        });
+
 }
