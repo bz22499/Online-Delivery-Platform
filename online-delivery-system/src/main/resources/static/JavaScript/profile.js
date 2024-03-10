@@ -145,6 +145,11 @@ function editAddress() {
         });
 }
 
+function isValidPostcode(postcode) {
+    // Regular expression for UK postcodes
+    var postcodeRegex = /^[A-Z]{1,2}[0-9R][0-9A-Z]? ?[0-9][A-Z]{2}$/i;
+    return postcodeRegex.test(postcode);
+}
 
 function saveAddress() {
     // Get address input data
@@ -153,6 +158,11 @@ function saveAddress() {
     var postCode = document.getElementById('postCode').value;
     var country = document.getElementById('country').value;
     var email = document.getElementById('userId').value;
+
+    if (!isValidPostcode(postCode)) {
+        alert("Invalid postcode");
+        return;
+    }
 
     // Make a request to fetch user data
     fetch(`/users/${email}`, {
