@@ -24,7 +24,7 @@
 <div id="profile-container">
   <div id="profile-picture">
     <input type="file" id="imageInput" accept="image/*" onchange="updateProfilePicture()">
-    <label for="imageInput"><img src="/images/logo_ld_png.png" alt="Press To Enter Profile Picture" id="previewImage"></label>
+    <label for="imageInput"><img th:src="@{/images/{imageURL}(imageURL=${imageURL})}" alt="Press To Enter Profile Picture" id="previewImage"></label>
   </div>
 
   <div id="user-details">
