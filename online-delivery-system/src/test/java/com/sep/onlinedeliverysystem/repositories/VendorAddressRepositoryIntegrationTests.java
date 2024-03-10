@@ -17,18 +17,19 @@ import static org.assertj.core.api.Assertions.assertThat;
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 public class VendorAddressRepositoryIntegrationTests {
 
-    private VendorRepository vendor;
+    private VendorRepository vendorRepository;
     private VendorAddressRepository vendorAddressTest;
 
     @Autowired
-    public VendorAddressRepositoryIntegrationTests(VendorAddressRepository vendorAddressTest, VendorRepository vendor){
+    public VendorAddressRepositoryIntegrationTests(VendorAddressRepository vendorAddressTest, VendorRepository vendorRepository){
         this.vendorAddressTest = vendorAddressTest;
-        this.vendor = vendor;
+        this.vendorRepository = vendorRepository;
     }
 
     @Test
     public void testSingleVendorAddressCreationAndFind(){
         Vendor vendor = TestUtil.vendorBuild1();
+        vendorRepository.save(vendor);
         VendorAddress vendorAddress = TestUtil.vendorAddressBuild1(vendor);
         vendorAddressTest.save(vendorAddress);
         Optional<VendorAddress> result = vendorAddressTest.findById(vendorAddress.getId());
@@ -39,6 +40,7 @@ public class VendorAddressRepositoryIntegrationTests {
     @Test
     public void testMultipleVendorAddressCreationAndFind(){
         Vendor vendor = TestUtil.vendorBuild1();
+        vendorRepository.save(vendor);
         VendorAddress vendorAddress1 = TestUtil.vendorAddressBuild1(vendor);
         VendorAddress vendorAddress2 = TestUtil.vendorAddressBuild2(vendor);
         VendorAddress vendorAddress3 = TestUtil.vendorAddressBuild3(vendor);
@@ -54,6 +56,7 @@ public class VendorAddressRepositoryIntegrationTests {
     @Test
     public void testVendorAddressUpdate(){
         Vendor vendor = TestUtil.vendorBuild1();
+        vendorRepository.save(vendor);
         VendorAddress vendorAddress1 = TestUtil.vendorAddressBuild1(vendor);
         vendorAddressTest.save(vendorAddress1);
         vendorAddress1.setCountry("Wales");
@@ -66,6 +69,7 @@ public class VendorAddressRepositoryIntegrationTests {
     @Test
     public void testVendorAddressDelete(){
         Vendor vendor = TestUtil.vendorBuild1();
+        vendorRepository.save(vendor);
         VendorAddress vendorAddress1 = TestUtil.vendorAddressBuild1(vendor);
         vendorAddressTest.save(vendorAddress1);
         vendorAddressTest.delete(vendorAddress1);

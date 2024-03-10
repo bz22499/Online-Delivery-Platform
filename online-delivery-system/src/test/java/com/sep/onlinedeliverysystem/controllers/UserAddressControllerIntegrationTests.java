@@ -263,5 +263,90 @@ public class UserAddressControllerIntegrationTests {
         ).andExpect(MockMvcResultMatchers.status().isNoContent());
     }
 
+    @Test
+    public void testGetAddressByUserEmailReturnsHttpStatus200OkWhenAddressExists() throws Exception {
+        User testUser = TestUtil.userBuild1();
+        userService.save(testUser);
+        UserAddress testAddress = TestUtil.userAddressBuild1(testUser);
+        userAddressService.save(testAddress);
+        mockMvc.perform(
+                MockMvcRequestBuilders.get("/addresses/user/{email}", testUser.getEmail())
+                        .contentType(MediaType.APPLICATION_JSON)
+        ).andExpect(MockMvcResultMatchers.status().isOk());
+    }
+
+    @Test
+    public void testGetAddressByUserEmailReturnsHttpStatus404NotFoundWhenAddressDoesNotExist() throws Exception {
+        mockMvc.perform(
+                MockMvcRequestBuilders.get("/addresses/user/nonexistent@example.com")
+                        .contentType(MediaType.APPLICATION_JSON)
+        ).andExpect(MockMvcResultMatchers.status().isNotFound());
+    }
+
+    @Test
+    public void testGetAddressByUserEmailReturnsCorrectAddress() throws Exception {
+        User testUser = TestUtil.userBuild1();
+        userService.save(testUser);
+
+        UserAddress testAddress = TestUtil.userAddressBuild1(testUser);
+        userAddressService.save(testAddress);
+
+        mockMvc.perform(
+                        MockMvcRequestBuilders.get("/addresses/user/{email}", testUser.getEmail())
+                                .contentType(MediaType.APPLICATION_JSON)
+                ).andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.street").value(testAddress.getStreet()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.postCode").value(testAddress.getPostCode()));
+    }
+
+    @Test
+    public void testPartialUpdateAddressByUserEmailReturnsHttpStatus200OkWhenAddressExists() throws Exception {
+        User testUser = TestUtil.userBuild1();
+        userService.save(testUser);
+        UserAddress testAddress = TestUtil.userAddressBuild1(testUser);
+        userAddressService.save(testAddress);
+
+        UserAddress updatedAddress = TestUtil.userAddressBuild2(testUser);
+        updatedAddress.setId(testAddress.getId());
+        updatedAddress.setStreet("Updated Street");
+
+        String updatedAddressJson = objectMapper.writeValueAsString(updatedAddress);
+        mockMvc.perform(
+                MockMvcRequestBuilders.patch("/addresses/user/{email}", testUser.getEmail())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(updatedAddressJson)
+        ).andExpect(MockMvcResultMatchers.status().isOk());
+    }
+
+    @Test
+    public void testPartialUpdateAddressByUserEmailReturnsHttpStatus404NotFoundWhenAddressDoesNotExist() throws Exception {
+        mockMvc.perform(
+                MockMvcRequestBuilders.patch("/addresses/user/nonexistent@example.com")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{}") // Empty body for non-existent address
+        ).andExpect(MockMvcResultMatchers.status().isNotFound());
+    }
+
+    @Test
+    public void testPartialUpdateAddressByUserEmailUpdatesCorrectly() throws Exception {
+        User testUser = TestUtil.userBuild1();
+        userService.save(testUser);
+
+        UserAddress originalAddress = TestUtil.userAddressBuild1(testUser);
+        userAddressService.save(originalAddress);
+
+        UserAddress updatedAddress = TestUtil.userAddressBuild2(testUser);
+        updatedAddress.setId(originalAddress.getId());
+        updatedAddress.setStreet("UPDATED!!!");
+
+        String updatedAddressJson = objectMapper.writeValueAsString(updatedAddress);
+        mockMvc.perform(
+                        MockMvcRequestBuilders.patch("/addresses/user/{email}", testUser.getEmail())
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(updatedAddressJson)
+                ).andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.street").value("UPDATED!!!"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.postCode").value(updatedAddress.getPostCode()));
+    }
 
 }
