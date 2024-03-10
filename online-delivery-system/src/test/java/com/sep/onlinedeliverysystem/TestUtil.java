@@ -93,10 +93,10 @@ public final class TestUtil {
         return userAddress;
     }
 
-    public static UserAddressDTO userAddressDTOCreate1(final UserDTO userDTO) {
+    public static UserAddressDTO userAddressDTOCreate1(final User user) {
         UserAddressDTO userAddressDTO = UserAddressDTO.builder()
                 .id(101L)
-                .userDTO(userDTO)
+                .user(user)
                 .street("123 Kiggell Road")
                 .city("Bristol")
                 .postCode("A12 B34")

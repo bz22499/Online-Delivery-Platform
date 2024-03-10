@@ -116,19 +116,28 @@ function editAddress() {
     fetch(`/addresses/user/${email}`, {
         method: 'GET'
     })
-        .then(response => response.json())
-        .then(data => {
-            if (data) {
-                document.getElementById('street').value = data.street;
-                document.getElementById('city').value = data.city;
-                document.getElementById('postCode').value = data.postCode;
-                document.getElementById('country').value = data.country;
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            } else if (response.status === 404) {
+                // Address not found, do nothing
+                return null;
+            } else {
+                throw new Error('Failed to fetch address data');
             }
+        })
+        .then(addressData => {
+            document.getElementById('street').value = addressData.street;
+            document.getElementById('city').value = addressData.city;
+            document.getElementById('postCode').value = addressData.postCode;
+            document.getElementById('country').value = addressData.country;
         })
         .catch(error => {
             console.error('Error fetching user address:', error);
+            alert("Failed to fetch address data");
         });
 }
+
 
 function saveAddress() {
     // Get address input data
@@ -152,8 +161,6 @@ function saveAddress() {
                 postCode: postCode,
                 country: country,
             };
-            alert(JSON.stringify(user));
-
             // Check if there's an existing address for the user
             fetch(`/addresses/user/${email}`, {
                 method: 'GET'
@@ -162,15 +169,20 @@ function saveAddress() {
                     if (response.ok) {
                         alert("patch");
 
-                        // Address exists, perform a PATCH request to update the existing address
-                        return fetch(`/addresses/user/${email}`, {
-                            method: 'PATCH',
-                            headers: {
-                                'Content-Type': 'application/json'
-                            },
-                            body: JSON.stringify(addressData)
+                        // Add the id to the addressData object (needed because it won't be generated this time; we're patching not posting)
+                        return response.json().then(existingAddress => {
+                            addressData.id = existingAddress.id;
+
+                            // Perform a PATCH request to update the existing address
+                            return fetch(`/addresses/user/${email}`, {
+                                method: 'PATCH',
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                },
+                                body: JSON.stringify(addressData)
+                            });
                         });
-                    } else {
+                    } else if (response.status === 404) {
                         alert("post");
                         // No address exists, perform a POST request to create a new address
                         return fetch(`/addresses`, {
@@ -180,6 +192,8 @@ function saveAddress() {
                             },
                             body: JSON.stringify(addressData)
                         });
+                    } else {
+                        throw new Error('Failed to fetch address data');
                     }
                 })
                 .then(response => {
@@ -203,3 +217,4 @@ function saveAddress() {
             alert("Failed to fetch user data");
         });
 }
+

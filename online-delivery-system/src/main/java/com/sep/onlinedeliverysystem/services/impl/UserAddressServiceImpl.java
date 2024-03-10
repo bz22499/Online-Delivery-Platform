@@ -20,6 +20,7 @@ public class UserAddressServiceImpl implements UserAddressService {
 
     public UserAddressServiceImpl(AddressRepository addressRepository, UserRepository userRepository) {
         this.addressRepository = addressRepository;
+        this.userRepository = userRepository;
     }
 
     @Override

@@ -18,18 +18,19 @@ import static org.assertj.core.api.Assertions.assertThat;
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 public class UserAddressRepositoryIntegrationTests {
 
-    private UserRepository user;
+    private UserRepository userTest;
     private AddressRepository userAddressTest;
 
     @Autowired
-    public UserAddressRepositoryIntegrationTests(AddressRepository test, UserRepository user){
+    public UserAddressRepositoryIntegrationTests(AddressRepository test, UserRepository userTest){
         this.userAddressTest = test;
-        this.user = user;
+        this.userTest = userTest;
     }
 
     @Test
     public void testSingleAddressCreationAndFind(){
         User userEntity = TestUtil.userBuild1();
+        userTest.save(userEntity);
         UserAddress userAddress = TestUtil.userAddressBuild1(userEntity);
         userAddressTest.save(userAddress);
         Optional<UserAddress> result = userAddressTest.findById(userAddress.getId());
@@ -40,9 +41,14 @@ public class UserAddressRepositoryIntegrationTests {
     @Test
     public void testMultipleAddressCreationAndFind(){
         User userEntity = TestUtil.userBuild1();
+        User userEntity2 = TestUtil.userBuild2();
+        User userEntity3 = TestUtil.userBuild3();
+        userTest.save(userEntity);
+        userTest.save(userEntity2);
+        userTest.save(userEntity3);
         UserAddress userAddress1 = TestUtil.userAddressBuild1(userEntity);
-        UserAddress userAddress2 = TestUtil.userAddressBuild2(userEntity);
-        UserAddress userAddress3 = TestUtil.userAddressBuild3(userEntity);
+        UserAddress userAddress2 = TestUtil.userAddressBuild2(userEntity2);
+        UserAddress userAddress3 = TestUtil.userAddressBuild3(userEntity3);
         userAddressTest.save(userAddress1);
         userAddressTest.save(userAddress2);
         userAddressTest.save(userAddress3);
@@ -55,6 +61,7 @@ public class UserAddressRepositoryIntegrationTests {
     @Test
     public void testAddressUpdate() {
         User userEntity = TestUtil.userBuild1();
+        userTest.save(userEntity);
         UserAddress userAddress1 = TestUtil.userAddressBuild1(userEntity);
         userAddressTest.save(userAddress1);
         userAddress1.setPostCode("Y67 Z89");
@@ -67,6 +74,7 @@ public class UserAddressRepositoryIntegrationTests {
     @Test
     public void testAddressDelete() {
         User userEntity = TestUtil.userBuild1();
+        userTest.save(userEntity);
         UserAddress userAddress1 = TestUtil.userAddressBuild1(userEntity);
         userAddressTest.save(userAddress1);
         userAddressTest.delete(userAddress1);

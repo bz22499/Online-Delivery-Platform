@@ -7,6 +7,7 @@ import com.sep.onlinedeliverysystem.domain.dto.UserAddressDTO;
 import com.sep.onlinedeliverysystem.domain.entities.User;
 import com.sep.onlinedeliverysystem.domain.entities.UserAddress;
 import com.sep.onlinedeliverysystem.services.UserAddressService;
+import com.sep.onlinedeliverysystem.services.UserService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,19 +27,23 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 public class UserAddressControllerIntegrationTests {
 
     private UserAddressService userAddressService;
+    private UserService userService;
     private MockMvc mockMvc;
     private ObjectMapper objectMapper;
 
     @Autowired
-    public UserAddressControllerIntegrationTests(MockMvc mockMvc, UserAddressService userAddressService) {
+    public UserAddressControllerIntegrationTests(MockMvc mockMvc, UserAddressService userAddressService, UserService userService) {
         this.mockMvc = mockMvc;
         this.userAddressService = userAddressService;
+        this.userService = userService;
         this.objectMapper = new ObjectMapper();
     }
 
     @Test
     public void testThatCreateAddressSuccessfullyReturnsHttp201Created() throws Exception {
-        UserAddress testAddress1 = TestUtil.userAddressBuild1(null);
+        User testUser = TestUtil.userBuild1();
+        userService.save(testUser);
+        UserAddress testAddress1 = TestUtil.userAddressBuild1(testUser);
         String addressJson = objectMapper.writeValueAsString(testAddress1);
         mockMvc.perform(
                 MockMvcRequestBuilders.post("/addresses")
@@ -51,7 +56,9 @@ public class UserAddressControllerIntegrationTests {
 
     @Test
     public void testThatCreateAddressEntitySuccessfullyReturnsSavedAddress() throws Exception {
-        UserAddress testAddress1 = TestUtil.userAddressBuild1(null);
+        User testUser = TestUtil.userBuild1();
+        userService.save(testUser);
+        UserAddress testAddress1 = TestUtil.userAddressBuild1(testUser);
         String addressJson = objectMapper.writeValueAsString(testAddress1);
         mockMvc.perform(
                 MockMvcRequestBuilders.post("/addresses")
@@ -64,7 +71,9 @@ public class UserAddressControllerIntegrationTests {
 
     @Test
     public void testThatCreateAddressDTOSuccessfullyReturnsSavedAddress() throws Exception {
-        UserAddressDTO testAddress1 = TestUtil.userAddressDTOCreate1(null);
+        User testUser = TestUtil.userBuild1();
+        userService.save(testUser);
+        UserAddressDTO testAddress1 = TestUtil.userAddressDTOCreate1(testUser);
         String addressJson = objectMapper.writeValueAsString(testAddress1);
         mockMvc.perform(
                 MockMvcRequestBuilders.post("/addresses")
@@ -88,7 +97,7 @@ public class UserAddressControllerIntegrationTests {
     @Test
     public void testThatListAddressSuccessfullyReturnsListOfAddresses() throws Exception {
         User testUser = TestUtil.userBuild1();
-
+        userService.save(testUser);
         UserAddress testAddress1 = TestUtil.userAddressBuild1(testUser);
         userAddressService.save(testAddress1);
         mockMvc.perform(
@@ -101,7 +110,9 @@ public class UserAddressControllerIntegrationTests {
 
     @Test
     public void testThatGetAddressSuccessfullyReturnsHttpStatus200OkWhenAddressExists() throws Exception {
-        UserAddress testAddress1 = TestUtil.userAddressBuild1(null);
+        User testUser = TestUtil.userBuild1();
+        userService.save(testUser);
+        UserAddress testAddress1 = TestUtil.userAddressBuild1(testUser);
         userAddressService.save(testAddress1);
         mockMvc.perform(
                 MockMvcRequestBuilders.get("/addresses/" + testAddress1.getId())
@@ -119,7 +130,9 @@ public class UserAddressControllerIntegrationTests {
 
     @Test
     public void testThatGetAddressSuccessfullyReturnsAddressWhenAddressExists() throws Exception {
-        UserAddress testAddress1 = TestUtil.userAddressBuild1(null);
+        User testUser = TestUtil.userBuild1();
+        userService.save(testUser);
+        UserAddress testAddress1 = TestUtil.userAddressBuild1(testUser);
         userAddressService.save(testAddress1);
         mockMvc.perform(
                 MockMvcRequestBuilders.get("/addresses/" + testAddress1.getId())
@@ -131,7 +144,9 @@ public class UserAddressControllerIntegrationTests {
 
     @Test
     public void testThatFullUpdateAddressSuccessfullyReturnsHttpStatus404NotFoundWhenAddressDoesNotExist() throws Exception {
-        UserAddressDTO testAddress1 = TestUtil.userAddressDTOCreate1(null);
+        User testUser = TestUtil.userBuild1();
+        userService.save(testUser);
+        UserAddressDTO testAddress1 = TestUtil.userAddressDTOCreate1(testUser);
         String addressDTOJson = objectMapper.writeValueAsString(testAddress1);
         mockMvc.perform(
                 MockMvcRequestBuilders.put("/addresses/123")
@@ -142,9 +157,13 @@ public class UserAddressControllerIntegrationTests {
 
     @Test
     public void testThatFullUpdateAddressSuccessfullyReturnsHttpStatus200OKWhenAddressExists() throws Exception {
-        UserAddress testUserAddress1 = TestUtil.userAddressBuild1(null);
+        User testUser = TestUtil.userBuild1();
+        userService.save(testUser);
+        User testUser2 = TestUtil.userBuild2();
+        userService.save(testUser2);
+        UserAddress testUserAddress1 = TestUtil.userAddressBuild1(testUser);
         UserAddress savedAddress = userAddressService.save(testUserAddress1);
-        UserAddressDTO testUserAddressDTO1 = TestUtil.userAddressDTOCreate1(null);
+        UserAddressDTO testUserAddressDTO1 = TestUtil.userAddressDTOCreate1(testUser2);
         String addressDTOJson = objectMapper.writeValueAsString(testUserAddressDTO1);
         mockMvc.perform(
                 MockMvcRequestBuilders.put("/addresses/" + savedAddress.getId())
@@ -155,10 +174,14 @@ public class UserAddressControllerIntegrationTests {
 
     @Test
     public void testThatFullUpdateUpdatesExistingAddress() throws Exception {
-        UserAddress testUserAddress1 = TestUtil.userAddressBuild1(null);
+        User testUser = TestUtil.userBuild1();
+        userService.save(testUser);
+        User testUser2 = TestUtil.userBuild2();
+        userService.save(testUser2);
+        UserAddress testUserAddress1 = TestUtil.userAddressBuild1(testUser);
         UserAddress savedAddress = userAddressService.save(testUserAddress1);
 
-        UserAddress addressDTO = TestUtil.userAddressBuild2(null);
+        UserAddress addressDTO = TestUtil.userAddressBuild2(testUser2);
         addressDTO.setId(savedAddress.getId());
         String addressUpdateDTOJson = objectMapper.writeValueAsString(addressDTO);
         mockMvc.perform(
@@ -176,10 +199,14 @@ public class UserAddressControllerIntegrationTests {
 
     @Test
     public void testThatPartialUpdateAddressSuccessfullyReturnsHttpStatus200OKWhenAddressExists() throws Exception {
-        UserAddress testUserAddress = TestUtil.userAddressBuild1(null);
+        User testUser = TestUtil.userBuild1();
+        userService.save(testUser);
+        User testUser2 = TestUtil.userBuild2();
+        userService.save(testUser2);
+        UserAddress testUserAddress = TestUtil.userAddressBuild1(testUser);
         UserAddress savedAddress = userAddressService.save(testUserAddress);
 
-        UserAddressDTO testUserAddressDTO = TestUtil.userAddressDTOCreate1(null);
+        UserAddressDTO testUserAddressDTO = TestUtil.userAddressDTOCreate1(testUser2);
         testUserAddressDTO.setId(savedAddress.getId());
         testUserAddressDTO.setStreet("UPDATED!!!");
         String addressDTOJson = objectMapper.writeValueAsString(testUserAddressDTO);
@@ -192,10 +219,14 @@ public class UserAddressControllerIntegrationTests {
 
     @Test
     public void testThatPartialUpdateAddressSuccessfullyReturnsUpdatedAddress() throws Exception {
-        UserAddress testUserAddress = TestUtil.userAddressBuild1(null);
+        User testUser = TestUtil.userBuild1();
+        userService.save(testUser);
+        User testUser2 = TestUtil.userBuild2();
+        userService.save(testUser2);
+        UserAddress testUserAddress = TestUtil.userAddressBuild1(testUser);
         UserAddress savedAddress = userAddressService.save(testUserAddress);
 
-        UserAddressDTO testUserAddressDTO = TestUtil.userAddressDTOCreate1(null);
+        UserAddressDTO testUserAddressDTO = TestUtil.userAddressDTOCreate1(testUser2);
         testUserAddressDTO.setId(savedAddress.getId());
         testUserAddressDTO.setStreet("UPDATED!!!");
         String addressDTOJson = objectMapper.writeValueAsString(testUserAddressDTO);
@@ -222,7 +253,9 @@ public class UserAddressControllerIntegrationTests {
 
     @Test
     public void testThatDeleteAddressReturnsHttpStatus204ForExistingAddress() throws Exception{
-        UserAddress testUserAddress = TestUtil.userAddressBuild1(null);
+        User testUser = TestUtil.userBuild1();
+        userService.save(testUser);
+        UserAddress testUserAddress = TestUtil.userAddressBuild1(testUser);
         UserAddress savedAddress = userAddressService.save(testUserAddress);
         mockMvc.perform(
                 MockMvcRequestBuilders.delete("/addresses/" + savedAddress.getId())
