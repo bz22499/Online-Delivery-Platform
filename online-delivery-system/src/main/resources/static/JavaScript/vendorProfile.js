@@ -85,3 +85,51 @@ function saveProfile() {
             alert("Failed to update profile 123456");
         });
 }
+
+function updateProfilePicture() {
+    var input = document.getElementById('imageInput');
+    var preview = document.getElementById('previewImage');
+
+    var file = input.files[0];
+
+    if (file) {
+        var reader = new FileReader();
+        reader.onload = function(e) {
+            preview.src = e.target.result;
+            uploadImage(file)
+        };
+        reader.readAsDataURL(file);
+    }
+}
+
+var mimeTypeExtensions = {
+    'image/jpeg': '.jpg',
+    'image/png': '.png',
+    'image/gif': '.gif',
+};
+
+function uploadImage(file){
+    alert("GOT HERE")
+    var formData = new FormData();
+    var vendorId = document.getElementById('vendorId').value;
+
+    vendorId = "*"+vendorId+"*"
+
+    var mimeType = file.type;
+    var fileExtension = mimeTypeExtensions[mimeType] || '';
+
+    formData.append('file', file, vendorId + fileExtension);
+
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', '/upload', true)
+    xhr.onload = function() {
+        if (xhr.status === 200) {
+            alert("WORKED")
+            console.log('Upload successful');
+        } else {
+            alert("FAILED")
+            console.error('Upload failed. Status: ' + xhr.status);
+        }
+    };
+    xhr.send(formData);
+}
