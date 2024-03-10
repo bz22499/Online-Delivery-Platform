@@ -165,3 +165,12 @@ h1.header {
     top: 80px;
     left: 30px;
 }
+
+#edit-address-btn {
+    margin-left: 20px;
+}
+
+#address-fields {
+    display: none;
+    margin-left: 20px;
+}

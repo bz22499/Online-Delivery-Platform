@@ -104,6 +104,11 @@ function saveProfile() {
         });
 }
 
+function cancelEditAddress() {
+    document.getElementById('address-fields').style.display = 'none';
+    document.getElementById('edit-address-btn').style.display = 'block';
+}
+
 function editAddress() {
     // Hide the "Edit Address" button
     document.getElementById('edit-address-btn').style.display = 'none';
