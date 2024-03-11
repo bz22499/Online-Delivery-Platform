@@ -66,6 +66,16 @@ function addOrUpdateBasketItem(item) {
         const basketItemData = basket.items.find(basketItem => basketItem.menuItem.id === item.id);
         updateItemQuantity(basketItem, 1);
     }
+    /* new code for baskets feature
+    sessionStorage.setItem('basket', JSON.stringify(basket));
+
+    const addToBasketButton = document.getElementById('addToBasketContainer');
+    if (addToBasketButton) {
+        addToBasketButton.addEventListener('click', function () {
+            addOrUpdateBasketItem(item);
+            alert('Item added to basket');
+        });
+    }*/
 }
 
 // basket item creation

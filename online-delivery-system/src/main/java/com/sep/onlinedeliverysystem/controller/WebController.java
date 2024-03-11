@@ -245,4 +245,11 @@ public class WebController {
     public String getBasketsPage() {
         return "baskets-overview";
     }
+
+    @GetMapping("/checkout-back")
+    public String checkoutBack() {return "menu-page";}
+
+    @GetMapping("/menu-page-back")
+    public String menuBack() {return "order";}
 }
+

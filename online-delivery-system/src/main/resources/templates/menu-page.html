@@ -7,6 +7,19 @@
 </head>
 <body>
 
+<ul class="banner">
+    <li><img src="/images/logo_ld_png.png"></li>
+    <li><a target="_parent" href="home">Home</a></li>
+    <li><a target="_parent" href="about">About Us</a></li>
+    <li><a target="_parent" href="order">Order</a></li>
+    <li><a target="_parent" href="contact">Contact</a></li>
+    <li class="right"><a target="_parent" href="menu-page-back">Back</a></li>
+    <li class="right"><a target="_parent" href="profile" th:if="${loggedIn}">Profile</a></li>
+    <li class="right"><a target="_parent" href="login" th:unless="${loggedIn}">Login</a></li>
+    <li class="right"><a target="_parent" href="customerlogin" th:unless="${loggedIn}">Sign up</a></li>
+    <li class="right"><a target="_parent" href="restaurantlogin" th:unless="${loggedIn}">Partner with us</a></li>
+</ul>
+
 <div style="margin: 8px 40px 8px 40px">
     <div class="header">
         <div class="name" th:text="${name}">Restaurant Name</div>
@@ -19,11 +32,14 @@
 </div>
 
 <div class="grid-container"></div>
+
 <div class="basket">
     <div class="basket-header">Basket</div>
     <div class="basket-items"></div>
-    <button class="proceed-button" th:if="${loggedIn}" id="checkoutButton">Checkout</button>
     <button th:unless="${loggedIn}" class="login-button" id="loginButton">Please login before you proceed to checkout</button>
+    <button class="add-to-basket-button" id="addToBasketContainer">Add to Basket</button>
+    <!--<button class="proceed-button" th:if="${loggedIn}" id="checkoutButton">Checkout</button>-->
+    <button class="proceed-button"  id="checkoutButton">Checkout</button>
 </div>
 
 
