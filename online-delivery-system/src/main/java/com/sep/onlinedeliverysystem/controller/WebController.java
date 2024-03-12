@@ -113,6 +113,8 @@ public class WebController {
     @GetMapping("/driverMain")
     public String driverMain(){return "driverMain"; }
 
+    @GetMapping("/ordersForDrivers")
+    public String ordersForDrivers(){return "ordersForDrivers"; }
     @GetMapping("/checkout")
     public String checkout(Principal principal){
         if (principal != null) {
