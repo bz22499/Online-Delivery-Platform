@@ -116,4 +116,12 @@ document.addEventListener("DOMContentLoaded", async () => {
     payButton.addEventListener("click", () => {
         alert("Getting redirected to payment");
     });
+
+    const backButton = document.querySelector(".banner .right a[href='checkout-back']");
+    backButton.addEventListener("click", () => {
+        alert("Going back");
+        window.location.href = "/menu-page.html"; // Redirect to menu page
+        const vendorId = document.getElementById("vendor-info").getAttribute("data-id");
+        load(vendorId); // Load menu items
+    });
 });
