@@ -159,6 +159,12 @@ function saveAddress() {
     var country = document.getElementById('country').value;
     var email = document.getElementById('userId').value;
 
+    // Check if any of the fields are empty
+    if (!street || !city || !postCode || !country) {
+        alert("Please fill in all address fields");
+        return;
+    }
+
     if (!isValidPostcode(postCode)) {
         alert("Invalid postcode");
         return;

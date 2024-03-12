@@ -18,6 +18,16 @@ async function fetchItems(vendorId) {
     }
 }
 
+// Function to check if the user has an address
+async function hasAddress(email) {
+    try {
+        const response = await fetch(`/addresses/user/${email}`);
+        return response.ok; // Returns true if the address exists, false otherwise
+    } catch (error) {
+        console.error('Error fetching user address:', error);
+        return false; // Return false in case of any error
+    }
+}
 
 // populate grid with given menu items
 function populateGrid(pageData) {
@@ -171,52 +181,57 @@ document.addEventListener('DOMContentLoaded', function () { // wait until DOM is
     if (vendorId) {
         load(vendorId);
     }
+    const userId = document.getElementById('user-info').getAttribute('data-userId');
     const proceedButton = document.querySelector('.proceed-button'); // create basket button and funcionality
     if (proceedButton) { // check if button exists to avoid null reference
         proceedButton.addEventListener('click', async function () { // checks if proceed is clicked
-            const response = await fetch("/baskets", { // post to baskets
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(basket)
-            }).then(response => {
-                if (response.ok) {
-                    return response.json()
-                }
-                else {
-                    throw new Error(`HTTP error. Status: ${response.status}`)
-                }
-            }).then(savedBasket => { // from saved basket, post basketItems
-                basketCache(savedBasket, basket.items) // cache the basket and basketItems
-                for (let bi of basket.items) {
-                    fetch("/basketItems", {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({
-                            basket: savedBasket,
-                            menuItem: bi.menuItem, // this data is maintained from first load function
-                            quantity: bi.quantity
+            const hasUserAddress = await hasAddress(userId); // Check if the user has an address
+            if (hasUserAddress) {
+
+                const response = await fetch("/baskets", { // post to baskets
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(basket)
+                }).then(response => {
+                    if (response.ok) {
+                        return response.json()
+                    } else {
+                        throw new Error(`HTTP error. Status: ${response.status}`)
+                    }
+                }).then(savedBasket => { // from saved basket, post basketItems
+                    basketCache(savedBasket, basket.items) // cache the basket and basketItems
+                    for (let bi of basket.items) {
+                        fetch("/basketItems", {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({
+                                basket: savedBasket,
+                                menuItem: bi.menuItem, // this data is maintained from first load function
+                                quantity: bi.quantity
+                            })
                         })
-                    })
-                }
-            })
-                .then(data => alert("Basket submitted"))
-                .catch(error => {
-                    console.error("Error creating basket: ", error)
-                    alert("Failed to create basket")
+                    }
                 })
-        });
-    }
+                    .then(data => alert("Basket submitted"))
+                    .catch(error => {
+                        console.error("Error creating basket: ", error)
+                        alert("Failed to create basket")
+                    });
+                }else {
+                    alert("Please provide an address before proceeding to checkout.");
+                }
+            });
+        }
 
-    const loginButton = document.querySelector('.login-button');
-    if (loginButton) {
-        loginButton.addEventListener('click', function () {
-            window.location.href = "/login";
-        });
-    }
+        const loginButton = document.querySelector('.login-button');
+        if (loginButton) {
+            loginButton.addEventListener('click', function () {
+                window.location.href = "/login";
+            });
+        }
 
-});
-
+    });
