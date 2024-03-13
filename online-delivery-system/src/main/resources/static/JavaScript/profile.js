@@ -190,8 +190,6 @@ function saveAddress() {
             })
                 .then(response => {
                     if (response.ok) {
-                        alert("patch");
-
                         // Add the id to the addressData object (needed because it won't be generated this time; we're patching not posting)
                         return response.json().then(existingAddress => {
                             addressData.id = existingAddress.id;
@@ -206,7 +204,6 @@ function saveAddress() {
                             });
                         });
                     } else if (response.status === 404) {
-                        alert("post");
                         // No address exists, perform a POST request to create a new address
                         return fetch(`/addresses`, {
                             method: 'POST',

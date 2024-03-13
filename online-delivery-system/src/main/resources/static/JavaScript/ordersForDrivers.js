@@ -39,6 +39,20 @@ async function fetchBasketsByOrder(orderId) {
     }
 }
 
+async function fetchVendorAddress(vendorEmail) {
+    try {
+        const response = await fetch(`/vendorAddresses/vendor/${vendorEmail}`);
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Error fetching vendor address:', error);
+        return null;
+    }
+}
+
 async function populateOrders(ordersData) {
     const gridContainer = document.querySelector('.grid-container');
 
@@ -60,9 +74,11 @@ async function populateOrders(ordersData) {
                     const basketItems = basket.basketItems;
                     for (const basketItem of basketItems) {
                         const menuItem = basketItem.menuItem;
+                        const vendorAddress = await fetchVendorAddress(menuItem.vendor.email);
+                        const addressDetails = vendorAddress ? `Street: ${vendorAddress.street}, Postcode: ${vendorAddress.postCode}` : 'N/A';
                         const totalPrice = menuItem ? (menuItem.price * basketItem.quantity).toFixed(2) : 'N/A';
                         const basketItemInfo = document.createElement('li');
-                        basketItemInfo.textContent = `Basket ID: ${basket.id}, Basket Item ID: ${basketItem.id}, Menu Item Name: ${menuItem.name}, Quantity: ${basketItem.quantity}, Price per Item: ${menuItem.price.toFixed(2)}, Total Price: ${totalPrice}`;
+                        basketItemInfo.textContent = `Basket ID: ${basket.id}, Basket Item ID: ${basketItem.id}, Menu Item Name: ${menuItem.name}, Quantity: ${basketItem.quantity}, Price per Item: ${menuItem.price.toFixed(2)}, Total Price: ${totalPrice}, Address: ${addressDetails}`;
                         basketList.appendChild(basketItemInfo);
                     }
                 }
