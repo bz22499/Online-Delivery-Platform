@@ -231,5 +231,11 @@ document.addEventListener('DOMContentLoaded', function () { // wait until DOM is
         });
     }
 
+    const menuBackButton = document.getElementById('menu-page-back');
+    menuBackButton.addEventListener("click", () => {
+        alert("Going back");
+        window.location.href = "/order";
+    });
+
 });
 
