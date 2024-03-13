@@ -183,7 +183,14 @@ document.addEventListener('DOMContentLoaded', function () { // wait until DOM is
     }
     const proceedButton = document.querySelector('.proceed-button'); // create basket button and funcionality
     if (proceedButton) { // check if button exists to avoid null reference
-        proceedButton.addEventListener('click', async function () { // checks if proceed is clicked
+        proceedButton.addEventListener('click', async function () {
+            window.location.href = "/checkout";
+        });
+    }
+
+    const addMenuItem = document.querySelector('.add-to-basket-button');
+    if (addMenuItem) { // check if button exists to avoid null reference
+        addMenuItem.addEventListener('click', async function () { // checks if proceed is clicked
             const response = await fetch("/baskets", { // post to baskets
                 method: 'POST',
                 headers: {
@@ -212,9 +219,6 @@ document.addEventListener('DOMContentLoaded', function () { // wait until DOM is
                         })
                     })
                 }
-                //redirect to check out page
-                window.location.href = '/checkout';
-
             })
                 .then(data => alert("Basket submitted"))
                 .catch(error => {
