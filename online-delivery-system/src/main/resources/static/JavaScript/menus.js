@@ -87,6 +87,7 @@ function populateGrid(pageData) { // populates the grid that shows all the resta
             // Nav to menu page
             gridItem.addEventListener('click', () => { // listener for clicks on gridItem
                 if (restaurant.email) { // if email isn't null
+                    sessionStorage.setItem('restaurantEmail', restaurant.email);
                     window.location.href = `/${encodeURIComponent(restaurant.email)}/menu-page`; // nav to restaurant page (created using the power of thymeleaf)
                 }
                 else {

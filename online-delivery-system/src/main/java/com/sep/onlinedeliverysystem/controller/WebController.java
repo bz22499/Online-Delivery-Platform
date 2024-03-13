@@ -247,7 +247,7 @@ public class WebController {
     }
 
     @GetMapping("/checkout-back")
-    public String checkoutBack() {return "menu-page";}
+    public String checkoutBack() {return "/${encodeURIComponent(restaurant.email)}/menu-page";}
 
     @GetMapping("/menu-page-back")
     public String menuBack() {return "order";}

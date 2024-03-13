@@ -117,11 +117,14 @@ document.addEventListener("DOMContentLoaded", async () => {
         alert("Getting redirected to payment");
     });
 
-    const backButton = document.querySelector(".banner .right a[href='checkout-back']");
+    const backButton = document.getElementById('back-button');
     backButton.addEventListener("click", () => {
         alert("Going back");
-        window.location.href = "/menu-page.html"; // Redirect to menu page
-        const vendorId = document.getElementById("vendor-info").getAttribute("data-id");
-        load(vendorId); // Load menu items
+        const restaurantEmail = sessionStorage.getItem("restaurantEmail");
+        if (restaurantEmail) {
+            window.location.href = `/${encodeURIComponent(restaurantEmail)}/menu-page`;
+        } else {
+            alert("No email");
+        }
     });
 });

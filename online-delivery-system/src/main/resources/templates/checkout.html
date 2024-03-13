@@ -13,7 +13,7 @@
     <li><a target="_parent" href="about">About Us</a></li>
     <li><a target="_parent" href="order">Order</a></li>
     <li><a target="_parent" href="contact">Contact</a></li>
-    <li class="right"><a target="_parent" href="checkout-back">Back</a></li>
+    <li id="back-button" class="right"><a target="_parent" >Back</a></li>
     <li class="right"><a target="_parent" href="profile" th:if="${loggedIn}">Profile</a></li>
     <li class="right"><a target="_parent" href="login" th:unless="${loggedIn}">Login</a></li>
     <li class="right"><a target="_parent" href="customerlogin" th:unless="${loggedIn}">Sign up</a></li>
@@ -27,7 +27,7 @@
         <label for="address-select">Select Delivery Address: </label>
         <select id="address-select" class="address-select" onchange="updateDeliveryAddress(this.value)">
             <option value="" selected disabled>Select an address
-                <!-- Example addresses, replace them with actual saved addresses -->
+                <!-- Example addresses -->
                 <option value="address1">123 Main St, Cityville</option>
                 <option value="address2">456 Oak St, Townsville</option>
         </select>
