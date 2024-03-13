@@ -12,12 +12,25 @@ async function fetchItems(vendorId) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
         const data = await response.json();
+
+        // Check if there are any baskets in cache
+        const cachedBaskets = JSON.parse(sessionStorage.getItem('baskets'));
+        if (cachedBaskets) {
+            // Extract the first basket from the cached baskets (assuming there's only one basket for simplicity)
+            const cachedBasket = cachedBaskets[Object.keys(cachedBaskets)[0]]; // Assuming only one basket for simplicity
+
+            // Add items from the cached basket to the basket container
+            const basketItemsContainer = document.querySelector('.basket-items');
+            cachedBasket.items.forEach(item => {
+                addOrUpdateBasketItem(item.menuItem, item.quantity, basketItemsContainer);
+            });
+        }
+
         return data;
     } catch (error) {
         console.error('Error fetching item data:', error);
     }
 }
-
 
 // populate grid with given menu items
 function populateGrid(pageData) {

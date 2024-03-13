@@ -28,55 +28,54 @@ async function displayBaskets(baskets) {
     const container = document.getElementById("baskets-container"); // defined in html
     container.innerHTML = ""; // clear to avoid duplicates
     if (baskets && baskets.length) {
-        // check if baskets exist
-        baskets.forEach((basket) => {
-            const section = document.createElement("section"); // create a section for each basket
-            section.className = "basket-section";
+        const lastBasket = baskets[baskets.length -1];
 
-            const heading = document.createElement("h2");
-            let basketData = getBasketItemsFromCache(basket.id);
-            heading.textContent = basketData.restName;
-            section.appendChild(heading);
+        const section = document.createElement("section"); // create a section for each basket
+        section.className = "basket-section";
 
-            // create a table for basket items
-            const table = document.createElement("table");
-            table.className = "basket-table";
-            const thead = document.createElement("thead");
-            const headerRow = document.createElement("tr");
-            const itemNameHeader = document.createElement("th");
-            itemNameHeader.textContent = "Item Name";
-            const quantityHeader = document.createElement("th");
-            quantityHeader.textContent = "Quantity";
-            headerRow.appendChild(itemNameHeader);
-            headerRow.appendChild(quantityHeader);
-            thead.appendChild(headerRow);
-            table.appendChild(thead);
+        const heading = document.createElement("h2");
+        let basketData = getBasketItemsFromCache(lastBasket.id);
+        heading.textContent = basketData.restName;
+        section.appendChild(heading);
 
-            const tbody = document.createElement("tbody");
+        // create a table for basket items
+        const table = document.createElement("table");
+        table.className = "basket-table";
+        const thead = document.createElement("thead");
+        const headerRow = document.createElement("tr");
+        const itemNameHeader = document.createElement("th");
+        itemNameHeader.textContent = "Item Name";
+        const quantityHeader = document.createElement("th");
+        quantityHeader.textContent = "Quantity";
+        headerRow.appendChild(itemNameHeader);
+        headerRow.appendChild(quantityHeader);
+        thead.appendChild(headerRow);
+        table.appendChild(thead);
 
-            basketData.items.forEach((item) => {
-                const row = document.createElement("tr");
+        const tbody = document.createElement("tbody");
 
-                const nameCell = document.createElement("td");
-                nameCell.textContent = item.menuItem.name;
-                row.appendChild(nameCell);
+        basketData.items.forEach((item) => {
+            const row = document.createElement("tr");
 
-                const quantityCell = document.createElement("td");
-                quantityCell.textContent = item.quantity;
-                row.appendChild(quantityCell);
+            const nameCell = document.createElement("td");
+            nameCell.textContent = item.menuItem.name;
+            row.appendChild(nameCell);
 
-                tbody.appendChild(row);
-            });
+            const quantityCell = document.createElement("td");
+            quantityCell.textContent = item.quantity;
+            row.appendChild(quantityCell);
 
-            table.appendChild(tbody);
-            section.appendChild(table);
-            container.appendChild(section);
+            tbody.appendChild(row);
         });
+
+        table.appendChild(tbody);
+        section.appendChild(table);
+        container.appendChild(section);
 
         // Display the total cost underneath all items
         const totalCostContainer = document.createElement("div");
         totalCostContainer.className = "total-cost";
-        totalCostContainer.textContent = "Total Cost: $" + calculateTotalCost(baskets);
+        totalCostContainer.textContent = "Total Cost: $" + calculateTotalCost([lastBasket]);
         container.appendChild(totalCostContainer);
     } else {
         container.textContent = "No baskets found.";
