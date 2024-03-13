@@ -113,7 +113,7 @@ function uploadImage(file){
     var formData = new FormData();
     var vendorId = document.getElementById('vendorId').value;
 
-    vendorId = "*"+vendorId+"*"
+    vendorId = "_"+vendorId+"_"
 
     var mimeType = file.type;
     var fileExtension = mimeTypeExtensions[mimeType] || '';
