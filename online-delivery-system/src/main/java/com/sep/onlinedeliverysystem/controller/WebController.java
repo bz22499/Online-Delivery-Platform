@@ -138,13 +138,7 @@ public class WebController {
                 model.addAttribute("lastName", user.get().getLastName());
                 model.addAttribute("password", user.get().getPassword());
                 return "profile";
-            } else if (vendor.isPresent()) {
-                model.addAttribute("id", vendor.get().getEmail());
-                model.addAttribute("firstName", vendor.get().getName());
-                model.addAttribute("lastName", vendor.get().getName());
-                model.addAttribute("password", vendor.get().getPassword());
-                return "profile";
-            } else {
+            }else {
                 return "notFound";
             }
         } else {
@@ -159,11 +153,13 @@ public class WebController {
             String loggedInUserEmail = principal.getName(); // Retrieves the email/id of the currently logged-in user
             Optional<Vendor> vendor = vendorService.findOne(loggedInUserEmail);
             if (vendor.isPresent()) {
-                model.addAttribute("id", vendor.get().getEmail());
-                model.addAttribute("name", vendor.get().getName());
-                model.addAttribute("description", vendor.get().getDescription());
-                model.addAttribute("rating", vendor.get().getRating());
-                model.addAttribute("password", vendor.get().getPassword());
+                Vendor vendorObj = vendor.get();
+                model.addAttribute("id", vendorObj.getEmail());
+                model.addAttribute("name", vendorObj.getName());
+                model.addAttribute("description", vendorObj.getDescription());
+                model.addAttribute("rating", vendorObj.getRating());
+                model.addAttribute("password", vendorObj.getPassword());
+                model.addAttribute("imageURL",vendorObj.getImageUrl());
                 return "vendorProfile";
             } else {
                 return "notFound";

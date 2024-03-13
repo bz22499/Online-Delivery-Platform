@@ -221,3 +221,82 @@ function saveAddress() {
             alert("Failed to fetch vendor data");
         });
 }
+
+function updateProfilePicture() {
+    var input = document.getElementById('imageInput');
+    var preview = document.getElementById('previewImage');
+
+    var file = input.files[0];
+
+    if (file) {
+        var reader = new FileReader();
+        reader.onload = function(e) {
+            preview.src = e.target.result;
+            uploadImage(file)
+        };
+        reader.readAsDataURL(file);
+    }
+}
+
+var mimeTypeExtensions = {
+    'image/jpeg': '.jpg',
+    'image/png': '.png',
+    'image/gif': '.gif',
+};
+
+function uploadImage(file){
+    alert("GOT HERE")
+    var formData = new FormData();
+    var vendorId = document.getElementById('vendorId').value;
+
+    vendorId = "_"+vendorId+"_"
+
+    var mimeType = file.type;
+    var fileExtension = mimeTypeExtensions[mimeType] || '';
+    var fileName = vendorId+fileExtension
+
+    formData.append('file', file, fileName);
+
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', '/upload', true)
+    xhr.onload = function() {
+        if (xhr.status === 200) {
+            alert("WORKED")
+            console.log('Upload successful');
+        } else {
+            alert("FAILED")
+            console.error('Upload failed. Status: ' + xhr.status);
+        }
+    };
+    xhr.send(formData);
+
+    updateURLOnDataBase(fileName)
+}
+
+function updateURLOnDataBase(fileName){
+    var vendorId = document.getElementById('vendorId').value;
+
+    var requestBody = {
+        imageUrl: fileName
+    };
+
+    fetch(`/vendors/${vendorId}`, {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(requestBody)
+    })
+        .then(response => {
+            if (response.ok) {
+
+            } else {
+                throw new Error('Failed to update profile');
+            }
+        })
+        .catch(error => {
+            console.error('Error updating profile:', error);
+            alert("Failed to update profile 123456");
+        });
+
+}
