@@ -1,14 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>driver pick order page</title>
-<style>
-    body { font-family: Arial, sans-serif; }
-    .order { margin-bottom: 15px; padding: 10px; border: 1px solid #ddd; }
-</style>
-    <link rel="stylesheet" type="text/css" href="/css/driver-main.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>driver pick order page</title>
+    <link rel="stylesheet" href="/css/driver-main.css">
+    <script src="/JavaScript/driver-main.js" defer></script>
 </head>
 <body>
 
@@ -38,41 +35,8 @@
 <div id="orders">
 
 </div>
-
-<script>
-
-const orders = [
-    { id: 1, customer: "Jia", address: "BS1 5JA", items: "Burger" },
-    { id: 2, customer: "hao", address: "BS8 1JR", items: "Pizza" },
-    // more order
-];
-
-function displayOrders() {
-    const ordersContainer = document.getElementById('orders');
-    ordersContainer.innerHTML = '';
-    orders.forEach(order => {
-        const orderDiv = document.createElement('div');
-        orderDiv.className = 'order';
-        orderDiv.innerHTML = `
-            <h3>order #${order.id}</h3>
-            <p><strong>customer:</strong> ${order.customer}</p>
-            <p><strong>address:</strong> ${order.address}</p>
-            <p><strong>order detail:</strong> ${order.items}</p>
-            <button onclick="acceptOrder(${order.id})">pick up</button>
-        `;
-        ordersContainer.appendChild(orderDiv);
-    });
-}
-
-function acceptOrder(orderId) {
-    console.log("accept order", orderId);
-}
-
-displayOrders();
-</script>
-
     <footer>
-        <p>Copyright © Rider Delivery System</p>
+     <p>Copyright © Online Delivery System</p>
     </footer>
 </body>
 </html>
