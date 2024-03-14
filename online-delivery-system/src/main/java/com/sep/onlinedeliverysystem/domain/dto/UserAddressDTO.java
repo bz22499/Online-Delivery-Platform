@@ -1,6 +1,7 @@
 package com.sep.onlinedeliverysystem.domain.dto;
 
 
+import com.sep.onlinedeliverysystem.domain.entities.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,7 +13,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class UserAddressDTO {
     private Long id;
-    private UserDTO userDTO;
+    private User user;
     private String street;
     private String city;
     private String postCode;

@@ -1,7 +1,9 @@
 package com.sep.onlinedeliverysystem.services.impl;
 
+import com.sep.onlinedeliverysystem.domain.entities.Vendor;
 import com.sep.onlinedeliverysystem.domain.entities.VendorAddress;
 import com.sep.onlinedeliverysystem.repositories.VendorAddressRepository;
+import com.sep.onlinedeliverysystem.repositories.VendorRepository;
 import com.sep.onlinedeliverysystem.services.VendorAddressService;
 import org.springframework.stereotype.Service;
 
@@ -14,9 +16,11 @@ import java.util.stream.StreamSupport;
 public class VendorAddressServiceImpl implements VendorAddressService {
 
     private VendorAddressRepository vendorAddressRepository;
+    private VendorRepository vendorRepository;
 
-    public VendorAddressServiceImpl(VendorAddressRepository vendorAddressRepository) {
+    public VendorAddressServiceImpl(VendorAddressRepository vendorAddressRepository, VendorRepository vendorRepository) {
         this.vendorAddressRepository = vendorAddressRepository;
+        this.vendorRepository = vendorRepository;
     }
 
     @Override
@@ -55,5 +59,15 @@ public class VendorAddressServiceImpl implements VendorAddressService {
     @Override
     public void delete(Long id) {
         vendorAddressRepository.deleteById(id);
+    }
+
+    @Override
+    public Optional<VendorAddress> findByVendorEmail(String email) {
+        Optional<Vendor> vendor = vendorRepository.findById(email);
+        if (vendor.isPresent()) {
+            return vendorAddressRepository.findByVendor(vendor.get());
+        } else {
+            return Optional.empty(); // Return empty optional if user with given email does not exist
+        }
     }
 }

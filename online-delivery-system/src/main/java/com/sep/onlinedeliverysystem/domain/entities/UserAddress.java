@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "user_addresses")
 public class UserAddress {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "address_id_uuid")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne
     @JoinColumn(name = "user_email", nullable = false)

@@ -2,6 +2,7 @@ package com.sep.onlinedeliverysystem.services.impl;
 
 import com.sep.onlinedeliverysystem.domain.entities.UserAddress;
 import com.sep.onlinedeliverysystem.repositories.UserAddressRepository;
+import com.sep.onlinedeliverysystem.repositories.UserRepository;
 import com.sep.onlinedeliverysystem.services.UserAddressService;
 import org.springframework.stereotype.Service;
 
@@ -12,8 +13,9 @@ import java.util.stream.StreamSupport;
 
 @Service
 public class UserAddressServiceImpl implements UserAddressService {
-
+    
     private UserAddressRepository userAddressRepository;
+    private UserRepository userRepository;
 
     public UserAddressServiceImpl(UserAddressRepository userAddressRepository) {
         this.userAddressRepository = userAddressRepository;
@@ -55,5 +57,10 @@ public class UserAddressServiceImpl implements UserAddressService {
     @Override
     public void delete(Long id) {
         userAddressRepository.deleteById(id);
+    }
+
+    @Override
+    public Optional<UserAddress> findByUserEmail(String email) {
+        return userAddressRepository.findByUserEmail(email);
     }
 }

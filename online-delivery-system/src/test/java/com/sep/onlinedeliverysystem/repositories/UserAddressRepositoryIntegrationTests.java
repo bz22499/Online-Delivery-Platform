@@ -9,9 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-
 import java.util.Optional;
-
 import static org.assertj.core.api.Assertions.assertThat;
 
 
@@ -24,9 +22,9 @@ public class UserAddressRepositoryIntegrationTests {
     private final UserAddressRepository userAddressTest;
 
     @Autowired
-    public UserAddressRepositoryIntegrationTests(UserAddressRepository test, UserRepository user){
-        this.userAddressTest = test;
-        this.userRepository = user;
+    public UserAddressRepositoryIntegrationTests(UserAddressRepository userAddressTest, UserRepository userRepository){
+        this.userAddressTest = userAddressTest;
+        this.userRepository = userRepository;
     }
 
     @Test
