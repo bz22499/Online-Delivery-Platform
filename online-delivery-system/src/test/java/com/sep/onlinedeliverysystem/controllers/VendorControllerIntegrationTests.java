@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sep.onlinedeliverysystem.TestUtil;
 import com.sep.onlinedeliverysystem.domain.dto.UserDTO;
 import com.sep.onlinedeliverysystem.domain.dto.VendorDTO;
+import com.sep.onlinedeliverysystem.domain.entities.Order;
 import com.sep.onlinedeliverysystem.domain.entities.User;
 import com.sep.onlinedeliverysystem.domain.entities.Vendor;
 import com.sep.onlinedeliverysystem.services.VendorService;
@@ -22,6 +23,8 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import static org.hamcrest.Matchers.hasSize;
 
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
@@ -104,6 +107,23 @@ public class VendorControllerIntegrationTests {
         ).andExpect(
                 MockMvcResultMatchers.jsonPath("$.name").value("WeSellFood")
         );
+    }
+
+    @Test
+    public void listVendorsReturnsVendors() throws Exception {
+        Vendor order1 = TestUtil.vendorBuild1();
+        Vendor order2 = TestUtil.vendorBuild2();
+        Vendor order3 = TestUtil.vendorBuild3();
+
+        vendorService.save(order1);
+        vendorService.save(order2);
+        vendorService.save(order3);
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/vendors")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.content").isArray())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.content", hasSize(3))); // Ensure the response contains 3 orders
     }
 
     @Test

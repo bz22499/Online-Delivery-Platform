@@ -80,6 +80,11 @@ public class WebController {
         return "contactUs";
     }
 
+    @GetMapping("/distanceCalculator")
+    public String calculateDistance() {
+        return "distance_calculator";
+    }
+
     @GetMapping("/customerlogin")
     public String customerlogin() {
         return "customerSignUp";
@@ -108,6 +113,8 @@ public class WebController {
     @GetMapping("/driverMain")
     public String driverMain(){return "driverMain"; }
 
+    @GetMapping("/ordersForDrivers")
+    public String ordersForDrivers(){return "ordersForDrivers"; }
     @GetMapping("/checkout")
     public String checkout(Principal principal){
         if (principal != null) {
@@ -184,13 +191,22 @@ public class WebController {
     }
 
     @GetMapping("/{email}/menu-page")
-    public String getMenuPage(@PathVariable("email") String email, Model model) {
+    public String getMenuPage(@PathVariable("email") String email, Model model, Principal principal) {
         Optional<Vendor> vendor = vendorService.findOne(email);
+        Optional<User> user = Optional.empty(); // Declare user variable outside the block
+
+        if (principal != null) {
+            String loggedInUserEmail = principal.getName(); // Retrieves the email/id of the currently logged-in user
+            user = userService.findOne(loggedInUserEmail);
+        }
         if (vendor.isPresent()) {
             model.addAttribute("id", vendor.get().getEmail());
             model.addAttribute("name", vendor.get().getName());
             model.addAttribute("description", vendor.get().getDescription());
             model.addAttribute("rating", vendor.get().getRating());
+            if (user.isPresent()){
+                model.addAttribute("userId", user.get().getEmail());
+            }
             return "menu-page";
         } else {
             return "notFound";
