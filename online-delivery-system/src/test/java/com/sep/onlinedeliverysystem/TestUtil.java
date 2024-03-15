@@ -264,6 +264,8 @@ public final class TestUtil {
         return order;
     }
 
+
+    // For address testing
     public static Order orderBuilder(UserAddress userAddress){
         Order order = Order.builder()
                 .userAddress(userAddress)
