@@ -1,5 +1,6 @@
 package com.sep.onlinedeliverysystem.domain.entities;
 
+import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -20,4 +21,7 @@ public class Order {
     @ManyToOne
     @JoinColumn(name = "address_id")
     private UserAddress userAddress;
+
+    @Nullable
+    private String status;
 }
