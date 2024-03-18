@@ -24,7 +24,7 @@
 <div id="profile-container">
   <div id="profile-picture">
     <input type="file" id="imageInput" accept="image/*" onchange="updateProfilePicture()">
-    <label for="imageInput"><img src="/images/logo_ld_png.png" alt="Press To Enter Profile Picture" id="previewImage"></label>
+    <label for="imageInput"><img th:src="@{/uploads/{imageURL}(imageURL=${imageURL})}" alt="Press To Enter Profile Picture" id="previewImage"></label>
   </div>
 
   <div id="user-details">
@@ -34,6 +34,26 @@
     <button class="edit-profile" onclick="editProfile()">Edit Profile</button>
     <button class="logout-button" id="logout" onclick="window.location.href='/logout'">Logout</button>
 
+  </div>
+
+  <button id="edit-address-btn" onclick="editAddress()">Edit Address</button>
+
+  <div id="address-fields" style="display: none;">
+
+    <label for="street">Street:</label>
+    <input type="text" id="street" required><br>
+
+    <label for="city">City:</label>
+    <input type="text" id="city" required><br>
+
+    <label for="postCode">Post Code:</label>
+    <input type="text" id="postCode" required><br>
+
+    <label for="country">Country:</label>
+    <input type="text" id="country" required><br>
+
+    <button type="button" onclick="saveAddress()">Save Address</button>
+    <button type="button" onclick="cancelEditAddress()">Cancel</button>
   </div>
 
   <form id="edit-form">

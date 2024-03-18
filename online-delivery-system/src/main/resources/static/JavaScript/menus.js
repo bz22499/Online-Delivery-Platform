@@ -65,7 +65,12 @@ function populateGrid(pageData) { // populates the grid that shows all the resta
 
             // create image element
             const image = document.createElement('img'); // create an image element
-            image.src = restaurant.imageUrl || 'images/wix1.png';
+            if(restaurant.imageUrl != null){
+                image.src = "uploads/" + restaurant.imageUrl
+            }else{
+                image.src = 'images/wix1.png';
+            }
+
             image.alt = restaurant.name;
             image.className = 'restaurant-image'; // set image class
 

@@ -27,7 +27,8 @@
         <div id="vendor-info" th:attr="data-id=${id}"></div>
     </div>
     <div class="description" th:text="${description}"></div>
-
+    <!-- Set userId as a data attribute -->
+    <div id="user-info" th:attr="data-userId=${userId}" style="display: none;"></div>
     <script src="/JavaScript/items.js"></script>
 </div>
 

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>All Orders</title>
+    <link rel="stylesheet" href="/css/order.css">
+</head>
+<body>
+<ul class="banner">
+    <li><img src="/images/logo_ld_png.png"></li>
+    <li><a target="_parent" href="home">Home</a></li>
+    <li><a target="_parent" href="about">About Us</a></li>
+    <li class="active"><a target="_parent" href="order">Order</a></li>
+    <li><a target="_parent" href="contact">Contact</a></li>
+    <li class="right"><a target="_parent" href="profile" th:if="${loggedIn}">Profile</a></li>
+    <li class="right"><a target="_parent" href="login" th:unless="${loggedIn}">Login</a></li>
+    <li class="right"><a target="_parent" href="customerlogin" th:unless="${loggedIn}">Sign up</a></li>
+    <li class="right"><a target="_parent" href="restaurantlogin" th:unless="${loggedIn}">Partner with us</a></li>
+    <li id="viewBasketsButton" class="right"><a href="#">View Baskets</a></li> <!--- baskets dropdown button --->
+</ul>
+
+<div id="basketsDropdown" class="basketsDropdown-content" style="display:none;"> <!--- baskets div (need to keep style as none so button loads fine on first click??!!!) --->
+</div>
+
+<div class="grid-container"></div>
+
+<script src="/JavaScript/ordersForDrivers.js"></script>
+</body>
+</html>

@@ -66,14 +66,21 @@ public class OrderControllerIntegrationTests {
 
     @Test
     public void listOrdersReturnsOrders() throws Exception {
-        orderService.create();
-        orderService.create();
-        orderService.create();
-        mockMvc.perform(
-                MockMvcRequestBuilders.get("/orders")
-                        .contentType(MediaType.APPLICATION_JSON)
-        ).andExpect(MockMvcResultMatchers.jsonPath("$", hasSize(3)));
+        Order order1 = TestUtil.orderBuilder();
+        Order order2 = TestUtil.orderBuilder();
+        Order order3 = TestUtil.orderBuilder();
+
+        orderService.save(order1);
+        orderService.save(order2);
+        orderService.save(order3);
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/orders")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.content").isArray())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.content", hasSize(3))); // Ensure the response contains 3 orders
     }
+
 
     @Test
     public void getOrderReturns200OkWhenOrderExists() throws Exception {

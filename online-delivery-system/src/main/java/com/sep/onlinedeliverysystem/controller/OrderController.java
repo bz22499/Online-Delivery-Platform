@@ -45,9 +45,9 @@ public class OrderController {
 //    }
 
     @GetMapping(path = "/orders")
-    public List<OrderDTO> listOrders(){ //Read All functionality
-        List<Order> orderList = orderService.findAll();
-        return orderList.stream().map(orderMapper::mapTo).collect(Collectors.toList());
+    public Page<OrderDTO> listOrders(Pageable pageable){ //Read All functionality
+        Page<Order> orders = orderService.findAll(pageable);
+        return orders.map(orderMapper::mapTo);
     }
 
     @GetMapping(path = "/orders/{id}") //Read One functionality

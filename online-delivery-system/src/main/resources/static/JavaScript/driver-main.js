@@ -1,24 +1,28 @@
-document.getElementById("showDetails").addEventListener("click", function() {
-    var details = document.getElementById("orderDetails");
-    if (details.style.display === "none") {
-        details.style.display = "block";
-    } else {
-        details.style.display = "none";
-    }
-});
+const orders = [
+    { id: 1, customer: "Jia", address: "BS1 5JA", items: "Burger" },
+    { id: 2, customer: "hao", address: "BS8 1JR", items: "Pizza" },
+    // more orders
+];
 
-
-function loadOrders() {
-fetch('/api/orders')
-.then(response => response.json())
-.then(orders => {
+function displayOrders() {
     const ordersContainer = document.getElementById('orders');
     ordersContainer.innerHTML = '';
     orders.forEach(order => {
-        const orderElement = document.createElement('div');
-        orderElement.innerHTML = `Order number:${order.id} - address:${order.address}`;
-        ordersContainer.appendChild(orderElement);
+        const orderDiv = document.createElement('div');
+        orderDiv.className = 'order';
+        orderDiv.innerHTML = `
+            <h3>Order #${order.id}</h3>
+            <p><strong>Customer:</strong> ${order.customer}</p>
+            <p><strong>Address:</strong> ${order.address}</p>
+            <p><strong>Order detail:</strong> ${order.items}</p>
+            <button onclick="acceptOrder(${order.id})">Pick up</button>
+        `;
+        ordersContainer.appendChild(orderDiv);
     });
-});
 }
-loadOrders();
+
+function acceptOrder(orderId) {
+    console.log("accept order", orderId);
+}
+
+document.addEventListener('DOMContentLoaded', displayOrders);

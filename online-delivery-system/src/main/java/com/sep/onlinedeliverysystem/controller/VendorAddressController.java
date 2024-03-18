@@ -77,4 +77,27 @@ public class VendorAddressController {
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 
+    @GetMapping("/vendorAddresses/vendor/{email}")
+    public ResponseEntity<VendorAddressDTO> getAddressByVendorEmail(@PathVariable String email) {
+        Optional<VendorAddress> vendorAddressOptional = vendorAddressService.findByVendorEmail(email);
+        if (vendorAddressOptional.isPresent()) {
+            VendorAddressDTO vendorAddressDTO = vendorAddressMapper.mapTo(vendorAddressOptional.get());
+            return new ResponseEntity<>(vendorAddressDTO, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @PatchMapping("/vendorAddresses/vendor/{email}")
+    public ResponseEntity<VendorAddressDTO> partialUpdateAddressByVendorEmail(@PathVariable String email, @RequestBody VendorAddressDTO address) {
+        Optional<VendorAddress> vendorAddressOptional = vendorAddressService.findByVendorEmail(email);
+        if (vendorAddressOptional.isPresent()) {
+            VendorAddress vendorAddress = vendorAddressMapper.mapFrom(address);
+            VendorAddress updatedAddress = vendorAddressService.partialUpdate(address.getId(), vendorAddress);
+            return new ResponseEntity<>(vendorAddressMapper.mapTo(updatedAddress), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
 }

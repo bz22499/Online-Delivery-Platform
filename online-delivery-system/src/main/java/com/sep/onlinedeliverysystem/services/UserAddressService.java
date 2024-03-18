@@ -19,4 +19,7 @@ public interface UserAddressService {
     UserAddress partialUpdate(Long id, UserAddress userAddressEntity);
 
     void delete(Long id);
+
+    Optional<UserAddress> findByUserEmail(String email);
+
 }
