@@ -1,8 +1,11 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Driver page</title>
-    <link rel="stylesheet" type="text/css" href="/css/driver-main.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>driver pick order page</title>
+    <link rel="stylesheet" href="/css/driver-main.css">
+    <script src="/JavaScript/driver-main.js" defer></script>
 </head>
 <body>
 
@@ -27,36 +30,13 @@
     <li class="right"><a target="_parent" href="restaurantlogin" th:unless="${loggedIn}">Partner with us</a></li>
 </ul>
 
-    <header>
-        <h1>Driver</h1>
-        <nav>
-            <a href="#">main</a> | 
-            <a href="#">Order history</a>
-        </nav>
-    </header>
+<h1>waiting list</h1>
 
-    <section class="order-list">
-        <div class="order-item">
-            <h2>Order #1234</h2>
-            <p>Restaurant: hamburger</p>
-            <p>Address: Bristol</p>
-            <button>Check the details</button>
-        </div>
-        <!-- Other order... -->
-    </section>
+<div id="orders">
 
-    <section class="order-details">
-        <h2>Order details</h2>
-        <!-- Order details -->
-    </section>
-
-    <section class="map">
-        <h2>Map localation</h2>
-        <img src="../../../../../map.png" alt="Map location example">
-    </section>
-
+</div>
     <footer>
-        <p>Copyright © Rider Delivery System</p>
+     <p>Copyright © Online Delivery System</p>
     </footer>
 </body>
 </html>
