@@ -3,9 +3,6 @@ package com.sep.onlinedeliverysystem;
 import com.sep.onlinedeliverysystem.domain.dto.*;
 import com.sep.onlinedeliverysystem.domain.entities.*;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public final class TestUtil {
     private TestUtil(){
 
@@ -83,7 +80,6 @@ public final class TestUtil {
 
     public static UserAddress userAddressBuild1(final User userEntity) {
         UserAddress userAddress = UserAddress.builder()
-                .id(100L)
                 .user(userEntity)
                 .street("123 Kiggell Road")
                 .city("Bristol")
@@ -95,7 +91,6 @@ public final class TestUtil {
 
     public static UserAddressDTO userAddressDTOCreate1(final User user) {
         UserAddressDTO userAddressDTO = UserAddressDTO.builder()
-                .id(101L)
                 .user(user)
                 .street("123 Kiggell Road")
                 .city("Bristol")
@@ -107,7 +102,6 @@ public final class TestUtil {
 
     public static UserAddress userAddressBuild2(final User userEntity) {
         UserAddress userAddress = UserAddress.builder()
-                .id(200L)
                 .user(userEntity)
                 .street("123 Price Road")
                 .city("Bristol")
@@ -119,7 +113,6 @@ public final class TestUtil {
 
     public static UserAddress userAddressBuild3(final User userEntity) {
         UserAddress userAddress = UserAddress.builder()
-                .id(300L)
                 .user(userEntity)
                 .street("123 Li Road")
                 .city("Bristol")
@@ -268,6 +261,15 @@ public final class TestUtil {
 
     public static Order orderBuilder(){
         Order order = Order.builder().build();
+        return order;
+    }
+
+
+    // For address testing
+    public static Order orderBuilder(UserAddress userAddress){
+        Order order = Order.builder()
+                .userAddress(userAddress)
+                .build();
         return order;
     }
 

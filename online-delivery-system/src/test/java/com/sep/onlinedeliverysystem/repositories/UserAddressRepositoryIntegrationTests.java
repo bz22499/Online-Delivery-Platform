@@ -1,8 +1,8 @@
 package com.sep.onlinedeliverysystem.repositories;
 
 import com.sep.onlinedeliverysystem.TestUtil;
-import com.sep.onlinedeliverysystem.domain.entities.UserAddress;
 import com.sep.onlinedeliverysystem.domain.entities.User;
+import com.sep.onlinedeliverysystem.domain.entities.UserAddress;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,20 +18,20 @@ import static org.assertj.core.api.Assertions.assertThat;
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 public class UserAddressRepositoryIntegrationTests {
 
-    private UserRepository userTest;
-    private AddressRepository userAddressTest;
+    private final UserRepository userRepository;
+    private final UserAddressRepository userAddressTest;
 
     @Autowired
-    public UserAddressRepositoryIntegrationTests(AddressRepository test, UserRepository userTest){
-        this.userAddressTest = test;
-        this.userTest = userTest;
+    public UserAddressRepositoryIntegrationTests(UserAddressRepository userAddressTest, UserRepository userRepository){
+        this.userAddressTest = userAddressTest;
+        this.userRepository = userRepository;
     }
 
     @Test
     public void testSingleAddressCreationAndFind(){
-        User userEntity = TestUtil.userBuild1();
-        userTest.save(userEntity);
-        UserAddress userAddress = TestUtil.userAddressBuild1(userEntity);
+        User user = TestUtil.userBuild1();
+        User savedUser = userRepository.save(user);
+        UserAddress userAddress = TestUtil.userAddressBuild1(savedUser);
         userAddressTest.save(userAddress);
         Optional<UserAddress> result = userAddressTest.findById(userAddress.getId());
         assertThat(result).isPresent();
@@ -40,15 +40,11 @@ public class UserAddressRepositoryIntegrationTests {
 
     @Test
     public void testMultipleAddressCreationAndFind(){
-        User userEntity = TestUtil.userBuild1();
-        User userEntity2 = TestUtil.userBuild2();
-        User userEntity3 = TestUtil.userBuild3();
-        userTest.save(userEntity);
-        userTest.save(userEntity2);
-        userTest.save(userEntity3);
-        UserAddress userAddress1 = TestUtil.userAddressBuild1(userEntity);
-        UserAddress userAddress2 = TestUtil.userAddressBuild2(userEntity2);
-        UserAddress userAddress3 = TestUtil.userAddressBuild3(userEntity3);
+        User user = TestUtil.userBuild1();
+        User savedUser = userRepository.save(user);
+        UserAddress userAddress1 = TestUtil.userAddressBuild1(savedUser);
+        UserAddress userAddress2 = TestUtil.userAddressBuild2(savedUser);
+        UserAddress userAddress3 = TestUtil.userAddressBuild3(savedUser);
         userAddressTest.save(userAddress1);
         userAddressTest.save(userAddress2);
         userAddressTest.save(userAddress3);
@@ -60,9 +56,9 @@ public class UserAddressRepositoryIntegrationTests {
 
     @Test
     public void testAddressUpdate() {
-        User userEntity = TestUtil.userBuild1();
-        userTest.save(userEntity);
-        UserAddress userAddress1 = TestUtil.userAddressBuild1(userEntity);
+        User user = TestUtil.userBuild1();
+        User savedUser = userRepository.save(user);
+        UserAddress userAddress1 = TestUtil.userAddressBuild1(savedUser);
         userAddressTest.save(userAddress1);
         userAddress1.setPostCode("Y67 Z89");
         userAddressTest.save(userAddress1);
@@ -73,9 +69,9 @@ public class UserAddressRepositoryIntegrationTests {
 
     @Test
     public void testAddressDelete() {
-        User userEntity = TestUtil.userBuild1();
-        userTest.save(userEntity);
-        UserAddress userAddress1 = TestUtil.userAddressBuild1(userEntity);
+        User user = TestUtil.userBuild1();
+        User savedUser = userRepository.save(user);
+        UserAddress userAddress1 = TestUtil.userAddressBuild1(savedUser);
         userAddressTest.save(userAddress1);
         userAddressTest.delete(userAddress1);
         Optional<UserAddress> result = userAddressTest.findById(userAddress1.getId());
