@@ -19,9 +19,8 @@ public class Order {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "address_id")
+    @JoinColumn(name = "addressId")
     private UserAddress userAddress;
 
-    @Nullable
     private String status;
 }
