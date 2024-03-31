@@ -1,5 +1,8 @@
+let orderString = sessionStorage.getItem('order');
+let order = JSON.parse(orderString);
+
 let basket = {
-    order: sessionStorage.getItem('orderId'),
+    order: order,
     basketId: null,
     items: []
 };
@@ -171,7 +174,6 @@ function basketCache(basket, basketItems) {
         baskets = {}; // this is an empty object (like a dict)
     }
     baskets[basket.id] = {items: basketItems, restName: restaurantName}
-    console.log(restaurantName)
     sessionStorage.setItem('baskets', JSON.stringify(baskets));
 }
 
@@ -187,7 +189,6 @@ document.addEventListener('DOMContentLoaded', function () { // wait until DOM is
         proceedButton.addEventListener('click', async function () { // checks if proceed is clicked
             const hasUserAddress = await hasAddress(userId); // Check if the user has an address
             if (hasUserAddress) {
-
                 const response = await fetch("/baskets", { // post to baskets
                     method: 'POST',
                     headers: {
@@ -215,9 +216,7 @@ document.addEventListener('DOMContentLoaded', function () { // wait until DOM is
                             })
                         })
                     }
-                })
-                    .then(data => alert("Basket submitted"))
-                    .catch(error => {
+                }).catch(error => {
                         console.error("Error creating basket: ", error)
                         alert("Failed to create basket")
                     });

@@ -19,12 +19,6 @@ public class OrderServiceImpl implements OrderService {
     public OrderServiceImpl(OrderRepository orderRepository){ this.orderRepository = orderRepository; }
 
     @Override
-    public Order create() {
-        Order orderEntity = Order.builder().build();
-        return orderRepository.save(orderEntity);
-    }
-
-    @Override
     public Order save(Order orderEntity) {
         return orderRepository.save(orderEntity);
     }
