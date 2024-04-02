@@ -68,4 +68,12 @@ public class OrderRepositoryIntegrationTests {
         Optional<Order> result = orderRepository.findById(order.getId());
         assertThat(result).isEmpty();
     }
+
+    @Test
+    public void testFindByStatusNull() {
+        Order order = TestUtil.orderBuilder();
+        orderRepository.save(order);
+        Iterable<Order> result = orderRepository.findAllByStatusIsNull();
+        assertThat(result).containsExactly(order);
+    }
 }

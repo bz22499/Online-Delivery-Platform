@@ -3,6 +3,7 @@ package com.sep.onlinedeliverysystem.services.impl;
 import com.sep.onlinedeliverysystem.domain.entities.Order;
 import com.sep.onlinedeliverysystem.repositories.OrderRepository;
 import com.sep.onlinedeliverysystem.services.OrderService;
+import org.aspectj.weaver.ast.Or;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -53,4 +54,7 @@ public class OrderServiceImpl implements OrderService {
     public void delete(Long id) {
         orderRepository.deleteById(id);
     }
+
+    @Override
+    public List<Order> findAllByStatusIsNull() {return orderRepository.findAllByStatusIsNull(); }
 }
