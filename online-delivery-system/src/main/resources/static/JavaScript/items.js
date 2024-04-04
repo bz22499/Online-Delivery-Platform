@@ -1,5 +1,8 @@
+let orderString = sessionStorage.getItem('order');
+let order = JSON.parse(orderString);
+
 let basket = {
-    order: sessionStorage.getItem('orderId'),
+    order: order,
     basketId: null,
     items: []
 };
@@ -13,19 +16,16 @@ async function fetchItems(vendorId) {
         }
         const data = await response.json();
 
-        // Check if there are any baskets in cache
+        // can probs make this a different method
         const cachedBaskets = JSON.parse(sessionStorage.getItem('baskets'));
         if (cachedBaskets) {
-            // Extract the first basket from the cached baskets (assuming there's only one basket for simplicity)
-            const cachedBasket = cachedBaskets[Object.keys(cachedBaskets)[0]]; // Assuming only one basket for simplicity
+            const cachedBasket = cachedBaskets[Object.keys(cachedBaskets)[0]];
 
-            // Add items from the cached basket to the basket container
             const basketItemsContainer = document.querySelector('.basket-items');
             cachedBasket.items.forEach(item => {
                 addOrUpdateBasketItem(item.menuItem, item.quantity, basketItemsContainer);
             });
         }
-
         return data;
     } catch (error) {
         console.error('Error fetching item data:', error);
@@ -199,78 +199,78 @@ function basketCache(basket, basketItems) {
     sessionStorage.setItem('baskets', JSON.stringify(baskets));
 }
 
-document.addEventListener('DOMContentLoaded', function () {
-    const vendorInfoElement = document.getElementById('vendor-info');
-    const vendorId = vendorInfoElement.getAttribute('data-id');
+document.addEventListener('DOMContentLoaded', function () { // wait until DOM is fully loaded
+    const vendorInfoElement = document.getElementById('vendor-info'); // given in html
+    const vendorId = vendorInfoElement.getAttribute('data-id'); // specific field in vendor-info
     if (vendorId) {
         load(vendorId);
     }
     const userId = document.getElementById('user-info').getAttribute('data-userId');
-    const proceedButton = document.querySelector('.proceed-button');
-    if (proceedButton) {
-        proceedButton.addEventListener('click', async function () {
-            window.location.href = "/checkout";
+    const proceedButton = document.querySelector('.proceed-button'); // create basket button and funcionality
+    if (proceedButton) { // check if button exists to avoid null reference
+        proceedButton.addEventListener('click', async function () { // checks if proceed is clicked
+            const hasUserAddress = await hasAddress(userId); // Check if the user has an address
+            if (hasUserAddress) {
+                window.location.href = "/checkout";
+            }
         });
     }
 
     const addMenuItem = document.querySelector('.add-to-basket-button');
     if (addMenuItem) {
-        addMenuItem.addEventListener('click', async function () {
-            if (userId) { // Check if userId exists
-                const hasUserAddress = await hasAddress(userId); // Check if the user has an address
-                if (hasUserAddress) {
-                    const response = await fetch("/baskets", {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify(basket)
-                    }).then(response => {
-                        if (response.ok) {
-                            return response.json()
-                        } else {
-                            throw new Error(`HTTP error. Status: ${response.status}`)
-                        }
-                    }).then(savedBasket => {
-                        basketCache(savedBasket, basket.items)
-                        for (let bi of basket.items) {
-                            fetch("/basketItems", {
-                                method: 'POST',
-                                headers: {
-                                    'Content-Type': 'application/json'
-                                },
-                                body: JSON.stringify({
-                                    basket: savedBasket,
-                                    menuItem: bi.menuItem,
-                                    quantity: bi.quantity
-                                })
+        addMenuItem.addEventListener('click', async function () { // checks if proceed is clicked
+            const hasUserAddress = await hasAddress(userId); // Check if the user has an address
+            if (hasUserAddress) {
+                const response = await fetch("/baskets", { // post to baskets
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(basket)
+                }).then(response => {
+                    if (response.ok) {
+                        return response.json()
+                    } else {
+                        throw new Error(`HTTP error. Status: ${response.status}`)
+                    }
+                }).then(savedBasket => { // from saved basket, post basketItems
+                    basketCache(savedBasket, basket.items) // cache the basket and basketItems
+                    for (let bi of basket.items) {
+                        fetch("/basketItems", {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({
+                                basket: savedBasket,
+                                menuItem: bi.menuItem, // this data is maintained from first load function
+                                quantity: bi.quantity
                             })
-                        }
-                    }).then(data => alert("Basket submitted"))
-                        .catch(error => {
-                            console.error("Error creating basket: ", error)
-                            alert("Failed to create basket")
-                        });
-                } else {
+                        })
+                    }
+                })
+                    .then(data => alert("Basket submitted"))
+                    .catch(error => {
+                        console.error("Error creating basket: ", error)
+                        alert("Failed to create basket")
+                    });
+                }else {
                     alert("Please provide an address before proceeding to checkout.");
                 }
-            } else {
-                alert("User information not available. Please log in to proceed.");
-            }
-        });
-    }
+            });
+        }
 
-    const menuBackButton = document.getElementById('menu-page-back');
-    menuBackButton.addEventListener("click", () => {
-        alert("Going back");
-        window.location.href = "/order";
+        // put this in html instead
+        const menuBackButton = document.getElementById('menu-page-back');
+        menuBackButton.addEventListener("click", () => {
+            alert("Going back");
+            window.location.href = "/order";
+        });
+
+        const loginButton = document.querySelector('.login-button');
+        if (loginButton) {
+            loginButton.addEventListener('click', function () {
+                window.location.href = "/login";
+            });
+        }
     });
-
-    const loginButton = document.querySelector('.login-button');
-    if (loginButton) {
-        loginButton.addEventListener('click', function () {
-            window.location.href = "/login";
-        });
-    }
-});
-

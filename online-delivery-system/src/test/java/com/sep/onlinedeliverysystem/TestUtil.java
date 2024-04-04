@@ -260,7 +260,8 @@ public final class TestUtil {
     }
 
     public static Order orderBuilder(){
-        Order order = Order.builder().build();
+        Order order = Order.builder()
+                .build();
         return order;
     }
 

@@ -18,10 +18,9 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-//    @ManyToOne
-//    @JoinColumn(name = "address_id")
-//    private UserAddress userAddress;
-//
-//    @Nullable
-//    private String status;
+    @ManyToOne
+    @JoinColumn(name = "addressId")
+    private UserAddress userAddress;
+
+    private String status;
 }

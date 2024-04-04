@@ -13,4 +13,5 @@ import lombok.NoArgsConstructor;
 public class OrderDTO {
     private Long id;
     private UserAddress userAddress;
+    private String status;
 }
