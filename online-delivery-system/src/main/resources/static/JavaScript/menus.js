@@ -19,7 +19,6 @@ async function createOrder() {
   const existingOrderString = sessionStorage.getItem("order"); // check if order has already been created for the session. If so, don't proceed with order creation
   const existingOrderJson = JSON.parse(existingOrderString)
   if (existingOrderJson) {
-    console.log("Order already created: ", existingOrderJson);
     return;
   }
   try {
@@ -39,7 +38,7 @@ async function createOrder() {
     const order = await response.json();
     sessionStorage.setItem("order", JSON.stringify(order));
   } catch (error) {
-    console.log("Error creating order: ", error);
+    console.error("Error creating order: ", error);
   }
 }
 

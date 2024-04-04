@@ -57,4 +57,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public List<Order> findAllByStatusIsNull() {return orderRepository.findAllByStatusIsNull(); }
+
+    @Override
+    public List<Order> findAllByStatus(String status) { return orderRepository.findAllByStatus(status); }
 }

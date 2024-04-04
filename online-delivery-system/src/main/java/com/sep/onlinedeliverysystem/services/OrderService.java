@@ -23,4 +23,6 @@ public interface OrderService {
     void delete(Long id);
 
     List<Order> findAllByStatusIsNull();
+
+    List<Order> findAllByStatus(String status);
 }

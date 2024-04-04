@@ -10,4 +10,5 @@ import java.util.List;
 @Repository
 public interface OrderRepository extends CrudRepository<Order, Long>, PagingAndSortingRepository<Order, Long> {
     List<Order> findAllByStatusIsNull();
+    List<Order> findAllByStatus(String status);
 }
