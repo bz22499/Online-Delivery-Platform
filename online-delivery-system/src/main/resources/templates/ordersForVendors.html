@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>All Orders</title>
+    <link rel="stylesheet" href="/css/order.css">
+</head>
+<body>
+<ul class="banner">
+    <li><img src="/images/logo_ld_png.png"></li>
+    <li><a target="_parent" href="vendor">Add Items</a></li>
+    <li><a target="_parent" href="vendoritems">Edit Items</a></li>
+    <li class="active"><a target="_parent" href="ordersForVendors">View Orders</a></li>
+    <li><a target="_parent" href="about">About Us</a></li>
+    <li><a target="_parent" href="contact">Contact</a></li>
+    <li class="right"><a target="_parent" href="vendorProfile">Profile</a></li>
+</ul>
+
+<div id="basketsDropdown" class="basketsDropdown-content" style="display:none;"> <!--- baskets div (need to keep style as none so button loads fine on first click??!!!) --->
+</div>
+
+<div class="grid-container"></div>
+
+<div id="loggedInVendorEmail" th:attr="data-email=${id}" style="display: none;"></div>
+
+<script src="/JavaScript/ordersForVendors.js"></script>
+</body>
+</html>

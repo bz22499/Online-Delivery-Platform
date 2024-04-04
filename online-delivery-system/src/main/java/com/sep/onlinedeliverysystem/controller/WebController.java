@@ -115,6 +115,23 @@ public class WebController {
 
     @GetMapping("/ordersForDrivers")
     public String ordersForDrivers(){return "ordersForDrivers"; }
+
+    @GetMapping("/ordersForVendors")
+    public String ordersForVendors(Principal principal, Model model) {
+        if (principal != null) {
+            String loggedInUserEmail = principal.getName(); // Retrieves the email/id of the currently logged-in user
+            Optional<Vendor> vendor = vendorService.findOne(loggedInUserEmail);
+
+            if (vendor.isPresent()) {
+                model.addAttribute("id", vendor.get().getEmail());
+                return "ordersForVendors";
+            }else {
+                return "notFound";
+            }
+        } else {
+            // Handle the case when no user is logged in
+            return "login"; // Redirect to the login page
+        }}
     @GetMapping("/checkout")
     public String checkout(Principal principal){
         if (principal != null) {
