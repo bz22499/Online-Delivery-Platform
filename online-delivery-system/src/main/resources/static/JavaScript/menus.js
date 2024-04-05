@@ -140,9 +140,10 @@ function getBasketItemsFromCache(basketId) {
 }
 
 async function preloadBaskets() {
-  const orderId = sessionStorage.getItem("orderId");
-  if (orderId) {
-    const baskets = await fetchBasketsByOrder(orderId);
+  const orderString = sessionStorage.getItem("order");
+  const order = JSON.parse(orderString);
+  if (order) {
+    const baskets = await fetchBasketsByOrder(order.id);
     sessionStorage.setItem("basketIDs", JSON.stringify(baskets)); // add basket IDs to cache
     isFetchingBaskets = false; // ensure the fetching and saving process is marked as done
   } else {

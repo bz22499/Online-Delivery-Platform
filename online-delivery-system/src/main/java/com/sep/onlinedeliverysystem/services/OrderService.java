@@ -25,4 +25,6 @@ public interface OrderService {
     List<Order> findAllByStatusIsNull();
 
     List<Order> findAllByStatus(String status);
+
+    void deleteOrderAndDependencies(Order order);
 }

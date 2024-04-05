@@ -1,7 +1,11 @@
 package com.sep.onlinedeliverysystem.services.impl;
 
+import com.sep.onlinedeliverysystem.domain.entities.Basket;
+import com.sep.onlinedeliverysystem.domain.entities.BasketItem;
 import com.sep.onlinedeliverysystem.domain.entities.Order;
 import com.sep.onlinedeliverysystem.repositories.OrderRepository;
+import com.sep.onlinedeliverysystem.services.BasketItemService;
+import com.sep.onlinedeliverysystem.services.BasketService;
 import com.sep.onlinedeliverysystem.services.OrderService;
 import org.aspectj.weaver.ast.Or;
 import org.springframework.data.domain.Page;
@@ -16,8 +20,14 @@ import java.util.stream.StreamSupport;
 @Service
 public class OrderServiceImpl implements OrderService {
     private OrderRepository orderRepository;
+    private BasketItemService basketItemService;
+    private BasketService basketService;
 
-    public OrderServiceImpl(OrderRepository orderRepository){ this.orderRepository = orderRepository; }
+    public OrderServiceImpl(OrderRepository orderRepository, BasketService basketService, BasketItemService basketItemService) {
+        this.orderRepository = orderRepository;
+        this.basketService = basketService;
+        this.basketItemService = basketItemService;
+    }
 
     @Override
     public Order save(Order orderEntity) {
@@ -60,4 +70,15 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public List<Order> findAllByStatus(String status) { return orderRepository.findAllByStatus(status); }
+
+    @Override
+    public void deleteOrderAndDependencies(Order order) {
+        List<Basket> baskets = basketService.findByOrder(order.getId());
+        for (Basket basket: baskets){
+            List<BasketItem> basketItems = basketItemService.findBasketItemByBasket_Id(basket.getId());
+            for (BasketItem basketItem : basketItems) {
+                basketItemService.delete(basketItem.getId());
+            }
+        }
+    }
 }
