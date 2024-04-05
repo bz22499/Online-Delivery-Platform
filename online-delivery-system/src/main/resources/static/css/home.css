@@ -4,12 +4,16 @@ body{
 }
 
 .banner {
+  background: white;
+  top: 0;
+  position: sticky;
+  z-index: 1;
   display: flex;
   justify-content: space-between;
   align-items: center;
   font-family: "IBM Plex Sans";
-  margin-top: 10px;
-  margin-bottom: 10px;
+  padding: 10px 0 10px 0;
+
 }
 
 .left {
@@ -39,6 +43,7 @@ body{
 }
 
 .right p a{
+  font-size: 120%;
   width: max-content;
   display: block;
   color: white;
@@ -86,15 +91,17 @@ color: white;
 }
 
 .swText {
+  border: 2px solid rgba(0, 0, 0, 1);
   display: flex;
   flex-direction: column;
   justify-content: center;
   text-align: center;
   color: white;
   position: absolute;
-  top: 35%;
+  top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  padding: 10px;
 }
 
 .swText h2 {
