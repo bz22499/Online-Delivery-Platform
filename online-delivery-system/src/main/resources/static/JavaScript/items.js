@@ -15,6 +15,17 @@ async function fetchItems(vendorId) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
         const data = await response.json();
+
+        // can probs make this a different method
+        const cachedBaskets = JSON.parse(sessionStorage.getItem('baskets'));
+        if (cachedBaskets) {
+            const cachedBasket = cachedBaskets[Object.keys(cachedBaskets)[0]];
+
+            const basketItemsContainer = document.querySelector('.basket-items');
+            cachedBasket.items.forEach(item => {
+                addOrUpdateBasketItem(item.menuItem, item.quantity, basketItemsContainer);
+            });
+        }
         return data;
     } catch (error) {
         console.error('Error fetching item data:', error);
@@ -79,6 +90,16 @@ function addOrUpdateBasketItem(item) {
         const basketItemData = basket.items.find(basketItem => basketItem.menuItem.id === item.id);
         updateItemQuantity(basketItem, 1);
     }
+    /* new code for baskets feature
+    sessionStorage.setItem('basket', JSON.stringify(basket));
+
+    const addToBasketButton = document.getElementById('addToBasketContainer');
+    if (addToBasketButton) {
+        addToBasketButton.addEventListener('click', function () {
+            addOrUpdateBasketItem(item);
+            alert('Item added to basket');
+        });
+    }*/
 }
 
 // basket item creation
@@ -174,6 +195,7 @@ function basketCache(basket, basketItems) {
         baskets = {}; // this is an empty object (like a dict)
     }
     baskets[basket.id] = {items: basketItems, restName: restaurantName}
+    console.log(restaurantName)
     sessionStorage.setItem('baskets', JSON.stringify(baskets));
 }
 
@@ -187,6 +209,16 @@ document.addEventListener('DOMContentLoaded', function () { // wait until DOM is
     const proceedButton = document.querySelector('.proceed-button'); // create basket button and funcionality
     if (proceedButton) { // check if button exists to avoid null reference
         proceedButton.addEventListener('click', async function () { // checks if proceed is clicked
+            const hasUserAddress = await hasAddress(userId); // Check if the user has an address
+            if (hasUserAddress) {
+                window.location.href = "/checkout";
+            }
+        });
+    }
+
+    const addMenuItem = document.querySelector('.add-to-basket-button');
+    if (addMenuItem) {
+        addMenuItem.addEventListener('click', async function () { // checks if proceed is clicked
             const hasUserAddress = await hasAddress(userId); // Check if the user has an address
             if (hasUserAddress) {
                 const response = await fetch("/baskets", { // post to baskets
@@ -216,7 +248,9 @@ document.addEventListener('DOMContentLoaded', function () { // wait until DOM is
                             })
                         })
                     }
-                }).catch(error => {
+                })
+                    .then(data => alert("Basket submitted"))
+                    .catch(error => {
                         console.error("Error creating basket: ", error)
                         alert("Failed to create basket")
                     });
@@ -226,11 +260,17 @@ document.addEventListener('DOMContentLoaded', function () { // wait until DOM is
             });
         }
 
+        // put this in html instead
+        const menuBackButton = document.getElementById('menu-page-back');
+        menuBackButton.addEventListener("click", () => {
+            alert("Going back");
+            window.location.href = "/order";
+        });
+
         const loginButton = document.querySelector('.login-button');
         if (loginButton) {
             loginButton.addEventListener('click', function () {
                 window.location.href = "/login";
             });
         }
-
     });
