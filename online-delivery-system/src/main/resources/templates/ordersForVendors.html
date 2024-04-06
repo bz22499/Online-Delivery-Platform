@@ -16,12 +16,9 @@
     <li class="right"><a target="_parent" href="vendorProfile">Profile</a></li>
 </ul>
 
-<div id="basketsDropdown" class="basketsDropdown-content" style="display:none;"> <!--- baskets div (need to keep style as none so button loads fine on first click??!!!) --->
-</div>
-
 <div class="grid-container"></div>
 
-<div id="loggedInVendorEmail" th:attr="data-email=${id}" style="display: none;"></div>
+<input id="vendorId" th:value="${id}" style="display: none;">
 
 <script src="/JavaScript/ordersForVendors.js"></script>
 </body>

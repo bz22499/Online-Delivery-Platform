@@ -1,6 +1,6 @@
 let isLoading = false;
 let currentPage = 0;
-let loggedInVendorId = ''; // Define a variable to store the logged-in vendor's id
+let vendorId = null;
 
 async function fetchOrders(page = 0, size = 10) {
     try {
@@ -22,6 +22,17 @@ async function fetchBasketsByOrder(orderId) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
         const baskets = await response.json();
+
+        // Fetch basket items for each basket
+        for (const basket of baskets) {
+            const basketItemsResponse = await fetch(`/basketItems/baskets/${basket.id}`);
+            if (!basketItemsResponse.ok) {
+                throw new Error(`HTTP error! status: ${basketItemsResponse.status}`);
+            }
+            const basketItems = await basketItemsResponse.json();
+            basket.basketItems = basketItems; // Assign fetched basketItems to basket object
+        }
+
         return baskets;
     } catch (error) {
         console.error('Error fetching baskets:', error);
@@ -34,7 +45,7 @@ async function populateOrders(ordersData) {
 
     if (ordersData && ordersData.content) {
         for (const order of ordersData.content) {
-            let orderContainsVendorItems = false;
+            var matchesVendor = false;
 
             const orderItem = document.createElement('div');
             orderItem.className = 'order-item';
@@ -52,31 +63,45 @@ async function populateOrders(ordersData) {
                     const basketItems = basket.basketItems;
                     for (const basketItem of basketItems) {
                         const menuItem = basketItem.menuItem;
-                        if (menuItem.vendor.id === loggedInVendorId) {
-                            orderContainsVendorItems = true;
-                            const basketItemInfo = document.createElement('li');
-                            const totalPrice = menuItem ? (menuItem.price * basketItem.quantity).toFixed(2) : 'N/A';
-                            basketItemInfo.textContent = `Basket ID: ${basket.id}, Basket Item ID: ${basketItem.id}, Menu Item Name: ${menuItem.name}, Quantity: ${basketItem.quantity}, Price per Item: ${menuItem.price.toFixed(2)}, Total Price: ${totalPrice}`;
-                            basketList.appendChild(basketItemInfo);
+                        const totalPrice = menuItem ? (menuItem.price * basketItem.quantity).toFixed(2) : 'N/A';
+                        const basketItemInfo = document.createElement('li');
+                        basketItemInfo.textContent = `Basket ID: ${basket.id}, Basket Item ID: ${basketItem.id}, Menu Item Name: ${menuItem.name}, Quantity: ${basketItem.quantity}, Price per Item: ${menuItem.price.toFixed(2)}, Total Price: ${totalPrice}`;
+                        basketList.appendChild(basketItemInfo);
+                        console.log(menuItem.vendor)
+                        console.log(menuItem.vendor.email)
+                        console.log(vendorId)
+                        if(menuItem.vendor.email === vendorId){
+                            console.log("yippee, match!")
+                            matchesVendor = true
                         }
                     }
                 }
-                if (orderContainsVendorItems) {
-                    orderItem.appendChild(basketList);
-                    gridContainer.appendChild(orderItem);
-                }
+                orderItem.appendChild(basketList);
+            } else {
+                const noBasketInfo = document.createElement('div');
+                noBasketInfo.textContent = 'No basket items found for this order.';
+                orderItem.appendChild(noBasketInfo);
             }
-            console.log('Order ID:', order.id, 'Contains Vendor Items:', orderContainsVendorItems);
+            const matchesMessage = document.createElement('div');
+            if(matchesVendor){
+                matchesMessage.textContent = 'This order is for this vendor! yippee!';
+            }
+            else{
+                matchesMessage.textContent = 'NOT FOR THIS VENDOR';
+            }
+            orderItem.appendChild(matchesMessage);
+            gridContainer.appendChild(orderItem);
         }
     }
 }
-
 
 // Function to load more orders
 async function loadMore() {
     if (isLoading) return;
     isLoading = true;
-    const orders = await fetchOrders(currentPage, 30);
+    const vendorIdElement = document.getElementById('vendorId');
+    vendorId = vendorIdElement.value;
+    const orders = await fetchOrders(currentPage, 40);
     if (orders && orders.content.length > 0) {
         await populateOrders(orders);
         currentPage++;
@@ -86,8 +111,6 @@ async function loadMore() {
 
 // Load initial set of orders when the window loads
 window.onload = async () => {
-    // Fetch the currently logged-in vendor's id from the hidden div
-    loggedInVendorId = document.getElementById('loggedInVendorEmail').getAttribute('data-email');
     await loadMore();
 };
 

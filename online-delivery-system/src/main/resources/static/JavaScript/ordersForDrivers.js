@@ -117,12 +117,3 @@ window.addEventListener('scroll', () => {
         loadMore();
     }
 });
-
-// Toggle visibility of baskets dropdown on button click
-document.addEventListener('DOMContentLoaded', function () {
-    document.getElementById('viewBasketsButton').addEventListener('click', async function(event) {
-        event.preventDefault();
-        const dropdown = document.getElementById('basketsDropdown');
-        dropdown.style.display = dropdown.style.display === 'none' ? 'block' : 'none';
-    });
-});
