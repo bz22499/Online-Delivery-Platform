@@ -4,8 +4,6 @@ package com.sep.onlinedeliverysystem.controllers;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sep.onlinedeliverysystem.TestUtil;
 import com.sep.onlinedeliverysystem.domain.dto.VendorAddressDTO;
-import com.sep.onlinedeliverysystem.domain.entities.User;
-import com.sep.onlinedeliverysystem.domain.entities.UserAddress;
 import com.sep.onlinedeliverysystem.domain.entities.Vendor;
 import com.sep.onlinedeliverysystem.domain.entities.VendorAddress;
 import com.sep.onlinedeliverysystem.services.VendorAddressService;

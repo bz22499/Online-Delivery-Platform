@@ -1,12 +1,8 @@
 package com.sep.onlinedeliverysystem.controllers;
 
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sep.onlinedeliverysystem.TestUtil;
-import com.sep.onlinedeliverysystem.domain.dto.UserDTO;
 import com.sep.onlinedeliverysystem.domain.dto.VendorDTO;
-import com.sep.onlinedeliverysystem.domain.entities.Order;
-import com.sep.onlinedeliverysystem.domain.entities.User;
 import com.sep.onlinedeliverysystem.domain.entities.Vendor;
 import com.sep.onlinedeliverysystem.services.VendorService;
 import org.junit.jupiter.api.Test;
