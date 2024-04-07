@@ -45,9 +45,13 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Order partialUpdate(Long id, Order orderEntity) {
-        orderEntity.setId(id);
-        return orderRepository.findById(id).map(existingOrder -> orderRepository.save(existingOrder)).orElseThrow(() -> new RuntimeException("Order doesn't exist"));
+        return orderRepository.findById(id).map(existingOrder ->{
+            Optional.ofNullable(orderEntity.getStatus()).ifPresent(existingOrder::setStatus);
+            Optional.ofNullable(orderEntity.getUserAddress()).ifPresent(existingOrder::setUserAddress);
+            return orderRepository.save(existingOrder);
+        }).orElseThrow(() -> new RuntimeException("Item doesn't exist"));
     }
+
 
     @Override
     public void delete(Long id) {

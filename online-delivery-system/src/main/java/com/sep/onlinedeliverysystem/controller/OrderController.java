@@ -59,7 +59,6 @@ public class OrderController {
     }
 
 
-    // PROBABLY WON'T USE UPDATE METHODS
     @PutMapping(path = "/orders/{id}")
     public ResponseEntity<OrderDTO> fullUpdateOrder(@PathVariable("id") Long id, OrderDTO orderDTO){
         if(!orderService.Exists(id)){

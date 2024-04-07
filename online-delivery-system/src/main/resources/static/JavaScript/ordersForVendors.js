@@ -90,6 +90,35 @@ async function populateOrders(ordersData) {
                 matchesMessage.textContent = 'NOT FOR THIS VENDOR';
             }
             orderItem.appendChild(matchesMessage);
+
+            // Additional functionality to confirm collection
+            const confirmButton = document.createElement('button');
+            confirmButton.textContent = 'Confirm Collection';
+            confirmButton.addEventListener('click', async () => {
+                const confirmation = confirm("Are you sure this order is ready for collection?");
+                if (confirmation) {
+                    order.status = 'COLLECTION';
+                    orderInfo.textContent = `Status: ${order.status}`;
+                    // Update order status on the backend
+                    try {
+                        const response = await fetch(`/orders/${order.id}`, {
+                            method: 'PATCH',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({ status: 'COLLECTION' })
+                        });
+                        if (!response.ok) {
+                            throw new Error(`HTTP error! status: ${response.status}`);
+                        }
+                        console.log("Order status updated to COLLECTION");
+                    } catch (error) {
+                        console.error('Error updating order status:', error);
+                    }
+                }
+            });
+            orderItem.appendChild(confirmButton);
+
             gridContainer.appendChild(orderItem);
         }
     }
