@@ -102,3 +102,44 @@ ul.banner li.right a {
 ul.banner li a:hover{
     background-color: gray;
 }
+
+.order-item {
+    margin-bottom: 15px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+
+.basket-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+
+.basket-item-info {
+    padding: 5px;
+    border-bottom: 1px solid #eee;
+    color: #333;
+}
+
+
+.no-basket-info {
+    color: #999;
+    font-style: italic;
+    padding: 10px;
+}
+
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 10px;
+    margin: 20px auto;
+    width: 80%;
+    padding: 20px;
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
