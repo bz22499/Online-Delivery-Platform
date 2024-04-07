@@ -72,7 +72,7 @@ public class OrderController {
     }
 
     @PatchMapping(path = "/orders/{id}")
-    public ResponseEntity<OrderDTO> partialUpdate(@PathVariable("id") Long id, OrderDTO orderDTO){
+    public ResponseEntity<OrderDTO> partialUpdate(@PathVariable("id") Long id, @RequestBody OrderDTO orderDTO){
         if(!orderService.Exists(id)){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }

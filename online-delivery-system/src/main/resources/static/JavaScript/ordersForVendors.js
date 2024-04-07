@@ -98,24 +98,31 @@ async function populateOrders(ordersData) {
                 const confirmation = confirm("Are you sure this order is ready for collection?");
                 if (confirmation) {
                     order.status = 'COLLECTION';
-                    orderInfo.textContent = `Status: ${order.status}`;
                     // Update order status on the backend
+                    console.log('Order before PATCH request:', order);
                     try {
                         const response = await fetch(`/orders/${order.id}`, {
                             method: 'PATCH',
                             headers: {
                                 'Content-Type': 'application/json'
                             },
-                            body: JSON.stringify({ status: 'COLLECTION' })
+                            body: JSON.stringify(order)
                         });
                         if (!response.ok) {
                             throw new Error(`HTTP error! status: ${response.status}`);
                         }
+                        const responseData = await response.json();
+                        console.log('Response from PATCH request:', responseData); // Add this log
                         console.log("Order status updated to COLLECTION");
+                        const orderInfoElement = document.getElementById(`order-${order.id}-info`);
+                        if (orderInfoElement) {
+                            orderInfoElement.textContent = `Status: ${order.status}`;
+                        }
                     } catch (error) {
                         console.error('Error updating order status:', error);
                     }
                 }
+
             });
             orderItem.appendChild(confirmButton);
 
