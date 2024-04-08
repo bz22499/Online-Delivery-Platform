@@ -91,12 +91,15 @@ color: white;
 }
 
 .swText {
-  border: 2px solid rgba(0, 0, 0, 1);
+  width: 36%;
+  height: 25%;
+  background: #9a9999;
+  border-radius: 7px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   text-align: center;
-  color: white;
+  color: black;
   position: absolute;
   top: 50%;
   left: 50%;
