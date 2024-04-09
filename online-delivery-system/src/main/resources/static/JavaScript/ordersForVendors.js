@@ -46,13 +46,10 @@ async function populateOrders(ordersData) {
     if (ordersData && ordersData.content) {
         for (const order of ordersData.content) {
             var matchesVendor = false;
+            console.log(order.id)
 
             const orderItem = document.createElement('div');
             orderItem.className = 'order-item';
-
-            const orderInfo = document.createElement('div');
-            orderInfo.textContent = `Order ID: ${order.id}`;
-            orderItem.appendChild(orderInfo);
 
             // Fetch baskets associated with the order
             const baskets = await fetchBasketsByOrder(order.id);
@@ -63,33 +60,27 @@ async function populateOrders(ordersData) {
                     const basketItems = basket.basketItems;
                     for (const basketItem of basketItems) {
                         const menuItem = basketItem.menuItem;
-                        const totalPrice = menuItem ? (menuItem.price * basketItem.quantity).toFixed(2) : 'N/A';
-                        const basketItemInfo = document.createElement('li');
-                        basketItemInfo.textContent = `Basket ID: ${basket.id}, Basket Item ID: ${basketItem.id}, Menu Item Name: ${menuItem.name}, Quantity: ${basketItem.quantity}, Price per Item: ${menuItem.price.toFixed(2)}, Total Price: ${totalPrice}`;
-                        basketList.appendChild(basketItemInfo);
-                        console.log(menuItem.vendor)
-                        console.log(menuItem.vendor.email)
-                        console.log(vendorId)
                         if(menuItem.vendor.email === vendorId){
-                            console.log("yippee, match!")
                             matchesVendor = true
+                            const totalPrice = menuItem ? (menuItem.price * basketItem.quantity).toFixed(2) : 'N/A';
+                            const basketItemInfo = document.createElement('li');
+                            basketItemInfo.textContent = `Basket ID: ${basket.id}, Basket Item ID: ${basketItem.id}, Menu Item Name: ${menuItem.name}, Quantity: ${basketItem.quantity}, Price per Item: ${menuItem.price.toFixed(2)}, Total Price: ${totalPrice}`;
+                            basketList.appendChild(basketItemInfo);
                         }
                     }
                 }
-                orderItem.appendChild(basketList);
+                if(matchesVendor) {
+                    const orderInfo = document.createElement('div');
+                    orderInfo.textContent = `Order ID: ${order.id}`;
+                    orderItem.appendChild(orderInfo);
+                    orderItem.appendChild(basketList);
+                }
             } else {
                 const noBasketInfo = document.createElement('div');
                 noBasketInfo.textContent = 'No basket items found for this order.';
                 orderItem.appendChild(noBasketInfo);
             }
-            const matchesMessage = document.createElement('div');
-            if(matchesVendor){
-                matchesMessage.textContent = 'This order is for this vendor! yippee!';
-            }
-            else{
-                matchesMessage.textContent = 'NOT FOR THIS VENDOR';
-            }
-            orderItem.appendChild(matchesMessage);
+
 
             // Additional functionality to confirm collection
             const confirmButton = document.createElement('button');
@@ -125,8 +116,9 @@ async function populateOrders(ordersData) {
 
             });
             orderItem.appendChild(confirmButton);
-
-            gridContainer.appendChild(orderItem);
+            if (matchesVendor) {
+                gridContainer.appendChild(orderItem);
+            }
         }
     }
 }
