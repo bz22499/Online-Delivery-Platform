@@ -46,7 +46,7 @@ async function populateOrders(ordersData) {
     if (ordersData && ordersData.content) {
         for (const order of ordersData.content) {
             var matchesVendor = false;
-            console.log(order.id)
+            console.log("order id: " + order.id)
 
             const orderItem = document.createElement('div');
             orderItem.className = 'order-item';
