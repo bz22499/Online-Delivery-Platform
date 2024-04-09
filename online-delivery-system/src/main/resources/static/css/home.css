@@ -1,75 +1,219 @@
 body{
-    background-color: lightgray;
-    margin: 0;
+  background-color: white;
+  margin: 0;
 }
 
-ul.banner {
-    z-index:1;
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-    background-color: #dfdfdf;
-    top: 0;
-    width: 100%;
-    position: sticky;
-  }
+.banner {
+  background: white;
+  top: 0;
+  position: sticky;
+  z-index: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: "IBM Plex Sans";
+  padding: 10px 0 10px 0;
 
-ul.banner img{
-  height: 19px;
-  padding: 14px;
-  float: left;
+}
+
+.left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-left: 22px;
+}
+
+.right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-right: 22px;
+}
+
+.left img {
+  height: 60px;
 }  
-  
- ul.banner li {
-    float: left;
-  }
 
-  ul.banner li.right {
-    float: right;
-  }
-  
- ul.banner li a {
-    display: block;
-    color: black;
-    text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
-  }
-
-ul.banner li.active a{
-    background-color: rgb(196, 194, 188);
+.left p a{
+  color: black;
+  text-decoration: none;
+  width: max-content;
+  padding: 5px 10px;
+  font-weight: 200;
 }
 
-  ul.banner li.right a {
-    display: block;
-    color: white;
-    background-color: black;
-    border-radius: 10px;
-    padding: 5px 16px;
-    margin: 8px 10px;
-  }
-
-ul.banner li a:hover{
-    background-color: gray;
+.right p a{
+  font-size: 120%;
+  width: max-content;
+  display: block;
+  color: white;
+  background-color: black;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 10px;
+  padding: 5px 12px;
+  font-weight: 200;
 }
 
+.left p a:hover{
+  color: gray;
+}
 
+.right p a:hover {
+  background-color: gray;
+}
 
 .locationInput {
-  position: relative;
+position: relative;
+text-align: center;
+color: white;
+}
+
+.locationInput input{
+    position: absolute;
+    top: 35%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 20px;
+    font-size: 17px;
+    border: 1px solid grey;
+    width: 40%;
+    background: #f1f1f1;
+    border-radius: 27px;
+}
+
+.searchWrapper {
+  font-family: "Oswald";
+}
+
+.searchWrapper img {
+  width: 100%;
+}
+
+.swText {
+  width: 36%;
+  height: 25%;
+  background: #9a9999;
+  border-radius: 7px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   text-align: center;
+  color: black;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 10px;
+}
+
+.swText h2 {
+  text-align: center;
+  font-weight: 400;
+  font-size: 50px;
+  margin: 10px;
+  height: min-content;
+  letter-spacing: 1px;
+  display: block;
+  background: rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(10px);
+  text-decoration: none;
+  border-radius: 10px;
+}
+
+.swText a {
+  text-decoration: none;
   color: white;
 }
-.locationInput input{
-      position: absolute;
-      top: 35%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      padding: 20px;
-      font-size: 17px;
-      border: 1px solid grey;
-      width: 40%;
-      background: #f1f1f1;
-      border-radius: 27px;
+
+.swText a:hover {
+  color: #04AA6D;
+}
+
+.swText p {
+  font-weight: 200;
+  font-size: 25px;
+  margin: 10px;
+}
+
+.partners {
+  font-family: "IBM Plex Sans";
+  display: flex;
+  justify-content: space-around;
+  padding: 0 5%;
+  padding-top: 5%;
+  padding-bottom: 5%;
+  gap: 20px;
+}
+
+.placeholder{
+  position: relative;
+  flex: 1;
+  overflow: hidden;
+}
+
+.placeholder a{
+  text-decoration: none;
+  color: white;
+}
+
+.placeholder a:hover {
+  color: gray;
+}
+
+.partners img {
+  width: 100%; 
+  height: auto; 
+  object-fit: cover; 
+  min-height: 100%;
+  border-radius: 27px;
+}
+
+.partner {
+  position: absolute;
+  right: 0;
+  bottom: 10px;
+  display: block;
+  background-color: black;
+  border-top-left-radius: 27px;
+  border-bottom-left-radius: 27px;
+  padding: 5px 30px;
+  font-weight: 200;
+}
+
+.ride {
+  position: absolute;
+  left: 0;
+  top: 10px;
+  display: block;
+  background-color: black;
+  color: white;
+  padding: 5px 30px;
+  font-weight: 200;
+  border-top-right-radius: 27px;
+  border-bottom-right-radius: 27px;
+}
+
+.footer {
+  display: flex;
+  display: block;
+  background-color: black;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  gap: 13px;
+  color: white;
+  padding-bottom: 10px;
+  padding-top: 5px;
+}
+
+.footer h2 {
+  font-family: "Oswald";
+  font-weight: 200;
+}
+
+.footer p {
+  font-family: "IBM Plex Sans";
+  font-weight: 100;
+  letter-spacing: 1px;
 }

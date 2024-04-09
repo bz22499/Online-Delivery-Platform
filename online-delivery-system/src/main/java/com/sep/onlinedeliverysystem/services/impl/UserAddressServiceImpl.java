@@ -1,21 +1,20 @@
 package com.sep.onlinedeliverysystem.services.impl;
 
-import com.sep.onlinedeliverysystem.domain.entities.UserAddress;
-import com.sep.onlinedeliverysystem.repositories.UserAddressRepository;
-import com.sep.onlinedeliverysystem.repositories.UserRepository;
-import com.sep.onlinedeliverysystem.services.UserAddressService;
-import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
+import org.springframework.stereotype.Service;
+
+import com.sep.onlinedeliverysystem.domain.entities.UserAddress;
+import com.sep.onlinedeliverysystem.repositories.UserAddressRepository;
+import com.sep.onlinedeliverysystem.services.UserAddressService;
+
 @Service
 public class UserAddressServiceImpl implements UserAddressService {
     
     private UserAddressRepository userAddressRepository;
-    private UserRepository userRepository;
 
     public UserAddressServiceImpl(UserAddressRepository userAddressRepository) {
         this.userAddressRepository = userAddressRepository;
