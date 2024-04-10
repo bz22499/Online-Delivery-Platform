@@ -30,14 +30,6 @@ async function displayBaskets(baskets) {
     if (baskets && baskets.length) {
         const lastBasket = baskets[baskets.length -1];
 
-        const section = document.createElement("section"); // create a section for each basket
-        section.className = "basket-section";
-
-        const heading = document.createElement("h2");
-        let basketData = getBasketItemsFromCache(lastBasket.id);
-        heading.textContent = basketData.restName;
-        section.appendChild(heading);
-
         // create a table for basket items
         const table = document.createElement("table");
         table.className = "basket-table";
@@ -54,6 +46,7 @@ async function displayBaskets(baskets) {
 
         const tbody = document.createElement("tbody");
 
+        let basketData = getBasketItemsFromCache(lastBasket.id);
         basketData.items.forEach((item) => {
             const row = document.createElement("tr");
 
@@ -69,8 +62,7 @@ async function displayBaskets(baskets) {
         });
 
         table.appendChild(tbody);
-        section.appendChild(table);
-        container.appendChild(section);
+        container.appendChild(table);
 
         // Display the total cost underneath all items
         const totalCostContainer = document.createElement("div");
