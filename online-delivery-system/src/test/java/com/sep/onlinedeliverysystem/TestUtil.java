@@ -300,7 +300,7 @@ public final class TestUtil {
     // For address testing
     public static Order orderBuilder(UserAddress userAddress){
         Order order = Order.builder()
-                //.userAddress(userAddress)
+                .userAddress(userAddress)
                 .build();
         return order;
     }
