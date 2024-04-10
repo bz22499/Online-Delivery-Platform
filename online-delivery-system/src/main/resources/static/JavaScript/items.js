@@ -241,7 +241,6 @@ document.addEventListener('DOMContentLoaded', function () { // wait until DOM is
                     }
                 })
                     .then(data => {
-                        alert("Basket submitted");
                         // Redirect to checkout page after setting orderId
                         window.location.href = "/checkout";
                     })
@@ -302,7 +301,6 @@ document.addEventListener('DOMContentLoaded', function () { // wait until DOM is
         // put this in html instead
         const menuBackButton = document.getElementById('menu-page-back');
         menuBackButton.addEventListener("click", () => {
-            alert("Going back");
             window.location.href = "/order";
         });
 
