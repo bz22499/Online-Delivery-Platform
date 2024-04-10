@@ -110,12 +110,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     const backButton = document.getElementById('back-button');
     backButton.addEventListener("click", () => {
-        alert("Going back");
-        const restaurantEmail = sessionStorage.getItem("restaurantEmail");
-        if (restaurantEmail) {
-            window.location.href = `/${encodeURIComponent(restaurantEmail)}/menu-page`;
-        } else {
-            alert("No email");
-        }
+        window.history.back();
     });
 });
