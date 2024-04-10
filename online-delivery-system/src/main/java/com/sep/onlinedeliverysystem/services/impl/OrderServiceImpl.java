@@ -1,5 +1,14 @@
 package com.sep.onlinedeliverysystem.services.impl;
 
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+
 import com.sep.onlinedeliverysystem.domain.entities.Basket;
 import com.sep.onlinedeliverysystem.domain.entities.BasketItem;
 import com.sep.onlinedeliverysystem.domain.entities.Order;
@@ -7,15 +16,6 @@ import com.sep.onlinedeliverysystem.repositories.OrderRepository;
 import com.sep.onlinedeliverysystem.services.BasketItemService;
 import com.sep.onlinedeliverysystem.services.BasketService;
 import com.sep.onlinedeliverysystem.services.OrderService;
-import org.aspectj.weaver.ast.Or;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 @Service
 public class OrderServiceImpl implements OrderService {
@@ -79,6 +79,8 @@ public class OrderServiceImpl implements OrderService {
             for (BasketItem basketItem : basketItems) {
                 basketItemService.delete(basketItem.getId());
             }
+            basketService.delete(basket.getId());
         }
+        orderRepository.delete(order);
     }
 }
