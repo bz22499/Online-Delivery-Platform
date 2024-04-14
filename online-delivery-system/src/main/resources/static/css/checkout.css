@@ -7,6 +7,7 @@
     border-radius: 8px;
     border: 1px solid #9a9999;
     box-shadow: 0 0 10px #a4a6a6;
+    font-family: "Oswald";
 }
 
 .basket-summary {
@@ -35,6 +36,7 @@
     align-self: flex-end;
     cursor: pointer;
     transition: 0.16s ease-out;
+    font-family: "Oswald";
 }
 
 .pay-button:hover {
@@ -144,6 +146,7 @@ ul.banner {
     top: 0;
     width: 100%;
     position: sticky;
+    font-family: "IBM Plex Sans";
 }
 
 ul.banner img{
@@ -212,4 +215,90 @@ ul.banner li a:hover{
 
 #back-button a:hover {
     background-color: #3a9320;
+}
+
+
+.partners {
+    font-family: "IBM Plex Sans";
+    display: flex;
+    justify-content: space-around;
+    padding: 0 5%;
+    padding-top: 5%;
+    padding-bottom: 5%;
+    gap: 20px;
+}
+
+.placeholder{
+    position: relative;
+    flex: 1;
+    overflow: hidden;
+}
+
+.placeholder a{
+    text-decoration: none;
+    color: white;
+}
+
+.placeholder a:hover {
+    color: gray;
+}
+
+.partners img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    min-height: 100%;
+    border-radius: 27px;
+}
+
+.partner {
+    position: absolute;
+    right: 0;
+    bottom: 10px;
+    display: block;
+    background-color: black;
+    border-top-left-radius: 27px;
+    border-bottom-left-radius: 27px;
+    padding: 5px 30px;
+    font-weight: 200;
+}
+
+.ride {
+    position: absolute;
+    left: 0;
+    top: 10px;
+    display: block;
+    background-color: black;
+    color: white;
+    padding: 5px 30px;
+    font-weight: 200;
+    border-top-right-radius: 27px;
+    border-bottom-right-radius: 27px;
+}
+
+.footer {
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    position: fixed;
+    display: block;
+    background-color: black;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    gap: 13px;
+    color: white;
+    padding-bottom: 10px;
+    padding-top: 5px;
+}
+
+.footer h2 {
+    font-family: "Oswald";
+    font-weight: 200;
+}
+
+.footer p {
+    font-family: "IBM Plex Sans";
+    font-weight: 100;
+    letter-spacing: 1px;
 }
