@@ -114,7 +114,58 @@ public class WebController {
     public String driverMain(){return "driverMain"; }
 
     @GetMapping("/ordersForDrivers")
-    public String ordersForDrivers(){return "ordersForDrivers"; }
+    public String ordersForDrivers(Principal principal, Model model) {
+        if (principal != null) {
+            String loggedInUserEmail = principal.getName(); // Retrieves the email/id of the currently logged-in user
+            Optional<Driver> driver = driverService.findOne(loggedInUserEmail);
+
+            if (driver.isPresent()) {
+                model.addAttribute("id", driver.get().getEmail());
+                return "ordersForDrivers";
+            }else {
+                return "notFound";
+            }
+        } else {
+            // Handle the case when no user is logged in
+            return "login"; // Redirect to the login page
+        }
+    }
+
+    @GetMapping("/collectionForDriver")
+    public String collectionForDriver(Principal principal, Model model) {
+        if (principal != null) {
+            String loggedInUserEmail = principal.getName(); // Retrieves the email/id of the currently logged-in user
+            Optional<Driver> driver = driverService.findOne(loggedInUserEmail);
+
+            if (driver.isPresent()) {
+                model.addAttribute("id", driver.get().getEmail());
+                return "collectionForDriver";
+            }else {
+                return "notFound";
+            }
+        } else {
+            // Handle the case when no user is logged in
+            return "login"; // Redirect to the login page
+        }
+    }
+
+    @GetMapping("/ordersForVendors")
+    public String ordersForVendors(Principal principal, Model model) {
+        if (principal != null) {
+            String loggedInUserEmail = principal.getName(); // Retrieves the email/id of the currently logged-in user
+            Optional<Vendor> vendor = vendorService.findOne(loggedInUserEmail);
+
+            if (vendor.isPresent()) {
+                model.addAttribute("id", vendor.get().getEmail());
+                return "ordersForVendors";
+            }else {
+                return "notFound";
+            }
+        } else {
+            // Handle the case when no user is logged in
+            return "login"; // Redirect to the login page
+        }
+    }
     @GetMapping("/checkout")
     public String checkout(Principal principal){
         if (principal != null) {
