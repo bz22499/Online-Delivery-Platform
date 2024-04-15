@@ -8,83 +8,74 @@
 </head>
 <body>
 
-<header>
-  <h1>User Profile</h1>
-</header>
-
-<ul class="banner">
-  <li><img src="/images/logo_ld_png.png"></li>
-  <li class><a target="_parent" href="vendor">Add Items</a></li>
-  <li><a target="_parent" href="vendoritems">Edit Items</a></li>
-  <li><a target="_parent" href="about">About Us</a></li>
-  <li><a target="_parent" href="contact">Contact</a></li>
-  <li class="active right"><a target="_parent" href="vendorProfile">Profile</a></li>
-</ul>
+<div class="banner">
+  <div class="left">
+      <img src="/images/logo_ld_png.png">
+      <p class><a target="_parent" href="vendor">Add Items</a></p>
+      <p><a target="_parent" href="vendoritems">Edit Items</a></p>
+      <p><a target="_parent" href="about">About Us</a></p>
+      <p><a target="_parent" href="contact">Contact</a></p>
+  </div>
+  <div class="right">
+    <p><a target="_parent" href="vendorProfile">Profile</a></p>
+  </div>
+</div>
 
 <div id="profile-container">
   <div id="profile-picture">
     <input type="file" id="imageInput" accept="image/*" onchange="updateProfilePicture()">
-    <label for="imageInput"><img th:src="@{/uploads/{imageURL}(imageURL=${imageURL})}" alt="Press To Enter Profile Picture" id="previewImage"></label>
+    <label for="imageInput"><img src="/images/logo_ld_png.png" alt="Press To Enter Profile Picture" id="previewImage"></label>
   </div>
 
   <div id="user-details">
     <h1 class="name" th:text="${name}">Restaurant</h1>
     <h1 class="description" th:text="${description}">blah blah blah</h1>
 
-    <button class="edit-profile" onclick="editProfile()">Edit Profile</button>
-    <button class="logout-button" id="logout" onclick="window.location.href='/logout'">Logout</button>
+    <button id="edit-profile" onclick="editProfile()">Edit Profile</button>
+    <div>
+      <form id="edit-form" style="display: none;">
+        <!--This is here so that we can use the id in the js-->
+        <input type="hidden" id="vendorId" th:value="${id}">
 
+        <label for="new-name">Name:</label>
+        <input type="text" id="new-name" required><br>
+
+        <label for="new-description">Description:</label>
+        <input type="text" id="new-description" required><br>
+
+        <label for="current-password">Current Password:</label>
+        <input type="password" id="current-password" required><br>
+
+        <label for="new-password">New Password:</label>
+        <input type="password" id="new-password" required><br>
+
+        <label for="confirm-password">Confirm Password:</label>
+        <input type="password" id="confirm-password" required><br>
+
+        <button type="button" onclick="saveProfile()">Save</button>
+        <button type="button" onclick="returnToProfile()">Cancel</button>
+      </form>
+    </div>
+    <button id="edit-address-btn" onclick="editAddress()">Edit Address</button>
+    <div id="address-fields" style="display: none;">
+      <label for="street">Street:</label>
+      <input type="text" id="street" required><br>
+
+      <label for="city">City:</label>
+      <input type="text" id="city" required><br>
+
+      <label for="postCode">Post Code:</label>
+      <input type="text" id="postCode" required><br>
+
+      <label for="country">Country:</label>
+      <input type="text" id="country" required><br>
+
+      <button type="button" onclick="saveAddress()">Save Address</button>
+      <button type="button" onclick="cancelEditAddress()">Cancel</button>
+    </div>
+    <button id="logout" onclick="window.location.href='/logout'">Logout</button>
   </div>
-
-  <button id="edit-address-btn" onclick="editAddress()">Edit Address</button>
-
-  <div id="address-fields" style="display: none;">
-
-    <label for="street">Street:</label>
-    <input type="text" id="street" required><br>
-
-    <label for="city">City:</label>
-    <input type="text" id="city" required><br>
-
-    <label for="postCode">Post Code:</label>
-    <input type="text" id="postCode" required><br>
-
-    <label for="country">Country:</label>
-    <input type="text" id="country" required><br>
-
-    <button type="button" onclick="saveAddress()">Save Address</button>
-    <button type="button" onclick="cancelEditAddress()">Cancel</button>
-  </div>
-
-  <form id="edit-form">
-
-    <!--This is here so that we can use the id in the js-->
-    <input type="hidden" id="vendorId" th:value="${id}">
-
-    <label for="new-name">Name:</label>
-    <input type="text" id="new-name" required><br>
-
-
-    <label for="new-description">Description:</label>
-    <input type="text" id="new-description" required><br>
-
-    <label for="current-password">Current Password:</label>
-    <input type="password" id="current-password" required><br>
-
-    <label for="new-password">New Password:</label>
-    <input type="password" id="new-password" required><br>
-
-    <label for="confirm-password">Confirm Password:</label>
-    <input type="password" id="confirm-password" required><br>
-
-    <button type="button" onclick="saveProfile()">Save</button>
-    <button type="button" onclick="returnToProfile()">Return</button>
-    <button type="button" onclick="cancelEdit()">Cancel</button>
-  </form>
 </div>
-
-
-<img src="images/background-aboutus.jpg" alt="" class="background-image">
 
 <script src="/JavaScript/vendorProfile.js"></script>
 </body>

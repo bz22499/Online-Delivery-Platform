@@ -1,57 +1,65 @@
 body{
     background-color: lightgray;
     margin: 0;
+
 }
-
-
-ul.banner {
-    z-index:1;
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-    background-color: #dfdfdf;
+.banner {
+    background: white;
     top: 0;
-    width: 100%;
     position: sticky;
+    z-index: 1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: "IBM Plex Sans";
+    padding: 10px 0 10px 0;
+
 }
 
-ul.banner img{
-    height: 19px;
-    padding: 14px;
-    float: left;
+.left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-left: 22px;
 }
 
-ul.banner li {
-    float: left;
+.right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-right: 22px;
 }
 
-ul.banner li.right {
-    float: right;
+.left img {
+    height: 60px;
 }
 
-ul.banner li a {
-    display: block;
+.left p a{
     color: black;
-    text-align: center;
-    padding: 14px 16px;
     text-decoration: none;
+    width: max-content;
+    padding: 5px 10px;
+    font-weight: 200;
 }
 
-ul.banner li.active a{
-    background-color: rgb(196, 194, 188);
-}
-
-ul.banner li.right a {
+.right p a{
+    font-size: 120%;
+    width: max-content;
     display: block;
     color: white;
     background-color: black;
+    text-align: center;
+    text-decoration: none;
     border-radius: 10px;
-    padding: 5px 16px;
-    margin: 8px 10px;
+    padding: 5px 12px;
+    font-weight: 200;
 }
 
-ul.banner li a:hover{
+.left p a:hover{
+    color: gray;
+}
+
+.right p a:hover {
     background-color: gray;
 }
 
@@ -63,6 +71,7 @@ ul.banner li a:hover{
     background-color: whitesmoke;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     padding: 20px;
+    font-family: "IBM Plex Sans";
     border-radius: 5px;
     text-align: center;
     width: 400px;

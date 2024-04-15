@@ -5,15 +5,12 @@ function editProfile() {
     document.getElementById('new-password').value = '';
     document.getElementById('confirm-password').value = '';
 
-    document.querySelector('.name').style.display = 'none';
-    document.getElementById('logout').style.display = 'none';
-
     document.getElementById('edit-form').style.display = 'block';
 
     // Set the current values in the form fields
     document.getElementById('new-name').value = document.querySelector('.name').innerText;
-    // Hide buttons in the user-details div
-    document.querySelector('#user-details button.edit-profile').style.display = 'none';
+    // Hide the edit profile button
+    document.getElementById('edit-profile').style.display = 'none';
 }
 
 function returnToProfile() {
@@ -23,12 +20,9 @@ function returnToProfile() {
     document.getElementById('edit-form').style.display = 'none';
 
     // Show the edit profile button again
-    document.querySelector('#user-details button.edit-profile').style.display = 'inline-block';
+    document.getElementById('edit-profile').style.display = 'inline-block';
 }
 
-function cancelEdit() {
-    returnToProfile();
-}
 
 function saveProfile() {
     var driverId = document.getElementById('driverId').value;

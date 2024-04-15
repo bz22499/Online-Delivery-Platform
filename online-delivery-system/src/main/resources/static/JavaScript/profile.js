@@ -22,8 +22,6 @@ function editProfile() {
 
     document.querySelector('.firstName').style.display = 'none';
     document.querySelector('.lastName').style.display = 'none';
-    document.getElementById('view-subscription').style.display = 'none';
-    document.getElementById('logout').style.display = 'none';
 
     document.getElementById('edit-form').style.display = 'block';
 
@@ -32,24 +30,17 @@ function editProfile() {
     document.getElementById('new-lastName').value = document.querySelector('.lastName').innerText;
 
     // Hide buttons in the user-details div
-    document.querySelector('#user-details button.edit-profile').style.display = 'none'; // edited this line as well
+    document.getElementById('edit-profile').style.display = 'none';
 }
 
 function returnToProfile() {
     document.querySelector('.firstName').style.display = 'block';
     document.querySelector('.lastName').style.display = 'block';
-    document.getElementById('view-subscription').style.display = 'inline-block';
-    document.getElementById('logout').style.display = 'inline-block';
-    //document.getElementById('edit-profile').style.display = 'block';
+    document.getElementById('logout').style.display = 'block';
+    document.getElementById('edit-profile').style.display = 'block';
 
     document.getElementById('edit-form').style.display = 'none';
 
-    // Show the edit profile button again
-    document.querySelector('#user-details button.edit-profile').style.display = 'inline-block';
-}
-
-function cancelEdit() {
-    returnToProfile();
 }
 
 function saveProfile() {
