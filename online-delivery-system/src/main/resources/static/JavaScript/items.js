@@ -77,11 +77,11 @@ function populateGrid(pageData) {
 }
 
 function addOrUpdateBasketItem(item) {
-    let basketItem = document.querySelector(`.basket-item[data-id='${item.id}']`); // has item id as identifier in html template
-    if (!basketItem) { // if not yet in the basket
-        basketItem = createBasketItem(item); // create the item to be displayed in basket
-        document.querySelector('.basket-items').appendChild(basketItem); // add basket item to html template
-        basket.items.push({ // initialise basket item object
+    let basketItem = document.querySelector(`.basket-item[data-id='${item.id}']`); 
+    if (!basketItem) {
+        basketItem = createBasketItem(item); 
+        document.querySelector('.basket-items').appendChild(basketItem); 
+        basket.items.push({ 
             basket: null,
             menuItem: item,
             quantity: 1

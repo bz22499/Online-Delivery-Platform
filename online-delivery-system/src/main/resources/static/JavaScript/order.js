@@ -1,4 +1,4 @@
-let isFetchingBaskets = false; // global state to signal when fetching baskets is done
+let isFetchingBaskets = false;
 let currentPage = 0;
 let isLoading = false;
 
@@ -16,10 +16,9 @@ async function fetchRestaurants(page = 0, size = 18) {
 }
 
 async function createOrder() {
-  const existingOrderString = sessionStorage.getItem("order"); // check if order has already been created for the session. If so, don't proceed with order creation
+  const existingOrderString = sessionStorage.getItem("order");
   const existingOrderJson = JSON.parse(existingOrderString)
   if (existingOrderJson) {
-    console.log("Order already created: ", existingOrderJson);
     return;
   }
   try {
@@ -43,7 +42,6 @@ async function createOrder() {
   }
 }
 
-// Luke's bit
 async function fetchAllRestaurants() {
   try {
     const response = await fetch(`/vendors`);
@@ -58,18 +56,14 @@ async function fetchAllRestaurants() {
 }
 
 function populateGrid(pageData) {
-  // populates the grid that shows all the restaurants
   const gridContainer = document.querySelector(".grid-container");
 
   if (pageData && pageData.content) {
-    // if there is pageData and there are >0 items
     pageData.content.forEach((restaurant) => {
-      // for each data object (restaurant)
-      const gridItem = document.createElement("div"); // create html div
-      gridItem.className = "grid-item"; // set classname
+      const gridItem = document.createElement("div");
+      gridItem.className = "grid-item";
 
-      // create image element
-      const image = document.createElement("img"); // create an image element
+      const image = document.createElement("img");
       if (restaurant.imageUrl != null) {
         image.src = "uploads/" + restaurant.imageUrl;
       } else {
@@ -77,38 +71,33 @@ function populateGrid(pageData) {
       }
 
       image.alt = restaurant.name;
-      image.className = "restaurant-image"; // set image class
+      image.className = "restaurant-image";
 
-      // Add image to div (gridItem)
       gridItem.appendChild(image);
 
-      // Restaurant name footer
-      const footer = document.createElement("div"); // create div for restaurant name (was located in the foot of the image at first)
+      const footer = document.createElement("div");
       footer.className = "grid-item-footer";
       footer.textContent = restaurant.name;
-      gridItem.appendChild(footer); // add footer to div (gridItem)
+      gridItem.appendChild(footer);
 
-      const rating = document.createElement("div"); // create div for rating
+      const rating = document.createElement("div");
       rating.className = "rating";
-      rating.textContent = restaurant.rating.toFixed(2); // set to a double digit float
-      gridItem.appendChild(rating); // add to the div (gridItem)
+      rating.textContent = restaurant.rating.toFixed(2);
+      gridItem.appendChild(rating);
 
       // Nav to menu page
       gridItem.addEventListener("click", () => {
-        // listener for clicks on gridItem
         if (restaurant.email) {
-          // if email isn't null
-          window.location.href = `/${encodeURIComponent(restaurant.email)}/menu-page`; // nav to restaurant page (created using the power of thymeleaf)
+          window.location.href = `/${encodeURIComponent(restaurant.email)}/menu-page`;
         } else {
           console.warn("Restaurant email is undefined:", restaurant);
         }
       });
-      gridContainer.appendChild(gridItem); // add the gridItem (the restaurant box we can see in order page) to the grid
+      gridContainer.appendChild(gridItem);
     });
   }
 }
 
-// get all the baskets for current order ID
 async function fetchBasketsByOrder(orderId) {
   try {
     const response = await fetch(`/baskets/orders/${orderId}`);
@@ -125,13 +114,12 @@ async function fetchBasketsByOrder(orderId) {
 function calculateTotal(items) {
   let total = 0;
   for (const item of items) {
-    total = item.quantity * item.menuItem.price; // we can access menuItems directly (since we used these to build basketItems)
+    total = item.quantity * item.menuItem.price;
   }
   return total;
 }
 
 function getBasketItemsFromCache(basketId) {
-  // basketItems retrieval from cache
   const basketsString = sessionStorage.getItem("baskets");
   const baskets = JSON.parse(basketsString);
   return {
@@ -141,32 +129,32 @@ function getBasketItemsFromCache(basketId) {
 }
 
 async function preloadBaskets() {
-  const orderId = sessionStorage.getItem("orderId");
+  const orderString = sessionStorage.getItem("order");
+  const order = JSON.parse(orderString);
+  const orderId = order.id;
   if (orderId) {
     const baskets = await fetchBasketsByOrder(orderId);
-    sessionStorage.setItem("basketIDs", JSON.stringify(baskets)); // add basket IDs to cache
-    isFetchingBaskets = false; // ensure the fetching and saving process is marked as done
+    sessionStorage.setItem("basketIDs", JSON.stringify(baskets));
+    isFetchingBaskets = false
   } else {
     isFetchingBaskets = false;
   }
 }
 
-// populate the dropdown button
 async function populateBasketsDropdown() {
-  const dropdown = document.getElementById("basketsDropdown"); // given in html (this is the dropdown button)
-  dropdown.innerHTML = ""; // have to clear previous items because it grows infinitely otherwise
+  const dropdown = document.getElementById("basketsDropdown");
+  dropdown.innerHTML = "";
 
   const basketsString = sessionStorage.getItem("basketIDs");
   const baskets = JSON.parse(basketsString);
 
   if (baskets && baskets.length) {
-    // check initialisation
     for (const basket of baskets) {
-      // display info for all baskets in cache (all created baskets)
       try {
         let basketData = getBasketItemsFromCache(basket.id);
         let totalPrice = calculateTotal(basketData.items);
         const basketElement = document.createElement("div");
+        basketElement.className = "basketDiv";
         basketElement.textContent = `Restaurant: ${basketData.restName}, Total: £${totalPrice.toFixed(2)}`;
         dropdown.appendChild(basketElement);
       } catch (error) {
@@ -174,25 +162,28 @@ async function populateBasketsDropdown() {
       }
     }
 
-    const editButton = document.createElement("button");
-    editButton.textContent = "View baskets";
-    editButton.className = "edit-baskets-button";
-    editButton.addEventListener("click", function () {
-      window.location.href = `/baskets-overview`;
-    });
-    dropdown.appendChild(editButton);
+    const checkoutButtonDiv = document.createElement("div");
+    checkoutButtonDiv.className = "checkout-button";
+    const checkoutButton = document.createElement("p");
+    const checkoutButtonTarget = document.createElement("a");
+    checkoutButtonTarget.textContent = "Checkout";
+    checkoutButtonTarget.target = "_parent";
+    checkoutButtonTarget.href = "/checkout";
+    checkoutButton.appendChild(checkoutButtonTarget);
+    checkoutButtonDiv.appendChild(checkoutButton);
+    dropdown.appendChild(checkoutButtonDiv);
+
+    // const viewButton = document.createElement("p");
+    // viewButton.textContent = "Checkout";
+    // viewButton.className = "dropdown-view-button";
+    // viewButton.addEventListener("click", function () {
+    //   window.location.href = `/checkout`;
+    // });
+    // dropdown.appendChild(viewButton);
   } else {
     dropdown.textContent = "No active baskets";
   }
 }
-
-// Luke's bit
-/*
-// Get query parameters from the URL
-var urlParams = new URLSearchParams(window.location.search);
-// Retrieve data from query parameters
-var address = urlParams.get('address');
-*/
 
 async function loadMore() {
   if (isLoading) return;
@@ -206,10 +197,10 @@ async function loadMore() {
 }
 
 window.onload = async () => {
-  isFetchingBaskets = true; // set fetching to true from the beginning so users can see lading message naturally
+  isFetchingBaskets = true;
   await loadMore();
   await createOrder();
-  await preloadBaskets().then(populateBasketsDropdown); // call preload then populate
+  await preloadBaskets().then(populateBasketsDropdown);
 };
 
 window.addEventListener("scroll", () => {
@@ -225,12 +216,17 @@ document.addEventListener("DOMContentLoaded", function () {
   document
     .getElementById("viewBasketsButton")
     .addEventListener("click", async function (event) {
-      event.preventDefault(); // to stop auto-scroll when clicking view basket (from gpt)
+      event.preventDefault();
       const dropdown = document.getElementById("basketsDropdown");
       if (isFetchingBaskets) {
-        dropdown.innerHTML = "Loading baskets..."; // set as loading in case it's still fetching
+        dropdown.innerHTML = "Loading baskets...";
+      } 
+      dropdown.style.display = dropdown.style.display === "none" ? "block" : "none";
+      if (dropdown.style.display === "block") {
+        const rect = viewBasketsButton.getBoundingClientRect();
+
+        dropdown.style.top = `${rect.bottom + window.scrollY}px`;
+        dropdown.style.left = `${rect.left + window.scrollX - 30}px`;
       }
-      dropdown.style.display =
-        dropdown.style.display === "none" ? "block" : "none"; // toggle display
     });
 });

@@ -58,7 +58,7 @@ public class SecurityConfig extends GlobalAuthenticationConfigurerAdapter {
         http.csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests((authorize) ->
                         authorize
-                                .requestMatchers("/profile/**", "/checkout/**", "/order/**").hasAuthority("USER")
+                                .requestMatchers("/profile/**", "/checkout/**").hasAuthority("USER")
                                 .requestMatchers("/vendoritems/**", "/vendor/**", "/vendorProfile/**", "/ordersForVendors/**").hasAuthority("VENDOR")
                                 .requestMatchers("/driverMain/**", "/driverProfile", "/ordersForDrivers").hasAuthority("DRIVER")
                                 .requestMatchers("/home").hasAnyAuthority("USER", "ROLE_ANONYMOUS") // Deny access to /home for vendors

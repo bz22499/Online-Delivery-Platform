@@ -1,4 +1,4 @@
-body{
+body {
   background-color: white;
   margin: 0;
 }
@@ -13,7 +13,6 @@ body{
   align-items: center;
   font-family: "IBM Plex Sans";
   padding: 10px 0 10px 0;
-
 }
 
 .left {
@@ -32,9 +31,10 @@ body{
 
 .left img {
   height: 60px;
-}  
+}
 
-.left p a{
+.left p a {
+  font-size: 120%;
   color: black;
   text-decoration: none;
   width: max-content;
@@ -42,7 +42,7 @@ body{
   font-weight: 200;
 }
 
-.right p a{
+.right p a {
   font-size: 120%;
   width: max-content;
   display: block;
@@ -55,7 +55,7 @@ body{
   font-weight: 200;
 }
 
-.left p a:hover{
+.left p a:hover {
   color: gray;
 }
 
@@ -64,22 +64,22 @@ body{
 }
 
 .locationInput {
-position: relative;
-text-align: center;
-color: white;
+  position: relative;
+  text-align: center;
+  color: white;
 }
 
-.locationInput input{
-    position: absolute;
-    top: 35%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    padding: 20px;
-    font-size: 17px;
-    border: 1px solid grey;
-    width: 40%;
-    background: #f1f1f1;
-    border-radius: 27px;
+.locationInput input {
+  position: absolute;
+  top: 35%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 20px;
+  font-size: 17px;
+  border: 1px solid grey;
+  width: 40%;
+  background: #f1f1f1;
+  border-radius: 27px;
 }
 
 .searchWrapper {
@@ -127,7 +127,7 @@ color: white;
 }
 
 .swText a:hover {
-  color: #04AA6D;
+  color: #04aa6d;
 }
 
 .swText p {
@@ -146,13 +146,13 @@ color: white;
   gap: 20px;
 }
 
-.placeholder{
+.placeholder {
   position: relative;
   flex: 1;
   overflow: hidden;
 }
 
-.placeholder a{
+.placeholder a {
   text-decoration: none;
   color: white;
 }
@@ -162,9 +162,9 @@ color: white;
 }
 
 .partners img {
-  width: 100%; 
-  height: auto; 
-  object-fit: cover; 
+  width: 100%;
+  height: auto;
+  object-fit: cover;
   min-height: 100%;
   border-radius: 27px;
 }
