@@ -59,7 +59,7 @@ async function populateOrders(ordersData) {
 
     if (ordersData && ordersData.content) {
         for (const order of ordersData.content) {
-            if (order.status === 'COLLECTION') {
+            if (order.status === driverId) {
                 const orderItem = document.createElement('div');
                 orderItem.className = 'order-item';
 
@@ -95,11 +95,11 @@ async function populateOrders(ordersData) {
                 }
                 // Additional functionality to confirm collection
                 const confirmButton = document.createElement('button');
-                confirmButton.textContent = 'Confirm Collection';
+                confirmButton.textContent = 'Confirm Delivered';
                 confirmButton.addEventListener('click', async () => {
-                    const confirmation = confirm("Are you sure you want to collect this order?");
+                    const confirmation = confirm("Are you sure you have delivered this order?");
                     if (confirmation) {
-                        order.status = driverId;
+                        order.status = 'DELETED';
                         // Update order status on the backend
                         console.log('Order before PATCH request:', order);
                         try {
@@ -128,7 +128,7 @@ async function populateOrders(ordersData) {
                 });
                 orderItem.appendChild(confirmButton);
             }else {
-                console.log(`Order ID: ${order.id} not displayed because its status is not 'COLLECTION'.`);
+                console.log(`Order ID: ${order.id} not displayed because its status is ${order.status}.`);
             }
         }
     }
@@ -141,7 +141,7 @@ async function loadMore() {
     isLoading = true;
     const driverIdElement = document.getElementById('driverId');
     driverId = driverIdElement.value;
-    const orders = await fetchOrders(currentPage, 40);
+    const orders = await fetchOrders(currentPage, 60);
     if (orders && orders.content.length > 0) {
         await populateOrders(orders);
         currentPage++;

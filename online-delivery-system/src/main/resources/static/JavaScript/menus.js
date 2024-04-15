@@ -19,7 +19,6 @@ async function createOrder() {
   const existingOrderString = sessionStorage.getItem("order"); // check if order has already been created for the session. If so, don't proceed with order creation
   const existingOrderJson = JSON.parse(existingOrderString)
   if (existingOrderJson) {
-    console.log("Order already created: ", existingOrderJson);
     return;
   }
   try {
@@ -39,7 +38,7 @@ async function createOrder() {
     const order = await response.json();
     sessionStorage.setItem("order", JSON.stringify(order));
   } catch (error) {
-    console.log("Error creating order: ", error);
+    console.error("Error creating order: ", error);
   }
 }
 
@@ -141,9 +140,10 @@ function getBasketItemsFromCache(basketId) {
 }
 
 async function preloadBaskets() {
-  const orderId = sessionStorage.getItem("orderId");
-  if (orderId) {
-    const baskets = await fetchBasketsByOrder(orderId);
+  const orderString = sessionStorage.getItem("order");
+  const order = JSON.parse(orderString);
+  if (order) {
+    const baskets = await fetchBasketsByOrder(order.id);
     sessionStorage.setItem("basketIDs", JSON.stringify(baskets)); // add basket IDs to cache
     isFetchingBaskets = false; // ensure the fetching and saving process is marked as done
   } else {

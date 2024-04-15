@@ -1,7 +1,20 @@
 package com.sep.onlinedeliverysystem;
 
-import com.sep.onlinedeliverysystem.domain.dto.*;
-import com.sep.onlinedeliverysystem.domain.entities.*;
+import com.sep.onlinedeliverysystem.domain.dto.DriverDTO;
+import com.sep.onlinedeliverysystem.domain.dto.MenuItemDTO;
+import com.sep.onlinedeliverysystem.domain.dto.UserAddressDTO;
+import com.sep.onlinedeliverysystem.domain.dto.UserDTO;
+import com.sep.onlinedeliverysystem.domain.dto.VendorAddressDTO;
+import com.sep.onlinedeliverysystem.domain.dto.VendorDTO;
+import com.sep.onlinedeliverysystem.domain.entities.Basket;
+import com.sep.onlinedeliverysystem.domain.entities.BasketItem;
+import com.sep.onlinedeliverysystem.domain.entities.Driver;
+import com.sep.onlinedeliverysystem.domain.entities.MenuItem;
+import com.sep.onlinedeliverysystem.domain.entities.Order;
+import com.sep.onlinedeliverysystem.domain.entities.User;
+import com.sep.onlinedeliverysystem.domain.entities.UserAddress;
+import com.sep.onlinedeliverysystem.domain.entities.Vendor;
+import com.sep.onlinedeliverysystem.domain.entities.VendorAddress;
 
 public final class TestUtil {
     private TestUtil(){
@@ -239,6 +252,16 @@ public final class TestUtil {
         return item;
     }
 
+    public static MenuItem menuItemBuilder1(){
+        MenuItem item = MenuItem.builder()
+                .name("Toast")
+                .description("2 slices of plain toast")
+                .price(1.99F)
+                .vendor(vendorBuild1())
+                .build();
+        return item;
+    }
+
     public static MenuItem menuItemBuilder2(final Vendor vendor){
         MenuItem item = MenuItem.builder()
                 .name("CS Nachos")
@@ -259,8 +282,16 @@ public final class TestUtil {
         return item;
     }
 
+
     public static Order orderBuilder(){
         Order order = Order.builder()
+                .build();
+        return order;
+    }
+
+    public static Order orderBuilder(String status){
+        Order order = Order.builder()
+                .status(status)
                 .build();
         return order;
     }
@@ -269,7 +300,7 @@ public final class TestUtil {
     // For address testing
     public static Order orderBuilder(UserAddress userAddress){
         Order order = Order.builder()
-                //.userAddress(userAddress)
+                .userAddress(userAddress)
                 .build();
         return order;
     }
