@@ -21,4 +21,10 @@ public interface OrderService {
     Order partialUpdate(Long id, Order orderEntity);
 
     void delete(Long id);
+
+    List<Order> findAllByStatusIsNull();
+
+    List<Order> findAllByStatus(String status);
+
+    void deleteOrderAndDependencies(Order order);
 }
