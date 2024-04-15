@@ -128,34 +128,31 @@ ul.banner li a:hover{
 
 .grid-item-delete{
     position: absolute;
-    top: 0;
-    right: 0;
-    background-color: red;
-    padding-bottom:20px;
-    padding-left:40px;
+    top: 20px;
+    right: 20px;
+    margin-top: 10px;
+    margin-right: 10px;
     cursor:pointer;
+}
+
+.grid-item-delete span{
+    font-size: 50px;
 }
 .grid-item-delete:hover {
     background-color: firebrick;
 }
 
 .grid-item-edit{
-    top: 20px; /* Adjust this value to move it down */
-    left: 20px; /* Adjust this value to move it to the right */
-    margin-top: 10px; /* Additional spacing from the top */
-    margin-left: 10px; /* Additional spacing from the left */
+    top: 20px;
+    left: 20px;
+    margin-top: 10px;
+    margin-left: 10px;
     position: absolute;
     cursor:pointer;
-    border: 4px solid rgba(0, 0, 0, 1);
-    border-radius: 50%;
 }
 
 .grid-item-edit span{
     font-size: 50px;
-}
-
-.grid-item-edit:hover{
-    background-color: #4CAF50;
 }
 
 

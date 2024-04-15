@@ -141,6 +141,13 @@ function populateGrid(pageData) {
 
         const deleteButton = document.createElement('div');
         deleteButton.className = 'grid-item-delete'
+
+
+        const deleteSymbol = document.createElement('span');
+        deleteSymbol.className = 'material-symbols-outlined';
+        deleteSymbol.textContent ="delete";
+
+        deleteButton.appendChild(deleteSymbol);
         gridItemContent.appendChild(deleteButton);
 
         const editButton = document.createElement('div');
