@@ -79,7 +79,6 @@ ul.banner li a:hover{
     grid-template-columns: repeat(2, 1fr);
     gap: 30px;
     padding: 40px;
-    margin-right: 400px;
 }
 
 
@@ -87,7 +86,8 @@ ul.banner li a:hover{
     background-color: lawngreen;
     border: 4px solid rgba(0, 0, 0, 0.8);
     height: 200px;
-    position: relative;border-radius: 75px;
+    position: relative;
+    border-radius: 75px;
 }
 .grid-item:hover{
     background-color: forestgreen;
@@ -140,96 +140,24 @@ ul.banner li a:hover{
 }
 
 .grid-item-edit{
+    top: 20px; /* Adjust this value to move it down */
+    left: 20px; /* Adjust this value to move it to the right */
+    margin-top: 10px; /* Additional spacing from the top */
+    margin-left: 10px; /* Additional spacing from the left */
     position: absolute;
-    top: 0;
-    right: 40px;
-    background-color: green;
-    padding-bottom:20px;
-    padding-left:40px;
     cursor:pointer;
+    border: 4px solid rgba(0, 0, 0, 1);
+    border-radius: 50%;
+}
+
+.grid-item-edit span{
+    font-size: 50px;
 }
 
 .grid-item-edit:hover{
     background-color: #4CAF50;
 }
 
-
-
-.basket {
-    position: fixed;
-    right: 0;
-    top: 0;
-    width: 400px;
-    height: 100vh;
-    background-color: #f9f9f9;
-    border-left: 1px solid #ccc;
-    padding: 20px;
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-}
-
-.basket-header {
-    font-size: 24px;
-    margin-bottom: 20px;
-}
-
-.basket-items {
-    overflow-y: auto;
-    height: calc(100% - 40px); /* Reserve space for header */
-}
-
-.proceed-button {
-    background-color: #4CAF50; /* Green background */
-    color: white;
-    padding: 15px 20px;
-    margin-bottom: 10px;
-    border: none;
-    cursor: pointer;
-    width: 100%; /* Make the button expand to the full width of the basket */
-    box-sizing: border-box; /* Include padding and border in the width */
-    border-radius: 5px;
-}
-
-.proceed-button:hover {
-    background-color: #45a049; /* Darker shade for hover effect */
-}
-
-.add-to-basket-button {
-    background-color: #4CAF50; /* Green background */
-    color: white;
-    padding: 15px 20px;
-    margin-bottom: 10px;
-    border: none;
-    cursor: pointer;
-    width: 100%; /* Make the button expand to the full width of the basket */
-    box-sizing: border-box; /* Include padding and border in the width */
-    border-radius: 5px;
-}
-
-.add-to-basket-button:hover {
-    background-color: #45a049; /* Darker shade for hover effect */
-}
-
-.login-button {
-    background-color: #4CAF50; /* Green background */
-    color: white;
-    padding: 15px 20px;
-    margin: 20px 0;
-    border: none;
-    cursor: pointer;
-    width: 100%; /* Make the button expand to the full width of the basket */
-    box-sizing: border-box; /* Include padding and border in the width */
-}
-
-.login-button:hover {
-    background-color: #45a049; /* Darker shade for hover effect */
-}
-
-/* Adjust the height of basket items to make sure there is space for the button */
-.basket-items {
-    height: calc(100% - 100px); /* Adjust the value based on actual header and button height */
-}
 
 .grid-item-form{
     width: 100%;
@@ -244,9 +172,4 @@ ul.banner li a:hover{
 .grid-item-form button{
     margin: auto;
     display: block;
-}
-
-#menu-page-back a{
-    background-color: #4CAF50;
-    color: white;
 }

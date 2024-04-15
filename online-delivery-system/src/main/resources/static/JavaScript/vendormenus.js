@@ -145,6 +145,12 @@ function populateGrid(pageData) {
 
         const editButton = document.createElement('div');
         editButton.className = 'grid-item-edit';
+
+        const editSymbol = document.createElement('span');
+        editSymbol.className = 'material-symbols-outlined';
+        editSymbol.textContent = "edit";
+
+        editButton.appendChild(editSymbol);
         gridItemContent.appendChild(editButton);
 
         gridItem.appendChild(gridItemContent);
