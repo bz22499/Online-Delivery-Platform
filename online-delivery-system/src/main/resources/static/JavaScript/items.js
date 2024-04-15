@@ -225,7 +225,6 @@ document.addEventListener('DOMContentLoaded', function () { // wait until DOM is
                     }
                 }).then(savedBasket => {
                     basketCache(savedBasket, basket.items);
-                    sessionStorage.setItem('orderId', savedBasket.order.id); // Set the orderId here
                     for (let bi of basket.items) {
                         fetch("/basketItems", {
                             method: 'POST',
@@ -241,7 +240,6 @@ document.addEventListener('DOMContentLoaded', function () { // wait until DOM is
                     }
                 })
                     .then(data => {
-                        // Redirect to checkout page after setting orderId
                         window.location.href = "/checkout";
                     })
                     .catch(error => {
@@ -301,13 +299,13 @@ document.addEventListener('DOMContentLoaded', function () { // wait until DOM is
         // put this in html instead
         const menuBackButton = document.getElementById('menu-page-back');
         menuBackButton.addEventListener("click", () => {
-            window.location.href = "/order";
+            window.history.back();
         });
 
         const loginButton = document.querySelector('.login-button');
         if (loginButton) {
             loginButton.addEventListener('click', function () {
-                window.history.back();
+                window.location.href = "/login";
             });
         }
     });
