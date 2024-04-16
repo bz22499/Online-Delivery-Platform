@@ -135,7 +135,7 @@ function populateGrid(pageData) {
 
         const profileButton = document.createElement('input');
         profileButton.className = 'grid-item-profile-picture';
-        profileButton.id = 'imageInput';
+        profileButton.id = 'imageInput'+item.id;
         profileButton.type = 'file';
         profileButton.accept="image/*";
 
@@ -146,7 +146,7 @@ function populateGrid(pageData) {
 
         //now i just need an edit button
         const editImageSymbolContainer = document.createElement('label');
-        editImageSymbolContainer.htmlFor = "imageInput";
+        editImageSymbolContainer.htmlFor = "imageInput"+item.id;
         editImageSymbolContainer.className = 'edit-profile-button'
 
         imageHandling.appendChild(editImageSymbolContainer);
