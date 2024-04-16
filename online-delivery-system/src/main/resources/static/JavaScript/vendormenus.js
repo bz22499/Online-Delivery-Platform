@@ -109,35 +109,69 @@ async function submitFormClicked(name, price, description,itemID,itemTitle,itemD
 
 }
 
-function cancelFormClicked(gridItemForm,gridItemContent){
+function cancelFormClicked(gridItemForm,gridItemInfo){
     gridItemForm.hidden = true;
-    gridItemContent.hidden = false;
+    gridItemInfo.hidden = false;
 }
 
 function populateGrid(pageData) {
     const gridContainer = document.querySelector('.grid-container');
     pageData.forEach((item) => {
+
         const gridItem = document.createElement('div');
         gridItem.className = 'grid-item';
 
-        //content contains the content of each menu item
+        //grid item contains 2 parts the form and the infomation
+        const gridItemInfo = document.createElement('div');
+        gridItemInfo.className = 'grid-item-info';
+
+        //content is within information this will be a flex box
         const gridItemContent = document.createElement('div');
+        gridItemContent.className = 'grid-item-content';
+
+        //image handling is also in content
+        const imageHandling = document.createElement('div');
+        imageHandling.className = "grid-item-image-box";
+
+        const profileButton = document.createElement('input');
+        profileButton.className = 'grid-item-profile-picture';
+        profileButton.type = 'file';
+
+
+        imageHandling.appendChild(profileButton);
+
+        imageHandling.style.backgroundImage = "url('images/wix1.png')"
+
+
+
+        gridItemContent.appendChild(imageHandling)
+
+        //text is within content this will also be a flex box for the title description and footer
+        const gridItemText = document.createElement('div');
+        gridItemText.className = 'grid-item-text';
 
 
         const gridTitle = document.createElement('div')
         gridTitle.className='grid-item-title'
         gridTitle.textContent = item.name;
-        gridItemContent.appendChild(gridTitle)
+        gridItemText.appendChild(gridTitle)
 
         const description = document.createElement('div');
         description.className = 'grid-item-description';
         description.textContent = item.description;
-        gridItemContent.appendChild(description);
+        gridItemText.appendChild(description);
 
         const footer = document.createElement('div');
         footer.className = 'grid-item-footer';
         footer.textContent = "£" + item.price.toFixed(2);
-        gridItemContent.appendChild(footer);
+        gridItemText.appendChild(footer);
+
+        gridItemContent.appendChild(gridItemText);
+
+
+        //symbols is also contained in content
+        const symbols = document.createElement('div');
+        symbols.className = 'symbols-container';
 
         const deleteButton = document.createElement('div');
         deleteButton.className = 'grid-item-delete'
@@ -148,19 +182,25 @@ function populateGrid(pageData) {
         deleteSymbol.textContent ="delete";
 
         deleteButton.appendChild(deleteSymbol);
-        gridItemContent.appendChild(deleteButton);
+        symbols.appendChild(deleteButton);
 
         const editButton = document.createElement('div');
         editButton.className = 'grid-item-edit';
 
         const editSymbol = document.createElement('span');
-        editSymbol.className = 'material-symbols-outlined';
-        editSymbol.textContent = "edit";
+        editSymbol.className = 'material-symbols-outlined'
+        editSymbol.textContent ="edit";
 
         editButton.appendChild(editSymbol);
-        gridItemContent.appendChild(editButton);
+        symbols.appendChild(editButton);
 
-        gridItem.appendChild(gridItemContent);
+        gridItemContent.appendChild(symbols)
+
+
+
+        gridItemInfo.appendChild(gridItemContent)
+
+        gridItem.appendChild(gridItemInfo);
 
         //elements inside the form will be fields that can be changed upon clicking the edit button
         const gridItemForm = document.createElement('form');
@@ -181,14 +221,14 @@ function populateGrid(pageData) {
         const submitForm = document.createElement('button');
         submitForm.id = 'submit-form-button'
         submitForm.type = "button"
-        submitForm.onclick = async function () {await submitFormClicked(formItemName.value,formItemPrice.value,formItemDescription.value,item.id,gridTitle,description,footer); cancelFormClicked(gridItemForm,gridItemContent)}
+        submitForm.onclick = async function () {await submitFormClicked(formItemName.value,formItemPrice.value,formItemDescription.value,item.id,gridTitle,description,footer); cancelFormClicked(gridItemForm,gridItemInfo)}
         submitForm.textContent = "SUBMIT"
         gridItemForm.appendChild(submitForm);
 
         const cancelForm = document.createElement('button');
         cancelForm.id = 'cancel-form-button'
         cancelForm.type = "button"
-        cancelForm.onclick = function () {cancelFormClicked(gridItemForm,gridItemContent)}
+        cancelForm.onclick = function () {cancelFormClicked(gridItemForm,gridItemInfo)}
         cancelForm.textContent = "CANCEL";
         gridItemForm.appendChild(cancelForm);
 
@@ -206,9 +246,24 @@ function populateGrid(pageData) {
         });
 
         editButton.addEventListener('click', function (){
-            gridItemContent.hidden = true;
+            gridItemInfo.hidden = true;
             gridItemForm.hidden=false;
         });
+
+
+        //functionality for profile picture change
+        profileButton.addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            const reader = new FileReader();
+
+            reader.onload = function(e) {
+                imageHandling.style.backgroundImage = `url(${e.target.result})`;
+                updateItemPicture();
+            };
+
+            reader.readAsDataURL(file);
+        });
+
 
     });
 }
@@ -237,3 +292,8 @@ document.addEventListener('DOMContentLoaded', async function () {
 
     load();
 });
+
+
+function updateItemPicture(){
+    alert("YIPPE");
+}
