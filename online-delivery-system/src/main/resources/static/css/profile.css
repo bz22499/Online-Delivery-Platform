@@ -64,7 +64,7 @@ body {
     background-color: gray;
 }
 
-#profile-container {
+.profile-container {
     max-width: 600px;
     margin: 20px auto;
     background-color: #fff;
@@ -107,14 +107,36 @@ body {
 
 
 #user-details {
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    color: grey;
 }
-#user-details h1 {
-    margin: 2px;
-}
+
+/*.input-field {*/
+/*    margin-bottom: 20px;*/
+/*}*/
+
+/*.input-field label {*/
+/*    font-weight: bold;*/
+/*    margin-bottom: 4px;*/
+/*    display: block;*/
+/*!*}*!*/
+
+/*.text-field {*/
+/*    width: 100%;*/
+/*    padding: 8px;*/
+/*    border: 1px solid #ccc;*/
+/*    border-radius: 4px;*/
+/*    background-color: white;*/
+/*}*/
+
+/*.text-field:focus {*/
+/*    outline: none;*/
+/*    border-color: #007bff; !* Change the border color on focus if needed *!*/
+/*}*/
+
+/*.text-field[contenteditable="true"] {*/
+/*    cursor: text;*/
+/*}*/
+
 
 input[type="text"],
 input[type="password"] {
@@ -126,11 +148,31 @@ input[type="password"] {
     border-radius: 4px;
 }
 
+.text-field {
+    width: 100%;
+    padding: 8px;
+    margin: 6px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    height: 33px;
+    color: gray;
+}
+
 label {
     margin-top: 10px;
     margin-bottom: 4px;
     font-weight: bold;
     color: #333;
+}
+
+.edit-form {
+    padding: 20px; /* Add padding around the form */
+}
+
+.edit-form input[type="text"],
+.edit-form input[type="password"] {
+    margin: 6px 0 16px 0; /* Add bottom margin to create spacing */
 }
 
 button {

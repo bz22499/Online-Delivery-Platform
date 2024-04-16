@@ -15,12 +15,12 @@ function editProfile() {
 
 function returnToProfile() {
     document.querySelector('.name').style.display = 'block';
-    document.getElementById('logout').style.display = 'inline-block';
+    document.getElementById('logout').style.display = 'block';
 
     document.getElementById('edit-form').style.display = 'none';
 
     // Show the edit profile button again
-    document.getElementById('edit-profile').style.display = 'inline-block';
+    document.getElementById('edit-profile').style.display = 'block';
 }
 
 

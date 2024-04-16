@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@100;200;300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@100;200;300;400;500;600&family=Oswald:wght@200..700&display=swap" rel="stylesheet">
     <title>P2P Online Delivery Platform - Profile Page</title>
     <link rel="stylesheet" href="/css/profile.css">
 </head>
@@ -21,11 +23,11 @@
     </div>
 </div>
 
-<div id="profile-container">
-    <div id="profile-picture">
-        <input type="file" id="imageInput" accept="image/*" onchange="updateProfilePicture()">
-        <label for="imageInput"><img src="/images/logo_ld_png.png" alt="Press To Enter Profile Picture" id="previewImage"></label>
-    </div>
+<div class="profile-container">
+<!--    <div id="profile-picture">-->
+<!--        <input type="file" id="imageInput" accept="image/*" onchange="updateProfilePicture()">-->
+<!--        <label for="imageInput"><img src="/images/logo_ld_png.png" alt="Press To Enter Profile Picture" id="previewImage"></label>-->
+<!--    </div>-->
 
     <div id="user-details">
         <h1 class="firstName" th:text="${firstName}">John</h1>
