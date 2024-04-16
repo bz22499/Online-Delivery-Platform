@@ -209,9 +209,45 @@ document.addEventListener('DOMContentLoaded', function () { // wait until DOM is
     const proceedButton = document.querySelector('.proceed-button'); // create basket button and funcionality
     if (proceedButton) { // check if button exists to avoid null reference
         proceedButton.addEventListener('click', async function () { // checks if proceed is clicked
-            const hasUserAddress = await hasAddress(userId); // Check if the user has an address
+            const hasUserAddress = await hasAddress(userId);
             if (hasUserAddress) {
-                window.location.href = "/checkout";
+                const response = await fetch("/baskets", {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(basket)
+                }).then(response => {
+                    if (response.ok) {
+                        return response.json()
+                    } else {
+                        throw new Error(`HTTP error. Status: ${response.status}`)
+                    }
+                }).then(savedBasket => {
+                    basketCache(savedBasket, basket.items);
+                    for (let bi of basket.items) {
+                        fetch("/basketItems", {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({
+                                basket: savedBasket,
+                                menuItem: bi.menuItem,
+                                quantity: bi.quantity
+                            })
+                        })
+                    }
+                })
+                    .then(data => {
+                        window.location.href = "/checkout";
+                    })
+                    .catch(error => {
+                        console.error("Error creating basket: ", error)
+                        alert("Failed to create basket")
+                    });
+            } else {
+                alert("Please provide an address before proceeding to checkout.");
             }
         });
     }
@@ -263,8 +299,7 @@ document.addEventListener('DOMContentLoaded', function () { // wait until DOM is
         // put this in html instead
         const menuBackButton = document.getElementById('menu-page-back');
         menuBackButton.addEventListener("click", () => {
-            alert("Going back");
-            window.location.href = "/order";
+            window.history.back();
         });
 
         const loginButton = document.querySelector('.login-button');

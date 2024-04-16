@@ -52,6 +52,8 @@ For chefs, the platform offers the ability to upload and manage menus, update fo
 Delivery drivers are assigned orders based on their proximity to the pick-up location, ensuring efficiency. They receive unique pick-up and drop-off numbers for verification purposes and can use a temporary messaging system for coordinating with chefs and customers. This holistic approach aims to streamline the food ordering and delivery process for all parties involved.
 
 ## Run the app locally
+<details>
+<summary>Instructions</summary>
 
 #### 1. Clone the repository
 
@@ -168,6 +170,8 @@ Once the application is running, you can access it by opening a web browser and 
 ```url
 http://localhost:8080
 ```
+
+</details>
 
 ## Tech Stack
 

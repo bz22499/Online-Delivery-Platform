@@ -1,44 +1,27 @@
 let isFetchingBaskets = false;
 
-// get all the baskets for current order ID
-async function fetchBasketsByOrder(orderId) {
-    try {
-        const response = await fetch(`/baskets/orders/${orderId}`);
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        return await response.json();
-    } catch (error) {
-        console.error("Error fetching baskets:", error);
-        return null;
-    }
-}
 // get basket items from cache
-function getBasketItemsFromCache(basketId) {
+function getBasketItemsFromCache() {
     const basketsString = sessionStorage.getItem("baskets");
     const baskets = JSON.parse(basketsString);
-    return {
+    /*return {
         items: baskets[basketId].items,
         restName: baskets[basketId].restName,
-    };
+    };*/
+    return baskets;
 }
 
 // populate page with basket information
-async function displayBaskets(baskets) {
+async function displayBaskets() {
+    const baskets = getBasketItemsFromCache();
     const container = document.getElementById("baskets-container"); // defined in html
     container.innerHTML = ""; // clear to avoid duplicates
-    if (baskets && baskets.length) {
-        const lastBasket = baskets[baskets.length -1];
+    if (baskets && Object.keys(baskets).length > 0) {
+        // Get the keys (basket IDs) and pick the last one
+        const basketIds = Object.keys(baskets);
+        const lastBasketId = basketIds[basketIds.length - 1];
+        const basketData = baskets[lastBasketId];
 
-        const section = document.createElement("section"); // create a section for each basket
-        section.className = "basket-section";
-
-        const heading = document.createElement("h2");
-        let basketData = getBasketItemsFromCache(lastBasket.id);
-        heading.textContent = basketData.restName;
-        section.appendChild(heading);
-
-        // create a table for basket items
         const table = document.createElement("table");
         table.className = "basket-table";
         const thead = document.createElement("thead");
@@ -69,28 +52,24 @@ async function displayBaskets(baskets) {
         });
 
         table.appendChild(tbody);
-        section.appendChild(table);
-        container.appendChild(section);
+        container.appendChild(table);
 
-        // Display the total cost underneath all items
         const totalCostContainer = document.createElement("div");
         totalCostContainer.className = "total-cost";
-        totalCostContainer.textContent = "Total Cost: $" + calculateTotalCost([lastBasket]);
+        totalCostContainer.textContent = "Total Cost: $" + calculateTotalCost(basketData.items);
         container.appendChild(totalCostContainer);
     } else {
         container.textContent = "No baskets found.";
     }
 }
 
+
 //Function to calculate the total cost
-function calculateTotalCost(baskets) {
+function calculateTotalCost(items) {
     let totalCost = 0;
 
-    baskets.forEach((basket) => {
-        let basketData = getBasketItemsFromCache(basket.id);
-        basketData.items.forEach((item) => {
-            totalCost += item.menuItem.price * item.quantity;
-        });
+    items.forEach((item) => {
+        totalCost += item.menuItem.price * item.quantity;
     });
 
     return totalCost.toFixed(2); //Round to 2 dp
@@ -101,15 +80,8 @@ function updateDeliveryAddress(selectedAddress) {
 }
 
 document.addEventListener("DOMContentLoaded", async () => {
-    const orderId = sessionStorage.getItem("orderId");
-    if (!orderId) {
-        alert("No order found.");
-        return;
-    }
-    const baskets = await fetchBasketsByOrder(orderId);
-    if (baskets) {
-        displayBaskets(baskets);
-    }
+
+    await displayBaskets();
 
     const payButton = document.querySelector(".pay-button");
     payButton.addEventListener("click", () => {
@@ -118,12 +90,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     const backButton = document.getElementById('back-button');
     backButton.addEventListener("click", () => {
-        alert("Going back");
-        const restaurantEmail = sessionStorage.getItem("restaurantEmail");
-        if (restaurantEmail) {
-            window.location.href = `/${encodeURIComponent(restaurantEmail)}/menu-page`;
-        } else {
-            alert("No email");
-        }
+        window.history.back();
     });
 });

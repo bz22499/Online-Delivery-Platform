@@ -1,7 +1,9 @@
 package com.sep.onlinedeliverysystem.repositories;
 
-import com.sep.onlinedeliverysystem.TestUtil;
-import com.sep.onlinedeliverysystem.domain.entities.Order;
+import static org.assertj.core.api.Assertions.assertThat;
+
+import java.util.Optional;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,16 +11,14 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import java.util.Optional;
-
-import static org.assertj.core.api.Assertions.assertThat;
+import com.sep.onlinedeliverysystem.TestUtil;
+import com.sep.onlinedeliverysystem.domain.entities.Order;
 
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 public class OrderRepositoryIntegrationTests {
 
-    @Autowired
     private OrderRepository orderRepository;
 
     @Autowired
@@ -67,5 +67,22 @@ public class OrderRepositoryIntegrationTests {
         orderRepository.delete(order);
         Optional<Order> result = orderRepository.findById(order.getId());
         assertThat(result).isEmpty();
+    }
+
+    @Test
+    public void testFindByStatusNull() {
+        Order order = TestUtil.orderBuilder();
+        orderRepository.save(order);
+        Iterable<Order> result = orderRepository.findAllByStatusIsNull();
+        assertThat(result).containsExactly(order);
+    }
+
+    @Test
+    public void testFindByStatus() {
+        Order order = TestUtil.orderBuilder();
+        order.setStatus("PENDING");
+        orderRepository.save(order);
+        Iterable<Order> result = orderRepository.findAllByStatus("PENDING");
+        assertThat(result).containsExactly(order);
     }
 }

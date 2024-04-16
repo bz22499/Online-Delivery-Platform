@@ -59,7 +59,6 @@ public class OrderController {
     }
 
 
-    // PROBABLY WON'T USE UPDATE METHODS
     @PutMapping(path = "/orders/{id}")
     public ResponseEntity<OrderDTO> fullUpdateOrder(@PathVariable("id") Long id, OrderDTO orderDTO){
         if(!orderService.Exists(id)){
@@ -73,7 +72,7 @@ public class OrderController {
     }
 
     @PatchMapping(path = "/orders/{id}")
-    public ResponseEntity<OrderDTO> partialUpdate(@PathVariable("id") Long id, OrderDTO orderDTO){
+    public ResponseEntity<OrderDTO> partialUpdate(@PathVariable("id") Long id, @RequestBody OrderDTO orderDTO){
         if(!orderService.Exists(id)){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
