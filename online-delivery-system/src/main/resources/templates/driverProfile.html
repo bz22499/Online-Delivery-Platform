@@ -22,39 +22,38 @@
 </div>
 
 <div class="profile-container">
-<!--    <div id="profile-picture">-->
-<!--        <input type="file" id="imageInput" accept="image/*" onchange="updateProfilePicture()">-->
-<!--        <label for="imageInput"><img src="/images/logo_ld_png.png" alt="Press To Enter Profile Picture" id="previewImage"></label>-->
-<!--    </div>-->
-
-    <div id="user-details">
-        <h1 class="name" th:text="${name}">Restaurant</h1>
+    <div class="edit-form" id="user-details">
+        <label for="name">Name:</label>
+        <div class="text-field" id="name" th:text="${name}"></div>
 
         <button id="edit-profile" onclick="editProfile()">Edit Profile</button>
-        <div>
-            <form id="edit-form" style="display: none;">
-                <!--This is here so that we can use the id in the js-->
-                <input type="hidden" id="driverId" th:value="${id}">
+    </div>
+    <div>
+        <form class="edit-form" id="edit-form" style="display: none;">
+            <!--This is here so that we can use the id in the js-->
+            <input type="hidden" id="driverId" th:value="${id}">
 
-                <label for="new-name">Name:</label>
-                <input type="text" id="new-name" required><br>
+            <label for="new-name">Name:</label>
+            <input type="text" id="new-name" required><br>
 
-                <label for="current-password">Current Password:</label>
-                <input type="password" id="current-password" required><br>
+            <label for="current-password">Current Password:</label>
+            <input type="password" id="current-password" required><br>
 
-                <label for="new-password">New Password:</label>
-                <input type="password" id="new-password" required><br>
+            <label for="new-password">New Password:</label>
+            <input type="password" id="new-password" required><br>
 
-                <label for="confirm-password">Confirm Password:</label>
-                <input type="password" id="confirm-password" required><br>
+            <label for="confirm-password">Confirm Password:</label>
+            <input type="password" id="confirm-password" required><br>
 
-                <button type="button" onclick="saveProfile()">Save</button>
-                <button type="button" onclick="returnToProfile()">Cancel</button>
-            </form>
-        </div>
-        <button id="logout" onclick="window.location.href='/logout'">Logout</button>
+            <button type="button" onclick="saveProfile()">Save</button>
+            <button type="button" onclick="returnToProfile()">Cancel</button>
+        </form>
     </div>
 </div>
+<div class="profile-container">
+    <button id="logout" onclick="window.location.href='/logout'">Logout</button>
+</div>
+
 
 <script src="/JavaScript/driverProfile.js"></script>
 </body>
