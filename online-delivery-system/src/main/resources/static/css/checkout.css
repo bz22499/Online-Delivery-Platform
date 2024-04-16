@@ -1,12 +1,12 @@
 .checkout-container {
     max-width: 600px;
-    margin: 0 auto;
-    padding: 20px;
+    margin: 50px auto;
+    padding: 30px;
     margin-top: 50px;
-    background-color: #ffffff;
-    border-radius: 8px;
-    border: 1px solid #9a9999;
-    box-shadow: 0 0 10px #a4a6a6;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    border: 2px solid #ccc;
+    box-shadow: 0 0 15px rgba(0,0,0,0.1);
     font-family: "Oswald";
 }
 
@@ -57,6 +57,11 @@
     margin-top: 20px;
 }
 
+.address-section label {
+    margin-bottom: 10px;
+    padding: 0;
+}
+
 .address-select {
     width: 100%;
     padding: 10px;
@@ -65,6 +70,8 @@
     margin-bottom: 20px;
     font-size: 16px;
     background-color: #fff;
+    padding: 8px;
+    box-sizing: border-box;
 }
 
 h2 {
@@ -277,10 +284,7 @@ ul.banner li a:hover{
 }
 
 .footer {
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    position: fixed;
+    display: flex;
     display: block;
     background-color: black;
     flex-direction: column;
