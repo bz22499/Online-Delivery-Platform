@@ -266,7 +266,6 @@ function uploadImage(file){
         xhr.open('POST', '/upload', true)
         xhr.onload = function() {
             if (xhr.status === 200) {
-                alert("Upload successful")
             } else {
                 alert("FAILED ensure file is < 1MB");
             }

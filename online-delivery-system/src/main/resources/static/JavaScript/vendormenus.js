@@ -135,14 +135,27 @@ function populateGrid(pageData) {
 
         const profileButton = document.createElement('input');
         profileButton.className = 'grid-item-profile-picture';
+        profileButton.id = 'imageInput';
         profileButton.type = 'file';
         profileButton.accept="image/*";
-    
+
 
         imageHandling.appendChild(profileButton);
 
         var ImgUrl = "uploads/" + "_" + item.id + "_.jpg";
 
+        //now i just need an edit button
+        const editImageSymbolContainer = document.createElement('label');
+        editImageSymbolContainer.htmlFor = "imageInput";
+        editImageSymbolContainer.className = 'edit-profile-button'
+
+        imageHandling.appendChild(editImageSymbolContainer);
+
+        const editImageSymbol = document.createElement('span');
+        editImageSymbol.className = 'material-symbols-outlined'
+        editImageSymbol.textContent ="edit";
+
+        editImageSymbolContainer.appendChild(editImageSymbol)
         imageHandling.style.backgroundImage =  "url('"+ImgUrl+"')"
 
 
@@ -193,6 +206,7 @@ function populateGrid(pageData) {
         const editSymbol = document.createElement('span');
         editSymbol.className = 'material-symbols-outlined'
         editSymbol.textContent ="edit";
+
 
         editButton.appendChild(editSymbol);
         symbols.appendChild(editButton);
@@ -330,8 +344,6 @@ function updateItemPicture(file, itemID, callback){
         xhr.open('POST', '/upload', true)
         xhr.onload = function() {
             if (xhr.status === 200) {
-                alert("WORKED")
-
                 if (callback) {
                     callback(true);
                 }

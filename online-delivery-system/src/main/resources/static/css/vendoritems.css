@@ -159,9 +159,21 @@ ul.banner li a:hover{
 }
 
 .grid-item-profile-picture{
+    display: none;
+}
+
+.edit-profile-button{
     position: absolute;
-    left:50%;
-    transform: translateX(-50%);
+    cursor: pointer;
+    top: 10%;
+    left: 10%;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: white;
+    align-content: center;
+    justify-content: center; /* Center content horizontally */
+    align-items: center; /* Center content vertically */
 }
 
 
