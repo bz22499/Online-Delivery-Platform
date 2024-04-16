@@ -1,8 +1,8 @@
 body{
     background-color: lightgray;
     margin: 0;
-
 }
+
 .banner {
     background: white;
     top: 0;
@@ -63,11 +63,10 @@ body{
     background-color: gray;
 }
 
+
 .item-container {
-    position: absolute;
-    top:  50%;
-    left: 50%;
-    transform: translate(-50%,-50%);
+    position: relative;
+    margin: 20px auto;
     background-color: whitesmoke;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     padding: 20px;
@@ -97,4 +96,22 @@ body{
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 3px;
+}
+
+button {
+    margin: 8px auto;
+    display: block;
+    width: 100%;
+    max-width: 200px;
+    padding: 10px;
+    background-color: black;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+button:hover {
+    background-color: gray;
 }
