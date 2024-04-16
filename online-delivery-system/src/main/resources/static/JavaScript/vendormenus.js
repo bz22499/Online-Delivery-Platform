@@ -136,11 +136,14 @@ function populateGrid(pageData) {
         const profileButton = document.createElement('input');
         profileButton.className = 'grid-item-profile-picture';
         profileButton.type = 'file';
-
+        profileButton.accept="image/*";
+    
 
         imageHandling.appendChild(profileButton);
 
-        imageHandling.style.backgroundImage = "url('images/wix1.png')"
+        var ImgUrl = "uploads/" + "_" + item.id + "_.jpg";
+
+        imageHandling.style.backgroundImage =  "url('"+ImgUrl+"')"
 
 
 
@@ -257,8 +260,11 @@ function populateGrid(pageData) {
             const reader = new FileReader();
 
             reader.onload = function(e) {
-                imageHandling.style.backgroundImage = `url(${e.target.result})`;
-                updateItemPicture();
+                updateItemPicture(file,item.id,function(success){
+                    if (success) {
+                        imageHandling.style.backgroundImage = `url(${e.target.result})`;
+                    }
+                });
             };
 
             reader.readAsDataURL(file);
@@ -294,6 +300,57 @@ document.addEventListener('DOMContentLoaded', async function () {
 });
 
 
-function updateItemPicture(){
-    alert("YIPPE");
+var mimeTypeExtensions = {
+    'image/jpeg': '.jpg',
+    'image/png': '.png',
+    'image/gif': '.gif',
+};
+
+
+function updateItemPicture(file, itemID, callback){
+
+    var formData = new FormData();
+
+    itemID= "_"+itemID+"_"
+
+    var mimeType = file.type;
+    var fileExtension = mimeTypeExtensions[mimeType] || '';
+    var fileName = itemID+fileExtension
+
+    var submitForm = true;
+
+    //for now only accept jpegs until i can change database
+    if(fileExtension !=='.jpg'){
+        submitForm = false;
+    }
+
+    if(submitForm){
+        formData.append('file', file, fileName);
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '/upload', true)
+        xhr.onload = function() {
+            if (xhr.status === 200) {
+                alert("WORKED")
+
+                if (callback) {
+                    callback(true);
+                }
+            } else {
+                alert("FAILED ensure <1MB");
+
+                if (callback) {
+                    callback(false);
+                }
+            }
+        };
+        xhr.send(formData);
+
+    }else{
+        alert("JPEG ONLY");
+        if (callback) {
+            callback(false);
+        }
+    }
+
+
 }
