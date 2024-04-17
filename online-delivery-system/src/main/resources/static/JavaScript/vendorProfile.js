@@ -238,7 +238,6 @@ var mimeTypeExtensions = {
 };
 
 function uploadImage(file){
-    alert("GOT HERE")
     var formData = new FormData();
     var vendorId = document.getElementById('vendorId').value;
 
@@ -246,24 +245,32 @@ function uploadImage(file){
 
     var mimeType = file.type;
     var fileExtension = mimeTypeExtensions[mimeType] || '';
-    var fileName = vendorId+fileExtension
 
-    formData.append('file', file, fileName);
+    var validFormat = true;
+    if(fileExtension ===''){
+        validFormat = false;
+    }
 
-    var xhr = new XMLHttpRequest();
-    xhr.open('POST', '/upload', true)
-    xhr.onload = function() {
-        if (xhr.status === 200) {
-            alert("WORKED")
-            console.log('Upload successful');
-        } else {
-            alert("FAILED")
-            console.error('Upload failed. Status: ' + xhr.status);
-        }
-    };
-    xhr.send(formData);
+    if(validFormat){
+        var fileName = vendorId+fileExtension
+        formData.append('file', file, fileName);
 
-    updateURLOnDataBase(fileName)
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '/upload', true)
+        xhr.onload = function() {
+            if (xhr.status === 200) {
+            } else {
+                alert("FAILED ensure file is < 1MB");
+            }
+        };
+        xhr.send(formData);
+
+        updateURLOnDataBase(fileName)
+    }else{
+        alert("Please use jpeg, png or gif");
+    }
+
+
 }
 
 function updateURLOnDataBase(fileName){

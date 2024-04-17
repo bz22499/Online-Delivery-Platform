@@ -109,49 +109,124 @@ async function submitFormClicked(name, price, description,itemID,itemTitle,itemD
 
 }
 
-function cancelFormClicked(gridItemForm,gridItemContent){
-    gridItemForm.hidden = true;
-    gridItemContent.hidden = false;
+function cancelFormClicked(gridFormContainer,gridItemInfo){
+    gridFormContainer.hidden = true;
+    gridItemInfo.hidden = false;
 }
 
 function populateGrid(pageData) {
     const gridContainer = document.querySelector('.grid-container');
     pageData.forEach((item) => {
+
         const gridItem = document.createElement('div');
         gridItem.className = 'grid-item';
 
-        //content contains the content of each menu item
+        //grid item contains 2 parts the form and the infomation
+        const gridItemInfo = document.createElement('div');
+        gridItemInfo.className = 'grid-item-info';
+
+        //content is within information this will be a flex box
         const gridItemContent = document.createElement('div');
+        gridItemContent.className = 'grid-item-content';
+
+        //image handling is also in content
+        const imageHandling = document.createElement('div');
+        imageHandling.className = "grid-item-image-box";
+
+        const profileButton = document.createElement('input');
+        profileButton.className = 'grid-item-profile-picture';
+        profileButton.id = 'imageInput'+item.id;
+        profileButton.type = 'file';
+        profileButton.accept="image/*";
+
+
+        imageHandling.appendChild(profileButton);
+
+        var ImgUrl = "uploads/" + "_" + item.id + "_.jpg";
+
+        //now i just need an edit button
+        const editImageSymbolContainer = document.createElement('label');
+        editImageSymbolContainer.htmlFor = "imageInput"+item.id;
+        editImageSymbolContainer.className = 'edit-profile-button'
+
+        imageHandling.appendChild(editImageSymbolContainer);
+
+        const editImageSymbol = document.createElement('span');
+        editImageSymbol.className = 'material-symbols-outlined'
+        editImageSymbol.textContent ="edit";
+
+        editImageSymbolContainer.appendChild(editImageSymbol)
+        imageHandling.style.backgroundImage =  "url('"+ImgUrl+"')"
+
+
+
+        gridItemContent.appendChild(imageHandling)
+
+        //text is within content this will also be a flex box for the title description and footer
+        const gridItemText = document.createElement('div');
+        gridItemText.className = 'grid-item-text';
 
 
         const gridTitle = document.createElement('div')
         gridTitle.className='grid-item-title'
         gridTitle.textContent = item.name;
-        gridItemContent.appendChild(gridTitle)
+        gridItemText.appendChild(gridTitle)
 
         const description = document.createElement('div');
         description.className = 'grid-item-description';
         description.textContent = item.description;
-        gridItemContent.appendChild(description);
+        gridItemText.appendChild(description);
 
         const footer = document.createElement('div');
         footer.className = 'grid-item-footer';
         footer.textContent = "£" + item.price.toFixed(2);
-        gridItemContent.appendChild(footer);
+        gridItemText.appendChild(footer);
 
-        const deleteButton = document.createElement('div');
-        deleteButton.className = 'grid-item-delete'
-        gridItemContent.appendChild(deleteButton);
+        gridItemContent.appendChild(gridItemText);
+
+
+        //symbols is also contained in content
+        const symbols = document.createElement('div');
+        symbols.className = 'symbols-container';
 
         const editButton = document.createElement('div');
         editButton.className = 'grid-item-edit';
-        gridItemContent.appendChild(editButton);
 
-        gridItem.appendChild(gridItemContent);
+        const editSymbol = document.createElement('span');
+        editSymbol.className = 'material-symbols-outlined'
+        editSymbol.textContent ="edit";
+        editButton.appendChild(editSymbol);
+        symbols.appendChild(editButton);
+
+        const deleteButton = document.createElement('div');
+        deleteButton.className = 'grid-item-delete'
+
+        const deleteSymbol = document.createElement('span');
+        deleteSymbol.className = 'material-symbols-outlined';
+        deleteSymbol.textContent ="delete";
+
+        deleteButton.appendChild(deleteSymbol);
+        symbols.appendChild(deleteButton);
+
+
+
+        gridItemContent.appendChild(symbols)
+
+
+
+        gridItemInfo.appendChild(gridItemContent)
+
+        gridItem.appendChild(gridItemInfo);
+
+        //grid item contains 2 parts the form and the infomation
+        const gridFormContainer = document.createElement('div');
+        gridFormContainer.className = 'grid-form-container';
+
 
         //elements inside the form will be fields that can be changed upon clicking the edit button
         const gridItemForm = document.createElement('form');
         gridItemForm.className = "grid-item-form"
+        gridFormContainer.appendChild(gridItemForm);
 
         const formItemName = document.createElement('input');
         formItemName.value=item.name
@@ -166,25 +241,26 @@ function populateGrid(pageData) {
         gridItemForm.appendChild(formItemPrice)
 
         const submitForm = document.createElement('button');
+        submitForm.className='stylishbutton';
         submitForm.id = 'submit-form-button'
         submitForm.type = "button"
-        submitForm.onclick = async function () {await submitFormClicked(formItemName.value,formItemPrice.value,formItemDescription.value,item.id,gridTitle,description,footer); cancelFormClicked(gridItemForm,gridItemContent)}
+        submitForm.onclick = async function () {await submitFormClicked(formItemName.value,formItemPrice.value,formItemDescription.value,item.id,gridTitle,description,footer); cancelFormClicked(gridFormContainer,gridItemInfo)}
         submitForm.textContent = "SUBMIT"
         gridItemForm.appendChild(submitForm);
 
         const cancelForm = document.createElement('button');
+        cancelForm.className='stylishbutton';
         cancelForm.id = 'cancel-form-button'
         cancelForm.type = "button"
-        cancelForm.onclick = function () {cancelFormClicked(gridItemForm,gridItemContent)}
+        cancelForm.onclick = function () {cancelFormClicked(gridFormContainer,gridItemInfo)}
         cancelForm.textContent = "CANCEL";
         gridItemForm.appendChild(cancelForm);
 
-
-        gridItem.appendChild(gridItemForm)
+        gridItem.appendChild(gridFormContainer);
 
         gridContainer.appendChild(gridItem);
 
-        gridItemForm.hidden=true;
+        gridFormContainer.hidden=true;
 
         deleteButton.addEventListener('click', function() {
             const parentNode = gridItem;
@@ -193,9 +269,27 @@ function populateGrid(pageData) {
         });
 
         editButton.addEventListener('click', function (){
-            gridItemContent.hidden = true;
-            gridItemForm.hidden=false;
+            gridItemInfo.hidden = true;
+            gridFormContainer.hidden=false;
         });
+
+
+        //functionality for profile picture change
+        profileButton.addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            const reader = new FileReader();
+
+            reader.onload = function(e) {
+                updateItemPicture(file,item.id,function(success){
+                    if (success) {
+                        imageHandling.style.backgroundImage = `url(${e.target.result})`;
+                    }
+                });
+            };
+
+            reader.readAsDataURL(file);
+        });
+
 
     });
 }
@@ -224,3 +318,57 @@ document.addEventListener('DOMContentLoaded', async function () {
 
     load();
 });
+
+
+var mimeTypeExtensions = {
+    'image/jpeg': '.jpg',
+    'image/png': '.png',
+    'image/gif': '.gif',
+};
+
+
+function updateItemPicture(file, itemID, callback){
+
+    var formData = new FormData();
+
+    itemID= "_"+itemID+"_"
+
+    var mimeType = file.type;
+    var fileExtension = mimeTypeExtensions[mimeType] || '';
+    var fileName = itemID+fileExtension
+
+    var submitForm = true;
+
+    //for now only accept jpegs until i can change database
+    if(fileExtension !=='.jpg'){
+        submitForm = false;
+    }
+
+    if(submitForm){
+        formData.append('file', file, fileName);
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '/upload', true)
+        xhr.onload = function() {
+            if (xhr.status === 200) {
+                if (callback) {
+                    callback(true);
+                }
+            } else {
+                alert("FAILED ensure <1MB");
+
+                if (callback) {
+                    callback(false);
+                }
+            }
+        };
+        xhr.send(formData);
+
+    }else{
+        alert("JPEG ONLY");
+        if (callback) {
+            callback(false);
+        }
+    }
+
+
+}
