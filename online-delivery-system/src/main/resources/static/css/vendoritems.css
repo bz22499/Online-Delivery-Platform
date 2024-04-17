@@ -99,6 +99,7 @@ body {
     position: relative;
     border-radius: 5px;
     overflow: hidden;
+    background: #FFFFFF;
 }
 
 .grid-item-content{
@@ -146,7 +147,7 @@ body {
 }
 
 .grid-item-delete{
-    margin-top: 10%;
+    margin-top: 40%;
     cursor:pointer;
 }
 
@@ -155,7 +156,7 @@ body {
 }
 
 .grid-item-edit{
-    margin-bottom: 10%;
+    margin-bottom: 40%;
     cursor:pointer;
 }
 
