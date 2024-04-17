@@ -1,61 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <meta charset="utf-8" />
     <title>P2P Online Delivery Platform - Home</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@100;200;300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@100;200;300;400;500;600&family=Oswald:wght@200..700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/css/home.css" />
-</head>
-<body>
-<ul class="banner">
-    <li><img src="/images/logo_ld_png.png"></li>
-    <li class="active"><a target="_parent" href="home">Home</a></li>
-    <li><a target="_parent" href="about">About Us</a></li>
-    <li><a target="_parent" href="order">Order</a></li>
-    <li><a target="_parent" href="contact">Contact</a></li>
-    <li class="right"><a target="_parent" href="profile" th:if="${loggedIn}">Profile</a></li>
-    <li class="right"><a target="_parent" href="login" th:unless="${loggedIn}">Login</a></li>
-    <li class="right"><a target="_parent" href="customerlogin" th:unless="${loggedIn}">Sign up</a></li>
-    <li class="right"><a target="_parent" href="restaurantlogin" th:unless="${loggedIn}">Partner with us</a></li>
-    <li class="right"><a target="_parent" href="driverSignUp" th:unless="${loggedIn}">Driver Sign up</a></li>
-</ul>
 
-<form class="locationInput">
-    <img src="images/wix1.png" alt="" style="width:100%;">
-    <input type="text" placeholder="Search.." id="search-input">
-</form>
+  </head>
+  <body>
+    <div class="banner">
+      <div class="left">
+        <img src="/images/logo_ld_png.png"><a target="_parent" href="home"></a></img>
+        <p><a target="_parent" href="home">Home</a></p>
+        <p><a target="_parent" href="about">About Us</a></p>
+        <p><a target="_parent" href="order">Order</a></p>
+        <p><a target="_parent" href="contact">Contact</a></p>
+      </div>
+      <div class="right">
+        <p><a target="_parent" href="profile" th:if="${loggedIn}">Profile</a></p>
+        <p><a target="_parent" href="restaurantlogin" th:unless="${loggedIn}">Partner with us</a></p>
+        <p><a target="_parent" href="login" th:unless="${loggedIn}">Login</a></p>
+        <p><a target="_parent" href="customerlogin" th:unless="${loggedIn}">Sign up</a></p>
+      </div>
+    </div>
+    <div class="searchWrapper">
+        <img src="/images/wix1.png" alt="paper_bag"/>
+        <div class="swText">
+            <p>A sustainable delivery service</p>
+            <h2><a target="_parent" href="order">Order</a></h2>
+        </div>
+    </div>
+    <div class="partners">
+        <div class="placeholder">
+            <img src="/images/loes-klinker-vLQY3beH2h0-unsplash.jpg" alt="partner-image"/>
+            <p class="partner"><a target="_parent" href="restaurantlogin">Partner with us</a></p>
+        </div>
+        <div class="placeholder">
+            <img src="/images/viktor-forgacs-MWrI3Q1UVxM-unsplash.jpg"/>
+            <p class="ride"><a target="_parent" href="driverSignUp">Ride with us</a></p>
+        </div>
+    </div>
+    <div class="footer">
+        <h2>P2P Online Delivery System</h2>
+        <p>info@fakemail.co.uk</p>
+    </div>
+>>>>>>> dev
 
-<script>
-    const searchInput = document.getElementById('search-input');
 
-    searchInput.addEventListener('keydown', function(event) {
-        if (event.key === 'Enter') {
-            event.preventDefault();
-            performSearch();
-        }
-    });
+    <!--
+    <form class="locationInput">
+      <img src="../static/images/wix1.png" alt="" style="width: 100%" />
+      <input type="text" placeholder="Search.." id="search-input" />
+    </form>
+    -->
 
-    function performSearch() {
-
-        var newPageUrl = "/order";
-
-        // Data to be transferred
-        var dataToTransfer = {
-            address: searchInput.value
-        };
-
-        var postCode = /^[A-Z]{1,2}[0-9R][0-9A-Z]? ?[0-9][A-Z]{2}$/i;
-
-        if (postCode.test(searchInput.value)) {
-            // Append data as query parameters to the URL
-            newPageUrl += '?' + new URLSearchParams(dataToTransfer).toString();
-            window.location.href = newPageUrl;
-        } else {
-            alert("Please enter a valid UK postal code.");
-        }
-
-    }
-</script>
-
-</body>
+    
+    <script src="../static/JavaScript/home.js"/>
+  </body>
 </html>

@@ -8,13 +8,19 @@
 </head>
 <body>
 
-<ul class="banner">
-    <li><img src="/images/logo_ld_png.png"></li>
-    <li class="active"><a target="_parent" href="driverMain">Home</a></li>
-    <li><a target="_parent" href="about">About Us</a></li>
-    <li><a target="_parent" href="contact">Contact</a></li>
-    <li class="active right"><a target="_parent" href="driverProfile" th:if="${loggedIn}">Profile</a></li>
-</ul>
+<div class="banner">
+    <div class="left">
+        <p><img src="/images/logo_ld_png.png"></p>
+        <p><a target="_parent" href="driverMain">Home</a></p>
+        <p><a target="_parent" href="ordersForDrivers">Available Orders</a></p>  
+        <p><a target="_parent" href="collectionForDriver">My Orders</a></p>  
+        <p><a target="_parent" href="about">About Us</a></p>
+        <p><a target="_parent" href="contact">Contact</a></p>
+    </div>  
+    <div class="right">  
+        <p><a target="_parent" href="driverProfile" th:if="${loggedIn}">Profile</a></li>
+    </div>        
+</div>
 
 <h1>waiting list</h1>
 

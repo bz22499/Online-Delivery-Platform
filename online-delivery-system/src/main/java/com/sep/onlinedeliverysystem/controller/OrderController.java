@@ -30,19 +30,18 @@ public class OrderController {
 
     //using DTOs to decouple service layer from persistence layer
 
-    @PostMapping(path = "/orders")
-    public ResponseEntity<OrderDTO> create(){ //Create functionality
-        Order savedOrderEntity = orderService.create(); //saves order DTO as entity into our database
-        return new ResponseEntity<>(orderMapper.mapTo(savedOrderEntity), HttpStatus.CREATED); //returns our saved entity as a DTO
-    }
-
-    // Unused save functionality in case it is needed later
 //    @PostMapping(path = "/orders")
-//    public ResponseEntity<OrderDTO> save(@RequestBody OrderDTO orderDTO){ //Create functionality
-//        Order orderEntity = orderMapper.mapFrom(orderDTO);
-//        Order savedOrderEntity = orderService.save(orderEntity); //saves order DTO as entity into our database
+//    public ResponseEntity<OrderDTO> create(){ //Create functionality
+//        Order savedOrderEntity = orderService.create(); //saves order DTO as entity into our database
 //        return new ResponseEntity<>(orderMapper.mapTo(savedOrderEntity), HttpStatus.CREATED); //returns our saved entity as a DTO
 //    }
+
+    @PostMapping(path = "/orders")
+    public ResponseEntity<OrderDTO> save(@RequestBody OrderDTO orderDTO){ //Create functionality
+        Order orderEntity = orderMapper.mapFrom(orderDTO);
+        Order savedOrderEntity = orderService.save(orderEntity); //saves order DTO as entity into our database
+        return new ResponseEntity<>(orderMapper.mapTo(savedOrderEntity), HttpStatus.CREATED); //returns our saved entity as a DTO
+    }
 
     @GetMapping(path = "/orders")
     public Page<OrderDTO> listOrders(Pageable pageable){ //Read All functionality
@@ -60,7 +59,6 @@ public class OrderController {
     }
 
 
-    // PROBABLY WON'T USE UPDATE METHODS
     @PutMapping(path = "/orders/{id}")
     public ResponseEntity<OrderDTO> fullUpdateOrder(@PathVariable("id") Long id, OrderDTO orderDTO){
         if(!orderService.Exists(id)){
@@ -74,7 +72,7 @@ public class OrderController {
     }
 
     @PatchMapping(path = "/orders/{id}")
-    public ResponseEntity<OrderDTO> partialUpdate(@PathVariable("id") Long id, OrderDTO orderDTO){
+    public ResponseEntity<OrderDTO> partialUpdate(@PathVariable("id") Long id, @RequestBody OrderDTO orderDTO){
         if(!orderService.Exists(id)){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }

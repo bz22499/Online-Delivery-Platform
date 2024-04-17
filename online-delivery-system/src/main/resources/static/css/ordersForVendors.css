@@ -1,0 +1,136 @@
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+.order-item {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+    margin-bottom: 20px;
+}
+
+header {
+    background-color: #007bff;
+    color: white;
+    padding: 20px 0;
+    text-align: center;
+}
+
+h1 {
+    margin: 0;
+    font-size: 24px;
+}
+
+button {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    margin-top: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+button:hover {
+    background-color: #218838;
+}
+
+.container {
+    width: 80%;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+#orderDetails {
+    display: none;
+    margin-top: 15px;
+}
+
+ul.banner {
+    z-index:1;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #dfdfdf;
+    top: 0;
+    width: 100%;
+    position: sticky;
+}
+
+ul.banner img{
+    height: 19px;
+    padding: 14px;
+    float: left;
+}
+
+ul.banner li {
+    float: left;
+    display: block;
+    color: black;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none
+}
+
+ul.banner li.right {
+    float: right;
+}
+
+ul.banner li a {
+    display: block;
+    color: black;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+ul.banner li.active a{
+    background-color: rgb(196, 194, 188);
+}
+
+ul.banner li.right a {
+    display: block;
+    color: white;
+    background-color: black;
+    border-radius: 10px;
+    padding: 5px 16px;
+    margin: 8px 10px;
+}
+
+ul.banner li a:hover{
+    background-color: gray;
+}
+
+input, select {
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    width: calc(100% - 22px); /* Account for padding and border */
+}
+
+/* Loading indicator style */
+.loading-indicator {
+    text-align: center;
+    padding: 20px;
+    color: #007bff;
+}
+
+/* Utility classes for margin and padding */
+.mt-10 {
+    margin-top: 10px;
+}
+
+.pt-10 {
+    padding-top: 10px;
+}

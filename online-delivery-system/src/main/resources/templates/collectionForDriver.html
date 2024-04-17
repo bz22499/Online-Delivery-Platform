@@ -3,20 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <title>All Orders</title>
-    <link rel="stylesheet" href="/css/ordersForDrivers.css">
+    <link rel="stylesheet" href="/css/collectionForDrivers.css">
 </head>
+
 <body>
 <div class="banner">
     <div class="left">
     <p><img src="/images/logo_ld_png.png"></p>
-    <p><a target="_parent" href="home">Home</a></p>
+    <p><a target="_parent" href="home">Home</a></li>
     <p><a target="_parent" href="ordersForDrivers">Available Orders</a></p>  
-    <p><a target="_parent" href="collectionForDriver">My Orders</a></p> 
-    <p><a target="_parent" href="about">About Us</a></p>
+    <p><a target="_parent" href="driverMain">driverMain</a></p> 
+    <p><a target="_parent" href="about">About Us</a></li>
     <p class="active"><a target="_parent" href="order">Order</a></p>
-    <p><a target="_parent" href="contact">Contact</a></p>
+    <p><a target="_parent" href="contact">Contact</a></li>
     </div>
-<div class="right">
+    <div class="right">
     <p class="right"><a target="_parent" href="profile" th:if="${loggedIn}">Profile</a></p>
     <p class="right"><a target="_parent" href="login" th:unless="${loggedIn}">Login</a></p>
     <p class="right"><a target="_parent" href="customerlogin" th:unless="${loggedIn}">Sign up</a></p>
@@ -29,6 +30,6 @@
 <input id="driverId" th:value="${id}" style="display: none;">
 
 
-<script src="/JavaScript/ordersForDrivers.js"></script>
+<script src="/JavaScript/collectionForDriver.js"></script>
 </body>
 </html>

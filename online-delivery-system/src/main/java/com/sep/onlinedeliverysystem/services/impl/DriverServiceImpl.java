@@ -1,26 +1,15 @@
 package com.sep.onlinedeliverysystem.services.impl;
 
-import com.sep.onlinedeliverysystem.domain.entities.Driver;
-import com.sep.onlinedeliverysystem.domain.entities.User;
-import com.sep.onlinedeliverysystem.domain.entities.Vendor;
-import com.sep.onlinedeliverysystem.repositories.DriverRepository;
-import com.sep.onlinedeliverysystem.services.DriverService;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.stereotype.Service;
-
-import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
+
+import org.springframework.stereotype.Service;
+
+import com.sep.onlinedeliverysystem.domain.entities.Driver;
+import com.sep.onlinedeliverysystem.repositories.DriverRepository;
+import com.sep.onlinedeliverysystem.services.DriverService;
 
 @Service
 public class DriverServiceImpl implements DriverService {

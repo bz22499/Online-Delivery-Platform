@@ -52,54 +52,62 @@ button:hover {
     margin-top: 15px;
 }
 
-ul.banner {
-    z-index:1;
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-    background-color: #dfdfdf;
+.banner {
+    background: white;
     top: 0;
-    width: 100%;
     position: sticky;
-}
-
-ul.banner img{
-    height: 19px;
-    padding: 14px;
-    float: left;
-}
-
-ul.banner li {
-    float: left;
-}
-
-ul.banner li.right {
-    float: right;
-}
-
-ul.banner li a {
-    display: block;
+    z-index: 1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: "IBM Plex Sans";
+    padding: 10px 0 10px 0;
+  
+  }
+  
+  .left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-left: 22px;
+  }
+  
+  .right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-right: 22px;
+  }
+  
+  .left img {
+    height: 60px;
+  }  
+  
+  .left p a{
     color: black;
-    text-align: center;
-    padding: 14px 16px;
     text-decoration: none;
-}
-
-ul.banner li.active a{
-    background-color: rgb(196, 194, 188);
-}
-
-ul.banner li.right a {
+    width: max-content;
+    padding: 5px 10px;
+    font-weight: 200;
+  }
+  
+  .right p a{
+    font-size: 120%;
+    width: max-content;
     display: block;
     color: white;
     background-color: black;
+    text-align: center;
+    text-decoration: none;
     border-radius: 10px;
-    padding: 5px 16px;
-    margin: 8px 10px;
-}
-
-ul.banner li a:hover{
+    padding: 5px 12px;
+    font-weight: 200;
+  }
+  
+  .left p a:hover{
+    color: gray;
+  }
+  
+  .right p a:hover {
     background-color: gray;
-}
-
+  }

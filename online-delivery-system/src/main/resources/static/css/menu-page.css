@@ -165,6 +165,8 @@ ul.banner li a:hover{
     border-left: 1px solid #ccc;
     padding: 20px;
     box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
 }
 
 .basket-header {
@@ -181,14 +183,31 @@ ul.banner li a:hover{
     background-color: #4CAF50; /* Green background */
     color: white;
     padding: 15px 20px;
-    margin: 20px 0;
+    margin-bottom: 10px;
     border: none;
     cursor: pointer;
     width: 100%; /* Make the button expand to the full width of the basket */
     box-sizing: border-box; /* Include padding and border in the width */
+    border-radius: 5px;
 }
 
 .proceed-button:hover {
+    background-color: #45a049; /* Darker shade for hover effect */
+}
+
+.add-to-basket-button {
+    background-color: #4CAF50; /* Green background */
+    color: white;
+    padding: 15px 20px;
+    margin-bottom: 10px;
+    border: none;
+    cursor: pointer;
+    width: 100%; /* Make the button expand to the full width of the basket */
+    box-sizing: border-box; /* Include padding and border in the width */
+    border-radius: 5px;
+}
+
+.add-to-basket-button:hover {
     background-color: #45a049; /* Darker shade for hover effect */
 }
 
@@ -225,4 +244,9 @@ ul.banner li a:hover{
 .grid-item-form button{
     margin: auto;
     display: block;
+}
+
+#menu-page-back a{
+    background-color: #4CAF50;
+    color: white;
 }
