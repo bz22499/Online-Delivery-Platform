@@ -109,8 +109,8 @@ async function submitFormClicked(name, price, description,itemID,itemTitle,itemD
 
 }
 
-function cancelFormClicked(gridItemForm,gridItemInfo){
-    gridItemForm.hidden = true;
+function cancelFormClicked(gridFormContainer,gridItemInfo){
+    gridFormContainer.hidden = true;
     gridItemInfo.hidden = false;
 }
 
@@ -189,9 +189,17 @@ function populateGrid(pageData) {
         const symbols = document.createElement('div');
         symbols.className = 'symbols-container';
 
+        const editButton = document.createElement('div');
+        editButton.className = 'grid-item-edit';
+
+        const editSymbol = document.createElement('span');
+        editSymbol.className = 'material-symbols-outlined'
+        editSymbol.textContent ="edit";
+        editButton.appendChild(editSymbol);
+        symbols.appendChild(editButton);
+
         const deleteButton = document.createElement('div');
         deleteButton.className = 'grid-item-delete'
-
 
         const deleteSymbol = document.createElement('span');
         deleteSymbol.className = 'material-symbols-outlined';
@@ -200,16 +208,7 @@ function populateGrid(pageData) {
         deleteButton.appendChild(deleteSymbol);
         symbols.appendChild(deleteButton);
 
-        const editButton = document.createElement('div');
-        editButton.className = 'grid-item-edit';
 
-        const editSymbol = document.createElement('span');
-        editSymbol.className = 'material-symbols-outlined'
-        editSymbol.textContent ="edit";
-
-
-        editButton.appendChild(editSymbol);
-        symbols.appendChild(editButton);
 
         gridItemContent.appendChild(symbols)
 
@@ -219,9 +218,15 @@ function populateGrid(pageData) {
 
         gridItem.appendChild(gridItemInfo);
 
+        //grid item contains 2 parts the form and the infomation
+        const gridFormContainer = document.createElement('div');
+        gridFormContainer.className = 'grid-form-container';
+
+
         //elements inside the form will be fields that can be changed upon clicking the edit button
         const gridItemForm = document.createElement('form');
         gridItemForm.className = "grid-item-form"
+        gridFormContainer.appendChild(gridItemForm);
 
         const formItemName = document.createElement('input');
         formItemName.value=item.name
@@ -236,25 +241,26 @@ function populateGrid(pageData) {
         gridItemForm.appendChild(formItemPrice)
 
         const submitForm = document.createElement('button');
+        submitForm.className='stylishbutton';
         submitForm.id = 'submit-form-button'
         submitForm.type = "button"
-        submitForm.onclick = async function () {await submitFormClicked(formItemName.value,formItemPrice.value,formItemDescription.value,item.id,gridTitle,description,footer); cancelFormClicked(gridItemForm,gridItemInfo)}
+        submitForm.onclick = async function () {await submitFormClicked(formItemName.value,formItemPrice.value,formItemDescription.value,item.id,gridTitle,description,footer); cancelFormClicked(gridFormContainer,gridItemInfo)}
         submitForm.textContent = "SUBMIT"
         gridItemForm.appendChild(submitForm);
 
         const cancelForm = document.createElement('button');
+        cancelForm.className='stylishbutton';
         cancelForm.id = 'cancel-form-button'
         cancelForm.type = "button"
-        cancelForm.onclick = function () {cancelFormClicked(gridItemForm,gridItemInfo)}
+        cancelForm.onclick = function () {cancelFormClicked(gridFormContainer,gridItemInfo)}
         cancelForm.textContent = "CANCEL";
         gridItemForm.appendChild(cancelForm);
 
-
-        gridItem.appendChild(gridItemForm)
+        gridItem.appendChild(gridFormContainer);
 
         gridContainer.appendChild(gridItem);
 
-        gridItemForm.hidden=true;
+        gridFormContainer.hidden=true;
 
         deleteButton.addEventListener('click', function() {
             const parentNode = gridItem;
@@ -264,7 +270,7 @@ function populateGrid(pageData) {
 
         editButton.addEventListener('click', function (){
             gridItemInfo.hidden = true;
-            gridItemForm.hidden=false;
+            gridFormContainer.hidden=false;
         });
 
 
