@@ -5,36 +5,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>driver pick order page</title>
     <link rel="stylesheet" href="/css/driver-main.css">
-    <script src="/JavaScript/driver-main.js" defer></script>
 </head>
 <body>
 
-<!--<ul class="banner">
-    <li><img src="/images/logo_ld_png.png"></li>
-    <li class="active"><a target="_parent" href="vendor">Add Items</a></li>
-    <li><a target="_parent" href="vendoritems">Edit Items</a></li>
-    <li><a target="_parent" href="about">About Us</a></li>
-    <li><a target="_parent" href="contact">Contact</a></li>
-    <li class="right"><a target="_parent" href="driverProfile">Profile</a></li>
-</ul>-->
-
-<ul class="banner">
-    <li><img src="/images/logo_ld_png.png"></li>
-    <li class="active"><a target="_parent" href="home">Home</a></li>
-    <li><a target="_parent" href="about">About Us</a></li>
-    <li><a target="_parent" href="order">Order</a></li>
-    <li><a target="_parent" href="contact">Contact</a></li>
-    <li class="active right"><a target="_parent" href="driverProfile" th:if="${loggedIn}">Profile</a></li>
-    <li class="right"><a target="_parent" href="login" th:unless="${loggedIn}">Login</a></li>
-    <li class="right"><a target="_parent" href="customerlogin" th:unless="${loggedIn}">Sign up</a></li>
-    <li class="right"><a target="_parent" href="restaurantlogin" th:unless="${loggedIn}">Partner with us</a></li>
-</ul>
+<div class="banner">
+    <div class="left">
+        <p><img src="/images/logo_ld_png.png"></p>
+        <p><a target="_parent" href="driverMain">Home</a></p>
+        <p><a target="_parent" href="ordersForDrivers">Available Orders</a></p>  
+        <p><a target="_parent" href="collectionForDriver">My Orders</a></p>  
+        <p><a target="_parent" href="about">About Us</a></p>
+        <p><a target="_parent" href="contact">Contact</a></p>
+    </div>  
+    <div class="right">  
+        <p><a target="_parent" href="driverProfile" th:if="${loggedIn}">Profile</a></li>
+    </div>        
+</div>
 
 <h1>waiting list</h1>
 
-<div id="orders">
+<div class="grid-container"></div>
 
+<button id="loadMoreButton">Load More Orders</button>
+
+<button id="viewBasketsButton">View Baskets</button>
+
+<div id="basketsDropdown" style="display:none;">
 </div>
+
+<script src="/JavaScript/orderForDrivers.js" defer></script>
+
     <footer>
      <p>Copyright © Online Delivery System</p>
     </footer>

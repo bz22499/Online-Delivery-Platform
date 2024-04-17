@@ -1,12 +1,19 @@
- body{
-     background-color: lightgray;
-     margin: 0;
- }
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    color: #333;
+}
 
- .cuisineBanner {
-     padding:20px;
-     margin-top:160px
- }
+.cuisineBanner {
+    padding: 20px;
+    margin-top: 160px;
+    background-color: #007bff;
+    color: white;
+    text-align: center;
+}
+
 
  ul.banner {
      z-index:1;
@@ -65,46 +72,53 @@
    position: relative;
    text-align: center;
  }
- .locationInput input{
-       position: absolute;
-       top: 12%;
-       left: 50%;
-       transform: translate(-50%, -50%);
-       padding: 20px;
-       font-size: 17px;
-       border: 1px solid grey;
-       width: 40%;
-       background: #f1f1f1;
-       border-radius: 27px;
- }
 
-
-
-ul.cuisineList{
-     list-style-type: none;
-     margin:auto;
-     overflow: hidden;
-     background-color: whitesmoke;
-     width: 80%;
-     position: relative;
+.locationInput input {
+    position: absolute;
+    top: 12%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 20px;
+    font-size: 17px;
+    border: 1px solid grey;
+    width: 40%;
+    background: white;
+    border-radius: 27px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
- ul.cuisineList li {display: inline;
-     color: black;
+ul.cuisineList {
+    list-style-type: none;
+    margin: auto;
+    overflow: hidden;
+    background-color: #007bff;
+    color: white;
+    width: 80%;
+    position: relative;
+}
+
+ ul.cuisineList li {
+     display: inline-block;
+     color: white;
      text-align: center;
      padding: 14px 16px;
-     text-decoration: none;
  }
 
  ul.cuisineList li .button {
-     background-color: #04AA6D;
+     background-color: #28a745;
      border: none;
      color: white;
      padding: 15px 32px;
      text-align: center;
      text-decoration: none;
      cursor: pointer;
- }
+     font-size: 16px;
+     border-radius: 5px;
+    }
+
+ ul.cuisineList li .button:hover {
+    background-color: #218838;
+}
 
  .grid-container {
      display: grid;
@@ -112,12 +126,13 @@ ul.cuisineList{
      gap: 30px;
      padding: 40px;
      margin: 40px;
+     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
  }
 
  .grid-item {
      border-radius: 7px;
-     background-color: rgba(255, 255, 255, 0.8);
-     border: 2px solid rgba(0, 0, 0, 1);
+     background-color: white;
+     border: 1px solid rgba(0, 0, 0, 1);
      /*padding: 20px;*/
      font-size: 30px;
      text-align: center;
@@ -126,6 +141,7 @@ ul.cuisineList{
      position: relative;
      padding-top: 25%;
      transition: transform 0.3s ease;
+     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
  }
 
  .grid-item:hover {
@@ -141,6 +157,7 @@ ul.cuisineList{
      left: 0;
      transition: transform 0.3s ease; /* keep transition smooth */
      overflow: hidden;
+     border-radius: 7px;
  }
 
  .grid-item:hover img{
@@ -163,12 +180,18 @@ ul.cuisineList{
      border-top-right-radius: 10px;
      border-bottom-right-radius: 10px;
      left: 0;
+     background-color: #007bff;
+     color: white;
+     padding: 5px;
  }
 
  .grid-item .rating{
      border-top-left-radius: 10px;
      border-bottom-left-radius: 10px;
      right: -100%;
+     background-color: #28a745;
+     color: white;
+     padding: 5px;
      overflow: hidden;
      transition: right 0.3s ease; /* make transition of banner smooth */
  }
@@ -177,7 +200,7 @@ ul.cuisineList{
      right: 0; /* when hovered have banner come into frame*/
  }
 
- ul.banner #viewBasketsButton a {
+ ul.banner .viewBasketsButton a {
      background-color: #04AA6D; /* Green background */
      color: white; /* White text */
      padding: 5px 16px;
