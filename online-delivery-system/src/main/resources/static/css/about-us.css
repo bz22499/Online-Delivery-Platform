@@ -1,91 +1,85 @@
-body{
+body {
+    background-color: white;
     margin: 0;
-    padding: 0;
-    background-color:aliceblue;
+    font-family: "IBM Plex Sans";
 }
 
-ul.banner {
-    z-index:1;
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-    background-color: #dfdfdf;
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.banner {
+    background: white;
     top: 0;
-    width: 100%;
     position: sticky;
+    z-index: 1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
 }
 
-ul.banner img{
-    height: 19px;
-    padding: 14px;
-    float: left;
+.left, .right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
-ul.banner li {
-    float: left;
+.left img {
+    height: 60px;
 }
 
-ul.banner li.right {
-    float: right;
-}
-
-ul.banner li a {
-    display: block;
+.left p a {
     color: black;
-    text-align: center;
-    padding: 14px 16px;
     text-decoration: none;
+    padding: 5px 10px;
+    font-weight: 200;
 }
 
-ul.banner li.active a{
-    background-color: rgb(196, 194, 188);
-}
-
-ul.banner li.right a {
+.right p a {
+    font-size: 120%;
+    width: max-content;
     display: block;
     color: white;
     background-color: black;
+    text-align: center;
+    text-decoration: none;
     border-radius: 10px;
-    padding: 5px 16px;
-    margin: 8px 10px;
+    padding: 5px 12px;
+    font-weight: 200;
 }
 
-ul.banner li a:hover{
+.left p a:hover {
+    color: gray;
+}
+
+.right p a:hover {
     background-color: gray;
 }
 
-h1.header {
-    position: relative;
-    top: 80px;
-    left: 30px;
+.header {
+    margin-top: 30px;
+    margin-left: 20px;
+    font-size: 24px;
+    font-weight: 600;
 }
 
-ol.list{
-    position: relative;
-    top: 70px;
-    left: 15px;
+.content-container {
+    margin-top: 20px;
 }
 
-ul.Names{
-  position: relative;
-  top: 90px;
-  left: 15px;
+.box {
+    border: 1px solid #ccc;
+    padding: 20px;
+    margin-bottom: 20px;
 }
 
-p.paragragh{
-  position: relative;
-  top: 80px;
-  left: 36px;
+.list, .Names, .paragraph {
+    margin: 0;
 }
 
-.background-image{
-  width: 100%;
-  height: 100vh;
-  background-size: cover;
-  background-position: center;
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: -1;
+.list li, .Names li {
+    padding: 5px 0;
 }
