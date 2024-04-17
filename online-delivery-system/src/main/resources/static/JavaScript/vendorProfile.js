@@ -1,37 +1,30 @@
 function editProfile() {
-
     // Clear the password-related input fields
     document.getElementById('current-password').value = '';
     document.getElementById('new-password').value = '';
     document.getElementById('confirm-password').value = '';
 
-    document.querySelector('.name').style.display = 'none';
-    document.querySelector('.description').style.display = 'none';
-    document.getElementById('logout').style.display = 'none';
+    // Hide the initial input fields and edit profile button
+    document.getElementById('user-details').style.display = 'none';
+    document.getElementById('edit-profile').style.display = 'none';
 
+    // Show the edit form
     document.getElementById('edit-form').style.display = 'block';
 
     // Set the current values in the form fields
-    document.getElementById('new-name').value = document.querySelector('.name').innerText;
-    document.getElementById('new-description').value = document.querySelector('.description').innerText;
-
-    // Hide buttons in the user-details div
-    document.querySelector('#user-details button.edit-profile').style.display = 'none';
+    document.getElementById('new-name').value = document.getElementById('name').innerText;
+    document.getElementById('new-description').value = document.getElementById('description').innerText;
 }
 
 function returnToProfile() {
-    document.querySelector('.name').style.display = 'block';
-    document.querySelector('.description').style.display = 'block';
-    document.getElementById('logout').style.display = 'inline-block';
+    // Show the user-details div
+    document.getElementById('user-details').style.display = 'block';
 
+    // Hide the edit form
     document.getElementById('edit-form').style.display = 'none';
 
-    // Show the edit profile button again
-    document.querySelector('#user-details button.edit-profile').style.display = 'inline-block';
-}
-
-function cancelEdit() {
-    returnToProfile();
+    // Show the edit profile button
+    document.getElementById('edit-profile').style.display = 'block';
 }
 
 function saveProfile() {

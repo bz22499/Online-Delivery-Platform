@@ -1,18 +1,70 @@
 body {
-    font-family: 'Arial', sans-serif;
+    font-family: 'IBM Plex Sans';
     margin: 0;
     padding: 0;
     background-color: #f0f0f0;
 }
 
-header {
-    background-color: #333;
-    color: #fff;
-    text-align: center;
-    padding-top: 30px;
+.banner {
+    background: white;
+    top: 0;
+    position: sticky;
+    z-index: 1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: "IBM Plex Sans";
+    padding: 10px 0 10px 0;
 }
 
-#profile-container {
+.left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-left: 22px;
+}
+
+.right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-right: 22px;
+}
+
+.left img {
+    height: 60px;
+}
+
+.left p a {
+    color: black;
+    text-decoration: none;
+    width: max-content;
+    padding: 5px 10px;
+    font-weight: 200;
+}
+
+.right p a {
+    font-size: 120%;
+    width: max-content;
+    display: block;
+    color: white;
+    background-color: black;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 10px;
+    padding: 5px 12px;
+    font-weight: 200;
+}
+
+.left p a:hover {
+    color: gray;
+}
+
+.right p a:hover {
+    background-color: gray;
+}
+
+.profile-container {
     max-width: 600px;
     margin: 20px auto;
     background-color: #fff;
@@ -38,6 +90,10 @@ header {
     cursor: pointer;
 }
 
+#imageInput:hover img {
+    filter: brightness(50%);
+}
+
 #imageInput {
     display: none;
     position: absolute;
@@ -49,128 +105,98 @@ header {
     cursor: pointer;
 }
 
+
 #user-details {
-    padding: 20px;
+    color: grey;
 }
 
-#edit-form input,
-#edit-form textarea {
-    display: block;
-    margin-bottom: 15px;
-    margin-left: 15px;
+/*.input-field {*/
+/*    margin-bottom: 20px;*/
+/*}*/
+
+/*.input-field label {*/
+/*    font-weight: bold;*/
+/*    margin-bottom: 4px;*/
+/*    display: block;*/
+/*!*}*!*/
+
+/*.text-field {*/
+/*    width: 100%;*/
+/*    padding: 8px;*/
+/*    border: 1px solid #ccc;*/
+/*    border-radius: 4px;*/
+/*    background-color: white;*/
+/*}*/
+
+/*.text-field:focus {*/
+/*    outline: none;*/
+/*    border-color: #007bff; !* Change the border color on focus if needed *!*/
+/*}*/
+
+/*.text-field[contenteditable="true"] {*/
+/*    cursor: text;*/
+/*}*/
+
+
+input[type="text"],
+input[type="password"] {
+    width: 100%;
+    padding: 8px;
+    margin: 6px 0;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 4px;
 }
 
-#edit-form button,
-#edit-form label {
-    margin-left: 15px;
+.text-field {
+    width: 100%;
+    padding: 8px;
+    margin: 6px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    height: 33px;
+    color: gray;
 }
 
-h1, h2 {
-    margin-bottom: 10px;
+label {
+    margin-top: 10px;
+    margin-bottom: 4px;
+    font-weight: bold;
+    color: #333;
 }
 
-p {
-    margin-bottom: 15px;
-    line-height: 1.5;
+.edit-form {
+    padding: 20px; /* Add padding around the form */
+}
+
+.edit-form input[type="text"],
+.edit-form input[type="password"] {
+    margin: 6px 0 16px 0; /* Add bottom margin to create spacing */
 }
 
 button {
     margin: 8px auto;
-}
-
-#profile-container {
-    max-width: 600px;
-    margin: 0 auto;
-}
-
-#profile-image {
-    width: 150px;
-    height: 150px;
-    border-radius: 50%;
-    object-fit: cover;
-}
-
-#edit-form {
-    display: none;
-}
-
-#edit-form label {
-    margin: 8px auto;
-}
-
-.background-image{
-    width: 100%;
-    height: 100vh;
-    background-size: cover;
-    background-position: center;
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: -1;
-}
-
-ul.banner {
-    z-index:1;
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-    background-color: #dfdfdf;
-    top: 0;
-    width: 100%;
-    position: sticky;
-}
-
-ul.banner img{
-    height: 19px;
-    padding: 14px;
-    float: left;
-}
-
-ul.banner li {
-    float: left;
-}
-
-ul.banner li.right {
-    float: right;
-}
-
-ul.banner li a {
     display: block;
-    color: black;
-    text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
-}
-
-/*ul.banner li.active a{
-    background-color: rgb(196, 194, 188);
-}*/
-
-ul.banner li.right a {
-    display: block;
-    color: white;
+    width: 100%;
+    max-width: 200px;
+    padding: 10px;
     background-color: black;
-    border-radius: 10px;
-    padding: 5px 16px;
-    margin: 8px 10px;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
 }
 
-ul.banner li a:hover{
+button:hover {
     background-color: gray;
 }
 
-h1.header {
-    position: relative;
-    top: 80px;
-    left: 30px;
+#logout{
+    background-color: red;
 }
 
-#edit-address-btn {
-    margin-left: 20px;
-}
-
-#address-fields {
-    display: none;
-    margin-left: 20px;
+#logout:hover{
+    background-color: indianred;
 }

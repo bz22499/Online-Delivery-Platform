@@ -1,55 +1,45 @@
-function updateProfilePicture() {
-    var input = document.getElementById('imageInput');
-    var preview = document.getElementById('previewImage');
-
-    var file = input.files[0];
-
-    if (file) {
-        var reader = new FileReader();
-        reader.onload = function(e) {
-            preview.src = e.target.result;
-        };
-        reader.readAsDataURL(file);
-    }
-}
+// function updateProfilePicture() {
+//     var input = document.getElementById('imageInput');
+//     var preview = document.getElementById('previewImage');
+//
+//     var file = input.files[0];
+//                                                                      //This was for the old pfp method
+//     if (file) {
+//         var reader = new FileReader();
+//         reader.onload = function(e) {
+//             preview.src = e.target.result;
+//         };
+//         reader.readAsDataURL(file);
+//     }
+// }
 
 function editProfile() {
-
     // Clear the password-related input fields
     document.getElementById('current-password').value = '';
     document.getElementById('new-password').value = '';
     document.getElementById('confirm-password').value = '';
 
-    document.querySelector('.firstName').style.display = 'none';
-    document.querySelector('.lastName').style.display = 'none';
-    document.getElementById('view-subscription').style.display = 'none';
-    document.getElementById('logout').style.display = 'none';
+    // Hide the initial input fields and edit profile button
+    document.getElementById('user-details').style.display = 'none';
+    document.getElementById('edit-profile').style.display = 'none';
 
+    // Show the edit form
     document.getElementById('edit-form').style.display = 'block';
 
     // Set the current values in the form fields
-    document.getElementById('new-firstName').value = document.querySelector('.firstName').innerText;
-    document.getElementById('new-lastName').value = document.querySelector('.lastName').innerText;
-
-    // Hide buttons in the user-details div
-    document.querySelector('#user-details button.edit-profile').style.display = 'none'; // edited this line as well
+    document.getElementById('new-firstName').value = document.getElementById('firstName').innerText;
+    document.getElementById('new-lastName').value = document.getElementById('lastName').innerText;
 }
 
 function returnToProfile() {
-    document.querySelector('.firstName').style.display = 'block';
-    document.querySelector('.lastName').style.display = 'block';
-    document.getElementById('view-subscription').style.display = 'inline-block';
-    document.getElementById('logout').style.display = 'inline-block';
-    //document.getElementById('edit-profile').style.display = 'block';
+    // Show the user-details div
+    document.getElementById('user-details').style.display = 'block';
 
+    // Hide the edit form
     document.getElementById('edit-form').style.display = 'none';
 
-    // Show the edit profile button again
-    document.querySelector('#user-details button.edit-profile').style.display = 'inline-block';
-}
-
-function cancelEdit() {
-    returnToProfile();
+    // Show the edit profile button
+    document.getElementById('edit-profile').style.display = 'block';
 }
 
 function saveProfile() {
