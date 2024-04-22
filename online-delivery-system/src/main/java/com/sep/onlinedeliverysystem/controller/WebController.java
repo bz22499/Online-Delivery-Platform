@@ -167,8 +167,11 @@ public class WebController {
         }
     }
     @GetMapping("/checkout")
-    public String checkout(Principal principal){
-        if (principal != null) {
+    public String checkout(Principal principal, Model model){
+        String loggedInUserEmail = principal.getName(); // Retrieves the email/id of the currently logged-in user
+        Optional<User> user = userService.findOne(loggedInUserEmail);
+        if (user.isPresent()) {
+            model.addAttribute("id", user.get().getEmail());
             return "checkout";
         }
         else{
@@ -181,7 +184,6 @@ public class WebController {
         if (principal != null) {
             String loggedInUserEmail = principal.getName(); // Retrieves the email/id of the currently logged-in user
             Optional<User> user = userService.findOne(loggedInUserEmail);
-            Optional<Vendor> vendor = vendorService.findOne(loggedInUserEmail);
 
             if (user.isPresent()) {
                 model.addAttribute("id", user.get().getEmail());

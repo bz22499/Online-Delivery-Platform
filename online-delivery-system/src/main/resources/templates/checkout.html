@@ -22,6 +22,8 @@
     <li class="right"><a target="_parent" href="restaurantlogin" th:unless="${loggedIn}">Partner with us</a></li>
 </ul>
 
+<input type="hidden" id="user-email" th:value="${id}">
+
 <div class="checkout-container">
     <h2>Your Basket</h2>
 
@@ -29,9 +31,6 @@
         <label for="address-select">Select Delivery Address: </label>
         <select id="address-select" class="address-select" onchange="updateDeliveryAddress(this.value)">
             <option value="" selected disabled>Select an address
-                <!-- Example addresses -->
-                <option value="address1">123 Main St, Cityville</option>
-                <option value="address2">456 Oak St, Townsville</option>
         </select>
     </div>
 
@@ -46,7 +45,7 @@
 
 <div class="partners">
     <div class="placeholder">
-        <img src="/images/loes-klinker-vLQY3beH2h0-unsplash.jpg" alt="partner-image"/>
+        <img src="/images/odiseo-castrejon-4Q_xlBOaCso-unsplash.jpg" alt="partner-image"/>
         <p class="partner"><a target="_parent" href="menu-page-back">Recommendations</a></p>
     </div>
     <div class="placeholder">
