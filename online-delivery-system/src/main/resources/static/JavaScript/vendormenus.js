@@ -40,6 +40,9 @@ function deleteItemForVendor(itemId){
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
+            }else{
+                //it is ok so we delete image
+                deleteFile("_"+itemId.toString()+"_.jpg");
             }
         })
         .then(data => {
@@ -47,6 +50,23 @@ function deleteItemForVendor(itemId){
         .catch(error => {
             // Handle errors that occur during the request
             alert('There was a problem with your fetch operation:' + error.toString());
+        });
+}
+
+function deleteFile(filename) {
+    fetch('/delete?filename=' + encodeURIComponent(filename), {
+        method: 'DELETE'
+    })
+        .then(response => {
+            if (response.ok) {
+                console.log('File deleted successfully');
+            } else {
+                alert("Image failed to delete")
+            }
+        })
+        .catch(error => {
+            console.error('Error deleting file:', error);
+            // Handle error
         });
 }
 

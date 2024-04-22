@@ -58,7 +58,7 @@ public class FileUploadController {
                 return new ResponseEntity<>("Failed to delete file", HttpStatus.INTERNAL_SERVER_ERROR);
             }
         } else {
-            return new ResponseEntity<>("File not found", HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>("File not found", HttpStatus.OK);
         }
     }
 }
