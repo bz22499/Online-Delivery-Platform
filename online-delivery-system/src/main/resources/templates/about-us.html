@@ -4,48 +4,57 @@
         <meta charset="utf-8" />
         <title>P2P Online Delivery Platform - About Us</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@100;200;300;400;500;600&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@100;200;300;400;500;600&family=Oswald:wght@200..700&display=swap" rel="stylesheet">
         <link rel = "stylesheet" href="/css/about-us.css"/>
     </head>
     <body>
-        <ul class="banner">
-            <li><img src="/images/logo_ld_png.png"></li>
-            <li><a target="_parent" href="home" th:unless="${loggedInVendor}">Home</a></li>
-            <li><a target="_parent" href="vendor" th:if="${loggedInVendor}">Add Items</a></li>
-            <li><a target="_parent" href="vendoritems" th:if="${loggedInVendor}">Edit Items</a></li>
-            <li class="active"><a target="_parent" href="about">About Us</a></li>
-            <li><a target="_parent" href="order" th:unless="${loggedInVendor}">Order</a></li>
-            <li><a target="_parent" href="contact">Contact</a></li>
-            <li class="right"><a target="_parent" href="profile" th:if="${loggedInUser}">Profile</a></li>
-            <li class="right"><a target="_parent" href="vendorProfile" th:if="${loggedInVendor}">Profile</a></li>
-            <li class="right"><a target="_parent" href="login" th:unless="${loggedIn}">Login</a></li>
-            <li class="right"><a target="_parent" href="customerlogin" th:unless="${loggedIn}">Sign up</a></li>
-            <li class="right"><a target="_parent" href="restaurantlogin" th:unless="${loggedIn}">Partner with us</a></li>
-        </ul>
+        <div class="banner">
+            <div class="left">
+                <p><img src="/images/logo_ld_png.png"></p>
+                <p><a target="_parent" href="home" th:unless="${loggedInVendor}">Home</a></p>
+                <p><a target="_parent" href="vendor" th:if="${loggedInVendor}">Add Items</a></p>
+                <p><a target="_parent" href="vendoritems" th:if="${loggedInVendor}">Edit Items</a></p>
+                <p class="active"><a target="_parent" href="about">About Us</a></p>
+                <p><a target="_parent" href="order" th:unless="${loggedInVendor}">Order</a></p>
+                <p><a target="_parent" href="contact">Contact</a></p>
+            </div>
+            <div class="right">
+                <p><a target="_parent" href="profile" th:if="${loggedInUser}">Profile</a></p>
+                <p><a target="_parent" href="vendorProfile" th:if="${loggedInVendor}">Profile</a></p>
+                <p><a target="_parent" href="login" th:unless="${loggedIn}">Login</a></p>
+                <p><a target="_parent" href="customerlogin" th:unless="${loggedIn}">Sign up</a></p>
+                <p><a target="_parent" href="restaurantlogin" th:unless="${loggedIn}">Partner with us</a></p>
+            </div>
+        </div>
+        <div class="content-container">
+            <h1 class="header">How to use the delivery service</h1>
+            <div class="box">
+                <ol class="list" type="1">
+                    <li>Sign in if you have an account</li>
+                    <li>Click on the order button in the banner</li>
+                    <li>Select the desired menu item for the selected day</li>
+                    <li>Once the order has been placed you will be given an email reciept.</li>
+                    <li>As easy as that, your food is ordered and enjoy your healthy meal!</li>
+                </ol>
+            </div>
 
-        <h1 class="header"> How to use the delivery service</h1>
+            <h1 class="header">Who are we?</h1>
+            <div class="box">
+                <p class="paragraph">We are a bunch of students from the University of Bristol who have created this website for the purpose of giving people a convenient and healthy option to food.</p>
+            </div>
 
-        <ol class="list" type="1">
-            <li>Sign in if you have an account</li>
-            <li>Click on the order button in the banner</li>
-            <li>Select the desired menu item for the selected day</li>
-            <li>Once the order has been placed you will be given an email reciept.</li>
-            <li>As easy as that, you food is ordered and enjoy your healthy meal!</li>
-        </ol>           
-
-        <h1 class="header">Who are we?</h1>
-
-        <p class="paragragh">We are a bunch of students from the University of Bristol who have created this website for the purpose of giving people a convenient and healthy option to food.</p>
-
-        <h1 class="header">Developers</h1>
-
-        <ul class="Names">
-            <li>JP Ruiz</li>
-            <li>Anthony Price</li>
-            <li>Luke Trott</li>
-            <li>Jiahao Li</li>
-            <li>Hugh Kiggell</li>
-        </ul> 
-
-        <img src="images/background-aboutus.jpg" alt="" class="background-image">
+            <h1 class="header">Developers</h1>
+            <div class="box">
+                <ul class="Names">
+                    <li>JP Ruiz</li>
+                    <li>Anthony Price</li>
+                    <li>Luke Trott</li>
+                    <li>Jiahao Li</li>
+                    <li>Hugh Kiggell</li>
+                </ul>
+            </div>
+        </div>
+        </div>
     </body>
 </html>

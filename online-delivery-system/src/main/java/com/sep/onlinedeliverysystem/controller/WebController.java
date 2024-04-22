@@ -314,5 +314,10 @@ public class WebController {
 
     @GetMapping("/menu-page-back")
     public String menuBack() {return "order";}
+
+    @GetMapping("/driver-sign-up")
+    public String driverSignUp() {
+        return "driverSignUp";
+    }
 }
 

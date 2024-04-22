@@ -1,37 +1,30 @@
 function editProfile() {
-
     // Clear the password-related input fields
     document.getElementById('current-password').value = '';
     document.getElementById('new-password').value = '';
     document.getElementById('confirm-password').value = '';
 
-    document.querySelector('.name').style.display = 'none';
-    document.querySelector('.description').style.display = 'none';
-    document.getElementById('logout').style.display = 'none';
+    // Hide the initial input fields and edit profile button
+    document.getElementById('user-details').style.display = 'none';
+    document.getElementById('edit-profile').style.display = 'none';
 
+    // Show the edit form
     document.getElementById('edit-form').style.display = 'block';
 
     // Set the current values in the form fields
-    document.getElementById('new-name').value = document.querySelector('.name').innerText;
-    document.getElementById('new-description').value = document.querySelector('.description').innerText;
-
-    // Hide buttons in the user-details div
-    document.querySelector('#user-details button.edit-profile').style.display = 'none';
+    document.getElementById('new-name').value = document.getElementById('name').innerText;
+    document.getElementById('new-description').value = document.getElementById('description').innerText;
 }
 
 function returnToProfile() {
-    document.querySelector('.name').style.display = 'block';
-    document.querySelector('.description').style.display = 'block';
-    document.getElementById('logout').style.display = 'inline-block';
+    // Show the user-details div
+    document.getElementById('user-details').style.display = 'block';
 
+    // Hide the edit form
     document.getElementById('edit-form').style.display = 'none';
 
-    // Show the edit profile button again
-    document.querySelector('#user-details button.edit-profile').style.display = 'inline-block';
-}
-
-function cancelEdit() {
-    returnToProfile();
+    // Show the edit profile button
+    document.getElementById('edit-profile').style.display = 'block';
 }
 
 function saveProfile() {
@@ -245,7 +238,6 @@ var mimeTypeExtensions = {
 };
 
 function uploadImage(file){
-    alert("GOT HERE")
     var formData = new FormData();
     var vendorId = document.getElementById('vendorId').value;
 
@@ -253,24 +245,32 @@ function uploadImage(file){
 
     var mimeType = file.type;
     var fileExtension = mimeTypeExtensions[mimeType] || '';
-    var fileName = vendorId+fileExtension
 
-    formData.append('file', file, fileName);
+    var validFormat = true;
+    if(fileExtension ===''){
+        validFormat = false;
+    }
 
-    var xhr = new XMLHttpRequest();
-    xhr.open('POST', '/upload', true)
-    xhr.onload = function() {
-        if (xhr.status === 200) {
-            alert("WORKED")
-            console.log('Upload successful');
-        } else {
-            alert("FAILED")
-            console.error('Upload failed. Status: ' + xhr.status);
-        }
-    };
-    xhr.send(formData);
+    if(validFormat){
+        var fileName = vendorId+fileExtension
+        formData.append('file', file, fileName);
 
-    updateURLOnDataBase(fileName)
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '/upload', true)
+        xhr.onload = function() {
+            if (xhr.status === 200) {
+            } else {
+                alert("FAILED ensure file is < 1MB");
+            }
+        };
+        xhr.send(formData);
+
+        updateURLOnDataBase(fileName)
+    }else{
+        alert("Please use jpeg, png or gif");
+    }
+
+
 }
 
 function updateURLOnDataBase(fileName){
