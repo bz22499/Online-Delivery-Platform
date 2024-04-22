@@ -27,7 +27,7 @@
   <div id="profile-picture">
     <input type="file" id="imageInput" accept="image/*" onchange="updateProfilePicture()">
     <label for="imageInput">
-        <img th:src="${imageURL != null} ? 'uploads/' + ${imageURL} : '/images/logo_hd0.png'"
+        <img th:src="${imageURL != null} ? 'uploads/' + ${imageURL} : '/images/logo_hd.png'"
              alt="Profile Picture" id="previewImage">
     </label>
   </div>
