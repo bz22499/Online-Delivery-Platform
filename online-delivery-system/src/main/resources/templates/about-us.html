@@ -13,9 +13,10 @@
             <div class="left">
                 <p><img src="/images/logo_ld_png.png"></p>
                 <p><a target="_parent" href="home" th:unless="${loggedInVendor}">Home</a></p>
-                <p><a target="_parent" href="vendor" th:if="${loggedInVendor}">Add Items</a></p>
+                <p><a target="_parent" href="vendor" th:if="${loggedInVendor}">Add Items</a></p> 
                 <p><a target="_parent" href="vendoritems" th:if="${loggedInVendor}">Edit Items</a></p>
-                <p class="active"><a target="_parent" href="about">About Us</a></p>
+                <p><a target="_parent" href="ordersForVendors" th:if="${loggedInVendor}">View Orders</a></p>
+                <p><a target="_parent" href="about">About Us</a></p>
                 <p><a target="_parent" href="order" th:unless="${loggedInVendor}">Order</a></p>
                 <p><a target="_parent" href="contact">Contact</a></p>
             </div>
