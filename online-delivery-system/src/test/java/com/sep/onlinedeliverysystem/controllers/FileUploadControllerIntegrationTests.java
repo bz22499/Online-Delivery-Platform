@@ -52,7 +52,7 @@ public class FileUploadControllerIntegrationTests {
         mockMvc.perform(
                 MockMvcRequestBuilders.multipart("/upload").file(file)
         ).andExpect(
-                MockMvcResultMatchers.content().contentType(MediaType.TEXT_PLAIN_VALUE)
+                MockMvcResultMatchers.content().contentType(MediaType.parseMediaType(MediaType.TEXT_PLAIN_VALUE + ";charset=UTF-8"))
         ).andExpect(
                 MockMvcResultMatchers.content().string(Files.readAllLines(Paths.get(file.getOriginalFilename())).get(0))
         );
