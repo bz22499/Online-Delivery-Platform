@@ -148,11 +148,11 @@ async function updateOrderAddress(){
 
     //now we have the id of the address we need the id of the order
     const orderId = getOrderIdFromCache();
-    
+
     const updatedOrderData = {
         id: orderId,
         userAddress: address,
-        status: "noway"
+        status: "PAID"
     };
 
     alert(orderId);
