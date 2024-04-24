@@ -9,7 +9,7 @@
 <body>
     <div class="login-container">
         <h1>User Register</h1>
-        <form>
+        <form id="userSignupForm">
             <div class="form-group">
                 <label for="firstName">First name</label>
                 <input type="text" id="firstName" required>
@@ -30,10 +30,26 @@
                 <label for="confirm-password">Confirm password</label>
                 <input type="password" id="confirm-password" required>
             </div>
+            <div class="form-group">
+                <label for="street">Street</label>
+                <input type="text" id="street" required>
+            </div>
+            <div class="form-group">
+                <label for="city">City</label>
+                <input type="text" id="city" required>
+            </div>
+            <div class="form-group">
+                <label for="postCode">Post Code</label>
+                <input type="text" id="postCode" required>
+            </div>
+            <div class="form-group">
+                <label for="country">Country</label>
+                <input type="text" id="country" required>
+            </div>
             <button type="button" onclick="createCustomer()">Register</button>
         </form>
 
-        <p>Already have an account? <a target="_parent" href="login">Login in</a></p>
+        <p>Already have an account? <a target="_parent" href="login">Login</a></p>
     </div>
     <script src="/JavaScript/userCreate.js"></script>
 </body>

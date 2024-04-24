@@ -9,7 +9,7 @@
 <body>
 <div class="login-container">
     <h1>Restaurant Register</h1>
-    <form>
+    <form id="vendorSignupForm">
         <div class="form-group">
             <label for="username">Name</label>
             <input type="text" id="username" name="username" required>
@@ -26,9 +26,25 @@
             <label for="confirm-password">Confirm password</label>
             <input type="password" id="confirm-password" name="confirm-password" required>
         </div>
+        <div class="form-group">
+            <label for="street">Street</label>
+            <input type="text" id="street" required>
+        </div>
+        <div class="form-group">
+            <label for="city">City</label>
+            <input type="text" id="city" required>
+        </div>
+        <div class="form-group">
+            <label for="postCode">Post Code</label>
+            <input type="text" id="postCode" required>
+        </div>
+        <div class="form-group">
+            <label for="country">Country</label>
+            <input type="text" id="country" required>
+        </div>
         <button type="button" onclick="createVendor()">Register</button>
     </form>
-    <p>Already have an account? <a target="_parent" href="login">Login in</a></p>
+    <p>Already have an account? <a target="_parent" href="login">Login</a></p>
 </div>
 <script src="/JavaScript/userCreate.js"></script>
 </body>
