@@ -77,8 +77,6 @@ function calculateTotalCost(items) {
 
 async function updateDeliveryAddress() {
     const userEmail = document.getElementById("user-email").value;
-    console.log(userEmail);
-    alert(userEmail);
 
     try {
         const response = await fetch(`/addresses/user/${userEmail}`);
