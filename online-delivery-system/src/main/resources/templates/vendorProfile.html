@@ -27,7 +27,10 @@
 <div class="profile-container">
   <div id="profile-picture">
     <input type="file" id="imageInput" accept="image/*" onchange="updateProfilePicture()">
-    <label for="imageInput"><img src="/images/logo_ld_png.png" alt="Press To Enter Profile Picture" id="previewImage"></label>
+    <label for="imageInput">
+        <img th:src="${imageURL != null} ? 'uploads/' + ${imageURL} : '/images/logo_hd.png'"
+             alt="Profile Picture" id="previewImage">
+    </label>
   </div>
 
   <div class="edit-form" id="user-details">
