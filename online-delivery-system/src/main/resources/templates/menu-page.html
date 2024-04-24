@@ -27,9 +27,7 @@
         <div id="vendor-info" th:attr="data-id=${id}"></div>
     </div>
     <div class="description" th:text="${description}"></div>
-    <!-- Set userId as a data attribute -->
     <div id="user-info" th:attr="data-userId=${userId}" style="display: none;"></div>
-    <script src="/JavaScript/items.js"></script>
 </div>
 
 <div class="grid-container"></div>
@@ -38,8 +36,9 @@
     <div class="basket-header">Basket</div>
     <div class="basket-items"></div>
     <button th:unless="${loggedIn}" class="login-button" id="loginButton">Please login before you proceed to checkout</button>
-    <button class="add-to-basket-button" id="addToBasketContainer">Add to Basket</button>
-    <button class="proceed-button" th:if="${loggedIn}" id="checkoutButton">Checkout</button>
+    <button class="update-basket-button" id="updateBasketContainer">Update to Basket</button>
+    <button class="checkout-button" th:if="${loggedIn}" id="checkoutButton">Checkout</button>
 </div>
+<script src="/JavaScript/menu-page.js"></script>
 </body>
 </html>

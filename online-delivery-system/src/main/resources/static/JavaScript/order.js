@@ -16,9 +16,8 @@ async function fetchRestaurants(page = 0, size = 18) {
 }
 
 async function createOrder() {
-  const existingOrderString = sessionStorage.getItem("order");
-  const existingOrderJson = JSON.parse(existingOrderString)
-  if (existingOrderJson) {
+  const existingOrder = sessionStorage.getItem("order");
+  if (existingOrder) {
     return;
   }
   try {

@@ -1,16 +1,24 @@
 package com.sep.onlinedeliverysystem.controller;
 
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.sep.onlinedeliverysystem.domain.dto.BasketItemDTO;
 import com.sep.onlinedeliverysystem.domain.entities.BasketItem;
 import com.sep.onlinedeliverysystem.mappers.Mapper;
 import com.sep.onlinedeliverysystem.services.BasketItemService;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 @RestController
 public class BasketItemController {
@@ -61,7 +69,7 @@ public class BasketItemController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         BasketItem basketItem = basketItemMapper.mapFrom(basketItemDTO);
-        BasketItem savedItem = basketItemService.save(basketItem);
+        BasketItem savedItem = basketItemService.partialUpdate(basketItem);
         return new ResponseEntity<>(basketItemMapper.mapTo(savedItem), HttpStatus.OK);
     }
 
