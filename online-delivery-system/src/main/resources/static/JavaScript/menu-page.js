@@ -20,12 +20,12 @@ function findIndex(name){
 
 
 
-function getSavedBasket(){
+function getSavedBasketIndex(){
     const index = findIndex(restaurantName);
     if (index === -1){
         return
     } else {
-        return baskets[index];
+        return index;
     }
 }
 
@@ -65,14 +65,13 @@ async function fetchItems(vendorId) {
     }
 }
 
-// Function to check if the user has an address
 async function hasAddress(email) {
     try {
         const response = await fetch(`/addresses/user/${email}`);
-        return response.ok; // Returns true if the address exists, false otherwise
+        return response.ok;
     } catch (error) {
         console.error('Error fetching user address:', error);
-        return false; // Return false in case of any error
+        return false;
     }
 }
 
@@ -130,7 +129,7 @@ function addOrUpdateBasketItem(menuItem, qty=1) {
             document.querySelector('.basket-items').appendChild(basketItemHtml); 
             basketItemHtml.basketItemData = basketItemData;
         };
-        updateItemQuantity(basketItemHtml, qty);
+        updateItemQuantity(basketItemHtml, qty); 
     }
 }
 
@@ -139,14 +138,20 @@ function createBasketItemHtml(menuItem) {
     basketItem.className = 'basket-item';
     basketItem.setAttribute('data-id', menuItem.id);
 
+    const itemInfo = document.createElement('div');
+    itemInfo.className = 'item-info';
+
     const itemName = document.createElement('span');
     itemName.textContent = menuItem.name;
-    basketItem.appendChild(itemName);
+    itemInfo.appendChild(itemName);
 
     const priceDisplay = document.createElement('span');
     priceDisplay.className = 'item-price';
-    priceDisplay.textContent = `£${menuItem.price.toFixed(2)}`;
-    basketItem.appendChild(priceDisplay);
+    priceDisplay.textContent = `Total: £${menuItem.price.toFixed(2)}`;
+    itemInfo.appendChild(priceDisplay);
+
+    
+    basketItem.appendChild(itemInfo);
 
     const quantityControl = createQuantityControl(basketItem);
     basketItem.appendChild(quantityControl);
@@ -160,7 +165,7 @@ function createQuantityControl(basketItemHtml) {
     quantityControl.className = 'quantity-control';
 
     const decreaseButton = document.createElement('button');
-    decreaseButton.textContent = '-';
+    decreaseButton.innerHTML = '<i class="fa fa-minus"></i>';
     decreaseButton.onclick = () => updateItemQuantity(basketItemHtml, -1);
 
     const quantityDisplay = document.createElement('span');
@@ -168,7 +173,7 @@ function createQuantityControl(basketItemHtml) {
     quantityDisplay.textContent = basketItemHtml.basketItemData ? basketItemHtml.basketItemData.quantity: 1;
 
     const increaseButton = document.createElement('button');
-    increaseButton.textContent = '+';
+    increaseButton.innerHTML = '<i class="fa fa-plus"></i>';
     increaseButton.onclick = () => updateItemQuantity(basketItemHtml, 1);
 
     quantityControl.appendChild(decreaseButton);
@@ -192,7 +197,7 @@ function updateItemQuantity(basketItemHtml, change) {
         } else {
             const priceDisplay = basketItemHtml.querySelector('.item-price');
             const newPrice = basketItemData.price * basketItemData.quantity;
-            priceDisplay.textContent = `£${newPrice.toFixed(2)}`;
+            priceDisplay.textContent = `Total: £${newPrice.toFixed(2)}`;
         }
     }
 }
@@ -220,23 +225,35 @@ function cacheBasket() {
     sessionStorage.setItem('baskets', JSON.stringify(baskets));
 }
 
+function deleteFromCache() {
+    const index = findIndex(restaurantName, baskets);
+    if (index === -1){
+        return
+    } else {
+        baskets.splice(index, 1);
+    }
+    sessionStorage.setItem('baskets', JSON.stringify(baskets));
+}
+
 document.addEventListener('DOMContentLoaded', function () {
     const vendorInfoElement = document.getElementById('vendor-info'); 
     const vendorId = vendorInfoElement.getAttribute('data-id');
     restaurantName = getRestaurantName();
     baskets = getBasketsFromCache();
-    const basketResult = getSavedBasket();
+    const basketResultIndex = getSavedBasketIndex();
+    const basketResult = baskets[basketResultIndex];
     if (basketResult) {
         basket.id = basketResult.id;
         if (basketResult.items){
             basket.items = basketResult.items;
         }
         loadSavedBasket();
+        baskets.splice(basketResultIndex, 1);
     }
     if (vendorId) {
         loadVendorItems(vendorId);
     }  
-
+ 
     const checkoutButton = document.querySelector('.checkout-button'); 
     checkoutButton.addEventListener('click', async function () {
         try {
@@ -280,7 +297,7 @@ async function postBasket(){
 
 async function handleBasketItems(){
     const updates = basket.items.map(async (item) => {
-        const endpoint = item.id ? `/basketItems/${basket.id}` : '/basketItems';
+        const endpoint = item.id ? `/basketItems/${item.id}` : '/basketItems';
         const method =  item.id ? 'PATCH' : 'POST';
         const bItemResponse = await fetch(endpoint, {
             method: method,
@@ -320,8 +337,22 @@ async function handleBasketItems(){
         );
 
         await Promise.all(deletePromises);
-        console.log("Items successfully deleted from the server.");
     } catch (error) {
         console.error("Error deleting items:", error);
+    }
+
+    if (basket.items.length === 0){
+        try {
+        const response = await fetch(`/baskets/${basket.id}`, {
+            method: 'DELETE'
+        });
+        if (!response.ok) {
+            throw new Error(`HTTP error deleting empty basket. Status: ${response.status}`);
+        }
+        deleteFromCache();
+        basket.id = null;
+     } catch (error) {
+        console.error("Error deleting empty basket: ", error);
+     }
     }
  }

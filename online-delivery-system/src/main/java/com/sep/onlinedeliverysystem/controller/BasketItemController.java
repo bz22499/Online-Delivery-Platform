@@ -68,6 +68,7 @@ public class BasketItemController {
         if (!basketItemService.Exists(id)) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+        basketItemDTO.setId(id);
         BasketItem basketItem = basketItemMapper.mapFrom(basketItemDTO);
         BasketItem savedItem = basketItemService.partialUpdate(basketItem);
         return new ResponseEntity<>(basketItemMapper.mapTo(savedItem), HttpStatus.OK);

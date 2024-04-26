@@ -1,42 +1,45 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
+<html lang="en">
+  <head>
     <meta charset="UTF-8">
-    <title>Menu</title>
-    <link rel="stylesheet" th:href="@{/css/menu-page.css}"/>
-</head>
+    <title>P2P Online Delivery Platform - Order</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@100;200;300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@100;200;300;400;500;600&family=Oswald:wght@200..700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/css/menu-page.css" />
+  </head>
 <body>
-
-<ul class="banner">
-    <li><img src="/images/logo_ld_png.png"></li>
-    <li><a target="_parent" href="home">Home</a></li>
-    <li><a target="_parent" href="about">About Us</a></li>
-    <li><a target="_parent" href="order">Order</a></li>
-    <li><a target="_parent" href="contact">Contact</a></li>
-    <li id="menu-page-back" class="right"><a target="_parent">Back</a></li>
-    <li class="right"><a target="_parent" href="profile" th:if="${loggedIn}">Profile</a></li>
-    <li class="right"><a target="_parent" href="login" th:unless="${loggedIn}">Login</a></li>
-    <li class="right"><a target="_parent" href="customerlogin" th:unless="${loggedIn}">Sign up</a></li>
-    <li class="right"><a target="_parent" href="restaurantlogin" th:unless="${loggedIn}">Partner with us</a></li>
-</ul>
-
-<div style="margin: 8px 40px 8px 40px">
-    <div class="header">
-        <div class="name" th:text="${name}">Restaurant Name</div>
-        <div class="rating" th:text="${rating}">4.5/5</div>
-        <div id="vendor-info" th:attr="data-id=${id}"></div>
+    <div class="banner">
+        <div class="left">
+          <img src="/images/logo_ld_png.png"><a target="_parent" href="home"></a></img>
+          <p><a target="_parent" href="home">Home</a></p>
+          <p><a target="_parent" href="about">About Us</a></p>
+          <p><a target="_parent" href="order">Order</a></p>
+          <p><a target="_parent" href="contact">Contact</a></p>
+        </div>
+        <div class="right">
+          <p id="back-button"><a href="#" onclick="history.back(); return false;">Back</a></p>
+          <p><a target="_parent" href="/profile" th:if="${loggedIn}">Profile</a></p>
+          <p><a target="_parent" href="login" th:unless="${loggedIn}">Login</a></p>
+          <p><a target="_parent" href="customerlogin" th:unless="${loggedIn}">Sign up</a></p>
+        </div>
     </div>
-    <div class="description" th:text="${description}"></div>
-    <div id="user-info" th:attr="data-userId=${userId}" style="display: none;"></div>
+
+<div class="header">
+    <div id="vendor-info" th:attr="data-id=${id}"></div>
+    <div class="name" th:text="${name}">Restaurant Name</div>
+    <div id="rating" th:text="${rating}">Rating</div>
+    <div id="description" th:text="${description}">Description</div>
 </div>
 
 <div class="grid-container"></div>
 
 <div class="basket">
-    <div class="basket-header">Basket</div>
+    <h2>Basket</h2>
     <div class="basket-items"></div>
     <button th:unless="${loggedIn}" class="login-button" id="loginButton">Please login before you proceed to checkout</button>
-    <button class="update-basket-button" id="updateBasketContainer">Update to Basket</button>
+    <button class="update-basket-button" id="updateBasketContainer">Update Basket</button>
     <button class="checkout-button" th:if="${loggedIn}" id="checkoutButton">Checkout</button>
 </div>
 <script src="/JavaScript/menu-page.js"></script>

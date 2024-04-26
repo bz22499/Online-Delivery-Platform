@@ -118,15 +118,6 @@ function calculateTotal(items) {
   return total;
 }
 
-function getBasketItemsFromCache(basketId) {
-  const basketsString = sessionStorage.getItem("baskets");
-  const baskets = JSON.parse(basketsString);
-  return {
-    items: baskets[basketId].items,
-    restName: baskets[basketId].restName,
-  };
-}
-
 async function preloadBaskets() {
   const orderString = sessionStorage.getItem("order");
   const order = JSON.parse(orderString);
@@ -144,17 +135,16 @@ async function populateBasketsDropdown() {
   const dropdown = document.getElementById("basketsDropdown");
   dropdown.innerHTML = "";
 
-  const basketsString = sessionStorage.getItem("basketIDs");
+  const basketsString = sessionStorage.getItem("baskets");
   const baskets = JSON.parse(basketsString);
 
   if (baskets && baskets.length) {
     for (const basket of baskets) {
       try {
-        let basketData = getBasketItemsFromCache(basket.id);
-        let totalPrice = calculateTotal(basketData.items);
+        const totalPrice = calculateTotal(basket.items);
         const basketElement = document.createElement("div");
         basketElement.className = "basketDiv";
-        basketElement.textContent = `Restaurant: ${basketData.restName}, Total: £${totalPrice.toFixed(2)}`;
+        basketElement.textContent = `Restaurant: ${basket.restName}, Total: £${totalPrice.toFixed(2)}`;
         dropdown.appendChild(basketElement);
       } catch (error) {
         console.error("Error populating baskets dropdown:", error);
