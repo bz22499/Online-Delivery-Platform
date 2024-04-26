@@ -113,7 +113,7 @@ async function fetchBasketsByOrder(orderId) {
 function calculateTotal(items) {
   let total = 0;
   for (const item of items) {
-    total = item.quantity * item.menuItem.price;
+    total = total + (item.quantity * item.menuItem.price);
   }
   return total;
 }

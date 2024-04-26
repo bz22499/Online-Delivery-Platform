@@ -123,6 +123,7 @@ function addOrUpdateBasketItem(menuItem, qty=1) {
         };
         basket.items.push(basketItemData);
         basketItemHtml.basketItemData = basketItemData;
+        updateSubtotal();
     } else {
         if (!basketItemHtml){
             basketItemHtml = createBasketItemHtml(menuItem); 
@@ -130,6 +131,7 @@ function addOrUpdateBasketItem(menuItem, qty=1) {
             basketItemHtml.basketItemData = basketItemData;
         };
         updateItemQuantity(basketItemHtml, qty); 
+        updateSubtotal();
     }
 }
 
@@ -199,6 +201,7 @@ function updateItemQuantity(basketItemHtml, change) {
             const newPrice = basketItemData.price * basketItemData.quantity;
             priceDisplay.textContent = `Total: £${newPrice.toFixed(2)}`;
         }
+        updateSubtotal();
     }
 }
 
@@ -235,6 +238,15 @@ function deleteFromCache() {
     sessionStorage.setItem('baskets', JSON.stringify(baskets));
 }
 
+function updateSubtotal(){
+    const subtotal = document.querySelector('.subtotal');
+    let total = 0;
+    for (const basketItem of basket.items){
+        total = total + (basketItem.quantity * basketItem.price);
+    }
+    subtotal.textContent = `Subtotal: £${total.toFixed(2)}`;
+}
+
 document.addEventListener('DOMContentLoaded', function () {
     const vendorInfoElement = document.getElementById('vendor-info'); 
     const vendorId = vendorInfoElement.getAttribute('data-id');
@@ -253,6 +265,8 @@ document.addEventListener('DOMContentLoaded', function () {
     if (vendorId) {
         loadVendorItems(vendorId);
     }  
+
+    updateSubtotal();
  
     const checkoutButton = document.querySelector('.checkout-button'); 
     checkoutButton.addEventListener('click', async function () {
