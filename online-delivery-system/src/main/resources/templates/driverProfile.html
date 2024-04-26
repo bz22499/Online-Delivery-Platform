@@ -3,62 +3,59 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@100;200;300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@100;200;300;400;500;600&family=Oswald:wght@200..700&display=swap" rel="stylesheet">
     <title>P2P Online Delivery Platform - Profile Page</title>
     <link rel="stylesheet" href="/css/profile.css">
 </head>
 <body>
 
-<header>
-    <h1>User Profile</h1>
-</header>
-
-<ul class="banner">
-    <li><img src="/images/logo_ld_png.png"></li>
-    <li><a target="_parent" href="about">About Us</a></li>
-    <li><a target="_parent" href="contact">Contact</a></li>
-    <li class="active right"><a target="_parent" href="driverProfile">Profile</a></li>
-</ul>
-
-<div id="profile-container">
-    <div id="profile-picture">
-        <input type="file" id="imageInput" accept="image/*" onchange="updateProfilePicture()">
-        <label for="imageInput"><img src="/images/logo_ld_png.png" alt="Press To Enter Profile Picture" id="previewImage"></label>
+<div class="banner">
+    <div class="left">
+        <p><img src="/images/logo_ld_png.png"></p>
+        <p><a target="_parent" href="driverMain">Home</a></p>
+        <p><a target="_parent" href="ordersForDrivers">Available Orders</a></p>  
+        <p><a target="_parent" href="collectionForDriver">My Orders</a></p>  
+        <p><a target="_parent" href="contact">Contact</a></p>
     </div>
-
-    <div id="user-details">
-        <h1 class="name" th:text="${name}">Restaurant</h1>
-        <h1 class="description" th:text="${description}">blah blah blah</h1>
-
-        <button class="edit-profile" onclick="editProfile()">Edit Profile</button>
-        <button class="logout-button" id="logout" onclick="window.location.href='/logout'">Logout</button>
-
+    <div class="right">
+        <p><a target="_parent" href="driverProfile">Profile</a></p>
     </div>
-
-    <form id="edit-form">
-
-        <!--This is here so that we can use the id in the js-->
-        <input type="hidden" id="driverId" th:value="${id}">
-
-        <label for="new-name">Name:</label>
-        <input type="text" id="new-name" required><br>
-
-        <label for="current-password">Current Password:</label>
-        <input type="password" id="current-password" required><br>
-
-        <label for="new-password">New Password:</label>
-        <input type="password" id="new-password" required><br>
-
-        <label for="confirm-password">Confirm Password:</label>
-        <input type="password" id="confirm-password" required><br>
-
-        <button type="button" onclick="saveProfile()">Save</button>
-        <button type="button" onclick="returnToProfile()">Return</button>
-        <button type="button" onclick="cancelEdit()">Cancel</button>
-    </form>
 </div>
 
+<div class="profile-container">
+    <div class="edit-form" id="user-details">
+        <label for="name">Name:</label>
+        <div class="text-field" id="name" th:text="${name}"></div>
 
-<img src="images/background-aboutus.jpg" alt="" class="background-image">
+        <button id="edit-profile" onclick="editProfile()">Edit Profile</button>
+    </div>
+    <div>
+        <form class="edit-form" id="edit-form" style="display: none;">
+            <!--This is here so that we can use the id in the js-->
+            <input type="hidden" id="driverId" th:value="${id}">
+
+            <label for="new-name">Name:</label>
+            <input type="text" id="new-name" required><br>
+
+            <label for="current-password">Current Password:</label>
+            <input type="password" id="current-password" required><br>
+
+            <label for="new-password">New Password:</label>
+            <input type="password" id="new-password" required><br>
+
+            <label for="confirm-password">Confirm Password:</label>
+            <input type="password" id="confirm-password" required><br>
+
+            <button type="button" onclick="saveProfile()">Save</button>
+            <button type="button" onclick="returnToProfile()">Cancel</button>
+        </form>
+    </div>
+</div>
+<div class="profile-container">
+    <button id="logout" onclick="window.location.href='/logout'">Logout</button>
+</div>
+
 
 <script src="/JavaScript/driverProfile.js"></script>
 </body>

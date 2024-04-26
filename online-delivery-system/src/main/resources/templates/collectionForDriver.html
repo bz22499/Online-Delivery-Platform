@@ -3,20 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <title>All Orders</title>
-    <link rel="stylesheet" href="/css/order.css">
+    <link rel="stylesheet" href="/css/collectionForDrivers.css">
 </head>
+
 <body>
-<ul class="banner">
-    <li><img src="/images/logo_ld_png.png"></li>
-    <li><a target="_parent" href="home">Home</a></li>
-    <li><a target="_parent" href="about">About Us</a></li>
-    <li class="active"><a target="_parent" href="order">Order</a></li>
-    <li><a target="_parent" href="contact">Contact</a></li>
-    <li class="right"><a target="_parent" href="profile" th:if="${loggedIn}">Profile</a></li>
-    <li class="right"><a target="_parent" href="login" th:unless="${loggedIn}">Login</a></li>
-    <li class="right"><a target="_parent" href="customerlogin" th:unless="${loggedIn}">Sign up</a></li>
-    <li class="right"><a target="_parent" href="restaurantlogin" th:unless="${loggedIn}">Partner with us</a></li>
-</ul>
+<div class="banner">
+    <div class="left">
+    <p><img src="/images/logo_ld_png.png"></p>
+    <p><a target="_parent" href="driverMain">Home</a></p>
+    <p><a target="_parent" href="ordersForDrivers">Available Orders</a></p>
+    <p><a target="_parent" href="collectionForDriver">My Orders</a></p>    
+    <p><a target="_parent" href="contact">Contact</a></p>
+    </div>
+    <div class="right">
+    <p><a target="_parent" href="driverProfile">Profile</a></p>
+    </div>
+</div>
 
 <div class="grid-container"></div>
 
