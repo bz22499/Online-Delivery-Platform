@@ -1,14 +1,15 @@
 package com.sep.onlinedeliverysystem.services.impl;
 
-import com.sep.onlinedeliverysystem.domain.entities.BasketItem;
-import com.sep.onlinedeliverysystem.repositories.BasketItemRepository;
-import com.sep.onlinedeliverysystem.services.BasketItemService;
-import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
+
+import org.springframework.stereotype.Service;
+
+import com.sep.onlinedeliverysystem.domain.entities.BasketItem;
+import com.sep.onlinedeliverysystem.repositories.BasketItemRepository;
+import com.sep.onlinedeliverysystem.services.BasketItemService;
 
 @Service
 public class BasketItemServiceImpl implements BasketItemService {
@@ -38,10 +39,8 @@ public class BasketItemServiceImpl implements BasketItemService {
     }
 
     @Override
-    public BasketItem partialUpdate(Long id, BasketItem basketEntity) {
-        basketEntity.setId(id);
-
-        return basketItemRepository.findById(id).map(existingBasketItem ->{
+    public BasketItem partialUpdate(BasketItem basketEntity) {
+        return basketItemRepository.findById(basketEntity.getId()).map(existingBasketItem ->{
             Optional.ofNullable(basketEntity.getBasket()).ifPresent((existingBasketItem::setBasket));
             Optional.ofNullable(basketEntity.getMenuItem()).ifPresent((existingBasketItem::setMenuItem));
             Optional.ofNullable(basketEntity.getQuantity()).ifPresent(existingBasketItem::setQuantity);

@@ -22,17 +22,14 @@ async function fetchBasketsByOrder(orderId) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
         const baskets = await response.json();
-
-        // Fetch basket items for each basket
         for (const basket of baskets) {
             const basketItemsResponse = await fetch(`/basketItems/baskets/${basket.id}`);
             if (!basketItemsResponse.ok) {
                 throw new Error(`HTTP error! status: ${basketItemsResponse.status}`);
             }
             const basketItems = await basketItemsResponse.json();
-            basket.basketItems = basketItems; // Assign fetched basketItems to basket object
+            basket.basketItems = basketItems;
         }
-
         return baskets;
     } catch (error) {
         console.error('Error fetching baskets:', error);
@@ -54,6 +51,26 @@ async function fetchVendorAddress(vendorEmail) {
     }
 }
 
+async function fetchDistance(postcode1, postcode2) {
+    try {
+        const response = await fetch('/calculate-distance', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ postcode1, postcode2 })
+        });
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const distance = await response.json();
+        return distance;
+    } catch (error) {
+        console.error('Error fetching distance:', error);
+        return null;
+    }
+}
+
 async function populateOrders(ordersData) {
     const gridContainer = document.querySelector('.grid-container');
 
@@ -63,13 +80,14 @@ async function populateOrders(ordersData) {
                 const orderItem = document.createElement('div');
                 orderItem.className = 'order-item';
 
+                const userPostcode = order.userAddress ? order.userAddress.postCode : null;
+                const userAddressDisplay = userPostcode ? `Street: ${order.userAddress.street}, Postcode: ${userPostcode}` : 'N/A';
                 const orderInfo = document.createElement('div');
-                orderInfo.textContent = `Order ID: ${order.id}`;
+                orderInfo.textContent = `Order ID: ${order.id}, User Address: ${userAddressDisplay}`;
                 orderItem.appendChild(orderInfo);
 
                 gridContainer.appendChild(orderItem);
 
-                // Fetch baskets associated with the order
                 const baskets = await fetchBasketsByOrder(order.id);
                 if (baskets && baskets.length > 0) {
                     const basketList = document.createElement('ul');
@@ -79,63 +97,62 @@ async function populateOrders(ordersData) {
                         for (const basketItem of basketItems) {
                             const menuItem = basketItem.menuItem;
                             const vendorAddress = await fetchVendorAddress(menuItem.vendor.email);
-                            const addressDetails = vendorAddress ? `Street: ${vendorAddress.street}, Postcode: ${vendorAddress.postCode}` : 'N/A';
+                            const vendorPostcode = vendorAddress ? vendorAddress.postCode : null;
+                            const vendorAddressDetails = vendorPostcode ? `Vendor Street: ${vendorAddress.street}, Vendor Postcode: ${vendorPostcode}` : 'N/A';
                             const totalPrice = menuItem ? (menuItem.price * basketItem.quantity).toFixed(2) : 'N/A';
+
+                            let distanceDisplay = 'Distance: N/A';
+                            if (userPostcode && vendorPostcode) {
+                                const distance = await fetchDistance(userPostcode, vendorPostcode);
+                                distanceDisplay = `Distance: ${distance} km`;
+                            }
+
                             const basketItemInfo = document.createElement('li');
-                            basketItemInfo.textContent = `Basket ID: ${basket.id}, Basket Item ID: ${basketItem.id}, Menu Item Name: ${menuItem.name}, Quantity: ${basketItem.quantity}, Price per Item: ${menuItem.price.toFixed(2)}, Total Price: ${totalPrice}, Address: ${addressDetails}`;
+                            basketItemInfo.textContent = `Basket ID: ${basket.id}, Basket Item ID: ${basketItem.id}, Menu Item Name: ${menuItem.name}, Quantity: ${basketItem.quantity}, Price per Item: ${menuItem.price.toFixed(2)}, Total Price: ${totalPrice}, User Address: ${userAddressDisplay}, Vendor Address: ${vendorAddressDetails}, ${distanceDisplay}`;
                             basketList.appendChild(basketItemInfo);
                         }
                     }
                     orderItem.appendChild(basketList);
                 } else {
-                    // const noBasketInfo = document.createElement('div');
-                    // noBasketInfo.textContent = 'No basket items found for this order.';
-                    // orderItem.appendChild(noBasketInfo);
-                    console.log('No basket items found for this order.')
+                    console.log('No basket items found for this order.');
                 }
-                // Additional functionality to confirm collection
+
                 const confirmButton = document.createElement('button');
                 confirmButton.textContent = 'Confirm Collection';
                 confirmButton.addEventListener('click', async () => {
                     const confirmation = confirm("Are you sure you want to collect this order?");
                     if (confirmation) {
                         order.status = driverId;
-                        // Update order status on the backend
-                        console.log('Order before PATCH request:', order);
-                        try {
-                            const response = await fetch(`/orders/${order.id}`, {
-                                method: 'PATCH',
-                                headers: {
-                                    'Content-Type': 'application/json'
-                                },
-                                body: JSON.stringify(order)
-                            });
-                            if (!response.ok) {
-                                throw new Error(`HTTP error! status: ${response.status}`);
-                            }
-                            const responseData = await response.json();
-                            console.log('Response from PATCH request:', responseData);
-                            console.log("Order status updated to driver id");
-                            const orderInfoElement = document.getElementById(`order-${order.id}-info`);
-                            if (orderInfoElement) {
-                                orderInfoElement.textContent = `Status: ${order.status}`;
-                            }
-                        } catch (error) {
-                            console.error('Error updating order status:', error);
+                        const response = await fetch(`/orders/${order.id}`, {
+                            method: 'PATCH',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify(order)
+                        });
+                        if (!response.ok) {
+                            throw new Error(`HTTP error! status: ${response.status}`);
+                        }
+                        const responseData = await response.json();
+                        console.log('Response from PATCH request:', responseData);
+                        console.log("Order status updated to driver id");
+                        const orderInfoElement = document.getElementById(`order-${order.id}-info`);
+                        if (orderInfoElement) {
+                            orderInfoElement.textContent = `Status: ${order.status}`;
                         }
                     }
-
                 });
                 orderItem.appendChild(confirmButton);
-            }else {
+            } else {
                 console.log(`Order ID: ${order.id} not displayed because its status is not 'COLLECTION'.`);
             }
         }
+    } else {
+        console.log('No orders to display.');
     }
 }
 
 
-// Function to load more orders
 async function loadMore() {
     if (isLoading) return;
     isLoading = true;
@@ -149,15 +166,12 @@ async function loadMore() {
     isLoading = false;
 }
 
-// Load initial set of orders when the window loads
 window.onload = async () => {
     await loadMore();
 };
 
-// Load more orders when scrolling near the bottom of the page
 window.addEventListener('scroll', () => {
     if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 100 && !isLoading) {
         loadMore();
     }
 });
-

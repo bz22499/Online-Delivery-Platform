@@ -63,11 +63,14 @@ async function populateOrders(ordersData) {
                 const orderItem = document.createElement('div');
                 orderItem.className = 'order-item';
 
-                const orderInfo = document.createElement('div');
-                orderInfo.textContent = `Order ID: ${order.id}`;
-                orderItem.appendChild(orderInfo);
+            // Get user address details from the order
+            const userAddress = order.userAddress ? `Street: ${order.userAddress.street}, Postcode: ${order.userAddress.postCode}` : 'N/A';
 
-                gridContainer.appendChild(orderItem);
+            const orderInfo = document.createElement('div');
+            orderInfo.textContent = `Order ID: ${order.id}, User Address: ${userAddress}`;
+            orderItem.appendChild(orderInfo);
+
+            gridContainer.appendChild(orderItem);
 
                 // Fetch baskets associated with the order
                 const baskets = await fetchBasketsByOrder(order.id);
@@ -79,7 +82,7 @@ async function populateOrders(ordersData) {
                         for (const basketItem of basketItems) {
                             const menuItem = basketItem.menuItem;
                             const vendorAddress = await fetchVendorAddress(menuItem.vendor.email);
-                            const addressDetails = vendorAddress ? `Street: ${vendorAddress.street}, Postcode: ${vendorAddress.postCode}` : 'N/A';
+                            const addressDetails = vendorAddress ? `Vendor Street: ${vendorAddress.street}, Vendor Postcode: ${vendorAddress.postCode}` : 'N/A';
                             const totalPrice = menuItem ? (menuItem.price * basketItem.quantity).toFixed(2) : 'N/A';
                             const basketItemInfo = document.createElement('li');
                             basketItemInfo.textContent = `Basket ID: ${basket.id}, Basket Item ID: ${basketItem.id}, Menu Item Name: ${menuItem.name}, Quantity: ${basketItem.quantity}, Price per Item: ${menuItem.price.toFixed(2)}, Total Price: ${totalPrice}, Address: ${addressDetails}`;
