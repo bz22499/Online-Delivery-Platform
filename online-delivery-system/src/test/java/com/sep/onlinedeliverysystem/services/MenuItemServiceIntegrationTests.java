@@ -16,7 +16,6 @@ import com.sep.onlinedeliverysystem.domain.entities.MenuItem;
 import com.sep.onlinedeliverysystem.domain.entities.Vendor;
 import com.sep.onlinedeliverysystem.domain.entities.Order;
 
-//findByVendorEmail, findByDeleteIsFalse, findByDeleteIsTrue, findByDeleteIsFalseAndVendorEmail
 
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
@@ -35,7 +34,6 @@ public class MenuItemServiceIntegrationTests {
 
     @Test
     public void testFindAll() {
-        // Create some menu items
         Vendor vendor = TestUtil.vendorBuild1();
         vendorService.save(vendor);
         MenuItem menuItem1 = TestUtil.menuItemBuilder1(vendor);
@@ -43,7 +41,6 @@ public class MenuItemServiceIntegrationTests {
         menuItemService.save(menuItem1);
         menuItemService.save(menuItem2);
 
-        // Retrieve all menu items from the service
         List<MenuItem> menuItems = menuItemService.findAll();
 
         assertThat(menuItems).containsExactly(menuItem1, menuItem2);
@@ -51,7 +48,6 @@ public class MenuItemServiceIntegrationTests {
 
     @Test
     public void testFindByVendorEmail() {
-        // Create a vendor and associated menu items
         Vendor vendor = TestUtil.vendorBuild1();
         vendorService.save(vendor);
         MenuItem menuItem1 = TestUtil.menuItemBuilder1(vendor);
@@ -59,7 +55,6 @@ public class MenuItemServiceIntegrationTests {
         menuItemService.save(menuItem1);
         menuItemService.save(menuItem2);
 
-        // Retrieve menu items by vendor email
         List<MenuItem> menuItems = menuItemService.findByVendorEmail(vendor.getEmail());
 
         assertThat(menuItems).containsExactly(menuItem1, menuItem2);
@@ -67,7 +62,6 @@ public class MenuItemServiceIntegrationTests {
 
     @Test
     public void testFindByDeleteIsFalse() {
-        // Create some menu items with delete flag false
         Vendor vendor = TestUtil.vendorBuild1();
         vendorService.save(vendor);
         MenuItem menuItem1 = TestUtil.menuItemBuilder1(vendor);
@@ -75,7 +69,6 @@ public class MenuItemServiceIntegrationTests {
         menuItemService.save(menuItem1);
         menuItemService.save(menuItem2);
 
-        // Retrieve menu items with delete flag false
         List<MenuItem> menuItems = menuItemService.findByDeleteIsFalse();
 
         assertThat(menuItems).containsExactly(menuItem1, menuItem2);
@@ -83,7 +76,6 @@ public class MenuItemServiceIntegrationTests {
 
     @Test
     public void testFindByDeleteIsTrue() {
-        // Create some menu items with delete flag true
         Vendor vendor = TestUtil.vendorBuild1();
         vendorService.save(vendor);
         MenuItem menuItem1 = TestUtil.menuItemBuilder1(vendor);
@@ -93,7 +85,6 @@ public class MenuItemServiceIntegrationTests {
         menuItemService.save(menuItem1);
         menuItemService.save(menuItem2);
 
-        // Retrieve menu items with delete flag true
         List<MenuItem> menuItems = menuItemService.findByDeleteIsTrue();
 
         assertThat(menuItems).containsExactly(menuItem1, menuItem2);
@@ -101,7 +92,6 @@ public class MenuItemServiceIntegrationTests {
 
     @Test
     public void testFindByDeleteIsFalseAndVendorEmail() {
-        // Create a vendor and associated menu items with delete flag false
         Vendor vendor = TestUtil.vendorBuild1();
         vendorService.save(vendor);
         MenuItem menuItem1 = TestUtil.menuItemBuilder1(vendor);
@@ -109,7 +99,6 @@ public class MenuItemServiceIntegrationTests {
         menuItemService.save(menuItem1);
         menuItemService.save(menuItem2);
 
-        // Retrieve menu items by vendor email with delete flag false
         List<MenuItem> menuItems = menuItemService.findByDeleteIsFalseAndVendorEmail(vendor.getEmail());
 
         assertThat(menuItems).containsExactly(menuItem1, menuItem2);
