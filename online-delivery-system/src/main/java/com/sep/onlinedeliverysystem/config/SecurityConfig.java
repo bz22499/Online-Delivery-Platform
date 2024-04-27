@@ -59,7 +59,7 @@ public class SecurityConfig extends GlobalAuthenticationConfigurerAdapter {
                 .authorizeHttpRequests((authorize) ->
                         authorize
                                 .requestMatchers("/profile/**", "/checkout/**").hasAuthority("USER")
-                                .requestMatchers("/vendoritems/**", "/vendor/**", "/vendorProfile/**", "/ordersForVendors/**").hasAuthority("VENDOR")
+                                .requestMatchers("vendorAddItems", "/vendorEditItems/**", "/vendor/**", "/vendorProfile/**", "/ordersForVendors/**").hasAuthority("VENDOR")
                                 .requestMatchers("/driverMain/**", "/driverProfile", "/ordersForDrivers").hasAuthority("DRIVER")
                                 .requestMatchers("/home/**", "/order/**").hasAnyAuthority("USER", "ROLE_ANONYMOUS") // Deny access to /home for vendors
                                 .anyRequest().permitAll()
@@ -101,7 +101,7 @@ public class SecurityConfig extends GlobalAuthenticationConfigurerAdapter {
             protected void handle(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
                 Set<String> roles = AuthorityUtils.authorityListToSet(authentication.getAuthorities());
                 if (roles.contains("VENDOR")) {
-                    response.sendRedirect("/vendor");
+                    response.sendRedirect("/vendoradditems");
                 }else if (roles.contains("DRIVER")) {
                     response.sendRedirect("/driverMain");
                 }else {

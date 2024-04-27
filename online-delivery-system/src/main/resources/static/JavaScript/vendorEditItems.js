@@ -7,7 +7,7 @@ async function fetchItemsForLoggedInVendor(vendorId) {
         const data = await response.json();
         return data;
     } catch (error) {
-        console.error('Error fetching item data:', error);
+        alert('Error fetching item data: ', error);
     }
 }
 
@@ -20,54 +20,42 @@ async function fetchVendorFromVendorId(vendorId){
         const data = await response.json();
         return data;
     } catch (error) {
-        console.error('Error fetching item data:', error);
+        console.error('Error fetching vendor data: ', error);
     }
 }
 
 function deleteItemForVendor(itemId){
-    // Define the info/piece of body that will be sent to back end (payload)
+ 
     const payload = {
         delete: true
     }
 
-    fetch('/menuItems/' + itemId.toString(), {
+    fetch(`/menuItems/${itemId}`, {
         method: 'PATCH',
         headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify(payload)
     })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }else{
-                //it is ok so we delete image
-                deleteFile("_"+itemId.toString()+"_.jpg");
-            }
-        })
-        .then(data => {
-        })
-        .catch(error => {
-            // Handle errors that occur during the request
-            alert('There was a problem with your fetch operation:' + error.toString());
-        });
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error deleting item. Status: ${response.status}`);
+        }else{
+            deleteFile("_"+itemId.toString()+"_.jpg");
+        }
+    })
+    .catch(error => {
+        alert('Error deleting menu item: ', error);
+    });
 }
 
 function deleteFile(filename) {
     fetch('/delete?filename=' + encodeURIComponent(filename), {
         method: 'DELETE'
     })
-        .then(response => {
-            if (response.ok) {
-                console.log('File deleted successfully');
-            } else {
-                alert("Image failed to delete")
-            }
-        })
-        .catch(error => {
-            console.error('Error deleting file:', error);
-            // Handle error
-        });
+    .catch(error => {
+        alert('Error deleting file:', error);
+    });
 }
 
 async function submitFormClicked(name, price, description,itemID,itemTitle,itemDescription,itemFooter){
@@ -78,18 +66,17 @@ async function submitFormClicked(name, price, description,itemID,itemTitle,itemD
     let valid = /^(\$|)([0-9]\d{0,2}(\,\d{3})*|([0-9]\d*))(\.\d{2})?$/.test(price)
 
     if(!valid){
-        alert("Price was not in correct format") //if it is not valid explain why
+        alert("Invalid price.") 
     }else{
         if(price > 10000){
             valid = false
-            alert("Price of item exceeded maximum price of 10000")
         }
     }
 
     if(valid){
         if(name.toString() === "" || description.toString() === "" || price.toString() === ""){
             valid = false
-            alert("A field was left empty");
+            alert("Please complete all the fields.");
         }
     }
 
@@ -110,19 +97,14 @@ async function submitFormClicked(name, price, description,itemID,itemTitle,itemD
         })
             .then(response => {
                 if (!response.ok) {
-                    throw new Error('Network response was not ok');
+                    throw new Error('Error updating item: ', response);
                 }
                 return response.json();
             })
-            .catch(error => {
-                console.error('There was a problem with the fetch operation:', error);
-            });
-
+            
         itemTitle.textContent = name;
         itemFooter.textContent = "£"+ price;
         itemDescription.textContent = description;
-    }else{
-        alert("FORM INCORRECTLY FILLED OUT")
     }
 
 
@@ -141,15 +123,12 @@ function populateGrid(pageData) {
         const gridItem = document.createElement('div');
         gridItem.className = 'grid-item';
 
-        //grid item contains 2 parts the form and the infomation
         const gridItemInfo = document.createElement('div');
         gridItemInfo.className = 'grid-item-info';
 
-        //content is within information this will be a flex box
         const gridItemContent = document.createElement('div');
         gridItemContent.className = 'grid-item-content';
 
-        //image handling is also in content
         const imageHandling = document.createElement('div');
         imageHandling.className = "grid-item-image-box";
 
@@ -164,7 +143,6 @@ function populateGrid(pageData) {
 
         var ImgUrl = "uploads/" + "_" + item.id + "_.jpg";
 
-        //now i just need an edit button
         const editImageSymbolContainer = document.createElement('label');
         editImageSymbolContainer.htmlFor = "imageInput"+item.id;
         editImageSymbolContainer.className = 'edit-profile-button'
@@ -182,7 +160,6 @@ function populateGrid(pageData) {
 
         gridItemContent.appendChild(imageHandling)
 
-        //text is within content this will also be a flex box for the title description and footer
         const gridItemText = document.createElement('div');
         gridItemText.className = 'grid-item-text';
 
@@ -205,7 +182,6 @@ function populateGrid(pageData) {
         gridItemContent.appendChild(gridItemText);
 
 
-        //symbols is also contained in content
         const symbols = document.createElement('div');
         symbols.className = 'symbols-container';
 
@@ -238,12 +214,10 @@ function populateGrid(pageData) {
 
         gridItem.appendChild(gridItemInfo);
 
-        //grid item contains 2 parts the form and the infomation
         const gridFormContainer = document.createElement('div');
         gridFormContainer.className = 'grid-form-container';
 
 
-        //elements inside the form will be fields that can be changed upon clicking the edit button
         const gridItemForm = document.createElement('form');
         gridItemForm.className = "grid-item-form"
         gridFormContainer.appendChild(gridItemForm);
@@ -294,7 +268,6 @@ function populateGrid(pageData) {
         });
 
 
-        //functionality for profile picture change
         profileButton.addEventListener('change', function(event) {
             const file = event.target.files[0];
             const reader = new FileReader();
@@ -332,7 +305,6 @@ document.addEventListener('DOMContentLoaded', async function () {
     if (proceedButton) {
         proceedButton.addEventListener('click', function() {
             console.log("Button clicked");
-            // window.location.href = '/checkout'; // Navigate to checkout page
         });
     }
 
@@ -359,7 +331,6 @@ function updateItemPicture(file, itemID, callback){
 
     var submitForm = true;
 
-    //for now only accept jpegs until i can change database
     if(fileExtension !=='.jpg'){
         submitForm = false;
     }
@@ -374,7 +345,7 @@ function updateItemPicture(file, itemID, callback){
                     callback(true);
                 }
             } else {
-                alert("FAILED ensure <1MB");
+                alert("Failed. Ensure file is under 1MB");
 
                 if (callback) {
                     callback(false);
@@ -384,7 +355,7 @@ function updateItemPicture(file, itemID, callback){
         xhr.send(formData);
 
     }else{
-        alert("JPEG ONLY");
+        alert("Please upload file in jpeg format.");
         if (callback) {
             callback(false);
         }

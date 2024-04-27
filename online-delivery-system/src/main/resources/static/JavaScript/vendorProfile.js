@@ -62,7 +62,6 @@ function saveProfile() {
     })
         .then(response => {
             if (response.ok) {
-                alert("Profile updated successfully");
                 document.querySelector('.name').innerText = name;
                 document.querySelector('.description').innerText = description;
                 returnToProfile();
@@ -195,7 +194,6 @@ function saveAddress() {
                 })
                 .then(response => {
                     if (response.ok) {
-                        alert("Address updated successfully");
                         // Hide the address fields
                         document.getElementById('address-fields').style.display = 'none';
                         // Show the "Edit Address" button
@@ -260,14 +258,14 @@ function uploadImage(file){
         xhr.onload = function() {
             if (xhr.status === 200) {
             } else {
-                alert("FAILED ensure file is < 1MB");
+                alert("Failed. Ensure file is under 1MB");
             }
         };
         xhr.send(formData);
 
         updateURLOnDataBase(fileName)
     }else{
-        alert("Please use jpeg, png or gif");
+        alert("Please upload file in jpeg, png or gif format.");
     }
 
 
@@ -296,7 +294,15 @@ function updateURLOnDataBase(fileName){
         })
         .catch(error => {
             console.error('Error updating profile:', error);
-            alert("Failed to update profile 123456");
+            alert("Failed to update profile");
         });
 
 }
+
+document.addEventListener('DOMContentLoaded', function () {
+    const logoutButton = document.querySelector("#logout");
+    logoutButton.addEventListener('click', function() {
+        sessionStorage.clear();
+        window.location.href='/logout';
+    })
+})
