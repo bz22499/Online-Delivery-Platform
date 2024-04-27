@@ -51,7 +51,7 @@ public class MenuItemServiceIntegrationTests {
 
     @Test
     public void testFindByVendorEmail() {
-        // Create a vendor and associated menu items for testing
+        // Create a vendor and associated menu items
         Vendor vendor = TestUtil.vendorBuild1();
         vendorService.save(vendor);
         MenuItem menuItem1 = TestUtil.menuItemBuilder1(vendor);
@@ -62,13 +62,12 @@ public class MenuItemServiceIntegrationTests {
         // Retrieve menu items by vendor email
         List<MenuItem> menuItems = menuItemService.findByVendorEmail(vendor.getEmail());
 
-        // Assert that the retrieved menu items match the expected ones
         assertThat(menuItems).containsExactly(menuItem1, menuItem2);
     }
 
     @Test
     public void testFindByDeleteIsFalse() {
-        // Create some menu items with delete flag false for testing
+        // Create some menu items with delete flag false
         Vendor vendor = TestUtil.vendorBuild1();
         vendorService.save(vendor);
         MenuItem menuItem1 = TestUtil.menuItemBuilder1(vendor);
@@ -79,13 +78,12 @@ public class MenuItemServiceIntegrationTests {
         // Retrieve menu items with delete flag false
         List<MenuItem> menuItems = menuItemService.findByDeleteIsFalse();
 
-        // Assert that the retrieved menu items match the expected ones
         assertThat(menuItems).containsExactly(menuItem1, menuItem2);
     }
 
     @Test
     public void testFindByDeleteIsTrue() {
-        // Create some menu items with delete flag true for testing
+        // Create some menu items with delete flag true
         Vendor vendor = TestUtil.vendorBuild1();
         vendorService.save(vendor);
         MenuItem menuItem1 = TestUtil.menuItemBuilder1(vendor);
@@ -98,13 +96,12 @@ public class MenuItemServiceIntegrationTests {
         // Retrieve menu items with delete flag true
         List<MenuItem> menuItems = menuItemService.findByDeleteIsTrue();
 
-        // Assert that the retrieved menu items match the expected ones
         assertThat(menuItems).containsExactly(menuItem1, menuItem2);
     }
 
     @Test
     public void testFindByDeleteIsFalseAndVendorEmail() {
-        // Create a vendor and associated menu items with delete flag false for testing
+        // Create a vendor and associated menu items with delete flag false
         Vendor vendor = TestUtil.vendorBuild1();
         vendorService.save(vendor);
         MenuItem menuItem1 = TestUtil.menuItemBuilder1(vendor);
@@ -115,7 +112,6 @@ public class MenuItemServiceIntegrationTests {
         // Retrieve menu items by vendor email with delete flag false
         List<MenuItem> menuItems = menuItemService.findByDeleteIsFalseAndVendorEmail(vendor.getEmail());
 
-        // Assert that the retrieved menu items match the expected ones
         assertThat(menuItems).containsExactly(menuItem1, menuItem2);
     }
 
