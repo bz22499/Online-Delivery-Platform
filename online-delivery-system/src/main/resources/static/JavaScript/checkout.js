@@ -155,8 +155,6 @@ async function updateOrderAddress(){
         status: "PAID"
     };
 
-    alert(orderId);
-
     await fetch('/orders/' + orderId, {
         method: 'PATCH',
         headers: {
@@ -165,7 +163,6 @@ async function updateOrderAddress(){
         body: JSON.stringify(updatedOrderData)
     })
         .then(response => {
-            alert(response.status);
             if (!response.ok) {
                 if (response.status === 404) {
                     console.error('Order not found.');
@@ -177,10 +174,9 @@ async function updateOrderAddress(){
             return response.json();
         })
         .then(updatedOrder => {
-            alert("UPDATED ORDER");
         })
         .catch(error => {
-            alert("FAILED");
+            console.log("failed");
         });
 
 
