@@ -77,7 +77,6 @@ function saveProfile() {
     })
         .then(response => {
             if (response.ok) {
-                alert("Profile updated successfully");
                 document.querySelector('.firstName').innerText = firstName;
                 document.querySelector('.lastName').innerText = lastName;
                 returnToProfile();
@@ -208,7 +207,6 @@ function saveAddress() {
                 })
                 .then(response => {
                     if (response.ok) {
-                        alert("Address updated successfully");
                         // Hide the address fields
                         document.getElementById('address-fields').style.display = 'none';
                         // Show the "Edit Address" button

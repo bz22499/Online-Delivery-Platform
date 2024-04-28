@@ -62,10 +62,10 @@ async function createVendor(){
     if(valid){
         valid = await checkEmailAddressNotUsed(email);
         if(!valid){
-            alert("email address already in use");
+            alert("Email address already in use");
         }
     }else{
-        alert("Form was not correctly filled in")
+        alert("Form was not correctly filled in.")
     }
 
 
@@ -148,7 +148,7 @@ function authenticateUser(email, password, isVendor, isDriver) {
             if(response.ok) {
                 // Redirect the user after successful authentication
                 if(isVendor) {
-                    window.location.href = '/vendor';
+                    window.location.href = '/vendoradditems';
                 } else if (isDriver) {
                     window.location.href = '/driverMain';
                 } else {

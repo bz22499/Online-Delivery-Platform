@@ -1,12 +1,8 @@
 package com.sep.onlinedeliverysystem.controller;
 
-import com.sep.onlinedeliverysystem.domain.entities.Driver;
-import com.sep.onlinedeliverysystem.domain.entities.User;
-import com.sep.onlinedeliverysystem.domain.entities.Vendor;
-import com.sep.onlinedeliverysystem.services.DriverService;
-import com.sep.onlinedeliverysystem.services.UserService;
-import com.sep.onlinedeliverysystem.services.VendorService;
-import jakarta.servlet.http.HttpServletRequest;
+import java.security.Principal;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -14,11 +10,17 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
-import java.security.Principal;
-import java.util.Optional;
+import com.sep.onlinedeliverysystem.domain.entities.Driver;
+import com.sep.onlinedeliverysystem.domain.entities.User;
+import com.sep.onlinedeliverysystem.domain.entities.Vendor;
+import com.sep.onlinedeliverysystem.services.DriverService;
+import com.sep.onlinedeliverysystem.services.UserService;
+import com.sep.onlinedeliverysystem.services.VendorService;
 
 @Controller
 public class WebController {
@@ -48,10 +50,10 @@ public class WebController {
     }
 
 
-    @GetMapping("/vendor") //Read all from current user functionality
+    @GetMapping("/vendoradditems")
     public String getVendorPage(Principal principal, Model model) {
         if (principal != null) {
-            String loggedInUserEmail = principal.getName(); // Retrieves the email/id of the currently logged-in user
+            String loggedInUserEmail = principal.getName();
             Optional<Vendor> vendor = vendorService.findOne(loggedInUserEmail);
 
             if (vendor.isPresent()) {
@@ -59,13 +61,12 @@ public class WebController {
                 model.addAttribute("name", vendor.get().getName());
                 model.addAttribute("description", vendor.get().getDescription());
                 model.addAttribute("rating", vendor.get().getRating());
-                return "vendor";
+                return "vendorAddItems";
             } else {
                 return "notFound";
             }
         } else {
-            // Handle the case when no user is logged in
-            return "login"; // Redirect to the login page
+            return "login";
         }
     }
 
@@ -95,9 +96,9 @@ public class WebController {
         return "driverSignUp";
     }
 
-    @GetMapping("/restaurantlogin")
+    @GetMapping("/vendorsignup")
     public String restaurant() {
-        return "restaurantSignUp";
+        return "vendorSignUp";
     }
 
     @GetMapping("/login")
@@ -243,7 +244,7 @@ public class WebController {
         }
     }
 
-    @GetMapping("/{email}/menu-page")
+    @GetMapping("/{email}/menuPage")
     public String getMenuPage(@PathVariable("email") String email, Model model, Principal principal) {
         Optional<Vendor> vendor = vendorService.findOne(email);
         Optional<User> user = Optional.empty(); // Declare user variable outside the block
@@ -260,13 +261,13 @@ public class WebController {
             if (user.isPresent()){
                 model.addAttribute("userId", user.get().getEmail());
             }
-            return "menu-page";
+            return "menuPage";
         } else {
             return "notFound";
         }
     }
 
-    @GetMapping("/vendoritems") //Read all from current user functionality
+    @GetMapping("/vendoredititems") //Read all from current user functionality
     public String getVendorItemsPage(Principal principal, Model model) {
         if (principal != null) {
             String loggedInUserEmail = principal.getName(); // Retrieves the email/id of the currently logged-in user
@@ -277,7 +278,7 @@ public class WebController {
                 model.addAttribute("name", vendor.get().getName());
                 model.addAttribute("description", vendor.get().getDescription());
                 model.addAttribute("rating", vendor.get().getRating());
-                return "vendoritems";
+                return "vendoredititems";
             } else {
                 return "notFound";
             }
