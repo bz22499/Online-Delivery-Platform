@@ -1,14 +1,7 @@
 package com.sep.onlinedeliverysystem.controllers;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sep.onlinedeliverysystem.TestUtil;
-import com.sep.onlinedeliverysystem.domain.entities.*;
-import com.sep.onlinedeliverysystem.domain.entities.MenuItem;
-import com.sep.onlinedeliverysystem.repositories.BasketRepository;
-import com.sep.onlinedeliverysystem.repositories.MenuItemRepository;
-import com.sep.onlinedeliverysystem.repositories.OrderRepository;
-import com.sep.onlinedeliverysystem.repositories.VendorRepository;
-import com.sep.onlinedeliverysystem.services.BasketItemService;
+import static org.hamcrest.Matchers.hasSize;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +13,19 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-import static org.hamcrest.Matchers.hasSize;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sep.onlinedeliverysystem.TestUtil;
+import com.sep.onlinedeliverysystem.domain.entities.Basket;
+import com.sep.onlinedeliverysystem.domain.entities.BasketItem;
+import com.sep.onlinedeliverysystem.domain.entities.MenuItem;
+import com.sep.onlinedeliverysystem.domain.entities.Order;
+import com.sep.onlinedeliverysystem.domain.entities.Vendor;
+import com.sep.onlinedeliverysystem.repositories.BasketRepository;
+import com.sep.onlinedeliverysystem.repositories.MenuItemRepository;
+import com.sep.onlinedeliverysystem.repositories.OrderRepository;
+import com.sep.onlinedeliverysystem.repositories.VendorRepository;
+import com.sep.onlinedeliverysystem.services.BasketItemService;
 
 
 @SpringBootTest
@@ -271,7 +276,8 @@ public class BasketItemControllerIntegrationTests {
         menuItemRepository.save(testMenuItem);
         BasketItem basketItem = TestUtil.basketItemBuilder(testBasket, testMenuItem, 1);
         basketItemService.save(basketItem);
-        BasketItem basketItemUpdated = TestUtil.basketItemBuilder(testBasket, testMenuItem, 1);
+        BasketItem basketItemUpdated = TestUtil.basketItemBuilder(testBasket, testMenuItem, 2);
+        basketItemUpdated.setId(basketItem.getId());
         String basketItemUpdatedDTOJson = objectMapper.writeValueAsString(basketItemUpdated);
         mockMvc.perform(
                 MockMvcRequestBuilders.patch("/basketItems/" + basketItem.getId())
@@ -305,33 +311,34 @@ public class BasketItemControllerIntegrationTests {
         );
     }
 
-//    @Test
-//    public void partialUpdateUpdatesItem() throws Exception {
-//        Order testOrder = TestUtil.orderBuilder();
-//        orderRepository.save(testOrder); // this generates the id for order object
-//        Basket testBasket = TestUtil.basketBuilder(testOrder);
-//        basketRepository.save(testBasket);
-//        // Create MenuItem (needs vendor)
-//        Vendor testVendor = TestUtil.vendorBuild1();
-//        vendorRepository.save(testVendor);
-//        MenuItem testMenuItem1 = TestUtil.menuItemBuilder1(testVendor);
-//        MenuItem testMenuItem2 = TestUtil.menuItemBuilder2(testVendor);
-//        menuItemRepository.save(testMenuItem1);
-//        menuItemRepository.save(testMenuItem2);
-//        BasketItem basketItem = TestUtil.basketItemBuilder(testBasket, testMenuItem1, 1);
-//        basketItemService.save(basketItem);
-//        BasketItem basketItemUpdated = TestUtil.basketItemBuilder(testBasket, testMenuItem2, 1);
-//        String basketItemUpdatedDTOJson = objectMapper.writeValueAsString(basketItemUpdated);
-//        mockMvc.perform(
-//                MockMvcRequestBuilders.put("/basketItems/" + basketItem.getId())
-//                        .contentType(MediaType.APPLICATION_JSON)
-//                        .content(basketItemUpdatedDTOJson)
-//        ).andExpect(
-//                MockMvcResultMatchers.jsonPath("$.id").value(basketItem.getId())
-//        ).andExpect(
-//                MockMvcResultMatchers.jsonPath("$.menuItem.id").value(testMenuItem2.getId())
-//        );
-//    }
+   @Test
+   public void partialUpdateUpdatesItem() throws Exception {
+       Order testOrder = TestUtil.orderBuilder();
+       orderRepository.save(testOrder); // this generates the id for order object
+       Basket testBasket = TestUtil.basketBuilder(testOrder);
+       basketRepository.save(testBasket);
+       // Create MenuItem (needs vendor)
+       Vendor testVendor = TestUtil.vendorBuild1();
+       vendorRepository.save(testVendor);
+       MenuItem testMenuItem1 = TestUtil.menuItemBuilder1(testVendor);
+       MenuItem testMenuItem2 = TestUtil.menuItemBuilder2(testVendor);
+       menuItemRepository.save(testMenuItem1);
+       menuItemRepository.save(testMenuItem2);
+       BasketItem basketItem = TestUtil.basketItemBuilder(testBasket, testMenuItem1, 1);
+       basketItemService.save(basketItem);
+       BasketItem basketItemUpdated = TestUtil.basketItemBuilder(testBasket, testMenuItem1, 2);
+       basketItemUpdated.setId(basketItem.getId());
+       String basketItemUpdatedDTOJson = objectMapper.writeValueAsString(basketItemUpdated);
+       mockMvc.perform(
+               MockMvcRequestBuilders.put("/basketItems/" + basketItem.getId())
+                       .contentType(MediaType.APPLICATION_JSON)
+                       .content(basketItemUpdatedDTOJson)
+       ).andExpect(
+               MockMvcResultMatchers.jsonPath("$.id").value(basketItem.getId())
+       ).andExpect(
+               MockMvcResultMatchers.jsonPath("$.quantity").value(basketItemUpdated.getQuantity())
+       );
+   }
 
     @Test
     public void deleteBasketItemReturns204WhenItemNotExist() throws Exception {
