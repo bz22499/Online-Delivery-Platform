@@ -116,11 +116,6 @@ function populateAddressDropdown(addressData) {
     }
 }
 
-// Function to update address dropdown based on selection
-function updateDeliveryAddressFromDropdown() {
-    const selectedAddressId = document.getElementById('address-select').value;
-    // Fetch address details for the selected address ID and populate other fields if needed
-}
 
 document.addEventListener("DOMContentLoaded", async () => {
 
@@ -131,6 +126,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     payButton.addEventListener("click", async () => {
         await updateOrderAddress()
         alert("Getting redirected to payment");
+        sessionStorage.clear();
     });
 
     const backButton = document.getElementById('back-button');
@@ -146,7 +142,6 @@ async function updateOrderAddress(){
 
     const address = await addressObj.json();
 
-    //now we have the id of the address we need the id of the order
     const orderId = getOrderIdFromCache();
 
     const updatedOrderData = {

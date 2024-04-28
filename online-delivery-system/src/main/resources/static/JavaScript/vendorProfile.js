@@ -298,3 +298,11 @@ function updateURLOnDataBase(fileName){
         });
 
 }
+
+document.addEventListener('DOMContentLoaded', function () {
+    const logoutButton = document.querySelector("#logout");
+    logoutButton.addEventListener('click', function() {
+        sessionStorage.clear();
+        window.location.href='/logout';
+    })
+})
