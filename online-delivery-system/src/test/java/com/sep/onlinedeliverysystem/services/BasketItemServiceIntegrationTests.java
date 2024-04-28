@@ -22,4 +22,14 @@ public class BasketItemServiceIntegrationTests {
     private BasketItemService basketItemService;
 
 
+    @Autowired
+    public BasketItemServiceIntegrationTests(BasketService basketService, BasketItemService basketItemService) {
+        this.basketItemService = basketItemService;
+        this.basketService = basketService;
+    }
+
+    @Test
+    public void test(){
+
+    }
 }
