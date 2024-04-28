@@ -30,9 +30,14 @@ public class BasketServiceIntegrationTests {
     @Autowired
     private OrderRepository orderRepository;
 
+    @Autowired
+    public BasketServiceIntegrationTests(BasketService basketService, OrderRepository orderRepository) {
+        this.basketService = basketService;
+        this.orderRepository = orderRepository;
+    }
+
     @Test
     public void testFindByOrderIdReturnsCorrectOrder() {
-        // Given
         Order testOrder = TestUtil.orderBuilder();
         orderRepository.save(testOrder);
         Basket basket1 = TestUtil.basketBuilder(testOrder);
@@ -42,10 +47,8 @@ public class BasketServiceIntegrationTests {
         Basket basket3 = TestUtil.basketBuilder(testOrder);
         basketService.save(basket3);
 
-        // When
         List<Basket> basketsFound = basketService.findByOrder(testOrder.getId());
 
-        // Then
         assertThat(basketsFound).isNotNull();
         assertThat(basketsFound).hasSize(3);
     }
