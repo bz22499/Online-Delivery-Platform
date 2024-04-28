@@ -5,6 +5,8 @@ function isValidPostcode(postcode) {
 }
 
 async function createCustomer(){
+    const registerButton = document.getElementById("registerButton");
+    registerButton.disabled = true;
     let firstName = document.getElementById("firstName").value;
     let lastName = document.getElementById("lastName").value;
     let password = document.getElementById("password").value
@@ -18,12 +20,14 @@ async function createCustomer(){
     // Validate address fields
     if (!firstName || !lastName || !password || !email || !street || !city || !postCode || !country) {
         alert("Please fill in all fields.");
+        registerButton.disabled = false
         return;
     }
 
     // Validate postcode
     if (!isValidPostcode(postCode)) {
         alert("Please enter a valid UK postcode.");
+        registerButton.disabled = false
         return;
     }
 
@@ -40,10 +44,14 @@ async function createCustomer(){
     if(valid){
         valid = await checkEmailAddressNotUsed(email);
         if(!valid){
-            alert("email address already in use");
+            alert("Email address already in use");
+            registerButton.disabled = false
+            return
         }
     }else{
         alert("Form was not correctly filled in")
+        registerButton.disabled = false
+        return
     }
 
     try {
@@ -60,7 +68,6 @@ async function createCustomer(){
                 email: email
             })
         });
-        const userData = await userResponse.json();
 
         // create the address associated with the user
         const addressResponse = await fetch('/addresses', {
@@ -76,16 +83,17 @@ async function createCustomer(){
                 country: country
             })
         });
-        const addressData = await addressResponse.json();
-
         // Once both user and address are created, authenticate the user
         authenticateUser(email, password, false, false);
     } catch (error) {
         console.error('Error:', error);
+        registerButton.disabled = false
     }
 }
 
 async function createVendor(){
+    const registerButton = document.getElementById("registerButton");
+    registerButton.disabled = true;
     let name = document.getElementById("username").value;
     let password = document.getElementById("password").value
     let email = document.getElementById("email").value
@@ -98,12 +106,14 @@ async function createVendor(){
     // Validate address fields
     if (!name || !password || !email || !street || !city || !postCode || !country) {
         alert("Please fill in all fields.");
+        registerButton.disabled = false 
         return;
     }
 
     // Validate postcode
     if (!isValidPostcode(postCode)) {
         alert("Please enter a valid UK postcode.");
+        registerButton.disabled = false
         return;
     }
 
@@ -121,9 +131,13 @@ async function createVendor(){
         valid = await checkEmailAddressNotUsed(email);
         if(!valid){
             alert("Email address already in use");
+            registerButton.disabled = false
+            return
         }
     }else{
         alert("Form was not correctly filled in.")
+        registerButton.disabled = false
+        return
     }
 
     try {
@@ -139,7 +153,6 @@ async function createVendor(){
                 email: email
             })
         });
-        const vendorData = await userResponse.json();
 
         // create the address associated with the user
         const addressResponse = await fetch('/vendorAddresses', {
@@ -155,16 +168,17 @@ async function createVendor(){
                 country: country
             })
         });
-        const vendorAddressData = await addressResponse.json();
-
         // Once both user and address are created, authenticate the user
         authenticateUser(email, password, true, false);
     } catch (error) {
         console.error('Error:', error);
+        registerButton.disabled = false;
     }
 }
 
 async function createDriver(){
+    const registerButton = document.getElementById("registerButton");
+    registerButton.disabled = true
     let name = document.getElementById("username").value;
     let password = document.getElementById("password").value
     let email = document.getElementById("email").value
@@ -183,15 +197,19 @@ async function createDriver(){
     if(valid){
         valid = await checkEmailAddressNotUsed(email);
         if(!valid){
-            alert("email address already in use");
+            alert("Email address already in use");
+            registerButton.disabled = false
+            return
         }
     } else {
         alert("Form was not correctly filled in")
+        registerButton.disabled = false
+        return
     }
 
     if(valid){
         // Send data to the backend
-        fetch('/drivers', {
+        await fetch('/drivers', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -205,6 +223,7 @@ async function createDriver(){
             })
             .catch(error => {
                 console.error('Error:', error);
+                registerButton.disabled = false
             });
     }
 }
@@ -259,12 +278,25 @@ async function checkEmailAddressNotUsed(email) {
             valid = false;
         }
 
-        // TODO: Once we have driver controller, check email address for drivers also!!!
+        const response3 = await fetch('drivers/' + email);
+        if (!response3.ok) {
+            if (response3.status !== 404) {
+                throw new Error('Network response was not ok');
+            }
+        } else {
+            valid = false;
+        }
 
         //if it gets here it means all fetch requests had response status not found hence email address is not used
         return valid;
     } catch (error) {
+        alert("THERE WAS AN ERROR");
         console.error('Error:', error);
         return valid;
     }
 }
+
+document.addEventListener('DOMContentLoaded', function() {
+    const signupButton = document.getElementById("registerButton");
+    signupButton.disabled = false;
+});

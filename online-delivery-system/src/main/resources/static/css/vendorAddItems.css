@@ -115,3 +115,8 @@ button {
 button:hover {
   background-color: gray;
 }
+
+button:disabled {
+  background-color: gray;
+  cursor: wait;
+}

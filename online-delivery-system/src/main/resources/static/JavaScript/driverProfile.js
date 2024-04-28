@@ -28,6 +28,11 @@ function returnToProfile() {
 
 
 function saveProfile() {
+    const saveButton = document.getElementById("saveProfileChanges");
+    saveButton.disabled = true;
+    const cancelButton = document.getElementById("cancelProfileChanges");
+    cancelButton.disabled = true;
+
     var driverId = document.getElementById('driverId').value;
     var currentPassword = document.getElementById('current-password').value;
     var name = document.getElementById('new-name').value;
@@ -36,6 +41,8 @@ function saveProfile() {
 
     // Ensure both password fields match
     if (newPassword !== confirmPassword) {
+        saveButton.disabled = false;
+        cancelButton.disabled = false;
         alert("Passwords do not match");
         return;
     }
@@ -65,13 +72,18 @@ function saveProfile() {
 
                 returnToProfile();
             } else if (response.status === 401) {
-                // Unauthorized, display invalid password alert
+                saveButton.disabled = false;
+                cancelButton.disabled = false;
                 alert("Invalid password");
             } else {
+                saveButton.disabled = false;
+                cancelButton.disabled = false;
                 throw new Error('Failed to update profile');
             }
         })
         .catch(error => {
+            saveButton.disabled = false;
+            cancelButton.disabled = false;
             console.error('Error updating profile:', error);
             alert("Failed to update profile");
         });
