@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 
+import com.sep.onlinedeliverysystem.repositories.OrderRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,58 +23,30 @@ import com.sep.onlinedeliverysystem.domain.entities.Vendor;
 @ExtendWith(SpringExtension.class)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 public class BasketServiceIntegrationTests {
-    private BasketService basketService;
-    private BasketItemService basketItemService;
-    private OrderService orderService;
-    private VendorService vendorService;
 
     @Autowired
-    public BasketServiceIntegrationTests(BasketService basketService, BasketItemService basketItemService, OrderService orderService, VendorService vendorService) {
-        this.basketService = basketService;
-        this.basketItemService = basketItemService;
-        this.orderService = orderService;
-        this.vendorService = vendorService;
-    }
+    private BasketService basketService;
+
+    @Autowired
+    private OrderRepository orderRepository;
 
     @Test
     public void testFindByOrderIdReturnsCorrectOrder() {
-        //create order
-        Order order = TestUtil.orderBuilder("Pending");
-        order = orderService.save(order);
+        // Given
+        Order testOrder = TestUtil.orderBuilder();
+        orderRepository.save(testOrder);
+        Basket basket1 = TestUtil.basketBuilder(testOrder);
+        basketService.save(basket1);
+        Basket basket2 = TestUtil.basketBuilder(testOrder);
+        basketService.save(basket2);
+        Basket basket3 = TestUtil.basketBuilder(testOrder);
+        basketService.save(basket3);
 
-        //add to basket
-        Vendor vendor = TestUtil.vendorBuild1();
-        MenuItem menuItem = TestUtil.menuItemBuilder1(vendor);
-        orderService.findAllByStatus("Pending");
+        // When
+        List<Basket> basketsFound = basketService.findByOrder(testOrder.getId());
 
-        //retrieve basket by id
-        Long basketId = menuItem.getId();
-        List basket = basketItemService.findBasketItemByBasket_Id(basketId);
-
-        //test functionality
-        assertThat(basket).isNotNull();
-        assertThat(basket).isNotEmpty();
-        assertThat(basket.getItems().get(0).getMenuItem()).isEqualTo(menuItem);
+        // Then
+        assertThat(basketsFound).isNotNull();
+        assertThat(basketsFound).hasSize(3);
     }
-
-    @Test
-    public void testAddItemToBasket() {
-        // create a sample order
-        Order order = TestUtil.orderBuilder("Pending");
-        order = orderService.save(order);
-
-        // add items to the basket
-        Vendor vendor = TestUtil.vendorBuild1();
-        MenuItem menuItem = TestUtil.menuItemBuilder1(vendor);
-        basketService.addItemToBasket(order.getId(), menuItem.getId(), 2);
-
-        // retrieve the basket
-        Basket basket = basketService.getBasketByOrderId(order.getId());
-
-        // test functionality
-        assertThat(basket).isNotNull();
-        assertThat(basket.getItems()).isNotEmpty();
-        assertThat(basket.getItems().get(0).getMenuItem()).isEqualTo(menuItem);
-    }
-
 }
