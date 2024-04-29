@@ -3,6 +3,8 @@ package com.sep.onlinedeliverysystem.controller;
 import java.security.Principal;
 import java.util.Optional;
 
+import com.sep.onlinedeliverysystem.domain.entities.VendorAddress;
+import com.sep.onlinedeliverysystem.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -18,9 +20,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.sep.onlinedeliverysystem.domain.entities.Driver;
 import com.sep.onlinedeliverysystem.domain.entities.User;
 import com.sep.onlinedeliverysystem.domain.entities.Vendor;
-import com.sep.onlinedeliverysystem.services.DriverService;
-import com.sep.onlinedeliverysystem.services.UserService;
-import com.sep.onlinedeliverysystem.services.VendorService;
 
 @Controller
 public class WebController {
@@ -28,14 +27,17 @@ public class WebController {
     private final VendorService vendorService;
     private final DriverService driverService;
     private final UserService userService;
-
+    private final UserAddressService userAddressService;
+    private final VendorAddressService vendorAddressService;
     private AuthenticationManager authenticationManager;
 
     @Autowired
-    public WebController(VendorService vendorService, DriverService driverService, UserService userService, @Qualifier("customAuthenticationManager") AuthenticationManager authenticationManager) {
+    public WebController(VendorService vendorService, DriverService driverService, UserService userService,UserAddressService userAddressService ,VendorAddressService vendorAddressService ,@Qualifier("customAuthenticationManager") AuthenticationManager authenticationManager) {
         this.vendorService = vendorService;
         this.driverService = driverService;
         this.userService = userService;
+        this.userAddressService = userAddressService;
+        this.vendorAddressService = vendorAddressService;
         this.authenticationManager = authenticationManager;
     }
 
@@ -214,6 +216,16 @@ public class WebController {
                 model.addAttribute("rating", vendorObj.getRating());
                 model.addAttribute("password", vendorObj.getPassword());
                 model.addAttribute("imageURL",vendorObj.getImageUrl());
+
+                Optional<VendorAddress> vendorAddress = vendorAddressService.findByVendorEmail(vendorObj.getEmail());
+                if(vendorAddress.isPresent()){
+                    VendorAddress vendorAddressObj = vendorAddress.get();
+                    model.addAttribute("street", vendorAddressObj.getStreet());
+                    model.addAttribute("city", vendorAddressObj.getCity());
+                    model.addAttribute("country", vendorAddressObj.getCountry());
+                    model.addAttribute("postcode", vendorAddressObj.getPostCode());
+                }
+
                 return "vendorProfile";
             } else {
                 return "notFound";
