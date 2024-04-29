@@ -196,6 +196,7 @@ async function updateOrderAddress(){
             return response.json();
         })
         .then(updatedOrder => {
+            sessionStorage.clear();
         })
         .catch(error => {
             console.log("failed");
