@@ -81,11 +81,12 @@ async function populateOrders(ordersData) {
                         const basketItems = basket.basketItems;
                         for (const basketItem of basketItems) {
                             const menuItem = basketItem.menuItem;
-                            const vendorAddress = await fetchVendorAddress(menuItem.vendor.email);
+                            const vendor = menuItem.vendor;
+                            const vendorAddress = await fetchVendorAddress(vendor.email);
                             const addressDetails = vendorAddress ? `Vendor Street: ${vendorAddress.street}, Vendor Postcode: ${vendorAddress.postCode}` : 'N/A';
                             const totalPrice = menuItem ? (menuItem.price * basketItem.quantity).toFixed(2) : 'N/A';
                             const basketItemInfo = document.createElement('li');
-                            basketItemInfo.textContent = `Basket ID: ${basket.id}, Basket Item ID: ${basketItem.id}, Menu Item Name: ${menuItem.name}, Quantity: ${basketItem.quantity}, Price per Item: ${menuItem.price.toFixed(2)}, Total Price: ${totalPrice}, Address: ${addressDetails}`;
+                            basketItemInfo.textContent = `Basket ID: ${basket.id}, Vendor: ${vendor}, Vendor Address: ${vendorAddressDetails}, User Address: ${userAddressDisplay}, ${distanceDisplay}`;
                             basketList.appendChild(basketItemInfo);
                         }
                     }
