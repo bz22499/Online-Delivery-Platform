@@ -182,7 +182,7 @@ async function createVendor(){
 
 async function createDriver(){
     const registerButton = document.getElementById("registerButton");
-    registerButton.disabled = true
+    registerButton.disabled = true;
     let name = document.getElementById("username").value;
     let password = document.getElementById("password").value
     let email = document.getElementById("email").value
