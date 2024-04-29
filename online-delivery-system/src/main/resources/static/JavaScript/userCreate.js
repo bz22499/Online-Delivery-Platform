@@ -285,7 +285,14 @@ async function checkEmailAddressNotUsed(email) {
             valid = false;
         }
 
-        // TODO: Once we have driver controller, check email address for drivers also!!!
+        const response3 = await fetch('drivers/' + email);
+        if (!response2.ok) {
+            if (response2.status !== 404) {
+                throw new Error('Network response was not ok');
+            }
+        } else {
+            valid = false;
+        }
 
         //if it gets here it means all fetch requests had response status not found hence email address is not used
         return valid;
