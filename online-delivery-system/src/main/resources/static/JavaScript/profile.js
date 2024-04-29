@@ -77,8 +77,12 @@ function saveProfile() {
     })
         .then(response => {
             if (response.ok) {
-                document.querySelector('.firstName').innerText = firstName;
-                document.querySelector('.lastName').innerText = lastName;
+                var firstName = document.getElementById('new-firstName').value;
+                var lastName = document.getElementById('new-lastName').value;
+
+                document.getElementById('firstName').innerText = firstName;
+                document.getElementById('lastName').innerText = lastName;
+
                 returnToProfile();
             } else if (response.status === 401) {
                 // Unauthorized, display invalid password alert

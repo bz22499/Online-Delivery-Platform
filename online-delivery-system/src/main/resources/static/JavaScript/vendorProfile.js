@@ -65,8 +65,8 @@ function saveProfile() {
                 var name = document.getElementById('new-name').value;
                 var description = document.getElementById('new-description').value;
 
-                document.getElementById('name').value = name;
-                document.getElementById('description').value = description;
+                document.getElementById('name').innerText = name;
+                document.getElementById('description').innerText = description;
 
                 returnToProfile();
             } else if (response.status === 401) {
