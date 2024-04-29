@@ -80,7 +80,6 @@ async function displayBaskets() {
             table.appendChild(tbody);
             container.appendChild(table);
         }
-        alert("Total Cost: " + totalCost);
 
 
         const totalCostContainer = document.createElement("div");

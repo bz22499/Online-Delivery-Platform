@@ -1,3 +1,7 @@
+body{
+    font-family: "IBM Plex Sans";
+}
+
 .checkout-container {
     max-width: 600px;
     margin: 50px auto;
@@ -7,7 +11,6 @@
     border-radius: 10px;
     border: 2px solid #ccc;
     box-shadow: 0 0 15px rgba(0,0,0,0.1);
-    font-family: "Oswald";
 }
 
 .rest-name{
@@ -105,7 +108,6 @@ td:nth-child(2) {
     margin-bottom: 20px;
     font-size: 16px;
     background-color: #fff;
-    padding: 8px;
     box-sizing: border-box;
 }
 
@@ -178,149 +180,69 @@ body{
     margin: 0;
 }
 
-ul.banner {
-    z-index:1;
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-    background-color: #dfdfdf;
+
+.banner {
+    background: white;
     top: 0;
-    width: 100%;
     position: sticky;
+    z-index: 1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     font-family: "IBM Plex Sans";
+    padding: 10px 0 10px 0;
 }
 
-ul.banner img{
-    height: 19px;
-    padding: 14px;
-    float: left;
+.left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-left: 22px;
 }
 
-ul.banner li {
-    float: left;
+.right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-right: 22px;
 }
 
-ul.banner li.right {
-    float: right;
+.left img {
+    height: 60px;
 }
 
-ul.banner li a {
-    display: block;
+.left p a {
+    font-size: 120%;
     color: black;
-    text-align: center;
-    padding: 14px 16px;
     text-decoration: none;
+    width: max-content;
+    padding: 5px 10px;
+    font-weight: 200;
 }
 
-ul.banner li.active a{
-    background-color: rgb(196, 194, 188);
-}
-
-ul.banner li.right a {
+.right p a {
+    font-size: 120%;
+    width: max-content;
     display: block;
     color: white;
     background-color: black;
-    border-radius: 10px;
-    padding: 5px 16px;
-    margin: 8px 10px;
-}
-
-ul.banner li a:hover{
-    background-color: gray;
-}
-
-
-
-.locationInput {
-    position: relative;
     text-align: center;
-    color: white;
-}
-.locationInput input{
-    position: absolute;
-    top: 35%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    padding: 20px;
-    font-size: 17px;
-    border: 1px solid grey;
-    width: 40%;
-    background: #f1f1f1;
-    border-radius: 27px;
-}
-
-#back-button a {
-    background-color: #4CAF50;
-    color: white;
-}
-
-#back-button a:hover {
-    background-color: #3a9320;
-}
-
-
-.partners {
-    font-family: "IBM Plex Sans";
-    display: flex;
-    justify-content: space-around;
-    padding: 0 5%;
-    padding-top: 5%;
-    padding-bottom: 5%;
-    gap: 20px;
-}
-
-.placeholder{
-    position: relative;
-    flex: 1;
-    overflow: hidden;
-}
-
-.placeholder a{
     text-decoration: none;
-    color: white;
+    border-radius: 10px;
+    padding: 5px 12px;
+    font-weight: 200;
 }
 
-.placeholder a:hover {
+.left p a:hover {
     color: gray;
 }
 
-.partners img {
-    width: 100%;
-    height: auto;
-    object-fit: cover;
-    min-height: 100%;
-    border-radius: 27px;
-}
-
-.partner {
-    position: absolute;
-    right: 0;
-    bottom: 10px;
-    display: block;
-    background-color: black;
-    border-top-left-radius: 27px;
-    border-bottom-left-radius: 27px;
-    padding: 5px 30px;
-    font-weight: 200;
-}
-
-.ride {
-    position: absolute;
-    left: 0;
-    top: 10px;
-    display: block;
-    background-color: black;
-    color: white;
-    padding: 5px 30px;
-    font-weight: 200;
-    border-top-right-radius: 27px;
-    border-bottom-right-radius: 27px;
+.right p a:hover {
+    background-color: gray;
 }
 
 .footer {
     display: flex;
-    display: block;
     background-color: black;
     flex-direction: column;
     justify-content: center;
@@ -340,4 +262,14 @@ ul.banner li a:hover{
     font-family: "IBM Plex Sans";
     font-weight: 100;
     letter-spacing: 1px;
+}
+
+#back-button a{
+    background-color: #04aa6d;
+    color: white;
+    padding: 5px 12px;
+    border-radius: 10px;
+}
+#back-button a:hover {
+    background-color: #74d2af;
 }
