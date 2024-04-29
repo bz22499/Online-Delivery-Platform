@@ -43,6 +43,7 @@ function returnToProfile() {
 }
 
 function saveProfile() {
+    const saveButton = document.
     var userId = document.getElementById('userId').value;
     var currentPassword = document.getElementById('current-password').value;
     var firstName = document.getElementById('new-firstName').value;

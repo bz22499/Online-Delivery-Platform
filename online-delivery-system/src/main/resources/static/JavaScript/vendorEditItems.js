@@ -59,6 +59,10 @@ function deleteFile(filename) {
 }
 
 async function submitFormClicked(name, price, description,itemID,itemTitle,itemDescription,itemFooter){
+    const submitButton = document.getElementById('submit-form-button');
+    const cancelButton = document.getElementById('cancel-form-button');
+    submitButton.disabled = true;
+    cancelButton.disabled = true;
     const vendorInfoElement = document.getElementById('vendor-info');
     const vendorId = vendorInfoElement.getAttribute('data-id');
     const vendor = await fetchVendorFromVendorId(vendorId);
@@ -66,6 +70,8 @@ async function submitFormClicked(name, price, description,itemID,itemTitle,itemD
     let valid = /^(\$|)([0-9]\d{0,2}(\,\d{3})*|([0-9]\d*))(\.\d{2})?$/.test(price)
 
     if(!valid){
+        submitButton.disabled = false;
+        cancelButton.disabled = false;
         alert("Invalid price.") 
     }else{
         if(price > 10000){
@@ -76,6 +82,8 @@ async function submitFormClicked(name, price, description,itemID,itemTitle,itemD
     if(valid){
         if(name.toString() === "" || description.toString() === "" || price.toString() === ""){
             valid = false
+            submitButton.disabled = false;
+            cancelButton.disabled = false;
             alert("Please complete all the fields.");
         }
     }
@@ -97,9 +105,12 @@ async function submitFormClicked(name, price, description,itemID,itemTitle,itemD
         })
             .then(response => {
                 if (!response.ok) {
+                    submitButton.disabled = false;
+                    cancelButton.disabled = false;
                     throw new Error('Error updating item: ', response);
                 }
-                return response.json();
+                submitButton.disabled = false;
+                cancelButton.disabled = false;
             })
             
         itemTitle.textContent = name;
@@ -235,6 +246,7 @@ function populateGrid(pageData) {
         gridItemForm.appendChild(formItemPrice)
 
         const submitForm = document.createElement('button');
+        submitForm.disabled = false;
         submitForm.className='stylishbutton';
         submitForm.id = 'submit-form-button'
         submitForm.type = "button"

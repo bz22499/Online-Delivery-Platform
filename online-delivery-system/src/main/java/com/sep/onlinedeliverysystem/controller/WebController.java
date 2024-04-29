@@ -278,7 +278,7 @@ public class WebController {
                 model.addAttribute("name", vendor.get().getName());
                 model.addAttribute("description", vendor.get().getDescription());
                 model.addAttribute("rating", vendor.get().getRating());
-                return "vendoredititems";
+                return "vendorEditItems";
             } else {
                 return "notFound";
             }
