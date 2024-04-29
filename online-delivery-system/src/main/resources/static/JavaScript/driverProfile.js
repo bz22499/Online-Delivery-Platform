@@ -72,7 +72,7 @@ function saveProfile() {
         })
         .catch(error => {
             console.error('Error updating profile:', error);
-            alert("Failed to update profile 123456");
+            alert("Failed to update profile");
         });
 }
 

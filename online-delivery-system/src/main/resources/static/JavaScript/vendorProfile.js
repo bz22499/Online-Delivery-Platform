@@ -62,8 +62,12 @@ function saveProfile() {
     })
         .then(response => {
             if (response.ok) {
-                document.querySelector('.name').innerText = name;
-                document.querySelector('.description').innerText = description;
+                var name = document.getElementById('new-name').value;
+                var description = document.getElementById('new-description').value;
+
+                document.getElementById('name').value = name;
+                document.getElementById('description').value = description;
+
                 returnToProfile();
             } else if (response.status === 401) {
                 // Unauthorized, display invalid password alert
