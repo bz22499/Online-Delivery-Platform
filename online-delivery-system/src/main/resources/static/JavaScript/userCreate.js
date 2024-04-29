@@ -1,9 +1,31 @@
+function isValidPostcode(postcode) {
+    // Regular expression for UK postcodes
+    var postcodeRegex = /^[A-Z]{1,2}[0-9R][0-9A-Z]? ?[0-9][A-Z]{2}$/i;
+    return postcodeRegex.test(postcode);
+}
+
 async function createCustomer(){
     let firstName = document.getElementById("firstName").value;
     let lastName = document.getElementById("lastName").value;
     let password = document.getElementById("password").value
     let email = document.getElementById("email").value
+    let street = document.getElementById("street").value;
+    let city = document.getElementById("city").value;
+    let postCode = document.getElementById("postCode").value;
+    let country = document.getElementById("country").value;
     let checkPassword = document.getElementById("confirm-password").value
+
+    // Validate address fields
+    if (!firstName || !lastName || !password || !email || !street || !city || !postCode || !country) {
+        alert("Please fill in all fields.");
+        return;
+    }
+
+    // Validate postcode
+    if (!isValidPostcode(postCode)) {
+        alert("Please enter a valid UK postcode.");
+        return;
+    }
 
     let valid = checkPassword === password
 
@@ -24,23 +46,42 @@ async function createCustomer(){
         alert("Form was not correctly filled in")
     }
 
-    if(valid){
-        // Send data to the backend
-        fetch('/users', {
+    try {
+        // create the user
+        const userResponse = await fetch('/users', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({firstName: firstName, lastName: lastName, password:password,email:email})
-        })
-            .then(response => response.json())
-            .then(data => {
-                // Authentication
-                authenticateUser(email, password, false, false);
+            body: JSON.stringify({
+                firstName: firstName,
+                lastName: lastName,
+                password: password,
+                email: email
             })
-            .catch(error => {
-                console.error('Error:', error);
-            });
+        });
+        const userData = await userResponse.json();
+
+        // create the address associated with the user
+        const addressResponse = await fetch('/addresses', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                user: { email: email },
+                street: street,
+                city: city,
+                postCode: postCode,
+                country: country
+            })
+        });
+        const addressData = await addressResponse.json();
+
+        // Once both user and address are created, authenticate the user
+        authenticateUser(email, password, false, false);
+    } catch (error) {
+        console.error('Error:', error);
     }
 }
 
@@ -48,7 +89,24 @@ async function createVendor(){
     let name = document.getElementById("username").value;
     let password = document.getElementById("password").value
     let email = document.getElementById("email").value
+    let street = document.getElementById("street").value;
+    let city = document.getElementById("city").value;
+    let postCode = document.getElementById("postCode").value;
+    let country = document.getElementById("country").value;
     let checkPassword = document.getElementById("confirm-password").value
+
+    // Validate address fields
+    if (!name || !password || !email || !street || !city || !postCode || !country) {
+        alert("Please fill in all fields.");
+        return;
+    }
+
+    // Validate postcode
+    if (!isValidPostcode(postCode)) {
+        alert("Please enter a valid UK postcode.");
+        return;
+    }
+
     let valid = checkPassword === password
     if(valid){
         valid = /\S+@\S+\.\S+/.test(email)
@@ -68,25 +126,41 @@ async function createVendor(){
         alert("Form was not correctly filled in.")
     }
 
-
-    if(valid){
-        // Send data to the backend
-        fetch('/vendors', {
+    try {
+        // create the vendor
+        const userResponse = await fetch('/vendors', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ name:name,password:password,email:email, rating: null, imageUrl: null,
-                description: null})
-        })
-            .then(response => response.json())
-            .then(data => {
-                // Authentication
-                authenticateUser(email, password, true, false)
+            body: JSON.stringify({
+                name: name,
+                password: password,
+                email: email
             })
-            .catch(error => {
-                console.error('Error:', error);
-            });
+        });
+        const vendorData = await userResponse.json();
+
+        // create the address associated with the user
+        const addressResponse = await fetch('/vendorAddresses', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                vendor: { email: email },
+                street: street,
+                city: city,
+                postCode: postCode,
+                country: country
+            })
+        });
+        const vendorAddressData = await addressResponse.json();
+
+        // Once both user and address are created, authenticate the user
+        authenticateUser(email, password, true, false);
+    } catch (error) {
+        console.error('Error:', error);
     }
 }
 
@@ -117,7 +191,6 @@ async function createDriver(){
 
     if(valid){
         // Send data to the backend
-        alert('registration complete')
         fetch('/drivers', {
             method: 'POST',
             headers: {
