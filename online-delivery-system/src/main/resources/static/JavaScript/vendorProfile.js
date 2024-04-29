@@ -17,14 +17,20 @@ function editProfile() {
 }
 
 function returnToProfile() {
-    // Show the user-details div
+    // Show the details divs
     document.getElementById('user-details').style.display = 'block';
 
-    // Hide the edit form
+    document.getElementById('address-details').style.display = 'block';
+
+    // Hide the edit forms
     document.getElementById('edit-form').style.display = 'none';
 
-    // Show the edit profile button
+    document.getElementById('address-fields').style.display = 'none';
+
+    // Show the edit buttons
     document.getElementById('edit-profile').style.display = 'block';
+
+    document.getElementById('edit-address-btn').style.display = 'block';
 }
 
 function saveProfile() {
@@ -62,8 +68,12 @@ function saveProfile() {
     })
         .then(response => {
             if (response.ok) {
-                document.querySelector('.name').innerText = name;
-                document.querySelector('.description').innerText = description;
+                var name = document.getElementById('new-name').value;
+                var description = document.getElementById('new-description').value;
+
+                document.getElementById('name').innerText = name;
+                document.getElementById('description').innerText = description;
+
                 returnToProfile();
             } else if (response.status === 401) {
                 // Unauthorized, display invalid password alert
@@ -78,46 +88,19 @@ function saveProfile() {
         });
 }
 
-function cancelEditAddress() {
-    document.getElementById('address-fields').style.display = 'none';
-    document.getElementById('edit-address-btn').style.display = 'block';
-}
-
 function editAddress() {
-    // Hide the "Edit Address" button
+    // Hide the initial input fields and edit profile button
+    document.getElementById('address-details').style.display = 'none';
     document.getElementById('edit-address-btn').style.display = 'none';
 
-    // Show the address fields
+    // Show the edit form
     document.getElementById('address-fields').style.display = 'block';
 
-    // Fetch current address data and populate the fields
-    var email = document.getElementById('vendorId').value;
-    fetch(`/vendorAddresses/vendor/${email}`, {
-        method: 'GET'
-    })
-        .then(response => {
-            if (response.ok) {
-                return response.json();
-            } else if (response.status === 404) {
-                // Address not found, do nothing
-                return null;
-            } else {
-                throw new Error('Failed to fetch address data');
-            }
-        })
-        .then(addressData => {
-            // Check if addressData is null before accessing its properties
-            if (addressData) {
-                document.getElementById('street').value = addressData.street;
-                document.getElementById('city').value = addressData.city;
-                document.getElementById('postCode').value = addressData.postCode;
-                document.getElementById('country').value = addressData.country;
-            }
-        })
-        .catch(error => {
-            console.error('Error fetching vendor address:', error);
-            alert("Failed to fetch address data");
-        });
+    // Set the current values in the form fields
+    document.getElementById('street').value = document.getElementById('current-street').innerText;
+    document.getElementById('city').value = document.getElementById('current-city').innerText;
+    document.getElementById('country').value = document.getElementById('current-country').innerText;
+    document.getElementById('postCode').value = document.getElementById('current-postcode').innerText;
 }
 
 function isValidPostcode(postcode) {
@@ -194,10 +177,12 @@ function saveAddress() {
                 })
                 .then(response => {
                     if (response.ok) {
-                        // Hide the address fields
-                        document.getElementById('address-fields').style.display = 'none';
-                        // Show the "Edit Address" button
-                        document.getElementById('edit-address-btn').style.display = 'block';
+                        // // Hide the address fields
+                        // document.getElementById('address-fields').style.display = 'none';
+                        // // Show the "Edit Address" button
+                        // document.getElementById('edit-address-btn').style.display = 'block';
+
+                        returnToProfile();
                     } else {
                         throw new Error('Failed to update address');
                     }

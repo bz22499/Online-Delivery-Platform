@@ -60,8 +60,9 @@ function saveProfile() {
     })
         .then(response => {
             if (response.ok) {
-                alert("Profile updated successfully");
-                document.querySelector('.name').innerText = name;
+                var name = document.getElementById('new-name').value;
+                document.getElementById('name').innerText = name;
+
                 returnToProfile();
             } else if (response.status === 401) {
                 // Unauthorized, display invalid password alert
@@ -72,7 +73,7 @@ function saveProfile() {
         })
         .catch(error => {
             console.error('Error updating profile:', error);
-            alert("Failed to update profile 123456");
+            alert("Failed to update profile");
         });
 }
 
