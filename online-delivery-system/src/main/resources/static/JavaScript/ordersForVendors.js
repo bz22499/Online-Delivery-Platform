@@ -65,7 +65,7 @@ async function populateOrders(ordersData) {
                                 matchesVendor = true
                                 const totalPrice = menuItem ? (menuItem.price * basketItem.quantity).toFixed(2) : 'N/A';
                                 const basketItemInfo = document.createElement('li');
-                                basketItemInfo.textContent = `Basket ID: ${basket.id}, Menu Item Name: ${menuItem.name}, Quantity: ${basketItem.quantity}, Price per Item: ${menuItem.price.toFixed(2)}, Total Price: ${totalPrice}`;
+                                basketItemInfo.textContent = `Menu Item Name: ${menuItem.name}, Quantity: ${basketItem.quantity}, Price per Item: ${menuItem.price.toFixed(2)}, Total Price: ${totalPrice}`;
                                 basketList.appendChild(basketItemInfo);
                             }
                         }
@@ -119,7 +119,7 @@ async function populateOrders(ordersData) {
                     gridContainer.appendChild(orderItem);
                 }
             } else {
-                console.log(`Order ID: ${order.id} not displayed because its status is not 'COLLECTION'.`);
+                console.log(`Order ID: ${order.id} not displayed because its status is not 'PAID'.`);
             }
         }
     } else {

@@ -86,15 +86,12 @@ async function populateOrders(ordersData) {
                             const addressDetails = vendorAddress ? `Vendor Street: ${vendorAddress.street}, Vendor Postcode: ${vendorAddress.postCode}` : 'N/A';
                             const totalPrice = menuItem ? (menuItem.price * basketItem.quantity).toFixed(2) : 'N/A';
                             const basketItemInfo = document.createElement('li');
-                            basketItemInfo.textContent = `Basket ID: ${basket.id}, Vendor: ${vendor}, Vendor Address: ${vendorAddressDetails}, User Address: ${userAddressDisplay}, ${distanceDisplay}`;
+                            basketItemInfo.textContent = `Vendor: ${vendor}, Vendor Address: ${vendorAddressDetails}, User Address: ${userAddressDisplay}, ${distanceDisplay}`;
                             basketList.appendChild(basketItemInfo);
                         }
                     }
                     orderItem.appendChild(basketList);
                 } else {
-                    // const noBasketInfo = document.createElement('div');
-                    // noBasketInfo.textContent = 'No basket items found for this order.';
-                    // orderItem.appendChild(noBasketInfo);
                     console.log('No basket items found for this order.')
                 }
                 // Additional functionality to confirm collection

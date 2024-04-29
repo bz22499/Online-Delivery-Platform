@@ -108,7 +108,7 @@ async function populateOrders(ordersData) {
                             }
 
                             const basketItemInfo = document.createElement('li');
-                            basketItemInfo.textContent = `Basket ID: ${basket.id}, Vendor: ${vendor}, Vendor Address: ${vendorAddressDetails}, User Address: ${userAddressDisplay}, ${distanceDisplay}`;
+                            basketItemInfo.textContent = `Vendor: ${vendor}, Vendor Address: ${vendorAddressDetails}, User Address: ${userAddressDisplay}, ${distanceDisplay}`;
                             basketList.appendChild(basketItemInfo);
                         }
                     }
