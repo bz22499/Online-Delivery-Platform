@@ -1,16 +1,3 @@
-let isFetchingBaskets = false;
-
-// get basket items from cache
-function getBasketItemsFromCache() {
-    const basketsString = sessionStorage.getItem("baskets");
-    const baskets = JSON.parse(basketsString);
-    /*return {
-        items: baskets[basketId].items,
-        restName: baskets[basketId].restName,
-    };*/
-    return baskets;
-}
-
 function getOrderIdFromCache(){
     const orderString = sessionStorage.getItem("order");
     const order = JSON.parse(orderString);
@@ -91,18 +78,6 @@ async function displayBaskets() {
     }
 }
 
-
-//Function to calculate the total cost
-function calculateTotalCost(items) {
-    let totalCost = 0;
-
-    items.forEach((item) => {
-        totalCost += item.menuItem.price * item.quantity;
-    });
-
-    return totalCost.toFixed(2); //Round to 2 dp
-}
-
 async function updateDeliveryAddress() {
     const userEmail = document.getElementById("user-email").value;
 
@@ -152,7 +127,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     const payButton = document.querySelector(".pay-button");
     payButton.addEventListener("click", async () => {
         await updateOrderAddress()
-        alert("Getting redirected to payment");
     });
 
     const backButton = document.getElementById('back-button');
@@ -197,8 +171,10 @@ async function updateOrderAddress(){
         })
         .then(updatedOrder => {
             sessionStorage.clear();
+            alert("Getting redirected to payment");
         })
         .catch(error => {
+            alert("Payment failed");
             console.log("failed");
         });
 
