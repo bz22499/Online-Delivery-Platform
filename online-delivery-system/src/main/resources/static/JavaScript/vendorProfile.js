@@ -177,10 +177,10 @@ function saveAddress() {
                 })
                 .then(response => {
                     if (response.ok) {
-                        // Hide the address fields
-                        document.getElementById('address-fields').style.display = 'none';
-                        // Show the "Edit Address" button
-                        document.getElementById('edit-address-btn').style.display = 'block';
+                        // // Hide the address fields
+                        // document.getElementById('address-fields').style.display = 'none';
+                        // // Show the "Edit Address" button
+                        // document.getElementById('edit-address-btn').style.display = 'block';
 
                         returnToProfile();
                     } else {

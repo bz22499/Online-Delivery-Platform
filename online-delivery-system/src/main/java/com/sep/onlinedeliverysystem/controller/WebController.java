@@ -3,7 +3,7 @@ package com.sep.onlinedeliverysystem.controller;
 import java.security.Principal;
 import java.util.Optional;
 
-import com.sep.onlinedeliverysystem.domain.entities.VendorAddress;
+import com.sep.onlinedeliverysystem.domain.entities.*;
 import com.sep.onlinedeliverysystem.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -16,10 +16,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
-import com.sep.onlinedeliverysystem.domain.entities.Driver;
-import com.sep.onlinedeliverysystem.domain.entities.User;
-import com.sep.onlinedeliverysystem.domain.entities.Vendor;
 
 @Controller
 public class WebController {
@@ -189,10 +185,21 @@ public class WebController {
             Optional<User> user = userService.findOne(loggedInUserEmail);
 
             if (user.isPresent()) {
+                User userObj = user.get();
                 model.addAttribute("id", user.get().getEmail());
                 model.addAttribute("firstName", user.get().getFirstName());
                 model.addAttribute("lastName", user.get().getLastName());
                 model.addAttribute("password", user.get().getPassword());
+
+                Optional<UserAddress> userAddress = userAddressService.findByUserEmail(userObj.getEmail());
+                if(userAddress.isPresent()){
+                    UserAddress userAddressObj = userAddress.get();
+                    model.addAttribute("street", userAddressObj.getStreet());
+                    model.addAttribute("city", userAddressObj.getCity());
+                    model.addAttribute("country", userAddressObj.getCountry());
+                    model.addAttribute("postcode", userAddressObj.getPostCode());
+                }
+
                 return "profile";
             }else {
                 return "notFound";
