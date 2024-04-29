@@ -43,7 +43,11 @@ function returnToProfile() {
 }
 
 function saveProfile() {
-    const saveButton = document.
+    const saveButton = document.getElementById("saveProfileChanges");
+    saveButton.disabled = true;
+    const cancelButton = document.getElementById("cancelProfileChanges");
+    cancelButton.disabled = true;
+
     var userId = document.getElementById('userId').value;
     var currentPassword = document.getElementById('current-password').value;
     var firstName = document.getElementById('new-firstName').value;
@@ -53,7 +57,9 @@ function saveProfile() {
 
     // Ensure both password fields match
     if (newPassword !== confirmPassword) {
-        alert("Passwords do not match");
+        saveButton.disabled = false;
+        cancelButton.disabled = false;
+        alert("Passwords do not match.");
         return;
     }
 
@@ -80,15 +86,23 @@ function saveProfile() {
             if (response.ok) {
                 document.querySelector('.firstName').innerText = firstName;
                 document.querySelector('.lastName').innerText = lastName;
+                saveButton.disabled = false;
+                cancelButton.disabled = false;
                 returnToProfile();
             } else if (response.status === 401) {
                 // Unauthorized, display invalid password alert
+                saveButton.disabled = false;
+                cancelButton.disabled = false;
                 alert("Invalid password");
             } else {
+                saveButton.disabled = false;
+                cancelButton.disabled = false;
                 throw new Error('Failed to update profile');
             }
         })
         .catch(error => {
+            saveButton.disabled = false;
+            cancelButton.disabled = false;
             console.error('Error updating profile:', error);
             alert("Failed to update profile");
         });
@@ -100,6 +114,11 @@ function cancelEditAddress() {
 }
 
 function editAddress() {
+    const saveButton = document.getElementById("saveAddressChanges");
+    saveButton.disabled = true;
+    const cancelButton = document.getElementById("cancelAddressChanges");
+    cancelButton.disabled = true;
+
     // Hide the "Edit Address" button
     document.getElementById('edit-address-btn').style.display = 'none';
 
@@ -113,11 +132,17 @@ function editAddress() {
     })
         .then(response => {
             if (response.ok) {
+                saveButton.disabled = false;
+                cancelButton.disabled = false;
                 return response.json();
             } else if (response.status === 404) {
+                saveButton.disabled = false;
+                cancelButton.disabled = false;
                 // Address not found, do nothing
                 return null;
             } else {
+                saveButton.disabled = false;
+                cancelButton.disabled = false;
                 throw new Error('Failed to fetch address data');
             }
         })
@@ -127,9 +152,13 @@ function editAddress() {
                 document.getElementById('city').value = addressData.city;
                 document.getElementById('postCode').value = addressData.postCode;
                 document.getElementById('country').value = addressData.country;
+                saveButton.disabled = false;
+                cancelButton.disabled = false;
             }
         })
         .catch(error => {
+            saveButton.disabled = false;
+            cancelButton.disabled = false;
             console.error('Error fetching user address:', error);
             alert("Failed to fetch address data");
         });
