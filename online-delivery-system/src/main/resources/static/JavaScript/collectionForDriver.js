@@ -83,10 +83,9 @@ async function populateOrders(ordersData) {
                             const menuItem = basketItem.menuItem;
                             const vendor = menuItem.vendor;
                             const vendorAddress = await fetchVendorAddress(vendor.email);
-                            const addressDetails = vendorAddress ? `Vendor Street: ${vendorAddress.street}, Vendor Postcode: ${vendorAddress.postCode}` : 'N/A';
-                            const totalPrice = menuItem ? (menuItem.price * basketItem.quantity).toFixed(2) : 'N/A';
+                            const vendorAddressDetails = vendorAddress ? `Vendor Street: ${vendorAddress.street}, Vendor Postcode: ${vendorAddress.postCode}` : 'N/A';
                             const basketItemInfo = document.createElement('li');
-                            basketItemInfo.textContent = `Vendor: ${vendor}, Vendor Address: ${vendorAddressDetails}, User Address: ${userAddressDisplay}, ${distanceDisplay}`;
+                            basketItemInfo.textContent = `Vendor: ${vendor.name}, Vendor Address: ${vendorAddressDetails}`;
                             basketList.appendChild(basketItemInfo);
                         }
                     }

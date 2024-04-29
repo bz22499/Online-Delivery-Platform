@@ -1,7 +1,5 @@
 body {
-    font-family: 'Arial', sans-serif;
     margin: 0;
-    padding: 0;
     background-color: #f4f4f4;
     color: #333;
 }
@@ -13,6 +11,7 @@ body {
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
     margin-bottom: 20px;
+    font-family: 'IBM Plex Sans'
 }
 
 header {
@@ -28,7 +27,7 @@ h1 {
 }
 
 button {
-    background-color: black;
+    background-color: #28a745;
     color: white;
     border: none;
     padding: 10px 20px;
@@ -56,6 +55,7 @@ button:hover {
 }
 
 .banner {
+    position: relative;
     background: white;
     top: 0;
     position: sticky;
@@ -65,36 +65,37 @@ button:hover {
     align-items: center;
     font-family: "IBM Plex Sans";
     padding: 10px 0 10px 0;
-  
-  }
-  
-  .left {
+    border-bottom: 1px solid lightgray;
+}
+
+.left {
     display: flex;
     align-items: center;
     gap: 10px;
     margin-left: 22px;
-  }
-  
-  .right {
+}
+
+.right {
     display: flex;
     align-items: center;
     gap: 10px;
     margin-right: 22px;
-  }
-  
-  .left img {
+}
+
+.left img {
     height: 60px;
-  }  
-  
-  .left p a{
+}
+
+.left p a {
+    font-size: 120%;
     color: black;
     text-decoration: none;
     width: max-content;
     padding: 5px 10px;
     font-weight: 200;
-  }
-  
-  .right p a{
+}
+
+.right p a {
     font-size: 120%;
     width: max-content;
     display: block;
@@ -105,22 +106,23 @@ button:hover {
     border-radius: 10px;
     padding: 5px 12px;
     font-weight: 200;
-  }
-  
-  .left p a:hover{
-    color: gray;
-  }
-  
-  .right p a:hover {
-    background-color: gray;
-  }
+}
 
-input, select {
+.left p a:hover {
+    color: gray;
+}
+
+.right p a:hover {
+    background-color: gray;
+}
+
+input,
+select {
     padding: 10px;
     margin: 10px 0;
     border: 1px solid #ddd;
     border-radius: 5px;
-    width: calc(100% - 22px); /* Account for padding and border */
+    width: calc(100% - 22px);
 }
 
 /* Loading indicator style */
@@ -130,7 +132,6 @@ input, select {
     color: #007bff;
 }
 
-/* Utility classes for margin and padding */
 .mt-10 {
     margin-top: 10px;
 }

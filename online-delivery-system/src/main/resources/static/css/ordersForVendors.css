@@ -11,6 +11,7 @@ body {
   border-radius: 5px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
   margin-bottom: 20px;
+  font-family: 'IBM Plex Sans'
 }
 
 header {
@@ -121,7 +122,7 @@ select {
   margin: 10px 0;
   border: 1px solid #ddd;
   border-radius: 5px;
-  width: calc(100% - 22px); /* Account for padding and border */
+  width: calc(100% - 22px);
 }
 
 /* Loading indicator style */
@@ -131,7 +132,6 @@ select {
   color: #007bff;
 }
 
-/* Utility classes for margin and padding */
 .mt-10 {
   margin-top: 10px;
 }
