@@ -19,50 +19,66 @@ function getOrderIdFromCache(){
 
 // populate page with basket information
 async function displayBaskets() {
-    const baskets = getBasketItemsFromCache();
+
+    const basketsString = sessionStorage.getItem("baskets");
+    const baskets = JSON.parse(basketsString);
+
+
     const container = document.getElementById("baskets-container"); // defined in html
     container.innerHTML = ""; // clear to avoid duplicates
-    if (baskets && Object.keys(baskets).length > 0) {
+
+    if (baskets && baskets.length) {
         // Get the keys (basket IDs) and pick the last one
-        const basketIds = Object.keys(baskets);
-        const lastBasketId = basketIds[basketIds.length - 1];
-        const basketData = baskets[lastBasketId];
 
         const table = document.createElement("table");
         table.className = "basket-table";
         const thead = document.createElement("thead");
         const headerRow = document.createElement("tr");
+        const restNameHeader = document.createElement("th");
+        restNameHeader.textContent = "Restaurant Name";
         const itemNameHeader = document.createElement("th");
         itemNameHeader.textContent = "Item Name";
         const quantityHeader = document.createElement("th");
         quantityHeader.textContent = "Quantity";
+        headerRow.appendChild(restNameHeader);
         headerRow.appendChild(itemNameHeader);
         headerRow.appendChild(quantityHeader);
         thead.appendChild(headerRow);
         table.appendChild(thead);
 
         const tbody = document.createElement("tbody");
+        for (const basket of baskets) {
+            try {
+                for(const basketItem of basket.items){
+                    alert("HEY QT");
+                    console.log(basketItem);
 
-        basketData.items.forEach((item) => {
-            const row = document.createElement("tr");
+                    const row = document.createElement("tr");
 
-            const nameCell = document.createElement("td");
-            nameCell.textContent = item.menuItem.name;
-            row.appendChild(nameCell);
+                    const restCell = document.createElement("td");
+                    restCell.textContent = basket.restName
+                    row.appendChild(restCell);
 
-            const quantityCell = document.createElement("td");
-            quantityCell.textContent = item.quantity;
-            row.appendChild(quantityCell);
+                    const nameCell = document.createElement("td");
+                    nameCell.textContent = basketItem.menuItem.name;
+                    row.appendChild(nameCell);
 
-            tbody.appendChild(row);
-        });
+                    const quantityCell = document.createElement("td");
+                    quantityCell.textContent = basketItem.quantity;
+                    row.appendChild(quantityCell);
 
+                    tbody.appendChild(row);
+                }
+
+            } catch (error) {
+                console.error("Error populating baskets dropdown:", error);
+            }
+        }
         table.appendChild(tbody);
         container.appendChild(table);
 
         const totalCostContainer = document.createElement("div");
         totalCostContainer.className = "total-cost";
-        totalCostContainer.textContent = "Total Cost: $" + calculateTotalCost(basketData.items);
         container.appendChild(totalCostContainer);
     } else {
         container.textContent = "No baskets found.";
@@ -116,6 +132,11 @@ function populateAddressDropdown(addressData) {
     }
 }
 
+// Function to update address dropdown based on selection
+function updateDeliveryAddressFromDropdown() {
+    const selectedAddressId = document.getElementById('address-select').value;
+    // Fetch address details for the selected address ID and populate other fields if needed
+}
 
 document.addEventListener("DOMContentLoaded", async () => {
 
@@ -126,7 +147,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     payButton.addEventListener("click", async () => {
         await updateOrderAddress()
         alert("Getting redirected to payment");
-        sessionStorage.clear();
     });
 
     const backButton = document.getElementById('back-button');
@@ -142,6 +162,7 @@ async function updateOrderAddress(){
 
     const address = await addressObj.json();
 
+    //now we have the id of the address we need the id of the order
     const orderId = getOrderIdFromCache();
 
     const updatedOrderData = {
