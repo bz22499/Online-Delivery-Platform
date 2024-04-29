@@ -6,26 +6,27 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@100;200;300;400;500;600&display=swap" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@100;200;300;400;500;600&family=Oswald:wght@200..700&display=swap" rel="stylesheet">
+        <link rel="icon" href="/images/logo_ld_white_png.png"/>
         <link rel = "stylesheet" href="/css/about-us.css"/>
     </head>
     <body>
         <div class="banner">
             <div class="left">
                 <img src="/images/logo_ld_png.png"><a target="_parent" href="home"></a></img>
-                <p><a target="_parent" href="home" th:unless="${loggedInVendor}">Home</a></p>
-                <p><a target="_parent" href="vendoradditems" th:if="${loggedInVendor}">Add Items</a></p> 
-                <p><a target="_parent" href="vendoredititems" th:if="${loggedInVendor}">Edit Items</a></p>
-                <p><a target="_parent" href="ordersForVendors" th:if="${loggedInVendor}">View Orders</a></p>
+                <p th:unless="${loggedInVendor}"><a target="_parent" href="home">Home</a></p>
+                <p th:if="${loggedInVendor}"><a target="_parent" href="vendoradditems">Add Items</a></p> 
+                <p th:if="${loggedInVendor}"><a target="_parent" href="vendoredititems">Edit Items</a></p>
+                <p th:if="${loggedInVendor}"><a target="_parent" href="ordersForVendors">View Orders</a></p>
                 <p><a target="_parent" href="about">About Us</a></p>
-                <p><a target="_parent" href="order" th:unless="${loggedInVendor}">Order</a></p>
+                <p th:unless="${loggedInVendor}"><a target="_parent" href="order">Order</a></p>
                 <p><a target="_parent" href="contact">Contact</a></p>
             </div>
             <div class="right">
-                <p><a target="_parent" href="profile" th:if="${loggedInUser}">Profile</a></p>
-                <p><a target="_parent" href="vendorProfile" th:if="${loggedInVendor}">Profile</a></p>
+                <p><a target="_parent" href="vendorsignup" th:unless="${loggedIn}">Partner with us</a></p>
                 <p><a target="_parent" href="login" th:unless="${loggedIn}">Login</a></p>
                 <p><a target="_parent" href="customerlogin" th:unless="${loggedIn}">Sign up</a></p>
-                <p><a target="_parent" href="restaurantlogin" th:unless="${loggedIn}">Partner with us</a></p>
+                <p><a target="_parent" href="profile" th:if="${loggedInUser}">Profile</a></p>
+                <p><a target="_parent" href="vendorProfile" th:if="${loggedInVendor}">Profile</a></p>
             </div>
         </div>
         <div class="content-container">
