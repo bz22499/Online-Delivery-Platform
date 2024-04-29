@@ -27,37 +27,38 @@ async function displayBaskets() {
     const container = document.getElementById("baskets-container"); // defined in html
     container.innerHTML = ""; // clear to avoid duplicates
 
+
     if (baskets && baskets.length) {
+        let totalCost = 0
         // Get the keys (basket IDs) and pick the last one
 
-        const table = document.createElement("table");
-        table.className = "basket-table";
-        const thead = document.createElement("thead");
-        const headerRow = document.createElement("tr");
-        const restNameHeader = document.createElement("th");
-        restNameHeader.textContent = "Restaurant Name";
-        const itemNameHeader = document.createElement("th");
-        itemNameHeader.textContent = "Item Name";
-        const quantityHeader = document.createElement("th");
-        quantityHeader.textContent = "Quantity";
-        headerRow.appendChild(restNameHeader);
-        headerRow.appendChild(itemNameHeader);
-        headerRow.appendChild(quantityHeader);
-        thead.appendChild(headerRow);
-        table.appendChild(thead);
 
-        const tbody = document.createElement("tbody");
         for (const basket of baskets) {
+
+            const restName = document.createElement("div");
+            restName.className = "rest-name";
+            restName.textContent = basket.restName;
+            container.appendChild(restName);
+
+            const table = document.createElement("table");
+            table.className = "basket-table";
+            const thead = document.createElement("thead");
+
+            const headerRow = document.createElement("tr");
+            const itemNameHeader = document.createElement("th");
+            itemNameHeader.textContent = "Item Name";
+            const quantityHeader = document.createElement("th");
+            quantityHeader.textContent = "Quantity";
+            headerRow.appendChild(itemNameHeader);
+            headerRow.appendChild(quantityHeader);
+            thead.appendChild(headerRow);
+            table.appendChild(thead);
+
+            const tbody = document.createElement("tbody");
+
             try {
                 for(const basketItem of basket.items){
-                    alert("HEY QT");
-                    console.log(basketItem);
-
                     const row = document.createElement("tr");
-
-                    const restCell = document.createElement("td");
-                    restCell.textContent = basket.restName
-                    row.appendChild(restCell);
 
                     const nameCell = document.createElement("td");
                     nameCell.textContent = basketItem.menuItem.name;
@@ -68,17 +69,23 @@ async function displayBaskets() {
                     row.appendChild(quantityCell);
 
                     tbody.appendChild(row);
+
+                    totalCost = totalCost + (basketItem.quantity*basketItem.price);
                 }
 
             } catch (error) {
                 console.error("Error populating baskets dropdown:", error);
             }
+
+            table.appendChild(tbody);
+            container.appendChild(table);
         }
-        table.appendChild(tbody);
-        container.appendChild(table);
+        alert("Total Cost: " + totalCost);
+
 
         const totalCostContainer = document.createElement("div");
         totalCostContainer.className = "total-cost";
+        totalCostContainer.textContent = "Total Cost: £" + totalCost.toString();
         container.appendChild(totalCostContainer);
     } else {
         container.textContent = "No baskets found.";
