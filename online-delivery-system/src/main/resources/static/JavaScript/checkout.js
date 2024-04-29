@@ -11,6 +11,12 @@ function getBasketItemsFromCache() {
     return baskets;
 }
 
+function getOrderIdFromCache(){
+    const orderString = sessionStorage.getItem("order");
+    const order = JSON.parse(orderString);
+    return order.id;
+}
+
 // populate page with basket information
 async function displayBaskets() {
     const baskets = getBasketItemsFromCache();
@@ -77,8 +83,6 @@ function calculateTotalCost(items) {
 
 async function updateDeliveryAddress() {
     const userEmail = document.getElementById("user-email").value;
-    console.log(userEmail);
-    alert(userEmail);
 
     try {
         const response = await fetch(`/addresses/user/${userEmail}`);
@@ -124,7 +128,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     await updateDeliveryAddress();
 
     const payButton = document.querySelector(".pay-button");
-    payButton.addEventListener("click", () => {
+    payButton.addEventListener("click", async () => {
+        await updateOrderAddress()
         alert("Getting redirected to payment");
     });
 
@@ -133,3 +138,46 @@ document.addEventListener("DOMContentLoaded", async () => {
         window.history.back();
     });
 });
+
+async function updateOrderAddress(){
+    const addressSelect = document.getElementById("address-select")
+    const addressId = addressSelect.value;
+    const addressObj = await fetch(`/addresses/${addressId}`);
+
+    const address = await addressObj.json();
+
+    //now we have the id of the address we need the id of the order
+    const orderId = getOrderIdFromCache();
+
+    const updatedOrderData = {
+        id: orderId,
+        userAddress: address,
+        status: "PAID"
+    };
+
+    await fetch('/orders/' + orderId, {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(updatedOrderData)
+    })
+        .then(response => {
+            if (!response.ok) {
+                if (response.status === 404) {
+                    console.error('Order not found.');
+                } else {
+                    console.error('Failed to update order:', response.statusText);
+                }
+                throw new Error('Failed to update order.');
+            }
+            return response.json();
+        })
+        .then(updatedOrder => {
+        })
+        .catch(error => {
+            console.log("failed");
+        });
+
+
+}

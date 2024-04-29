@@ -1,252 +1,261 @@
 body {
-    font-family: "Nimbus Sans";
-    margin: 0;
-    padding: 0;
+  background-color: white;
+  margin: 0;
 }
 
-ul.banner {
-    z-index: 1;
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-    background-color: #dedede;
-    width: 100%;
-    position: sticky;
+.banner {
+  position: relative;
+  background: white;
+  top: 0;
+  position: sticky;
+  z-index: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: "IBM Plex Sans";
+  padding: 10px 0 10px 0;
+  border-bottom: 1px solid lightgray;
 }
 
-ul.banner img{
-    height: 19px;
-    padding: 14px;
-    float: left;
+.left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-left: 22px;
 }
 
-ul.banner li {
-    float: left;
+.right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-right: 22px;
 }
 
-ul.banner li.right {
-    float: right;
+.left img {
+  height: 60px;
 }
 
-ul.banner li a {
-    display: block;
-    color: black;
-    text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
+.left p a {
+  font-size: 120%;
+  color: black;
+  text-decoration: none;
+  width: max-content;
+  padding: 5px 10px;
+  font-weight: 200;
 }
 
-ul.banner li.active a{
-    background-color: rgb(196, 194, 188);
+.right p a {
+  font-size: 120%;
+  width: max-content;
+  display: block;
+  color: white;
+  background-color: black;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 10px;
+  padding: 5px 12px;
+  font-weight: 200;
 }
 
-ul.banner li.right a {
-    display: block;
-    color: white;
-    background-color: black;
-    border-radius: 10px;
-    padding: 5px 16px;
-    margin: 8px 10px;
+.left p a:hover {
+  color: gray;
 }
 
-ul.banner li a:hover{
-    background-color: gray;
+.right p a:hover {
+  background-color: gray;
 }
 
+.right #back-button a {
+  background-color: #04aa6d;
+  color: white;
+  padding: 5px 12px;
+  border-radius: 10px;
+}
+
+.right #back-button a:hover {
+  background-color: #74d2af;
+}
 
 .header {
-    display: flex;
-    align-items: center;
-    margin-bottom: 20px;
+  font-family: "IBM Plex Sans";
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  margin-top: 20px;
+  margin-left: 20px;
 }
 .name {
-    font-size: 24px;
-    margin-right: 10px;
+  font-size: 24px;
+  margin-right: 10px;
 }
-.rating {
-    font-size: 18px;
-    color: #888;
+.header #rating {
+  font-size: 24px;
+  color: #888;
 }
 .description {
-    margin-bottom: 30px;
+  margin-bottom: 30px;
 }
-
-
 
 .grid-container {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 30px;
-    padding: 40px;
-    margin-right: 400px;
+  font-family: "IBM Plex Sans";
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+  padding: 40px;
+  margin-right: 400px;
 }
-
 
 .grid-item {
-    background-color: lawngreen;
-    border: 4px solid rgba(0, 0, 0, 0.8);
-    height: 200px;
-    position: relative;border-radius: 75px;
+  color: black;
+  background-color: lightgray;
+  border: 1px solid rgba(0, 0, 0, 0.8);
+  height: 200px;
+  position: relative;
+  border-radius: 75px;
+  cursor: pointer;
 }
-.grid-item:hover{
-    background-color: forestgreen;
-    color: white;
+.grid-item:hover {
+  background-color: #04aa6d;
+  color: white;
 }
 
 .grid-item img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
-    position: absolute;
-    top: 0;
-    left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 
-.grid-item-title{
-    padding: 30px 10px 10px 20px;
-    text-align: center;
-    position: relative;
-    font-size: 3rem;
+.grid-item-title {
+  padding: 30px 10px 10px 20px;
+  text-align: center;
+  position: relative;
+  font-size: 3rem;
 }
 
-.grid-item-description{
-    text-align: center;
-    font-size: 1.5rem;
-    position: relative;
-    padding-bottom: 5px;
+.grid-item-description {
+  text-align: center;
+  font-size: 1.5rem;
+  position: relative;
+  padding-bottom: 5px;
 }
 
 .grid-item-footer {
-    text-align: center;
-    position: absolute;
-    font-size: 1rem;
-    width: 100%;
-    bottom: 0;
+  text-align: center;
+  position: absolute;
+  font-size: 1rem;
+  width: 100%;
+  bottom: 0;
 }
-
-.grid-item-delete{
-    position: absolute;
-    top: 0;
-    right: 0;
-    background-color: red;
-    padding-bottom:20px;
-    padding-left:40px;
-    cursor:pointer;
-}
-.grid-item-delete:hover {
-    background-color: firebrick;
-}
-
-.grid-item-edit{
-    position: absolute;
-    top: 0;
-    right: 40px;
-    background-color: green;
-    padding-bottom:20px;
-    padding-left:40px;
-    cursor:pointer;
-}
-
-.grid-item-edit:hover{
-    background-color: #4CAF50;
-}
-
-
 
 .basket {
-    position: fixed;
-    right: 0;
-    top: 0;
-    width: 400px;
-    height: 100vh;
-    background-color: #f9f9f9;
-    border-left: 1px solid #ccc;
-    padding: 20px;
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
+  font-family: "IBM Plex Sans";
+  position: fixed;
+  right: 0;
+  top: 0;
+  width: 400px;
+  height: 95vh;
+  background-color: #f9f9f9;
+  border-left: 1px solid #ccc;
+  padding: 20px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  margin-top: 50px;
 }
 
-.basket-header {
-    font-size: 24px;
-    margin-bottom: 20px;
+.basket h2 {
+  color: black;
+  font-size: 24px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.subtotal {
+  align-self: center;
+  padding: 10px;
 }
 
 .basket-items {
-    overflow-y: auto;
-    height: calc(100% - 40px); /* Reserve space for header */
+  height: calc(100% - 100px);
 }
 
-.proceed-button {
-    background-color: #4CAF50; /* Green background */
-    color: white;
-    padding: 15px 20px;
-    margin-bottom: 10px;
-    border: none;
-    cursor: pointer;
-    width: 100%; /* Make the button expand to the full width of the basket */
-    box-sizing: border-box; /* Include padding and border in the width */
-    border-radius: 5px;
+.basket-item {
+  display: flex;
+  text-align: center;
+  justify-content: space-between;
+  padding: 10px;
+  margin-bottom: 10px;
 }
 
-.proceed-button:hover {
-    background-color: #45a049; /* Darker shade for hover effect */
+.item-info {
+  text-align: left;
+  display: flex;
+  flex-direction: column;
 }
 
-.add-to-basket-button {
-    background-color: #4CAF50; /* Green background */
-    color: white;
-    padding: 15px 20px;
-    margin-bottom: 10px;
-    border: none;
-    cursor: pointer;
-    width: 100%; /* Make the button expand to the full width of the basket */
-    box-sizing: border-box; /* Include padding and border in the width */
-    border-radius: 5px;
+.item-info span {
+  font-weight: 400;
 }
 
-.add-to-basket-button:hover {
-    background-color: #45a049; /* Darker shade for hover effect */
+.quantity-control button {
+  margin: 5px;
+  cursor: pointer;
+  background: none;
+  border: 0px;
+}
+
+.checkout-button {
+  background-color: #04aa6d;
+  color: white;
+  padding: 15px 20px;
+  margin-bottom: 10px;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  box-sizing: border-box;
+  border-radius: 5px;
+}
+
+.checkout-button:hover {
+  background-color: #74d2af;
+}
+
+.update-basket-button {
+  background-color: #04aa6d;
+  color: white;
+  padding: 15px 20px;
+  margin-bottom: 10px;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  box-sizing: border-box;
+  border-radius: 5px;
+}
+
+.update-basket-button:hover {
+  background-color: #74d2af;
 }
 
 .login-button {
-    background-color: #4CAF50; /* Green background */
-    color: white;
-    padding: 15px 20px;
-    margin: 20px 0;
-    border: none;
-    cursor: pointer;
-    width: 100%; /* Make the button expand to the full width of the basket */
-    box-sizing: border-box; /* Include padding and border in the width */
+  background-color: #4caf50;
+  color: white;
+  padding: 15px 20px;
+  margin: 20px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .login-button:hover {
-    background-color: #45a049; /* Darker shade for hover effect */
+  background-color: #45a049;
 }
 
-/* Adjust the height of basket items to make sure there is space for the button */
-.basket-items {
-    height: calc(100% - 100px); /* Adjust the value based on actual header and button height */
-}
-
-.grid-item-form{
-    width: 100%;
-}
-.grid-item-form input{
-    height: 30px;
-    margin: 10px auto 10px auto;
-    display: block;
-    width: 80%;
-}
-
-.grid-item-form button{
-    margin: auto;
-    display: block;
-}
-
-#menu-page-back a{
-    background-color: #4CAF50;
-    color: white;
+#menu-page-back a {
+  background-color: #4caf50;
+  color: white;
 }

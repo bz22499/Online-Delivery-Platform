@@ -1,224 +1,211 @@
 body {
-    font-family: 'Arial', sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f4f4f4;
-    color: #333;
+  background-color: white;
+  margin: 0;
 }
 
-.cuisineBanner {
-    padding: 20px;
-    margin-top: 160px;
-    background-color: #007bff;
-    color: white;
-    text-align: center;
+.banner {
+  position: relative;
+  background: white;
+  top: 0;
+  position: sticky;
+  z-index: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: "IBM Plex Sans";
+  padding: 10px 0 10px 0;
+  border-bottom: 1px solid lightgray;
 }
 
+.left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-left: 22px;
+}
 
- ul.banner {
-     z-index:1;
-     list-style-type: none;
-     margin: 0;
-     padding: 0;
-     overflow: hidden;
-     background-color: #dfdfdf;
-     top: 0;
-     width: 100%;
-     position: sticky;
-   }
+.right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-right: 22px;
+}
 
- ul.banner img{
-   height: 19px;
-   padding: 14px;
-   float: left;
- }
+.left img {
+  height: 60px;
+}
 
-  ul.banner li {
-     float: left;
-  }
+.left p a {
+  font-size: 120%;
+  color: black;
+  text-decoration: none;
+  width: max-content;
+  padding: 5px 10px;
+  font-weight: 200;
+}
 
-   ul.banner li.right {
-     float: right;
-  }
+.right p a {
+  font-size: 120%;
+  width: max-content;
+  display: block;
+  color: white;
+  background-color: black;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 10px;
+  padding: 5px 12px;
+  font-weight: 200;
+}
 
-  ul.banner li a {
-     display: block;
-     color: black;
-     text-align: center;
-     padding: 14px 16px;
-     text-decoration: none;
-  }
+.left p a:hover {
+  color: gray;
+}
 
-  ul.banner li.active a{
-     background-color: rgb(196, 194, 188);
-  }
+.right p a:hover {
+  background-color: gray;
+}
 
-   ul.banner li.right a {
-     display: block;
-     color: white;
-     background-color: black;
-     border-radius: 10px;
-     padding: 5px 16px;
-     margin: 8px 10px;
-   }
+.right #viewBasketsButton a {
+  background-color: #04aa6d;
+  color: white;
+  padding: 5px 12px;
+  border-radius: 10px;
+}
 
- ul.banner li a:hover{
-     background-color: gray;
- }
+.right #viewBasketsButton a:hover {
+  background-color: #74d2af;
+}
 
+.basketsDropdown-content {
+  font-family: "IBM Plex Sans";
+  font-weight: 100;
+  font-size: 120%;
+  text-align: center;
+  display: block;
+  position: absolute;
+  background-color: darkgray;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 2;
+  border-radius: 10px;
+  margin-top: 5px;
+}
 
+.basketDiv {
+  padding: 2px 16px;
+}
 
- .locationInput {
-   position: relative;
-   text-align: center;
- }
+.checkout-button {
+  display: block;
+  background-color: black;
+  width: 100%;
+  padding: 5px;
+  box-sizing: border-box;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+.checkout-button p {
+  font-family: "IBM Plex Sans";
+  font-weight: 100;
+  padding-top: 0;
+  margin: 0;
+}
+
+.checkout-button a {
+  color: white;
+  text-decoration: none;
+  width: max-content;
+  display: block;
+  width: 100%;
+}
+
+.checkout-button:hover {
+  background-color: gray;
+}
+
+.locationInput {
+  position: relative;
+  text-align: center;
+}
 
 .locationInput input {
-    position: absolute;
-    top: 12%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    padding: 20px;
-    font-size: 17px;
-    border: 1px solid grey;
-    width: 40%;
-    background: white;
-    border-radius: 27px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  position: absolute;
+  top: 12%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 20px;
+  font-size: 17px;
+  border: 1px solid grey;
+  width: 40%;
+  background: #f1f1f1;
+  border-radius: 27px;
 }
 
-ul.cuisineList {
-    list-style-type: none;
-    margin: auto;
-    overflow: hidden;
-    background-color: #007bff;
-    color: white;
-    width: 80%;
-    position: relative;
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+  padding: 40px;
 }
 
- ul.cuisineList li {
-     display: inline-block;
-     color: white;
-     text-align: center;
-     padding: 14px 16px;
- }
-
- ul.cuisineList li .button {
-     background-color: #28a745;
-     border: none;
-     color: white;
-     padding: 15px 32px;
-     text-align: center;
-     text-decoration: none;
-     cursor: pointer;
-     font-size: 16px;
-     border-radius: 5px;
-    }
-
- ul.cuisineList li .button:hover {
-    background-color: #218838;
+.grid-item {
+  border-radius: 7px;
+  background-color: rgba(255, 255, 255, 0.8);
+  border: 2px solid rgba(0, 0, 0, 1);
+  font-size: 30px;
+  text-align: center;
+  height: 100px;
+  overflow: hidden;
+  position: relative;
+  padding-top: 25%;
+  transition: transform 0.3s ease;
 }
 
- .grid-container {
-     display: grid;
-     grid-template-columns: repeat(3, 1fr);
-     gap: 30px;
-     padding: 40px;
-     margin: 40px;
-     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
- }
+.grid-item:hover {
+  transform: scale(1.05);
+}
 
- .grid-item {
-     border-radius: 7px;
-     background-color: white;
-     border: 1px solid rgba(0, 0, 0, 1);
-     /*padding: 20px;*/
-     font-size: 30px;
-     text-align: center;
-     height: 100px;
-     overflow: hidden;
-     position: relative;
-     padding-top: 25%;
-     transition: transform 0.3s ease;
-     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
- }
+.grid-item img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  transition: transform 0.3s ease;
+  overflow: hidden;
+}
 
- .grid-item:hover {
-     transform: scale(1.05);
- }
+.grid-item:hover img {
+  transform: scale(1.3);
+}
 
- .grid-item img {
-     width: 100%;
-     height: 100%;
-     display: block;
-     position: absolute;
-     top: 0;
-     left: 0;
-     transition: transform 0.3s ease; /* keep transition smooth */
-     overflow: hidden;
-     border-radius: 7px;
- }
+.grid-item div {
+  position: absolute;
+  height: auto;
+  text-align: center;
+  background-color: rgba(0, 0, 0, 0.75);
+  color: white;
+  font-size: 75%;
+  padding: 5px;
+  width: auto;
+}
 
- .grid-item:hover img{
-     transform: scale(1.3); /* Zoom in the image by 10% */
- }
+.grid-item .grid-item-footer {
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+  left: 0;
+}
 
- .grid-item div{
-     position: absolute; /* Position the overlay relative to the container */
-     bottom: 70%;
-     height: auto;
-     text-align: center;
-     background-color: rgba(0, 0, 0, 0.75);
-     color: white;
-     font-size: 75%;
-     padding: 5px;
-     width: auto;
- }
+.grid-item .rating {
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+  right: -100%;
+  overflow: hidden;
+  transition: right 0.3s ease;
+}
 
- .grid-item .grid-item-footer{
-     border-top-right-radius: 10px;
-     border-bottom-right-radius: 10px;
-     left: 0;
-     background-color: #007bff;
-     color: white;
-     padding: 5px;
- }
-
- .grid-item .rating{
-     border-top-left-radius: 10px;
-     border-bottom-left-radius: 10px;
-     right: -100%;
-     background-color: #28a745;
-     color: white;
-     padding: 5px;
-     overflow: hidden;
-     transition: right 0.3s ease; /* make transition of banner smooth */
- }
-
- .grid-item:hover .rating{
-     right: 0; /* when hovered have banner come into frame*/
- }
-
- ul.banner .viewBasketsButton a {
-     background-color: #04AA6D; /* Green background */
-     color: white; /* White text */
-     padding: 5px 16px;
-     margin: 8px 10px;
-     border-radius: 10px; /* Optional: adds rounded corners */
- }
-
- .basketsDropdown-content {
-     display: none;
-     position: fixed; /* Changed to fixed to stick to the viewport */
-     right: 0; /* Align to the right side of the viewport */
-     top: 50px; /* Adjust based on your banner's height */
-     background-color: darkgray;
-     min-width: 160px;
-     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-     padding: 12px 16px;
-     z-index: 2; /* Ensure it's above other content */
- }
-
-
-
+.grid-item:hover .rating {
+  right: 0;
+}
