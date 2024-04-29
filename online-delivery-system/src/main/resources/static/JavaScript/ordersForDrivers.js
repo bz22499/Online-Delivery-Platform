@@ -96,10 +96,10 @@ async function populateOrders(ordersData) {
                         const basketItems = basket.basketItems;
                         for (const basketItem of basketItems) {
                             const menuItem = basketItem.menuItem;
-                            const vendorAddress = await fetchVendorAddress(menuItem.vendor.email);
+                            const vendor = menuItem.vendor;
+                            const vendorAddress = await fetchVendorAddress(vendor.email);
                             const vendorPostcode = vendorAddress ? vendorAddress.postCode : null;
                             const vendorAddressDetails = vendorPostcode ? `Vendor Street: ${vendorAddress.street}, Vendor Postcode: ${vendorPostcode}` : 'N/A';
-                            const totalPrice = menuItem ? (menuItem.price * basketItem.quantity).toFixed(2) : 'N/A';
 
                             let distanceDisplay = 'Distance: N/A';
                             if (userPostcode && vendorPostcode) {
@@ -108,7 +108,7 @@ async function populateOrders(ordersData) {
                             }
 
                             const basketItemInfo = document.createElement('li');
-                            basketItemInfo.textContent = `Basket ID: ${basket.id}, Basket Item ID: ${basketItem.id}, Menu Item Name: ${menuItem.name}, Quantity: ${basketItem.quantity}, Price per Item: ${menuItem.price.toFixed(2)}, Total Price: ${totalPrice}, User Address: ${userAddressDisplay}, Vendor Address: ${vendorAddressDetails}, ${distanceDisplay}`;
+                            basketItemInfo.textContent = `Basket ID: ${basket.id}, Vendor: ${vendor}, Vendor Address: ${vendorAddressDetails}, User Address: ${userAddressDisplay}, ${distanceDisplay}`;
                             basketList.appendChild(basketItemInfo);
                         }
                     }
