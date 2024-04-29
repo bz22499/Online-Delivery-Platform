@@ -1,0 +1,117 @@
+body {
+  background-color: lightgray;
+  margin: 0;
+}
+
+.banner {
+  background: white;
+  top: 0;
+  position: sticky;
+  z-index: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: "IBM Plex Sans";
+  padding: 10px 0 10px 0;
+  border-bottom: 1px solid lightgray;
+}
+
+.left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-left: 22px;
+}
+
+.right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-right: 22px;
+}
+
+.left img {
+  height: 60px;
+}
+
+.left p a {
+  font-size: 120%;
+  color: black;
+  text-decoration: none;
+  width: max-content;
+  padding: 5px 10px;
+  font-weight: 200;
+}
+
+.right p a {
+  font-size: 120%;
+  width: max-content;
+  display: block;
+  color: white;
+  background-color: black;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 10px;
+  padding: 5px 12px;
+  font-weight: 200;
+}
+
+.left p a:hover {
+  color: gray;
+}
+
+.right p a:hover {
+  background-color: gray;
+}
+
+.item-container {
+  position: relative;
+  margin: 20px auto;
+  background-color: whitesmoke;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  font-family: "IBM Plex Sans";
+  border-radius: 5px;
+  text-align: center;
+  width: 400px;
+}
+
+.item-container h1 {
+  margin: 0 0 20px;
+}
+
+.form-group {
+  text-align: left;
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.form-group input {
+  width: 95%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+button {
+  margin: 8px auto;
+  display: block;
+  width: 100%;
+  max-width: 200px;
+  padding: 10px;
+  background-color: black;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+button:hover {
+  background-color: gray;
+}

@@ -276,7 +276,7 @@ document.addEventListener('DOMContentLoaded', function () {
             cacheBasket();
             window.location.href = "/checkout";
         } catch (error) {
-            alert("Error creating basket: " + error)
+            alert("Error creating basket: ", error)
         }
     });
 
@@ -287,7 +287,7 @@ document.addEventListener('DOMContentLoaded', function () {
             await handleBasketItems();
             cacheBasket();
         } catch (error) {
-            alert("Error creating basket: " + error)
+            alert("Error creating basket: ", error)
         }
     });
 });
@@ -349,7 +349,6 @@ async function handleBasketItems(){
                 method: 'DELETE'
             })
         );
-
         await Promise.all(deletePromises);
     } catch (error) {
         console.error("Error deleting items:", error);

@@ -87,7 +87,7 @@ function populateGrid(pageData) {
       // Nav to menu page
       gridItem.addEventListener("click", () => {
         if (restaurant.email) {
-          window.location.href = `/${encodeURIComponent(restaurant.email)}/menu-page`;
+          window.location.href = `/${encodeURIComponent(restaurant.email)}/menuPage`;
         } else {
           console.warn("Restaurant email is undefined:", restaurant);
         }
@@ -162,13 +162,6 @@ async function populateBasketsDropdown() {
     checkoutButtonDiv.appendChild(checkoutButton);
     dropdown.appendChild(checkoutButtonDiv);
 
-    // const viewButton = document.createElement("p");
-    // viewButton.textContent = "Checkout";
-    // viewButton.className = "dropdown-view-button";
-    // viewButton.addEventListener("click", function () {
-    //   window.location.href = `/checkout`;
-    // });
-    // dropdown.appendChild(viewButton);
   } else {
     dropdown.textContent = "No active baskets";
   }

@@ -75,3 +75,11 @@ function saveProfile() {
             alert("Failed to update profile 123456");
         });
 }
+
+document.addEventListener('DOMContentLoaded', function () {
+    const logoutButton = document.querySelector("#logout");
+    logoutButton.addEventListener('click', function() {
+        sessionStorage.clear();
+        window.location.href='/logout';
+    })
+});

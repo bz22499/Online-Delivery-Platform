@@ -1,0 +1,219 @@
+body {
+  font-family: "Nimbus Sans";
+  margin: 0;
+  padding: 0;
+  background: #eeeeee;
+}
+
+.banner {
+  background: white;
+  top: 0;
+  position: sticky;
+  z-index: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: "IBM Plex Sans";
+  padding: 10px 0 10px 0;
+}
+
+.left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-left: 22px;
+}
+
+.right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-right: 22px;
+}
+
+.left img {
+  height: 60px;
+}
+
+.left p a {
+  font-size: 120%;
+  color: black;
+  text-decoration: none;
+  width: max-content;
+  padding: 5px 10px;
+  font-weight: 200;
+}
+
+.right p a {
+  font-size: 120%;
+  width: max-content;
+  display: block;
+  color: white;
+  background-color: black;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 10px;
+  padding: 5px 12px;
+  font-weight: 200;
+}
+
+.left p a:hover {
+  color: gray;
+}
+
+.right p a:hover {
+  background-color: gray;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+.name {
+  font-size: 24px;
+  margin-right: 10px;
+}
+.rating {
+  font-size: 18px;
+  color: #888;
+}
+.description {
+  margin-bottom: 30px;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 30px;
+  padding: 40px;
+}
+
+.grid-item {
+  border: 2px solid rgba(0, 0, 0, 0.8);
+  height: 200px;
+  position: relative;
+  border-radius: 5px;
+  overflow: hidden;
+  background: #ffffff;
+}
+
+.grid-item-content {
+  position: absolute;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  height: 100%;
+}
+
+.grid-item-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  text-align: center;
+  height: 100%;
+  width: 40%;
+  overflow-wrap: break-word;
+}
+
+.grid-item-title {
+  margin-top: 5%;
+  font-size: 40px;
+}
+
+.grid-item-description {
+  font-size: 30px;
+}
+
+.grid-item-footer {
+  font-size: 25px;
+  margin-bottom: 0;
+}
+
+.symbols-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  text-align: center;
+  height: 100%;
+  width: 10%;
+  margin-right: 2%;
+}
+
+.grid-item-delete {
+  margin-bottom: 40%;
+  cursor: pointer;
+}
+
+.grid-item-delete span {
+  font-size: 50px;
+}
+
+.grid-item-edit {
+  margin-top: 40%;
+  cursor: pointer;
+}
+
+.grid-item-edit span {
+  font-size: 50px;
+}
+
+.grid-item-image-box {
+  position: relative;
+  height: 100%;
+  width: 40%;
+  background-size: 100% 100%;
+  border-right: 2px solid rgba(0, 0, 0, 0.8);
+}
+
+.grid-item-profile-picture {
+  display: none;
+}
+
+.edit-profile-button {
+  position: absolute;
+  cursor: pointer;
+  top: 10%;
+  left: 10%;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: white;
+  align-content: center;
+  justify-content: center; /* Center content horizontally */
+  align-items: center; /* Center content vertically */
+}
+
+.grid-item-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 100%;
+  height: 100%;
+}
+.grid-item-form input {
+  height: 30px;
+  margin: 10px auto 10px auto;
+  display: block;
+  width: 80%;
+}
+
+.grid-item-form button {
+  margin: auto;
+  display: block;
+  font-size: 120%;
+  width: max-content;
+  color: white;
+  background-color: black;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 10px;
+  padding: 5px 12px;
+  font-weight: 200;
+}
+.grid-form-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
