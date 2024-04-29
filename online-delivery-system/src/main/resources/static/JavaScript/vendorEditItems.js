@@ -61,6 +61,7 @@ function deleteFile(filename) {
 async function submitFormClicked(name, price, description,itemID,itemTitle,itemDescription,itemFooter){
     const submitButton = document.getElementById('submit-form-button');
     const cancelButton = document.getElementById('cancel-form-button');
+
     submitButton.disabled = true;
     cancelButton.disabled = true;
     const vendorInfoElement = document.getElementById('vendor-info');
@@ -107,7 +108,7 @@ async function submitFormClicked(name, price, description,itemID,itemTitle,itemD
                 if (!response.ok) {
                     submitButton.disabled = false;
                     cancelButton.disabled = false;
-                    throw new Error('Error updating item: ', response);
+                    return false;
                 }
                 submitButton.disabled = false;
                 cancelButton.disabled = false;
@@ -116,8 +117,10 @@ async function submitFormClicked(name, price, description,itemID,itemTitle,itemD
         itemTitle.textContent = name;
         itemFooter.textContent = "£"+ price;
         itemDescription.textContent = description;
+    }else{
+        return false;
     }
-
+    return true;
 
 
 }
@@ -245,12 +248,30 @@ function populateGrid(pageData) {
         formItemPrice.value=item.price.toFixed(2);
         gridItemForm.appendChild(formItemPrice)
 
+        let currentName = item.name;
+        let currentDesc = item.description;
+        let currentPrice = item.price;
+
+
         const submitForm = document.createElement('button');
         submitForm.disabled = false;
         submitForm.className='stylishbutton';
         submitForm.id = 'submit-form-button'
         submitForm.type = "button"
-        submitForm.onclick = async function () {await submitFormClicked(formItemName.value,formItemPrice.value,formItemDescription.value,item.id,gridTitle,description,footer); cancelFormClicked(gridFormContainer,gridItemInfo)}
+        submitForm.onclick = async function () {
+            let worked = await submitFormClicked(formItemName.value,formItemPrice.value,formItemDescription.value,item.id,gridTitle,description,footer);
+            if(!worked){
+                formItemName.value = currentName;
+                formItemDescription.value = currentDesc;
+                formItemPrice.value = currentPrice;
+            }else{
+                currentName = formItemName.value;
+                currentDesc = formItemDescription.value;
+                currentPrice = formItemPrice.value;
+            }
+            cancelFormClicked(gridFormContainer,gridItemInfo);
+
+        }
         submitForm.textContent = "SUBMIT"
         gridItemForm.appendChild(submitForm);
 
@@ -275,6 +296,10 @@ function populateGrid(pageData) {
         });
 
         editButton.addEventListener('click', function (){
+            formItemName.value = currentName;
+            formItemPrice.value = currentPrice;
+            formItemDescription.value = currentDesc;
+
             gridItemInfo.hidden = true;
             gridFormContainer.hidden=false;
         });
