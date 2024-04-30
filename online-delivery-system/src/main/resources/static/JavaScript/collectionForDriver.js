@@ -81,19 +81,16 @@ async function populateOrders(ordersData) {
                         const basketItems = basket.basketItems;
                         for (const basketItem of basketItems) {
                             const menuItem = basketItem.menuItem;
-                            const vendorAddress = await fetchVendorAddress(menuItem.vendor.email);
-                            const addressDetails = vendorAddress ? `Vendor Street: ${vendorAddress.street}, Vendor Postcode: ${vendorAddress.postCode}` : 'N/A';
-                            const totalPrice = menuItem ? (menuItem.price * basketItem.quantity).toFixed(2) : 'N/A';
+                            const vendor = menuItem.vendor;
+                            const vendorAddress = await fetchVendorAddress(vendor.email);
+                            const vendorAddressDetails = vendorAddress ? `Vendor Street: ${vendorAddress.street}, Vendor Postcode: ${vendorAddress.postCode}` : 'N/A';
                             const basketItemInfo = document.createElement('li');
-                            basketItemInfo.textContent = `Basket ID: ${basket.id}, Basket Item ID: ${basketItem.id}, Menu Item Name: ${menuItem.name}, Quantity: ${basketItem.quantity}, Price per Item: ${menuItem.price.toFixed(2)}, Total Price: ${totalPrice}, Address: ${addressDetails}`;
+                            basketItemInfo.textContent = `Vendor: ${vendor.name}, Vendor Address: ${vendorAddressDetails}`;
                             basketList.appendChild(basketItemInfo);
                         }
                     }
                     orderItem.appendChild(basketList);
                 } else {
-                    // const noBasketInfo = document.createElement('div');
-                    // noBasketInfo.textContent = 'No basket items found for this order.';
-                    // orderItem.appendChild(noBasketInfo);
                     console.log('No basket items found for this order.')
                 }
                 // Additional functionality to confirm collection

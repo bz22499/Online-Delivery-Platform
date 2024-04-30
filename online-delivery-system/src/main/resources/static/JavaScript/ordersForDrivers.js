@@ -101,6 +101,7 @@ async function fetchDistance(postcode1, postcode2) {
 
 async function populateOrders(ordersData) {
     const gridContainer = document.querySelector('.grid-container');
+
     for (const object of orders){
         const orderItem = document.createElement('div');
         orderItem.className = 'order-item';

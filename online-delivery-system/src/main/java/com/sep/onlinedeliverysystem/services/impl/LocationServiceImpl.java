@@ -18,7 +18,7 @@ public class LocationServiceImpl implements LocationService {
         String coords1 = getCoordinates(postcode1);
         String coords2 = getCoordinates(postcode2);
         if (coords1 == null || coords2 == null) {
-            throw new IllegalArgumentException("Invalid postcodes provided");
+            return 0.0; // Return 0 as the distance for invalid postcodes
         }
 
         //split the coords into lat & lon
@@ -34,22 +34,20 @@ public class LocationServiceImpl implements LocationService {
     private String getCoordinates(String postcode) {
         RestTemplate restTemplate = new RestTemplate();
         String url = "https://eu1.locationiq.com/v1/search.php?key=" + LOCATIONIQ_API_KEY + "&q=" + postcode + "&format=json";
-        ResponseEntity<String> responseEntity = restTemplate.getForEntity(url, String.class);
-        if (responseEntity.getStatusCode().is2xxSuccessful()) {
-            String responseBody = responseEntity.getBody();
-            try {
+        try {
+            ResponseEntity<String> responseEntity = restTemplate.getForEntity(url, String.class);
+            if (responseEntity.getStatusCode().is2xxSuccessful()) {
+                String responseBody = responseEntity.getBody();
                 // Parse JSON response to extract latitude and longitude
                 ObjectMapper objectMapper = new ObjectMapper();
                 JsonNode rootNode = objectMapper.readTree(responseBody);
                 String latitude = rootNode.get(0).get("lat").asText();
                 String longitude = rootNode.get(0).get("lon").asText();
                 return latitude + "," + longitude;
-            } catch (Exception e) {
-                // exception handling
-                e.printStackTrace();
+            } else {
                 return null;
             }
-        } else {
+        } catch (Exception e) {
             return null;
         }
     }
@@ -67,6 +65,10 @@ public class LocationServiceImpl implements LocationService {
                         Math.sin(deltaLambda / 2) * Math.sin(deltaLambda / 2);
         double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 
-        return R * c;
+        double distance = R * c;
+
+        distance = Math.round(distance * 100.0) / 100.0;
+
+        return distance;
     }
 }
