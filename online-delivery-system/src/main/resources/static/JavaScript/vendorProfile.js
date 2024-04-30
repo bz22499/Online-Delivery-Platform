@@ -34,6 +34,11 @@ function returnToProfile() {
 }
 
 function saveProfile() {
+    const saveButton = document.getElementById("saveProfileChanges");
+    saveButton.disabled = true;
+    const cancelButton = document.getElementById("cancelProfileChanges");
+    cancelButton.disabled = true;
+
     var vendorId = document.getElementById('vendorId').value;
     var currentPassword = document.getElementById('current-password').value;
     var name = document.getElementById('new-name').value;
@@ -43,6 +48,8 @@ function saveProfile() {
 
     // Ensure both password fields match
     if (newPassword !== confirmPassword) {
+        saveButton.disabled = false;
+        cancelButton.disabled = false;
         alert("Passwords do not match");
         return;
     }
@@ -73,27 +80,33 @@ function saveProfile() {
 
                 document.getElementById('name').innerText = name;
                 document.getElementById('description').innerText = description;
+              
+                saveButton.disabled = false;
+                cancelButton.disabled = false;
 
                 returnToProfile();
             } else if (response.status === 401) {
-                // Unauthorized, display invalid password alert
+                saveButton.disabled = false;
+                cancelButton.disabled = false;
                 alert("Invalid password");
             } else {
+                saveButton.disabled = false;
+                cancelButton.disabled = false;
                 throw new Error('Failed to update profile');
             }
         })
         .catch(error => {
+            saveButton.disabled = false;
+            cancelButton.disabled = false;
             console.error('Error updating profile:', error);
             alert("Failed to update profile");
         });
 }
 
 function editAddress() {
-    // Hide the initial input fields and edit profile button
     document.getElementById('address-details').style.display = 'none';
     document.getElementById('edit-address-btn').style.display = 'none';
 
-    // Show the edit form
     document.getElementById('address-fields').style.display = 'block';
 
     // Set the current values in the form fields
@@ -110,20 +123,27 @@ function isValidPostcode(postcode) {
 }
 
 function saveAddress() {
-    // Get address input data
+    const saveButton = document.getElementById("saveAddressChanges");
+    saveButton.disabled = true;
+    const cancelButton = document.getElementById("cancelAddressChanges");
+    cancelButton.disabled = true;
+
     var street = document.getElementById('street').value;
     var city = document.getElementById('city').value;
     var postCode = document.getElementById('postCode').value;
     var country = document.getElementById('country').value;
     var email = document.getElementById('vendorId').value;
 
-    // Check if any of the fields are empty
     if (!street || !city || !postCode || !country) {
+        saveButton.disabled = false;
+        cancelButton.disabled = false;
         alert("Please fill in all address fields");
         return;
     }
 
     if (!isValidPostcode(postCode)) {
+        saveButton.disabled = false;
+        cancelButton.disabled = false;
         alert("Invalid postcode");
         return;
     }
@@ -148,7 +168,8 @@ function saveAddress() {
             })
                 .then(response => {
                     if (response.ok) {
-
+                        saveButton.disabled = false;
+                        cancelButton.disabled = false;
                         // Add the id to the addressData object (needed because it won't be generated this time; we're patching not posting)
                         return response.json().then(existingAddress => {
                             addressData.id = existingAddress.id;
@@ -163,6 +184,8 @@ function saveAddress() {
                             });
                         });
                     } else if (response.status === 404) {
+                        saveButton.disabled = false;
+                        cancelButton.disabled = false;
                         // No address exists, perform a POST request to create a new address
                         return fetch(`/vendorAddresses`, {
                             method: 'POST',
@@ -172,27 +195,32 @@ function saveAddress() {
                             body: JSON.stringify(addressData)
                         });
                     } else {
+                        saveButton.disabled = false;
+                        cancelButton.disabled = false;
                         throw new Error('Failed to fetch address data');
                     }
                 })
                 .then(response => {
                     if (response.ok) {
-                        // // Hide the address fields
-                        // document.getElementById('address-fields').style.display = 'none';
-                        // // Show the "Edit Address" button
-                        // document.getElementById('edit-address-btn').style.display = 'block';
-
+                        saveButton.disabled = false;
+                        cancelButton.disabled = false;
                         returnToProfile();
                     } else {
+                        saveButton.disabled = false;
+                        cancelButton.disabled = false;
                         throw new Error('Failed to update address');
                     }
                 })
                 .catch(error => {
+                    saveButton.disabled = false;
+                    cancelButton.disabled = false;
                     console.error('Error updating address:', error);
                     alert("Failed to update address");
                 });
         })
         .catch(error => {
+            saveButton.disabled = false;
+            cancelButton.disabled = false;
             console.error('Error fetching vendor data:', error);
             alert("Failed to fetch vendor data");
         });

@@ -41,7 +41,7 @@
     <div class="basket-items"></div>
     <h3 class="subtotal"></h3>
     <button class="login-button" th:unless="${loggedIn}" id="loginButton"><a href="/login">Please login before starting an order<a/></button>
-    <button class="update-basket-button" th:if="${loggedIn}" id="updateBasketContainer">Update Basket</button>
+    <button class="update-basket-button" th:if="${loggedIn}" id="updateBasketButton">Update Basket</button>
     <button class="checkout-button" th:if="${loggedIn}" id="checkoutButton">Checkout</button>
 </div>
 <script src="/JavaScript/menuPage.js"></script>

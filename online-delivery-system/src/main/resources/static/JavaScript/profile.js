@@ -1,18 +1,3 @@
-// function updateProfilePicture() {
-//     var input = document.getElementById('imageInput');
-//     var preview = document.getElementById('previewImage');
-//
-//     var file = input.files[0];
-//                                                                      //This was for the old pfp method
-//     if (file) {
-//         var reader = new FileReader();
-//         reader.onload = function(e) {
-//             preview.src = e.target.result;
-//         };
-//         reader.readAsDataURL(file);
-//     }
-// }
-
 function editProfile() {
     // Clear the password-related input fields
     document.getElementById('current-password').value = '';
@@ -49,6 +34,11 @@ function returnToProfile() {
 }
 
 function saveProfile() {
+    const saveButton = document.getElementById("saveProfileChanges");
+    saveButton.disabled = true;
+    const cancelButton = document.getElementById("cancelProfileChanges");
+    cancelButton.disabled = true;
+
     var userId = document.getElementById('userId').value;
     var currentPassword = document.getElementById('current-password').value;
     var firstName = document.getElementById('new-firstName').value;
@@ -58,7 +48,9 @@ function saveProfile() {
 
     // Ensure both password fields match
     if (newPassword !== confirmPassword) {
-        alert("Passwords do not match");
+        saveButton.disabled = false;
+        cancelButton.disabled = false;
+        alert("Passwords do not match.");
         return;
     }
 
@@ -83,48 +75,58 @@ function saveProfile() {
     })
         .then(response => {
             if (response.ok) {
+                saveButton.disabled = false;
+                cancelButton.disabled = false;
+                
                 var firstName = document.getElementById('new-firstName').value;
                 var lastName = document.getElementById('new-lastName').value;
 
                 document.getElementById('firstName').innerText = firstName;
                 document.getElementById('lastName').innerText = lastName;
 
+
                 returnToProfile();
             } else if (response.status === 401) {
                 // Unauthorized, display invalid password alert
+                saveButton.disabled = false;
+                cancelButton.disabled = false;
                 alert("Invalid password");
             } else {
+                saveButton.disabled = false;
+                cancelButton.disabled = false;
                 throw new Error('Failed to update profile');
             }
         })
         .catch(error => {
+            saveButton.disabled = false;
+            cancelButton.disabled = false;
             console.error('Error updating profile:', error);
             alert("Failed to update profile");
         });
 }
+
 function editAddress() {
-    // Hide the initial input fields and edit profile button
     document.getElementById('address-details').style.display = 'none';
     document.getElementById('edit-address-btn').style.display = 'none';
-
-    // Show the edit form
     document.getElementById('address-fields').style.display = 'block';
 
-    // Set the current values in the form fields
     document.getElementById('street').value = document.getElementById('current-street').innerText;
     document.getElementById('city').value = document.getElementById('current-city').innerText;
     document.getElementById('country').value = document.getElementById('current-country').innerText;
     document.getElementById('postCode').value = document.getElementById('current-postcode').innerText;
-
 }
 
 function isValidPostcode(postcode) {
-    // Regular expression for UK postcodes
     var postcodeRegex = /^[A-Z]{1,2}[0-9R][0-9A-Z]? ?[0-9][A-Z]{2}$/i;
     return postcodeRegex.test(postcode);
 }
 
 function saveAddress() {
+    const saveButton = document.getElementById("saveAddressChanges");
+    saveButton.disabled = true;
+    const cancelButton = document.getElementById("cancelAddressChanges");
+    cancelButton.disabled = true;
+  
     // Get address input data
     var street = document.getElementById('street').value;
     var city = document.getElementById('city').value;
@@ -135,11 +137,15 @@ function saveAddress() {
     // Check if any of the fields are empty
     if (!street || !city || !postCode || !country) {
         alert("Please fill in all address fields");
+        saveButton.disabled = false;
+        cancelButton.disabled = false;
         return;
     }
 
     if (!isValidPostcode(postCode)) {
         alert("Invalid postcode");
+        saveButton.disabled = false;
+        cancelButton.disabled = false;
         return;
     }
 
@@ -163,6 +169,8 @@ function saveAddress() {
             })
                 .then(response => {
                     if (response.ok) {
+                        saveButton.disabled = false;
+                        cancelButton.disabled = false;
                         // Add the id to the addressData object (needed because it won't be generated this time; we're patching not posting)
                         return response.json().then(existingAddress => {
                             addressData.id = existingAddress.id;
@@ -177,6 +185,8 @@ function saveAddress() {
                             });
                         });
                     } else if (response.status === 404) {
+                        saveButton.disabled = false;
+                        cancelButton.disabled = false;
                         // No address exists, perform a POST request to create a new address
                         return fetch(`/addresses`, {
                             method: 'POST',
@@ -186,29 +196,33 @@ function saveAddress() {
                             body: JSON.stringify(addressData)
                         });
                     } else {
+                        saveButton.disabled = false;
+                        cancelButton.disabled = false;
                         throw new Error('Failed to fetch address data');
                     }
                 })
                 .then(response => {
                     if (response.ok) {
-                        // // Hide the address fields
-                        // document.getElementById('address-fields').style.display = 'none';
-                        // // Show the "Edit Address" button
-                        // document.getElementById('edit-address-btn').style.display = 'block';
-
+                        saveButton.disabled = false;
+                        cancelButton.disabled = false;
                         returnToProfile();
                     } else {
+                        saveButton.disabled = false;
+                        cancelButton.disabled = false;
                         throw new Error('Failed to update address');
                     }
                 })
                 .catch(error => {
+                    saveButton.disabled = false;
+                    cancelButton.disabled = false;
                     console.error('Error updating address:', error);
                     alert("Failed to update address");
                 });
         })
         .catch(error => {
-            console.error('Error fetching user data:', error);
-            alert("Failed to fetch user data");
+            saveButton.disabled = false;
+            cancelButton.disabled = false;
+            alert("Failed to fetch user data: ", error);
         });
 }
 
