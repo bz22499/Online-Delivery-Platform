@@ -82,21 +82,31 @@ function populateGrid(pageData) {
         const gridItem = document.createElement('div');
         gridItem.className = 'grid-item';
 
+        const gridData = document.createElement('div');
+        gridData.className = 'grid-data';
+        gridItem.appendChild(gridData);
+
+        const gridImg = document.createElement('div');
+        gridImg.className = 'grid-img';
+        gridImg.style.backgroundImage = "url('/images/wix1.png')"
+        gridItem.appendChild(gridImg);
+
+
         const gridTitle = document.createElement('div')
         gridTitle.className='grid-item-title'
         gridTitle.textContent = item.name;
-        gridItem.appendChild(gridTitle)
+        gridData.appendChild(gridTitle)
 
 
         const description = document.createElement('div');
         description.className = 'grid-item-description';
         description.textContent = item.description;
-        gridItem.appendChild(description);
+        gridData.appendChild(description);
 
         const footer = document.createElement('div');
         footer.className = 'grid-item-footer';
-        footer.textContent = "£"+item.price;
-        gridItem.appendChild(footer);
+        footer.textContent = "£"+item.price.toFixed(2);
+        gridData.appendChild(footer);
 
         gridItem.addEventListener('click', function() {
             addOrUpdateBasketItem(item);
@@ -136,6 +146,9 @@ function addOrUpdateBasketItem(menuItem, qty=1) {
 }
 
 function createBasketItemHtml(menuItem) {
+
+
+
     const basketItem = document.createElement('div');
     basketItem.className = 'basket-item';
     basketItem.setAttribute('data-id', menuItem.id);
