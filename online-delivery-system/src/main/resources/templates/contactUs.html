@@ -20,7 +20,9 @@
         <p><a target="_parent" href="contact">Contact</a></p>
         </div>  
         <div class="right">  
-        <p><a target="_parent" href="profile" th:if="${loggedIn}">Profile</a></p>
+        <p><a target="_parent" href="profile" th:if="${loggedInUser}">Profile</a></p>
+        <p><a target="_parent" href="vendorProfile" th:if="${loggedInVendor}">Profile</a></p>
+        <p><a target="_parent" href="driverProfile" th:if="${loggedInDriver}">Profile</a></p>
         </div>        
     </div>
 
