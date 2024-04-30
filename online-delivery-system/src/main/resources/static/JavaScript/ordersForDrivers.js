@@ -62,7 +62,6 @@ async function preLoadData(){
     });
 
     list = await Promise.all(promises);
-    console.log("Finished preloading");
     return list;
 }
 
@@ -101,9 +100,7 @@ async function fetchDistance(postcode1, postcode2) {
 }
 
 async function populateOrders(ordersData) {
-    console.log("populating");
     const gridContainer = document.querySelector('.grid-container');
-    console.log(orders);
     for (const object of orders){
         const orderItem = document.createElement('div');
         orderItem.className = 'order-item';
@@ -137,48 +134,38 @@ async function populateOrders(ordersData) {
             }
             orderItem.appendChild(basketList);
             gridContainer.appendChild(orderItem);
-        } else {
-            console.log('No basket items found for this order.');
-        }
 
-        const confirmButton = document.createElement('button');
-        confirmButton.textContent = 'Confirm Collection';
-        confirmButton.addEventListener('click', async () => {
-            const confirmation = confirm("Are you sure you want to collect this order?");
-            if (confirmation) {
-                order.status = driverId;
-                const response = await fetch(`/orders/${order.id}`, {
-                    method: 'PATCH',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(order)
-                });
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
+            const confirmButton = document.createElement('button');
+            confirmButton.textContent = 'Confirm Collection';
+            confirmButton.addEventListener('click', async () => {
+                const confirmation = confirm("Are you sure you want to collect this order?");
+                if (confirmation) {
+                    object.order.status = driverId;
+                    const response = await fetch(`/orders/${object.order.id}`, {
+                        method: 'PATCH',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(object.order)
+                    });
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    } else {
+                        gridContainer.removeChild(orderItem);
+                    }
                 }
-                const responseData = await response.json();
-                console.log('Response from PATCH request:', responseData);
-                console.log("Order status updated to driver id");
-                const orderInfoElement = document.getElementById(`order-${order.id}-info`);
-                if (orderInfoElement) {
-                    orderInfoElement.textContent = `Status: ${order.status}`;
-                }
-            }
-        });
+            });
         orderItem.appendChild(confirmButton);
+        }
     }
-    console.log("populated");
 }
 
 async function loadMore() {
-    console.log("loadmore");
     if (isLoading) return;
     isLoading = true;
     const driverIdElement = document.getElementById('driverId');
     driverId = driverIdElement.value;
     if (orders && orders.length > 0) {
-        console.log("hit load");
         await populateOrders(orders);
     }
     isLoading = false;
@@ -189,8 +176,3 @@ window.onload = async () => {
     await loadMore();
 };
 
-// window.addEventListener('scroll', () => {
-//     if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 100 && !isLoading) {
-//         loadMore();
-//     }
-// });
