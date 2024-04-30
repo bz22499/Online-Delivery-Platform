@@ -2,63 +2,251 @@ body {
     font-family: 'Arial', sans-serif;
     margin: 0;
     padding: 0;
-}
-
-header {
-    background-color: #333;
-    color: #fff;
-    padding: 10px;
-    text-align: center;
-}
-
-section {
-    max-width: 800px;
-    margin: 20px auto;
-    padding: 20px;
-}
-
-h2 {
+    background-color: #f4f4f4;
     color: #333;
 }
 
-#chat-container {
-    height: 200px;
-    overflow-y: scroll;
-    border: 1px solid #ccc;
-    padding: 10px;
+.header {
+  display: block;
+  background-color: black;
+  flex-direction: column;
+  text-align: center;
+  color: white;
+  padding-bottom: 10px;
+  padding-top: 5px;
+}
+
+.header h1 {
+  font-family: "Oswald";
+  font-weight: 200;
+}
+
+.header p {
+  font-family: "IBM Plex Sans";
+  font-weight: 100;
+  letter-spacing: 1px; 
+}
+
+.banner {
+  background: white;
+  top: 0;
+  position: sticky;
+  z-index: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: "IBM Plex Sans";
+  padding: 10px 0 10px 0;
+}
+  
+.left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-left: 22px;
+}
+  
+.right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-right: 22px;
+}
+  
+.left img {
+  height: 60px;
+}  
+  
+.left p a{
+  color: black;
+  text-decoration: none;
+  width: max-content;
+  padding: 5px 10px;
+  font-weight: 200;
+}
+  
+.right p a{
+  font-size: 120%;
+  width: max-content;
+  display: block;
+  color: white;
+  background-color: black;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 10px;
+  padding: 5px 12px;
+  font-weight: 200;
+}
+  
+.left p a:hover{
+  color: gray;
+}
+  
+.right p a:hover {
+  background-color: gray;
+}
+
+section {
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 20px;
+}
+
+.contact-info {
+    background-color: #ffffff;
+    border: 1px solid #dddddd;
+    border-radius: 8px;
+    padding: 20px;
+    max-width: 600px;
+    margin: 20px auto;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.contact-info h2 {
+    color: #333;
+    font-size: 24px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.info-item {
     margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.info-item label {
+    font-weight: bold;
+    margin-right: 10px;
+    min-width: 150px; /* Ensure labels are aligned */
+}
+
+.info-item span {
+    font-size: 16px;
+    color: #555;
+}
+
+.feedback-section {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    max-width: 500px;
+    margin: 20px auto;
+}
+
+.feedback-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 16px;
+    color: #333;
+}
+
+input[type="text"],
+input[type="email"],
+textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box; /* Adds padding and border to the element's total width and height */
+}
+
+textarea {
+    resize: vertical; /* Allows vertical resizing, good for a textarea */
+}
+
+.submit-button {
+    background-color: #0056b3;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.submit-button:hover {
+    background-color: #004494;
+}
+
+#chat-container {
+  height: 200px;
+  overflow-y: scroll;
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-bottom: 10px;
 }
 
 #message-input {
-    width: 70%;
-    padding: 5px;
+  width: 70%;
+  padding: 5px;
 }
 
 button {
-    padding: 5px 10px;
+  margin-bottom: 10px;
+  padding: 8px 16px;
 }
 
-ul {
-    list-style-type: none;
-    padding: 0;
+.faq-container {
+    margin-top: 20px;
 }
 
 .faq-item {
+    background-color: #f1f1f1;
+    border: 1px solid #d3d3d3;
+    padding: 10px;
     margin-bottom: 10px;
 }
 
-.faq-item strong {
-    cursor: pointer;
-    color: #3366cc;
-}
-
-.faq-item p {
-    display: none;
-}
-
-footer {
-    background-color: #333;
-    color: #fff;
+.faq-question {
+    width: 100%;
+    text-align: left;
+    border: none;
+    background: none;
     padding: 10px;
-    text-align: center;
+    font-size: 16px;
+    cursor: pointer;
+    outline: none;
 }
+
+.faq-answer {
+    padding: 0 10px;
+    margin: 5px 0;
+    display: none;
+    color: #007BFF;
+}
+
+
+.footer {
+  display: flex;
+  display: block;
+  background-color: black;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  gap: 13px;
+  color: white;
+  padding-bottom: 10px;
+  padding-top: 5px;
+}
+  
+.footer h2 {
+  font-family: "Oswald";
+  font-weight: 200;
+}
+  
+.footer p {
+  font-family: "IBM Plex Sans";
+  font-weight: 100;
+  letter-spacing: 1px;
+  }
