@@ -83,7 +83,6 @@ async function createCustomer(){
                 country: country
             })
         });
-        registerButton.disabled = false
         // Once both user and address are created, authenticate the user
         authenticateUser(email, password, false, false);
     } catch (error) {
@@ -168,9 +167,6 @@ async function createVendor(){
                 postCode: postCode,
                 country: country
             })
-            .then(() => {
-                registerButton.disabled = false
-            })
         });
         // Once both user and address are created, authenticate the user
         authenticateUser(email, password, true, false);
@@ -182,7 +178,7 @@ async function createVendor(){
 
 async function createDriver(){
     const registerButton = document.getElementById("registerButton");
-    registerButton.disabled = true;
+    registerButton.disabled = true
     let name = document.getElementById("username").value;
     let password = document.getElementById("password").value
     let email = document.getElementById("email").value
@@ -224,9 +220,6 @@ async function createDriver(){
             .then(data => {
                 // Authentication
                 authenticateUser(email, password, false, true);
-            })
-            .then(() => {
-                registerButton.disabled = false
             })
             .catch(error => {
                 console.error('Error:', error);
@@ -286,8 +279,8 @@ async function checkEmailAddressNotUsed(email) {
         }
 
         const response3 = await fetch('drivers/' + email);
-        if (!response2.ok) {
-            if (response2.status !== 404) {
+        if (!response3.ok) {
+            if (response3.status !== 404) {
                 throw new Error('Network response was not ok');
             }
         } else {
@@ -297,6 +290,7 @@ async function checkEmailAddressNotUsed(email) {
         //if it gets here it means all fetch requests had response status not found hence email address is not used
         return valid;
     } catch (error) {
+        alert("THERE WAS AN ERROR");
         console.error('Error:', error);
         return valid;
     }
