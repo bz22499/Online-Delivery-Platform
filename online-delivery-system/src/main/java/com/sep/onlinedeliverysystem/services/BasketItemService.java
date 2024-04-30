@@ -15,4 +15,5 @@ public interface BasketItemService {
     boolean Exists(Long id);
     BasketItem partialUpdate(BasketItem basketEntity);
     void delete(Long id);
+    List<BasketItem> findByOrder(Long order);
 }

@@ -1,20 +1,26 @@
 package com.sep.onlinedeliverysystem.controller;
 
-import com.sep.onlinedeliverysystem.domain.dto.OrderDTO;
-import com.sep.onlinedeliverysystem.domain.entities.Order;
-import com.sep.onlinedeliverysystem.mappers.Mapper;
-import com.sep.onlinedeliverysystem.services.OrderService;
-import com.sun.source.tree.ContinueTree;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.method.P;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
+import com.sep.onlinedeliverysystem.domain.dto.OrderDTO;
+import com.sep.onlinedeliverysystem.domain.entities.Order;
+import com.sep.onlinedeliverysystem.mappers.Mapper;
+import com.sep.onlinedeliverysystem.services.OrderService;
 
 @RestController
 public class OrderController {
@@ -27,14 +33,6 @@ public class OrderController {
         this.orderService = orderService;
         this.orderMapper = orderMapper;
     }
-
-    //using DTOs to decouple service layer from persistence layer
-
-//    @PostMapping(path = "/orders")
-//    public ResponseEntity<OrderDTO> create(){ //Create functionality
-//        Order savedOrderEntity = orderService.create(); //saves order DTO as entity into our database
-//        return new ResponseEntity<>(orderMapper.mapTo(savedOrderEntity), HttpStatus.CREATED); //returns our saved entity as a DTO
-//    }
 
     @PostMapping(path = "/orders")
     public ResponseEntity<OrderDTO> save(@RequestBody OrderDTO orderDTO){ //Create functionality
@@ -58,6 +56,11 @@ public class OrderController {
         }).orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
+    @GetMapping(path = "/orders/status/{status}")
+    public List<OrderDTO> getOrdersByStatus(@PathVariable("status") String status){
+        List<Order> foundOrders = orderService.findAllByStatus(status);
+         return foundOrders.stream().map(orderMapper::mapTo).collect(Collectors.toList());
+    }
 
     @PutMapping(path = "/orders/{id}")
     public ResponseEntity<OrderDTO> fullUpdateOrder(@PathVariable("id") Long id, OrderDTO orderDTO){

@@ -1,9 +1,7 @@
 package com.sep.onlinedeliverysystem.controllers;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sep.onlinedeliverysystem.TestUtil;
-import com.sep.onlinedeliverysystem.domain.entities.Order;
-import com.sep.onlinedeliverysystem.services.OrderService;
+import static org.hamcrest.Matchers.hasSize;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +13,11 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-import static org.hamcrest.Matchers.hasSize;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sep.onlinedeliverysystem.TestUtil;
+import com.sep.onlinedeliverysystem.domain.entities.Order;
+import com.sep.onlinedeliverysystem.services.OrderService;
 
 
 @SpringBootTest
@@ -133,8 +135,6 @@ public class OrderControllerIntegrationTests {
         ).andExpect(MockMvcResultMatchers.status().isOk());
     }
 
-    //NO UPDATE FUNCTIONALITY NEEDED, SKIP FULL UPDATE
-
     @Test
     public void deleteOrderReturns204WhenOrderNotExists() throws Exception {
         mockMvc.perform(
@@ -168,6 +168,31 @@ public class OrderControllerIntegrationTests {
         mockMvc.perform(
                 MockMvcRequestBuilders.get("/orders/" + savedOrder.getId())
         ).andExpect(MockMvcResultMatchers.status().isNotFound());
+    }
+
+    @Test
+    public void findAllByStatusReturns200Ok() throws Exception {
+        mockMvc.perform(
+                MockMvcRequestBuilders.get("/orders/status/something")
+                        .contentType(MediaType.APPLICATION_JSON)
+        ).andExpect(MockMvcResultMatchers.status().isOk());
+    }
+
+    @Test
+    public void findAllByStatusReturnsOrders() throws Exception {
+        Order order1 = TestUtil.orderBuilder("PAID");
+        Order order2 = TestUtil.orderBuilder("PAID");
+        Order order3 = TestUtil.orderBuilder("PENDING");
+
+        orderService.save(order1);
+        orderService.save(order2);
+        orderService.save(order3);
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/orders/status/PAID")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$").isArray())
+                .andExpect(MockMvcResultMatchers.jsonPath("$", hasSize(2)));
     }
 }
 
