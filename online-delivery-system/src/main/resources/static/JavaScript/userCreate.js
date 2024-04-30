@@ -209,7 +209,7 @@ async function createDriver(){
 
     if(valid){
         // Send data to the backend
-        fetch('/drivers', {
+        await fetch('/drivers', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -224,7 +224,7 @@ async function createDriver(){
             .catch(error => {
                 console.error('Error:', error);
                 registerButton.disabled = false
-            });   
+            });
     }
 }
 
