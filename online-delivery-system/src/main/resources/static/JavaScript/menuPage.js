@@ -249,9 +249,12 @@ function updateSubtotal(){
 
 document.addEventListener('DOMContentLoaded', function () {
     const addBasketItem = document.getElementById('updateBasketButton');
-    addBasketItem.disable = false;
-    const checkoutButton = document.getElementById('checkoutButton'); 
-    checkoutButton.disabled = false;
+    const checkoutButton = document.getElementById('checkoutButton');
+
+    if(addBasketItem && checkoutButton){
+        addBasketItem.disabled = false;
+        checkoutButton.disabled = false;
+    }
 
     const vendorInfoElement = document.getElementById('vendor-info'); 
     const vendorId = vendorInfoElement.getAttribute('data-id');
@@ -274,36 +277,51 @@ document.addEventListener('DOMContentLoaded', function () {
     updateSubtotal();
  
     checkoutButton.addEventListener('click', async function () {
+
+        if(addBasketItem && checkoutButton){
+            checkoutButton.disabled = true;
+            addBasketItem.disabled = true;
+        }
         checkoutButton.disabled = true;
         addBasketItem.disabled = true;
         try {
             basket.id ? basket : await postBasket();
             await handleBasketItems();
             cacheBasket();
-            checkoutButton.disabled = false;
-            addBasketItem.disabled = false;
+            if(addBasketItem && checkoutButton){
+                checkoutButton.disabled = false;
+                addBasketItem.disabled = false;
+            }
             window.location.href = "/checkout";
         } catch (error) {
             alert("Error creating basket: ", error);
-            checkoutButton.disabled = false;
-            addBasketItem.disabled = false;
+            if(addBasketItem && checkoutButton){
+                checkoutButton.disabled = false;
+                addBasketItem.disabled = false;
+            }
         }
     });
 
     addBasketItem.addEventListener('click', async function () {
-        checkoutButton.disabled = true;
-        addBasketItem.disabled = true;
+        if(addBasketItem && checkoutButton){
+            checkoutButton.disabled = true;
+            addBasketItem.disabled = true;
+        }
         try {
             basket.id ? basket : await postBasket();
             await handleBasketItems();
             cacheBasket();
-            checkoutButton.disabled = false;
-            addBasketItem.disabled = false;
+            if(addBasketItem && checkoutButton){
+                checkoutButton.disabled = false;
+                addBasketItem.disabled = false;
+            }
             console.log('here');
         } catch (error) {
             alert("Error creating basket: ", error);
-            checkoutButton.disabled = false;
-            addBasketItem.disabled = false;
+            if(addBasketItem && checkoutButton){
+                checkoutButton.disabled = false;
+                addBasketItem.disabled = false;
+            }
         }
     });
 });

@@ -162,15 +162,20 @@ function populateGrid(pageData) {
         editImageSymbolContainer.className = 'edit-profile-button'
 
         imageHandling.appendChild(editImageSymbolContainer);
+        imageHandling.style.backgroundImage =  "url('images/wix1.png')"
 
         const editImageSymbol = document.createElement('span');
         editImageSymbol.className = 'material-symbols-outlined'
         editImageSymbol.textContent ="edit";
 
         editImageSymbolContainer.appendChild(editImageSymbol)
-        imageHandling.style.backgroundImage =  "url('"+ImgUrl+"')"
 
-
+        //check if the image exists
+        let img = new Image();
+        img.onload = function() {
+            imageHandling.style.backgroundImage =  "url('"+ImgUrl+"')"
+        };
+        img.src = ImgUrl;
 
         gridItemContent.appendChild(imageHandling)
 
