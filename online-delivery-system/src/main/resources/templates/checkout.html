@@ -5,22 +5,28 @@
     <title>Checkout</title>
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@100;200;300;400;500;600&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@100;200;300;400;500;600&family=Oswald:wght@200..700&display=swap" rel="stylesheet">
+    <link rel="icon" href="/images/logo_ld_white_png.png"/>
     <link rel="stylesheet" th:href="@{/css/checkout.css}"/>
 </head>
 <body>
 
-<ul class="banner">
-    <li><img src="/images/logo_ld_png.png"></li>
-    <li><a target="_parent" href="home">Home</a></li>
-    <li><a target="_parent" href="about">About Us</a></li>
-    <li><a target="_parent" href="order">Order</a></li>
-    <li><a target="_parent" href="contact">Contact</a></li>
-    <li id="back-button" class="right"><a target="_parent" >Back</a></li>
-    <li class="right"><a target="_parent" href="profile" th:if="${loggedIn}">Profile</a></li>
-    <li class="right"><a target="_parent" href="login" th:unless="${loggedIn}">Login</a></li>
-    <li class="right"><a target="_parent" href="customerlogin" th:unless="${loggedIn}">Sign up</a></li>
-    <li class="right"><a target="_parent" href="restaurantlogin" th:unless="${loggedIn}">Partner with us</a></li>
-</ul>
+<div class="banner">
+    <div class="left">
+        <img src="/images/logo_ld_png.png"><a target="_parent" href="home"></a></img>
+        <p><a target="_parent" href="home">Home</a></p>
+        <p><a target="_parent" href="about">About Us</a></p>
+        <p><a target="_parent" href="order">Order</a></p>
+        <p><a target="_parent" href="contact">Contact</a></p>
+    </div>
+    <div class="right">
+        <p id="back-button"><a href="#" onclick="history.back(); return false;">Back</a></p>
+        <p><a target="_parent" href="profile" th:if="${loggedIn}">Profile</a></p>
+        <p><a target="_parent" href="restaurantlogin" th:unless="${loggedIn}">Partner with us</a></p>
+        <p><a target="_parent" href="login" th:unless="${loggedIn}">Login</a></p>
+        <p><a target="_parent" href="customerlogin" th:unless="${loggedIn}">Sign up</a></p>
+    </div>
+</div>
+
 
 <input type="hidden" id="user-email" th:value="${id}">
 
@@ -41,17 +47,6 @@
     <div class="total-cost"></div>
 
     <button class="pay-button">Pay Now</button>
-</div>
-
-<div class="partners">
-    <div class="placeholder">
-        <img src="/images/odiseo-castrejon-4Q_xlBOaCso-unsplash.jpg" alt="partner-image"/>
-        <p class="partner"><a target="_parent" href="menu-page-back">Recommendations</a></p>
-    </div>
-    <div class="placeholder">
-        <img src="/images/viktor-forgacs-MWrI3Q1UVxM-unsplash.jpg"/>
-        <p class="ride"><a target="_parent" href="driver-sign-up">Ride with us</a></p>
-    </div>
 </div>
 
 <div class="footer">

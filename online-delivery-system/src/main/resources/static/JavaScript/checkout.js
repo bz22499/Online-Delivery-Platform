@@ -1,16 +1,3 @@
-let isFetchingBaskets = false;
-
-// get basket items from cache
-function getBasketItemsFromCache() {
-    const basketsString = sessionStorage.getItem("baskets");
-    const baskets = JSON.parse(basketsString);
-    /*return {
-        items: baskets[basketId].items,
-        restName: baskets[basketId].restName,
-    };*/
-    return baskets;
-}
-
 function getOrderIdFromCache(){
     const orderString = sessionStorage.getItem("order");
     const order = JSON.parse(orderString);
@@ -19,66 +6,76 @@ function getOrderIdFromCache(){
 
 // populate page with basket information
 async function displayBaskets() {
-    const baskets = getBasketItemsFromCache();
+
+    const basketsString = sessionStorage.getItem("baskets");
+    const baskets = JSON.parse(basketsString);
+
+
     const container = document.getElementById("baskets-container"); // defined in html
     container.innerHTML = ""; // clear to avoid duplicates
-    if (baskets && Object.keys(baskets).length > 0) {
+
+
+    if (baskets && baskets.length) {
+        let totalCost = 0
         // Get the keys (basket IDs) and pick the last one
-        const basketIds = Object.keys(baskets);
-        const lastBasketId = basketIds[basketIds.length - 1];
-        const basketData = baskets[lastBasketId];
 
-        const table = document.createElement("table");
-        table.className = "basket-table";
-        const thead = document.createElement("thead");
-        const headerRow = document.createElement("tr");
-        const itemNameHeader = document.createElement("th");
-        itemNameHeader.textContent = "Item Name";
-        const quantityHeader = document.createElement("th");
-        quantityHeader.textContent = "Quantity";
-        headerRow.appendChild(itemNameHeader);
-        headerRow.appendChild(quantityHeader);
-        thead.appendChild(headerRow);
-        table.appendChild(thead);
 
-        const tbody = document.createElement("tbody");
+        for (const basket of baskets) {
 
-        basketData.items.forEach((item) => {
-            const row = document.createElement("tr");
+            const restName = document.createElement("div");
+            restName.className = "rest-name";
+            restName.textContent = basket.restName;
+            container.appendChild(restName);
 
-            const nameCell = document.createElement("td");
-            nameCell.textContent = item.menuItem.name;
-            row.appendChild(nameCell);
+            const table = document.createElement("table");
+            table.className = "basket-table";
+            const thead = document.createElement("thead");
 
-            const quantityCell = document.createElement("td");
-            quantityCell.textContent = item.quantity;
-            row.appendChild(quantityCell);
+            const headerRow = document.createElement("tr");
+            const itemNameHeader = document.createElement("th");
+            itemNameHeader.textContent = "Item Name";
+            const quantityHeader = document.createElement("th");
+            quantityHeader.textContent = "Quantity";
+            headerRow.appendChild(itemNameHeader);
+            headerRow.appendChild(quantityHeader);
+            thead.appendChild(headerRow);
+            table.appendChild(thead);
 
-            tbody.appendChild(row);
-        });
+            const tbody = document.createElement("tbody");
 
-        table.appendChild(tbody);
-        container.appendChild(table);
+            try {
+                for(const basketItem of basket.items){
+                    const row = document.createElement("tr");
+
+                    const nameCell = document.createElement("td");
+                    nameCell.textContent = basketItem.menuItem.name;
+                    row.appendChild(nameCell);
+
+                    const quantityCell = document.createElement("td");
+                    quantityCell.textContent = basketItem.quantity;
+                    row.appendChild(quantityCell);
+
+                    tbody.appendChild(row);
+
+                    totalCost = totalCost + (basketItem.quantity*basketItem.price);
+                }
+
+            } catch (error) {
+                console.error("Error populating baskets dropdown:", error);
+            }
+
+            table.appendChild(tbody);
+            container.appendChild(table);
+        }
+
 
         const totalCostContainer = document.createElement("div");
         totalCostContainer.className = "total-cost";
-        totalCostContainer.textContent = "Total Cost: $" + calculateTotalCost(basketData.items);
+        totalCostContainer.textContent = "Total Cost: £" + totalCost.toString();
         container.appendChild(totalCostContainer);
     } else {
         container.textContent = "No baskets found.";
     }
-}
-
-
-//Function to calculate the total cost
-function calculateTotalCost(items) {
-    let totalCost = 0;
-
-    items.forEach((item) => {
-        totalCost += item.menuItem.price * item.quantity;
-    });
-
-    return totalCost.toFixed(2); //Round to 2 dp
 }
 
 async function updateDeliveryAddress() {
@@ -116,6 +113,11 @@ function populateAddressDropdown(addressData) {
     }
 }
 
+// Function to update address dropdown based on selection
+function updateDeliveryAddressFromDropdown() {
+    const selectedAddressId = document.getElementById('address-select').value;
+    // Fetch address details for the selected address ID and populate other fields if needed
+}
 
 document.addEventListener("DOMContentLoaded", async () => {
 
@@ -125,8 +127,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     const payButton = document.querySelector(".pay-button");
     payButton.addEventListener("click", async () => {
         await updateOrderAddress()
-        alert("Getting redirected to payment");
-        sessionStorage.clear();
     });
 
     const backButton = document.getElementById('back-button');
@@ -142,6 +142,7 @@ async function updateOrderAddress(){
 
     const address = await addressObj.json();
 
+    //now we have the id of the address we need the id of the order
     const orderId = getOrderIdFromCache();
 
     const updatedOrderData = {
@@ -169,8 +170,11 @@ async function updateOrderAddress(){
             return response.json();
         })
         .then(updatedOrder => {
+            sessionStorage.clear();
+            alert("Getting redirected to payment");
         })
         .catch(error => {
+            alert("Payment failed");
             console.log("failed");
         });
 

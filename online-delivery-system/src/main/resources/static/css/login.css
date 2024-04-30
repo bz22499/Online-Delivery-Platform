@@ -1,5 +1,5 @@
 body {
-  font-family: Arial, sans-serif;
+  font-family: "IBM Plex Sans";
   background-image: url(../images/freshFoodBackground.jpg);
   background-size: cover;
   background-repeat: no-repeat;
@@ -44,12 +44,12 @@ body {
 }
 
 .confirm-password-group {
-  border: 5px solid #FF0000; 
-  background-color: #FFFFCC;
+  border: 5px solid #ff0000;
+  background-color: #ffffcc;
 }
 
 button {
-  background-color: #007BFF;
+  background-color: #007bff;
   color: #fff;
   padding: 10px 20px;
   border: none;
@@ -62,28 +62,44 @@ button:hover {
   background-color: #0056b3;
 }
 
-p {
+button:disabled {
+  background-color: gray;
+  cursor: wait;
+}
+
+.login-container p {
   font-size: 14px;
 }
 
 a {
   text-decoration: none;
-  color: #007BFF;
+  color: #007bff;
 }
 
-.back-button {
+.right p a {
+  font-size: 120%;
+  width: max-content;
+  display: block;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 10px;
+  padding: 5px 12px;
+  font-weight: 200;
+}
+
+.right #back-button a {
+  width: max-content;
   position: fixed;
   top: 10px;
   right: 10px;
   background-color: black;
   color: white;
-  padding: 8px 16px;
-  border: none;
-  border-radius: 3px;
+  border-radius: 10px;
   cursor: pointer;
-  font-weight: bold;
+  padding: 5px 12px;
 }
 
-.back-button:hover {
+.right #back-button a:hover {
   background-color: grey;
 }

@@ -7,22 +7,23 @@
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@100;200;300;400;500;600&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@100;200;300;400;500;600&family=Oswald:wght@200..700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="icon" href="/images/logo_ld_white_png.png"/>
     <link rel="stylesheet" href="/css/menuPage.css" />
   </head>
 <body>
     <div class="banner">
         <div class="left">
           <img src="/images/logo_ld_png.png"><a target="_parent" href="home"></a></img>
-          <p><a target="_parent" href="home">Home</a></p>
-          <p><a target="_parent" href="about">About Us</a></p>
-          <p><a target="_parent" href="order">Order</a></p>
-          <p><a target="_parent" href="contact">Contact</a></p>
+          <p><a href="/home">Home</a></p>
+          <p><a href="/about">About Us</a></p>
+          <p><a href="/order">Order</a></p>
+          <p><a href="/contact">Contact</a></p>
         </div>
         <div class="right">
           <p id="back-button"><a href="#" onclick="history.back(); return false;">Back</a></p>
-          <p><a target="_parent" href="/profile" th:if="${loggedIn}">Profile</a></p>
-          <p><a target="_parent" href="login" th:unless="${loggedIn}">Login</a></p>
-          <p><a target="_parent" href="customerlogin" th:unless="${loggedIn}">Sign up</a></p>
+          <p><a href="/profile" th:if="${loggedIn}">Profile</a></p>
+          <p><a href="/login" th:unless="${loggedIn}">Login</a></p>
+          <p><a href="/customerlogin" th:unless="${loggedIn}">Sign up</a></p>
         </div>
     </div>
 
@@ -39,8 +40,8 @@
     <h2>Basket</h2>
     <div class="basket-items"></div>
     <h3 class="subtotal"></h3>
-    <button th:unless="${loggedIn}" class="login-button" id="loginButton">Please login before you proceed to checkout</button>
-    <button class="update-basket-button" id="updateBasketContainer">Update Basket</button>
+    <button class="login-button" th:unless="${loggedIn}" id="loginButton"><a href="/login">Please login before starting an order<a/></button>
+    <button class="update-basket-button" th:if="${loggedIn}" id="updateBasketButton">Update Basket</button>
     <button class="checkout-button" th:if="${loggedIn}" id="checkoutButton">Checkout</button>
 </div>
 <script src="/JavaScript/menuPage.js"></script>

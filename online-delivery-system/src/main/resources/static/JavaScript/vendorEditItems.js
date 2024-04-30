@@ -59,6 +59,11 @@ function deleteFile(filename) {
 }
 
 async function submitFormClicked(name, price, description,itemID,itemTitle,itemDescription,itemFooter){
+    const submitButton = document.getElementById('submit-form-button');
+    const cancelButton = document.getElementById('cancel-form-button');
+
+    submitButton.disabled = true;
+    cancelButton.disabled = true;
     const vendorInfoElement = document.getElementById('vendor-info');
     const vendorId = vendorInfoElement.getAttribute('data-id');
     const vendor = await fetchVendorFromVendorId(vendorId);
@@ -66,6 +71,8 @@ async function submitFormClicked(name, price, description,itemID,itemTitle,itemD
     let valid = /^(\$|)([0-9]\d{0,2}(\,\d{3})*|([0-9]\d*))(\.\d{2})?$/.test(price)
 
     if(!valid){
+        submitButton.disabled = false;
+        cancelButton.disabled = false;
         alert("Invalid price.") 
     }else{
         if(price > 10000){
@@ -76,6 +83,8 @@ async function submitFormClicked(name, price, description,itemID,itemTitle,itemD
     if(valid){
         if(name.toString() === "" || description.toString() === "" || price.toString() === ""){
             valid = false
+            submitButton.disabled = false;
+            cancelButton.disabled = false;
             alert("Please complete all the fields.");
         }
     }
@@ -97,16 +106,21 @@ async function submitFormClicked(name, price, description,itemID,itemTitle,itemD
         })
             .then(response => {
                 if (!response.ok) {
-                    throw new Error('Error updating item: ', response);
+                    submitButton.disabled = false;
+                    cancelButton.disabled = false;
+                    return false;
                 }
-                return response.json();
+                submitButton.disabled = false;
+                cancelButton.disabled = false;
             })
             
         itemTitle.textContent = name;
         itemFooter.textContent = "£"+ price;
         itemDescription.textContent = description;
+    }else{
+        return false;
     }
-
+    return true;
 
 
 }
@@ -148,15 +162,20 @@ function populateGrid(pageData) {
         editImageSymbolContainer.className = 'edit-profile-button'
 
         imageHandling.appendChild(editImageSymbolContainer);
+        imageHandling.style.backgroundImage =  "url('images/wix1.png')"
 
         const editImageSymbol = document.createElement('span');
         editImageSymbol.className = 'material-symbols-outlined'
         editImageSymbol.textContent ="edit";
 
         editImageSymbolContainer.appendChild(editImageSymbol)
-        imageHandling.style.backgroundImage =  "url('"+ImgUrl+"')"
 
-
+        //check if the image exists
+        let img = new Image();
+        img.onload = function() {
+            imageHandling.style.backgroundImage =  "url('"+ImgUrl+"')"
+        };
+        img.src = ImgUrl;
 
         gridItemContent.appendChild(imageHandling)
 
@@ -234,11 +253,30 @@ function populateGrid(pageData) {
         formItemPrice.value=item.price.toFixed(2);
         gridItemForm.appendChild(formItemPrice)
 
+        let currentName = item.name;
+        let currentDesc = item.description;
+        let currentPrice = item.price;
+
+
         const submitForm = document.createElement('button');
+        submitForm.disabled = false;
         submitForm.className='stylishbutton';
         submitForm.id = 'submit-form-button'
         submitForm.type = "button"
-        submitForm.onclick = async function () {await submitFormClicked(formItemName.value,formItemPrice.value,formItemDescription.value,item.id,gridTitle,description,footer); cancelFormClicked(gridFormContainer,gridItemInfo)}
+        submitForm.onclick = async function () {
+            let worked = await submitFormClicked(formItemName.value,formItemPrice.value,formItemDescription.value,item.id,gridTitle,description,footer);
+            if(!worked){
+                formItemName.value = currentName;
+                formItemDescription.value = currentDesc;
+                formItemPrice.value = currentPrice;
+            }else{
+                currentName = formItemName.value;
+                currentDesc = formItemDescription.value;
+                currentPrice = formItemPrice.value;
+            }
+            cancelFormClicked(gridFormContainer,gridItemInfo);
+
+        }
         submitForm.textContent = "SUBMIT"
         gridItemForm.appendChild(submitForm);
 
@@ -263,6 +301,10 @@ function populateGrid(pageData) {
         });
 
         editButton.addEventListener('click', function (){
+            formItemName.value = currentName;
+            formItemPrice.value = currentPrice;
+            formItemDescription.value = currentDesc;
+
             gridItemInfo.hidden = true;
             gridFormContainer.hidden=false;
         });

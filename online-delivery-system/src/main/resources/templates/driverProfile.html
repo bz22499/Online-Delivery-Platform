@@ -6,6 +6,7 @@
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@100;200;300;400;500;600&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@100;200;300;400;500;600&family=Oswald:wght@200..700&display=swap" rel="stylesheet">
     <title>P2P Online Delivery Platform - Profile Page</title>
+    <link rel="icon" href="/images/logo_ld_white_png.png"/>
     <link rel="stylesheet" href="/css/profile.css">
 </head>
 <body>
@@ -47,8 +48,8 @@
             <label for="confirm-password">Confirm Password:</label>
             <input type="password" id="confirm-password" required><br>
 
-            <button type="button" onclick="saveProfile()">Save</button>
-            <button type="button" onclick="returnToProfile()">Cancel</button>
+            <button id="saveProfileChanges" type="button" onclick="saveProfile()">Save</button>
+            <button id="cancelProfileChanges" type="button" onclick="returnToProfile()">Cancel</button>
         </form>
     </div>
 </div>

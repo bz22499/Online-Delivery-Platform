@@ -1,4 +1,6 @@
 function createItem(){
+    const registerButton = document.getElementById("registerButton");
+    registerButton.disabled = true;
     let name = document.getElementById("name").value;
     let description = document.getElementById("description").value;
     let price = document.getElementById("price").value
@@ -65,7 +67,15 @@ function createItem(){
                                 alert(`Error posting basket . Status: ${response.status}`);
                             }
                         })
+                        .finally(() => {
+                            registerButton.disabled = false;
+                        });
                     })
             })
     }
 }
+
+document.addEventListener('DOMContentLoaded', function() {
+    const registerButton = document.getElementById("registerButton");
+    registerButton.disabled = false;
+});

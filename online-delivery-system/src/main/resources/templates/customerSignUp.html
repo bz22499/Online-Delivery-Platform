@@ -3,11 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register</title>
+    <title>P2P Online Delivery Platform - User Register</title>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@100;200;300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="icon" href="/images/logo_ld_white_png.png"/>
     <link rel="stylesheet" href="/css/login.css">
 </head>
 <body>
-    <a href="/" class="back-button">Back</a>
+    <div class="right">
+        <p id="back-button"><a href="#" onclick="history.back(); return false;">Back</a></p>
+    </div>
 
     <div class="login-container">
         <h1>User Register</h1>
@@ -48,7 +52,7 @@
                 <label for="country">Country</label>
                 <input type="text" id="country" required>
             </div>
-            <button type="button" onclick="createCustomer()">Register</button>
+            <button id="registerButton" type="button" onclick="createCustomer()">Register</button>
         </form>
 
         <p>Already have an account? <a target="_parent" href="login">Login</a></p>
