@@ -36,6 +36,7 @@ body {
 }
 
 .left p a {
+  font-size: 120%;
   color: black;
   text-decoration: none;
   width: max-content;
@@ -112,33 +113,6 @@ body {
 #user-details {
   color: grey;
 }
-
-/*.input-field {*/
-/*    margin-bottom: 20px;*/
-/*}*/
-
-/*.input-field label {*/
-/*    font-weight: bold;*/
-/*    margin-bottom: 4px;*/
-/*    display: block;*/
-/*!*}*!*/
-
-/*.text-field {*/
-/*    width: 100%;*/
-/*    padding: 8px;*/
-/*    border: 1px solid #ccc;*/
-/*    border-radius: 4px;*/
-/*    background-color: white;*/
-/*}*/
-
-/*.text-field:focus {*/
-/*    outline: none;*/
-/*    border-color: #007bff; !* Change the border color on focus if needed *!*/
-/*}*/
-
-/*.text-field[contenteditable="true"] {*/
-/*    cursor: text;*/
-/*}*/
 
 input[type="text"],
 input[type="password"] {
