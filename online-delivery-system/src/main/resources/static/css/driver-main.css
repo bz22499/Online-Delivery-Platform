@@ -157,7 +157,7 @@ button:hover {
 .partner {
   position: absolute;
   right: 0;
-  bottom: 10px;
+  top: 10px;
   display: block;
   background-color: black;
   border-top-left-radius: 27px;
