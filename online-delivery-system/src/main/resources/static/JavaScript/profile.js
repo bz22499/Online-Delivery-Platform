@@ -1,18 +1,3 @@
-// function updateProfilePicture() {
-//     var input = document.getElementById('imageInput');
-//     var preview = document.getElementById('previewImage');
-//
-//     var file = input.files[0];
-//                                                                      //This was for the old pfp method
-//     if (file) {
-//         var reader = new FileReader();
-//         reader.onload = function(e) {
-//             preview.src = e.target.result;
-//         };
-//         reader.readAsDataURL(file);
-//     }
-// }
-
 function editProfile() {
     // Clear the password-related input fields
     document.getElementById('current-password').value = '';
@@ -32,14 +17,20 @@ function editProfile() {
 }
 
 function returnToProfile() {
-    // Show the user-details div
+    // Show the details divs
     document.getElementById('user-details').style.display = 'block';
 
-    // Hide the edit form
+    document.getElementById('address-details').style.display = 'block';
+
+    // Hide the edit forms
     document.getElementById('edit-form').style.display = 'none';
 
-    // Show the edit profile button
+    document.getElementById('address-fields').style.display = 'none';
+
+    // Show the edit buttons
     document.getElementById('edit-profile').style.display = 'block';
+
+    document.getElementById('edit-address-btn').style.display = 'block';
 }
 
 function saveProfile() {
@@ -84,10 +75,16 @@ function saveProfile() {
     })
         .then(response => {
             if (response.ok) {
-                document.querySelector('.firstName').innerText = firstName;
-                document.querySelector('.lastName').innerText = lastName;
                 saveButton.disabled = false;
                 cancelButton.disabled = false;
+                
+                var firstName = document.getElementById('new-firstName').value;
+                var lastName = document.getElementById('new-lastName').value;
+
+                document.getElementById('firstName').innerText = firstName;
+                document.getElementById('lastName').innerText = lastName;
+
+
                 returnToProfile();
             } else if (response.status === 401) {
                 // Unauthorized, display invalid password alert
@@ -108,69 +105,28 @@ function saveProfile() {
         });
 }
 
-function cancelEditAddress() {
-    document.getElementById('address-fields').style.display = 'none';
-    document.getElementById('edit-address-btn').style.display = 'block';
-}
-
 function editAddress() {
-    const saveButton = document.getElementById("saveAddressChanges");
-    saveButton.disabled = true;
-    const cancelButton = document.getElementById("cancelAddressChanges");
-    cancelButton.disabled = true;
-
-    // Hide the "Edit Address" button
+    document.getElementById('address-details').style.display = 'none';
     document.getElementById('edit-address-btn').style.display = 'none';
-
-    // Show the address fields
     document.getElementById('address-fields').style.display = 'block';
 
-    // Fetch current address data and populate the fields
-    var email = document.getElementById('userId').value;
-    fetch(`/addresses/user/${email}`, {
-        method: 'GET'
-    })
-        .then(response => {
-            if (response.ok) {
-                saveButton.disabled = false;
-                cancelButton.disabled = false;
-                return response.json();
-            } else if (response.status === 404) {
-                saveButton.disabled = false;
-                cancelButton.disabled = false;
-                // Address not found, do nothing
-                return null;
-            } else {
-                saveButton.disabled = false;
-                cancelButton.disabled = false;
-                throw new Error('Failed to fetch address data');
-            }
-        })
-        .then(addressData => {
-            if (addressData) {
-                document.getElementById('street').value = addressData.street;
-                document.getElementById('city').value = addressData.city;
-                document.getElementById('postCode').value = addressData.postCode;
-                document.getElementById('country').value = addressData.country;
-                saveButton.disabled = false;
-                cancelButton.disabled = false;
-            }
-        })
-        .catch(error => {
-            saveButton.disabled = false;
-            cancelButton.disabled = false;
-            console.error('Error fetching user address:', error);
-            alert("Failed to fetch address data");
-        });
+    document.getElementById('street').value = document.getElementById('current-street').innerText;
+    document.getElementById('city').value = document.getElementById('current-city').innerText;
+    document.getElementById('country').value = document.getElementById('current-country').innerText;
+    document.getElementById('postCode').value = document.getElementById('current-postcode').innerText;
 }
 
 function isValidPostcode(postcode) {
-    // Regular expression for UK postcodes
     var postcodeRegex = /^[A-Z]{1,2}[0-9R][0-9A-Z]? ?[0-9][A-Z]{2}$/i;
     return postcodeRegex.test(postcode);
 }
 
 function saveAddress() {
+    const saveButton = document.getElementById("saveAddressChanges");
+    saveButton.disabled = true;
+    const cancelButton = document.getElementById("cancelAddressChanges");
+    cancelButton.disabled = true;
+  
     // Get address input data
     var street = document.getElementById('street').value;
     var city = document.getElementById('city').value;
@@ -181,11 +137,15 @@ function saveAddress() {
     // Check if any of the fields are empty
     if (!street || !city || !postCode || !country) {
         alert("Please fill in all address fields");
+        saveButton.disabled = false;
+        cancelButton.disabled = false;
         return;
     }
 
     if (!isValidPostcode(postCode)) {
         alert("Invalid postcode");
+        saveButton.disabled = false;
+        cancelButton.disabled = false;
         return;
     }
 
@@ -209,6 +169,8 @@ function saveAddress() {
             })
                 .then(response => {
                     if (response.ok) {
+                        saveButton.disabled = false;
+                        cancelButton.disabled = false;
                         // Add the id to the addressData object (needed because it won't be generated this time; we're patching not posting)
                         return response.json().then(existingAddress => {
                             addressData.id = existingAddress.id;
@@ -223,6 +185,8 @@ function saveAddress() {
                             });
                         });
                     } else if (response.status === 404) {
+                        saveButton.disabled = false;
+                        cancelButton.disabled = false;
                         // No address exists, perform a POST request to create a new address
                         return fetch(`/addresses`, {
                             method: 'POST',
@@ -232,27 +196,33 @@ function saveAddress() {
                             body: JSON.stringify(addressData)
                         });
                     } else {
+                        saveButton.disabled = false;
+                        cancelButton.disabled = false;
                         throw new Error('Failed to fetch address data');
                     }
                 })
                 .then(response => {
                     if (response.ok) {
-                        // Hide the address fields
-                        document.getElementById('address-fields').style.display = 'none';
-                        // Show the "Edit Address" button
-                        document.getElementById('edit-address-btn').style.display = 'block';
+                        saveButton.disabled = false;
+                        cancelButton.disabled = false;
+                        returnToProfile();
                     } else {
+                        saveButton.disabled = false;
+                        cancelButton.disabled = false;
                         throw new Error('Failed to update address');
                     }
                 })
                 .catch(error => {
+                    saveButton.disabled = false;
+                    cancelButton.disabled = false;
                     console.error('Error updating address:', error);
                     alert("Failed to update address");
                 });
         })
         .catch(error => {
-            console.error('Error fetching user data:', error);
-            alert("Failed to fetch user data");
+            saveButton.disabled = false;
+            cancelButton.disabled = false;
+            alert("Failed to fetch user data: ", error);
         });
 }
 
