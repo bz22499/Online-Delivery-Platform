@@ -78,7 +78,6 @@ body {
 
 .header {
   font-family: "IBM Plex Sans";
-  display: flex;
   align-items: center;
   margin-bottom: 20px;
   margin-top: 20px;
