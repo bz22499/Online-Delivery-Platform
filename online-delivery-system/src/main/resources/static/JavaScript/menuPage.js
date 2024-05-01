@@ -91,6 +91,14 @@ function populateGrid(pageData) {
         gridImg.style.backgroundImage = "url('/images/wix1.png')"
         gridItem.appendChild(gridImg);
 
+        //check if the image exists
+        var ImgUrl = "/uploads/" + "_" + item.id + "_.jpg";
+        let img = new Image();
+        img.onload = function() {
+            gridImg.style.backgroundImage =  "url('"+ImgUrl+"')"
+        };
+        img.src = ImgUrl;
+
 
         const gridTitle = document.createElement('div')
         gridTitle.className='grid-item-title'

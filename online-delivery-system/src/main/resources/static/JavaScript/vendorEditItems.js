@@ -155,8 +155,6 @@ function populateGrid(pageData) {
 
         imageHandling.appendChild(profileButton);
 
-        var ImgUrl = "uploads/" + "_" + item.id + "_.jpg";
-
         const editImageSymbolContainer = document.createElement('label');
         editImageSymbolContainer.htmlFor = "imageInput"+item.id;
         editImageSymbolContainer.className = 'edit-profile-button'
@@ -171,6 +169,7 @@ function populateGrid(pageData) {
         editImageSymbolContainer.appendChild(editImageSymbol)
 
         //check if the image exists
+        var ImgUrl = "uploads/" + "_" + item.id + "_.jpg";
         let img = new Image();
         img.onload = function() {
             imageHandling.style.backgroundImage =  "url('"+ImgUrl+"')"
