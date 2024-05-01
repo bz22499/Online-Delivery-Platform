@@ -17,6 +17,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -49,8 +50,8 @@ public class SecurityConfig extends GlobalAuthenticationConfigurerAdapter {
 
     @Bean
     public PasswordEncoder passwordEncoder() {    //Alternate between NoOp and BCrypt when you need to check passwords in the database
-        return NoOpPasswordEncoder.getInstance(); //ONLY USE THIS WHEN YOU DON'T HAVE REAL USERS
-//        return new BCryptPasswordEncoder();
+//        return NoOpPasswordEncoder.getInstance(); //ONLY USE THIS WHEN YOU DON'T HAVE REAL USERS
+        return new BCryptPasswordEncoder();
     }
 
     @Bean
