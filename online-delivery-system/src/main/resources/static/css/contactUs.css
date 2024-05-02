@@ -1,9 +1,9 @@
 body {
-    font-family: 'Arial', sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f4f4f4;
-    color: #333;
+  font-family: "Arial", sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f4f4f4;
+  color: #333;
 }
 
 .header {
@@ -24,7 +24,7 @@ body {
 .header p {
   font-family: "IBM Plex Sans";
   font-weight: 100;
-  letter-spacing: 1px; 
+  letter-spacing: 1px;
 }
 
 .banner {
@@ -38,34 +38,35 @@ body {
   font-family: "IBM Plex Sans";
   padding: 10px 0 10px 0;
 }
-  
+
 .left {
   display: flex;
   align-items: center;
   gap: 10px;
   margin-left: 22px;
 }
-  
+
 .right {
   display: flex;
   align-items: center;
   gap: 10px;
   margin-right: 22px;
 }
-  
+
 .left img {
   height: 60px;
-}  
-  
-.left p a{
+}
+
+.left p a {
+  font-size: 120%;
   color: black;
   text-decoration: none;
   width: max-content;
   padding: 5px 10px;
   font-weight: 200;
 }
-  
-.right p a{
+
+.right p a {
   font-size: 120%;
   width: max-content;
   display: block;
@@ -77,11 +78,11 @@ body {
   padding: 5px 12px;
   font-weight: 200;
 }
-  
-.left p a:hover{
+
+.left p a:hover {
   color: gray;
 }
-  
+
 .right p a:hover {
   background-color: gray;
 }
@@ -93,90 +94,90 @@ section {
 }
 
 .contact-info {
-    background-color: #ffffff;
-    border: 1px solid #dddddd;
-    border-radius: 8px;
-    padding: 20px;
-    max-width: 600px;
-    margin: 20px auto;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  background-color: #ffffff;
+  border: 1px solid #dddddd;
+  border-radius: 8px;
+  padding: 20px;
+  max-width: 600px;
+  margin: 20px auto;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
 .contact-info h2 {
-    color: #333;
-    font-size: 24px;
-    text-align: center;
-    margin-bottom: 20px;
+  color: #333;
+  font-size: 24px;
+  text-align: center;
+  margin-bottom: 20px;
 }
 
 .info-item {
-    margin-bottom: 10px;
-    display: flex;
-    align-items: center;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
 }
 
 .info-item label {
-    font-weight: bold;
-    margin-right: 10px;
-    min-width: 150px; /* Ensure labels are aligned */
+  font-weight: bold;
+  margin-right: 10px;
+  min-width: 150px;
 }
 
 .info-item span {
-    font-size: 16px;
-    color: #555;
+  font-size: 16px;
+  color: #555;
 }
 
 .feedback-section {
-    background-color: #f9f9f9;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    max-width: 500px;
-    margin: 20px auto;
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  max-width: 500px;
+  margin: 20px auto;
 }
 
 .feedback-form {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
 .form-group {
-    margin-bottom: 15px;
+  margin-bottom: 15px;
 }
 
 label {
-    display: block;
-    margin-bottom: 5px;
-    font-size: 16px;
-    color: #333;
+  display: block;
+  margin-bottom: 5px;
+  font-size: 16px;
+  color: #333;
 }
 
 input[type="text"],
 input[type="email"],
 textarea {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box; /* Adds padding and border to the element's total width and height */
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
 }
 
 textarea {
-    resize: vertical; /* Allows vertical resizing, good for a textarea */
+  resize: vertical;
 }
 
 .submit-button {
-    background-color: #0056b3;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s;
+  background-color: #0056b3;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
 }
 
 .submit-button:hover {
-    background-color: #004494;
+  background-color: #004494;
 }
 
 #chat-container {
@@ -198,34 +199,33 @@ button {
 }
 
 .faq-container {
-    margin-top: 20px;
+  margin-top: 20px;
 }
 
 .faq-item {
-    background-color: #f1f1f1;
-    border: 1px solid #d3d3d3;
-    padding: 10px;
-    margin-bottom: 10px;
+  background-color: #f1f1f1;
+  border: 1px solid #d3d3d3;
+  padding: 10px;
+  margin-bottom: 10px;
 }
 
 .faq-question {
-    width: 100%;
-    text-align: left;
-    border: none;
-    background: none;
-    padding: 10px;
-    font-size: 16px;
-    cursor: pointer;
-    outline: none;
+  width: 100%;
+  text-align: left;
+  border: none;
+  background: none;
+  padding: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  outline: none;
 }
 
 .faq-answer {
-    padding: 0 10px;
-    margin: 5px 0;
-    display: none;
-    color: #007BFF;
+  padding: 0 10px;
+  margin: 5px 0;
+  display: none;
+  color: #007bff;
 }
-
 
 .footer {
   display: flex;
@@ -239,14 +239,14 @@ button {
   padding-bottom: 10px;
   padding-top: 5px;
 }
-  
+
 .footer h2 {
   font-family: "Oswald";
   font-weight: 200;
 }
-  
+
 .footer p {
   font-family: "IBM Plex Sans";
   font-weight: 100;
   letter-spacing: 1px;
-  }
+}

@@ -37,7 +37,7 @@ async function createOrder() {
     const order = await response.json();
     sessionStorage.setItem("order", JSON.stringify(order));
   } catch (error) {
-    console.log("Error creating order: ", error);
+    console.error("Error creating order: ", error);
   }
 }
 

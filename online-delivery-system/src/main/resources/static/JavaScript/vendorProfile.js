@@ -186,7 +186,6 @@ function saveAddress() {
                     } else if (response.status === 404) {
                         saveButton.disabled = false;
                         cancelButton.disabled = false;
-                        // No address exists, perform a POST request to create a new address
                         return fetch(`/vendorAddresses`, {
                             method: 'POST',
                             headers: {

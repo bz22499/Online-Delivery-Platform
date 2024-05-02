@@ -124,10 +124,9 @@ input, select {
   margin: 10px 0;
   border: 1px solid #ddd;
   border-radius: 5px;
-  width: calc(100% - 22px); /* Account for padding and border */
+  width: calc(100% - 22px);
 }
 
-/* Loading indicator style */
 .loading-indicator {
   text-align: center;
   padding: 20px;

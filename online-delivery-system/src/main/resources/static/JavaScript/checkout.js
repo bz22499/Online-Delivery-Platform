@@ -11,14 +11,12 @@ async function displayBaskets() {
     const baskets = JSON.parse(basketsString);
 
 
-    const container = document.getElementById("baskets-container"); // defined in html
-    container.innerHTML = ""; // clear to avoid duplicates
+    const container = document.getElementById("baskets-container");
+    container.innerHTML = "";
 
 
     if (baskets && baskets.length) {
         let totalCost = 0
-        // Get the keys (basket IDs) and pick the last one
-
 
         for (const basket of baskets) {
 
@@ -97,14 +95,13 @@ async function updateDeliveryAddress() {
     }
 }
 
-// Function to populate the address dropdown with fetched address data
 function populateAddressDropdown(addressData) {
     const addressSelect = document.getElementById('address-select');
-    addressSelect.innerHTML = ""; // Clear existing options
+    addressSelect.innerHTML = "";
 
     if (addressData) {
         const option = document.createElement('option');
-        option.value = addressData.id; // Assuming address has an ID
+        option.value = addressData.id;
         option.textContent = `${addressData.street}, ${addressData.city}, ${addressData.country}`;
         addressSelect.appendChild(option);
     } else {
@@ -113,10 +110,8 @@ function populateAddressDropdown(addressData) {
     }
 }
 
-// Function to update address dropdown based on selection
 function updateDeliveryAddressFromDropdown() {
     const selectedAddressId = document.getElementById('address-select').value;
-    // Fetch address details for the selected address ID and populate other fields if needed
 }
 
 document.addEventListener("DOMContentLoaded", async () => {
@@ -142,7 +137,6 @@ async function updateOrderAddress(){
 
     const address = await addressObj.json();
 
-    //now we have the id of the address we need the id of the order
     const orderId = getOrderIdFromCache();
 
     const updatedOrderData = {
@@ -175,7 +169,6 @@ async function updateOrderAddress(){
         })
         .catch(error => {
             alert("Payment failed");
-            console.log("failed");
         });
 
 

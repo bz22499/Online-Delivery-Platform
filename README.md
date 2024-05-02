@@ -188,27 +188,29 @@ http://localhost:8080
 
 #### Cloud
 
-- [Microsoft Azure](https://azure.microsoft.com/en-gb/) - App Cloud Services
+- [Amazon Webb Services] - Cloud Services
 - [Neon](https://neon.tech/) - Database Server
 
 #### DevOps
 
 - GitHub Actions - CI
-- AWS - Deployment and CD
+- AWS CodePipeline - CD
+- AWS CodeBuild - Build
+- AWS ElasticBeanstalk - Deployment
 
 ## User Stories
 
-As a **customer**, I seek a way to browse available options for meals which can be delivered to me in subsequent days; the food delivery will be cooked ready for reheating, and will arrive in a reuseable container which I can then return to a driver at a later time.
+As a **customer**, I seek a way to browse available options for meals which can be delivered to me in subsequent days; the food delivery will be cooked ready for reheating and will arrive in a reusable container which I can then return to a driver at a later time.
 
 As a **chef**, I wish to receive orders promptly after they are processed, so that I can quickly prepare food for delivery within the following days.
 
-As a **delivery driver**, I would like to receive a daily quota of deliveries to be made, complete with a pick-up and drop-off location so that I can deliver food quickly and efficiently. Ideally my drop-off locations would be as close to each other as possible.
+As a **delivery driver**, I would like to receive a daily quota of deliveries to be made, complete with a pick-up and drop-off location so that I can deliver food quickly and efficiently. Ideally, my drop-off locations would be as close to each other as possible.
 
 ## Stake Holders
 
-- **Chefs/restaurants** have the option to sign up to the service so that they can sell and distribute their meals to customers in reusable containers which will be returned to them.
-- **Customers** can place orders for meals to be delivered to them on following days in reusable containers; at a later time or during their next order the container can be collected by a driver to be returned to the chef/restaurant.
-- **Delivery Drivers** will sign up to the service and receive notifications of nearby orders to pick up/customers to deliver to/containers to collect. They are able to verify deliveries by a customer's username and unique order code. They should have some way of storing the reusable containers during journeys, and ideally would be either travelling by bicycle or electric vehicle.
+- **Chefs/restaurants** have the option to sign up for the service so that they can sell and distribute their meals to customers in reusable containers which will be returned to them.
+- **Customers** can place orders for meals to be delivered to them on the following days in reusable containers; at a later time or during their next order the container can be collected by a driver to be returned to the chef/restaurant.
+- **Delivery Drivers** will sign up for the service and receive notifications of nearby orders to pick up/customers to deliver to/containers to collect. They are able to verify deliveries by a customer's username and unique order code. They should have some way of storing the reusable containers during journeys, and ideally would be either travelling by bicycle or electric vehicle.
 - **The client** will have created a sustainable, eco-friendly delivery service in which food containers are reused and orders are delivered by green vehicles.
 
 ## Product Map
@@ -220,11 +222,6 @@ As a **delivery driver**, I would like to receive a daily quota of deliveries to
 ## Licence
 
 This project is licensed under MIT - see the [LICENSE](https://github.com/spe-uob/2023-OnlineDeliveryPlatform/blob/dev/LICENSE) file for details.
-
-## Acknowledgements
-
-Mention any external libraries, frameworks, or tools used in the project.
-Credit any sources of inspiration or references that contributed to the project.
 
 ## Team
 

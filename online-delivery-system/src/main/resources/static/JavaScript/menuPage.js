@@ -1,15 +1,13 @@
-let restaurantName;
 let order = getOrderFromCache();
-let baskets;
 
 let basket = {
     order: order,
     items: []
 };
 
-function findIndex(name){
+function findIndex(name, basketsList){
     let i = 0;
-    for (let b of baskets){
+    for (let b of basketsList){
         if (b.restName === name){
             return i
         }
@@ -19,9 +17,8 @@ function findIndex(name){
 }
 
 
-
-function getSavedBasketIndex(){
-    const index = findIndex(restaurantName);
+function getSavedBasketIndex(name, basketsList){
+    const index = findIndex(name, basketsList);
     if (index === -1){
         return
     } else {
@@ -29,27 +26,30 @@ function getSavedBasketIndex(){
     }
 }
 
+
 function getOrderFromCache(){
-    let orderString = sessionStorage.getItem("order");
-    let order = JSON.parse(orderString);
+    const orderString = sessionStorage.getItem("order");
+    const order = JSON.parse(orderString);
     return order
 }
 
+
 function getBasketsFromCache(){
-    let basketsString = sessionStorage.getItem('baskets');
+    let baskets = [];
+    const basketsString = sessionStorage.getItem('baskets');
     if (basketsString) {
         baskets = JSON.parse(basketsString);
-    } else {
-        baskets = []; 
     }
     return baskets;
 }
 
+
 function getRestaurantName(){
-    let restaurantNameDiv = document.querySelector('.name')
-    let restaurantName = restaurantNameDiv.textContent
+    const restaurantNameDiv = document.querySelector('.name')
+    const restaurantName = restaurantNameDiv.textContent
     return restaurantName;
 }
+
 
 async function fetchItems(vendorId) {
     try {
@@ -65,6 +65,7 @@ async function fetchItems(vendorId) {
     }
 }
 
+
 async function hasAddress(email) {
     try {
         const response = await fetch(`/addresses/user/${email}`);
@@ -74,6 +75,7 @@ async function hasAddress(email) {
         return false;
     }
 }
+
 
 // populate grid with given menu items
 function populateGrid(pageData) {
@@ -124,6 +126,7 @@ function populateGrid(pageData) {
     });
 }
 
+
 function addOrUpdateBasketItem(menuItem, qty=1) {
     let basketItemData = basket.items.find(item => item.menuItem.id === menuItem.id);
     let basketItemHtml = document.querySelector(`.basket-item[data-id='${menuItem.id}']`);
@@ -153,10 +156,8 @@ function addOrUpdateBasketItem(menuItem, qty=1) {
     }
 }
 
+
 function createBasketItemHtml(menuItem) {
-
-
-
     const basketItem = document.createElement('div');
     basketItem.className = 'basket-item';
     basketItem.setAttribute('data-id', menuItem.id);
@@ -226,6 +227,7 @@ function updateItemQuantity(basketItemHtml, change) {
     }
 }
 
+
 async function loadVendorItems(vendorId) {
     const items = await fetchItems(vendorId);
     if (items.length > 0) {
@@ -233,30 +235,34 @@ async function loadVendorItems(vendorId) {
     }
 }
 
+
 function loadSavedBasket(){
     for (bItem of basket.items){
         addOrUpdateBasketItem(bItem.menuItem, 0);
     }
 }
 
-function cacheBasket() {
-    const index = findIndex(restaurantName, baskets);
+
+function cacheBasket(name, basketsList) {
+    const index = findIndex(name, basketsList);
     if (index === -1){
-        baskets.push({id: basket.id, items: basket.items, restName: restaurantName})
+        basketsList.push({id: basket.id, items: basket.items, restName: name});
     } else {
-        baskets[index] = {id: basket.id, items: basket.items, restName: restaurantName};
+        basketsList[index] = {id: basket.id, items: basket.items, restName: name};
     }
-    sessionStorage.setItem('baskets', JSON.stringify(baskets));
+    sessionStorage.setItem('baskets', JSON.stringify(basketsList));
+    return basketsList
 }
 
-function deleteFromCache() {
-    const index = findIndex(restaurantName, baskets);
-    if (index === -1){
-        return
+function deleteFromCache(name, basketsList) {
+    const index = findIndex(name, basketsList);
+    if (index === -1) {
+        return;
     } else {
-        baskets.splice(index, 1);
+        basketsList.splice(index, 1);
     }
-    sessionStorage.setItem('baskets', JSON.stringify(baskets));
+    sessionStorage.setItem('baskets', JSON.stringify(basketsList));
+    return basketsList
 }
 
 function updateSubtotal(){
@@ -269,80 +275,110 @@ function updateSubtotal(){
 }
 
 document.addEventListener('DOMContentLoaded', function () {
-    const addBasketItem = document.getElementById('updateBasketButton');
+    const updateBasket = document.getElementById('updateBasketButton');
     const checkoutButton = document.getElementById('checkoutButton');
-
-    if(addBasketItem && checkoutButton){
-        addBasketItem.disabled = false;
+    const backButton = document.getElementById('back-button');
+   
+    if(updateBasket && checkoutButton){
+        updateBasket.disabled = false;
         checkoutButton.disabled = false;
+        backButton.disabled = false;
     }
 
     const vendorInfoElement = document.getElementById('vendor-info'); 
     const vendorId = vendorInfoElement.getAttribute('data-id');
-    restaurantName = getRestaurantName();
-    baskets = getBasketsFromCache();
-    const basketResultIndex = getSavedBasketIndex();
-    const basketResult = baskets[basketResultIndex];
-    if (basketResult) {
-        basket.id = basketResult.id;
-        if (basketResult.items){
-            basket.items = basketResult.items;
-        }
-        loadSavedBasket();
-        baskets.splice(basketResultIndex, 1);
-    }
     if (vendorId) {
         loadVendorItems(vendorId);
     }  
 
+    const restaurantName = getRestaurantName();
+    let baskets = getBasketsFromCache();
+    const basketResultIndex = getSavedBasketIndex(restaurantName, baskets);
+    const basketResult = baskets[basketResultIndex];
+    if (basketResult) {
+        basket.id = basketResult.id;
+        if (basketResult.items.length > 0){
+            basket.items = basketResult.items;
+        }
+        loadSavedBasket();
+    }
     updateSubtotal();
+
+    backButton.addEventListener('click', function() {
+        window.history.back();
+    });
  
     checkoutButton.addEventListener('click', async function () {
-
-        if(addBasketItem && checkoutButton){
-            checkoutButton.disabled = true;
-            addBasketItem.disabled = true;
-        }
-        checkoutButton.disabled = true;
-        addBasketItem.disabled = true;
-        try {
-            basket.id ? basket : await postBasket();
-            await handleBasketItems();
-            cacheBasket();
-            if(addBasketItem && checkoutButton){
-                checkoutButton.disabled = false;
-                addBasketItem.disabled = false;
-            }
-            window.location.href = "/checkout";
-        } catch (error) {
-            alert("Error creating basket: ", error);
-            if(addBasketItem && checkoutButton){
-                checkoutButton.disabled = false;
-                addBasketItem.disabled = false;
-            }
-        }
+        // if(addBasketItem && checkoutButton){
+        //     checkoutButton.disabled = true;
+        //     addBasketItem.disabled = true;
+        // }
+        // if (basket.items.length > 0){
+        //     try {
+        //         basket.id ? basket : await postBasket();
+        //         await handleBasketItems();
+        //         baskets = cacheBasket(restaurantName, baskets);
+        //         if(addBasketItem && checkoutButton){
+        //             checkoutButton.disabled = false;
+        //             addBasketItem.disabled = false;
+        //         }
+        //     } catch (error) {
+        //         alert("Error creating basket: ", error);
+        //         if(addBasketItem && checkoutButton){
+        //             checkoutButton.disabled = false;
+        //             addBasketItem.disabled = false;
+        //         }
+        //     }
+        // } else {
+        //     if (basket.id) {
+        //         await handleBasketItems();
+        //         await deleteBasket();
+        //         baskets = deleteFromCache(restaurantName, baskets);
+        //     }
+        //     if(addBasketItem && checkoutButton){
+        //         checkoutButton.disabled = false;
+        //         addBasketItem.disabled = false;
+        //     }
+        // }
+        window.location.href = "/checkout";    
     });
 
-    addBasketItem.addEventListener('click', async function () {
-        if(addBasketItem && checkoutButton){
+
+    updateBasket.addEventListener('click', async function () {
+        if(updateBasket && checkoutButton){
             checkoutButton.disabled = true;
-            addBasketItem.disabled = true;
+            updateBasket.disabled = true;
+            backButton.disabled = true;
         }
-        try {
-            basket.id ? basket : await postBasket();
-            await handleBasketItems();
-            cacheBasket();
-            if(addBasketItem && checkoutButton){
-                checkoutButton.disabled = false;
-                addBasketItem.disabled = false;
+        if (basket.items.length > 0){
+            try {
+                basket.id ? basket : await postBasket();
+                await handleBasketItems();
+                baskets = cacheBasket(restaurantName, baskets);
+                if(updateBasket && checkoutButton){
+                    checkoutButton.disabled = false;
+                    updateBasket.disabled = false;
+                    backButton.disabled = false;
+                }
+            } catch (error) {
+                alert("Error creating basket: ", error);
+                if(updateBasket && checkoutButton){
+                    checkoutButton.disabled = false;
+                    updateBasket.disabled = false;
+                    backButton.disabled = false;
+                }
             }
-            console.log('here');
-        } catch (error) {
-            alert("Error creating basket: ", error);
-            if(addBasketItem && checkoutButton){
-                checkoutButton.disabled = false;
-                addBasketItem.disabled = false;
+        } else {
+            if (basket.id) {
+                await handleBasketItems();
+                await deleteBasket();
+                baskets = deleteFromCache(restaurantName, baskets);
             }
+            if(updateBasket && checkoutButton){
+                checkoutButton.disabled = false;
+                updateBasket.disabled = false;
+                backButton.disabled = false;
+            }    
         }
     });
 });
@@ -362,6 +398,20 @@ async function postBasket(){
     }
     const responseBasket = await response.json();
     basket.id = responseBasket.id;
+}
+
+async function deleteBasket(){
+    try {
+        const response = await fetch(`/baskets/${basket.id}`, {
+            method: 'DELETE'
+        });
+        if (!response.ok) {
+            throw new Error(`HTTP error deleting empty basket. Status: ${response.status}`);
+        }
+        basket.id = null;
+    } catch (error) {
+        console.error("Error deleting empty basket: ", error);
+    }
 }
 
 async function handleBasketItems(){
@@ -407,20 +457,5 @@ async function handleBasketItems(){
         await Promise.all(deletePromises);
     } catch (error) {
         console.error("Error deleting items:", error);
-    }
-
-    if (basket.items.length === 0){
-        try {
-        const response = await fetch(`/baskets/${basket.id}`, {
-            method: 'DELETE'
-        });
-        if (!response.ok) {
-            throw new Error(`HTTP error deleting empty basket. Status: ${response.status}`);
-        }
-        deleteFromCache();
-        basket.id = null;
-     } catch (error) {
-        console.error("Error deleting empty basket: ", error);
-     }
     }
  }

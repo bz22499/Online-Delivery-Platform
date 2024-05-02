@@ -20,8 +20,8 @@
           <p><a href="/contact">Contact</a></p>
         </div>
         <div class="right">
-          <p id="back-button"><a href="#" onclick="history.back(); return false;">Back</a></p>
-          <p><a href="/profile" th:if="${loggedIn}">Profile</a></p>
+          <button id="back-button">Back</button>
+          <button id="checkoutButton" th:if="${loggedIn}">Checkout</button>
           <p><a href="/login" th:unless="${loggedIn}">Login</a></p>
           <p><a href="/customerlogin" th:unless="${loggedIn}">Sign up</a></p>
         </div>
@@ -42,7 +42,6 @@
     <h3 class="subtotal"></h3>
     <button class="login-button" th:unless="${loggedIn}" id="loginButton"><a href="/login">Please login before starting an order<a/></button>
     <button class="update-basket-button" th:if="${loggedIn}" id="updateBasketButton">Update Basket</button>
-    <button class="checkout-button" th:if="${loggedIn}" id="checkoutButton">Checkout</button>
 </div>
 <script src="/JavaScript/menuPage.js"></script>
 </body>

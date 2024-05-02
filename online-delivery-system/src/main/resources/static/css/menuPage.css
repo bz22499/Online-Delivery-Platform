@@ -65,15 +65,48 @@ body {
   background-color: gray;
 }
 
-.right #back-button a {
+.right #back-button {
+  font-family: "IBM Plex Sans";
+  font-size: 120%;
+  display: block;
+  font-weight: 200;
   background-color: #04aa6d;
   color: white;
   padding: 5px 12px;
   border-radius: 10px;
+  border: 0px;
 }
 
-.right #back-button a:hover {
+.right #back-button:hover {
   background-color: #74d2af;
+  cursor: pointer;
+}
+
+.right #back-button:disabled {
+  background-color: gray;
+  cursor: wait;
+}
+
+.right #checkoutButton {
+  font-family: "IBM Plex Sans";
+  font-size: 120%;
+  display: block;
+  font-weight: 200;
+  background-color: #04aa6d;
+  color: white;
+  padding: 5px 12px;
+  border-radius: 10px;
+  border: 0px;
+}
+
+.right #checkoutButton:hover {
+  background-color: #74d2af;
+  cursor: pointer;
+}
+
+.right #checkoutButton:disabled {
+  background-color: gray;
+  cursor: wait;
 }
 
 .header {
@@ -115,28 +148,28 @@ body {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
 }
 
-.grid-data{
+.grid-data {
   flex: 0 0 60%;
   display: flex;
   flex-direction: column;
   text-align: center;
 }
 
-.grid-item-title{
+.grid-item-title {
   font-size: 2.2em;
 }
 
-.grid-item-description{
+.grid-item-description {
   margin-top: 5%;
   font-size: 1.3em;
 }
 
-.grid-item-footer{
+.grid-item-footer {
   margin-top: auto;
   font-size: 1.3em;
 }
 
-.grid-img{
+.grid-img {
   flex: 0 0 40%;
   width: 100%;
   height: 100%;
@@ -144,7 +177,6 @@ body {
   background-repeat: no-repeat;
   background-position: center center;
 }
-
 
 .basket {
   font-family: "IBM Plex Sans";
@@ -224,22 +256,6 @@ body {
   color: white;
 }
 
-.checkout-button {
-  background-color: #04aa6d;
-  color: white;
-  padding: 15px 20px;
-  margin-bottom: 10px;
-  border: none;
-  cursor: pointer;
-  width: 100%;
-  box-sizing: border-box;
-  border-radius: 5px;
-}
-
-.checkout-button:hover {
-  background-color: #74d2af;
-}
-
 .update-basket-button {
   background-color: #04aa6d;
   color: white;
@@ -256,17 +272,7 @@ body {
   background-color: #74d2af;
 }
 
-#menu-page-back a {
-  background-color: #4caf50;
-  color: white;
-}
-
 #updateBasketButton:disabled {
-  background-color: gray;
-  cursor: wait;
-}
-
-#checkoutButton:disabled {
   background-color: gray;
   cursor: wait;
 }
