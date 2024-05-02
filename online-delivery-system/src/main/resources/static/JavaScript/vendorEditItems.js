@@ -341,14 +341,6 @@ async function load() {
 }
 
 document.addEventListener('DOMContentLoaded', async function () {
-    const proceedButton = document.querySelector('.proceed-button');
-
-    if (proceedButton) {
-        proceedButton.addEventListener('click', function() {
-            console.log("Button clicked");
-        });
-    }
-
     load();
 });
 

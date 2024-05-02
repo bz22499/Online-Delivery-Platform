@@ -47,7 +47,6 @@ async function populateOrders(ordersData) {
         for (const order of ordersData.content) {
             if (order.status === 'PAID') {
                 var matchesVendor = false;
-                console.log("order id: " + order.id)
 
                 const orderItem = document.createElement('div');
                 orderItem.className = 'order-item';
@@ -76,8 +75,6 @@ async function populateOrders(ordersData) {
                         orderItem.appendChild(orderInfo);
                         orderItem.appendChild(basketList);
                     }
-                } else {
-                    console.log('No basket items found for this order.');
                 }
 
 
@@ -88,8 +85,6 @@ async function populateOrders(ordersData) {
                     const confirmation = confirm("Are you sure this order is ready for collection?");
                     if (confirmation) {
                         order.status = 'COLLECTION';
-                        // Update order status on the backend
-                        console.log('Order before PATCH request:', order);
                         try {
                             const response = await fetch(`/orders/${order.id}`, {
                                 method: 'PATCH',
@@ -102,8 +97,6 @@ async function populateOrders(ordersData) {
                                 throw new Error(`HTTP error! status: ${response.status}`);
                             }
                             const responseData = await response.json();
-                            console.log('Response from PATCH request:', responseData); // Add this log
-                            console.log("Order status updated to COLLECTION");
                             const orderInfoElement = document.getElementById(`order-${order.id}-info`);
                             if (orderInfoElement) {
                                 orderInfoElement.textContent = `Status: ${order.status}`;
@@ -118,12 +111,8 @@ async function populateOrders(ordersData) {
                 if (matchesVendor) {
                     gridContainer.appendChild(orderItem);
                 }
-            } else {
-                console.log(`Order ID: ${order.id} not displayed because its status is not 'PAID'.`);
             }
         }
-    } else {
-        console.log('No orders to display.');
     }
 }
 

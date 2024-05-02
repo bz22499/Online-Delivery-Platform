@@ -143,12 +143,12 @@ label {
 }
 
 .edit-form {
-  padding: 20px; /* Add padding around the form */
+  padding: 20px;
 }
 
 .edit-form input[type="text"],
 .edit-form input[type="password"] {
-  margin: 6px 0 16px 0; /* Add bottom margin to create spacing */
+  margin: 6px 0 16px 0;
 }
 
 button {

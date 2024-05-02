@@ -90,8 +90,6 @@ async function populateOrders(ordersData) {
                         }
                     }
                     orderItem.appendChild(basketList);
-                } else {
-                    console.log('No basket items found for this order.')
                 }
                 // Additional functionality to confirm collection
                 const confirmButton = document.createElement('button');
@@ -100,8 +98,6 @@ async function populateOrders(ordersData) {
                     const confirmation = confirm("Are you sure you have delivered this order?");
                     if (confirmation) {
                         order.status = 'DELETED';
-                        // Update order status on the backend
-                        console.log('Order before PATCH request:', order);
                         try {
                             const response = await fetch(`/orders/${order.id}`, {
                                 method: 'PATCH',
@@ -114,8 +110,6 @@ async function populateOrders(ordersData) {
                                 throw new Error(`HTTP error! status: ${response.status}`);
                             }
                             const responseData = await response.json();
-                            console.log('Response from PATCH request:', responseData);
-                            console.log("Order status updated to driver id");
                             const orderInfoElement = document.getElementById(`order-${order.id}-info`);
                             if (orderInfoElement) {
                                 orderInfoElement.textContent = `Status: ${order.status}`;
@@ -127,8 +121,6 @@ async function populateOrders(ordersData) {
 
                 });
                 orderItem.appendChild(confirmButton);
-            }else {
-                console.log(`Order ID: ${order.id} not displayed because its status is ${order.status}.`);
             }
         }
     }

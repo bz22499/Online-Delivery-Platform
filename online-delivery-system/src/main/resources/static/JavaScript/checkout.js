@@ -9,7 +9,6 @@ async function displayBaskets() {
 
     const basketsString = sessionStorage.getItem("baskets");
     const baskets = JSON.parse(basketsString);
-    console.log(baskets);
 
 
     const container = document.getElementById("baskets-container");
@@ -170,7 +169,6 @@ async function updateOrderAddress(){
         })
         .catch(error => {
             alert("Payment failed");
-            console.log("failed");
         });
 
 
