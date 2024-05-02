@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>P2P Online Delivery Platform - Order</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@100;200;300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@100;200;300;400;500;600&family=Oswald:wght@200..700&display=swap" rel="stylesheet">
+    <link rel="icon" href="/images/logo_ld_white_png.png"/>
+    <link rel="stylesheet" href="/css/order.css" />
+  </head>
+  <body>
+    <div class="banner">
+      <div class="left">
+        <img src="/images/logo_ld_png.png"><a target="_parent" href="home"></a></img>
+        <p><a href="/home">Home</a></p>
+        <p><a href="/about">About Us</a></p>
+        <p><a href="/order">Order</a></p>
+        <p><a href="/contact">Contact</a></p>
+      </div>
+      <div class="right">
+        <p id="viewBasketsButton"><a href="#">View Baskets</a></p>
+        <p><a href="/profile" th:if="${loggedIn}">Profile</a></p>
+        <p><a href="/vendorsignup" th:unless="${loggedIn}">Partner with us</a></p>
+        <p><a href="/login" th:unless="${loggedIn}">Login</a></p>
+        <p><a href="/customerlogin" th:unless="${loggedIn}">Sign up</a></p>
+      </div>
+    </div>
+    <div id="basketsDropdown" class="basketsDropdown-content" style="display:none;"></div>   
+    <div class="grid-container"></div>
+    <script src="/JavaScript/order.js"></script>
+  </body>
+</html>

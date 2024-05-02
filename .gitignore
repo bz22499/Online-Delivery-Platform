@@ -1,2 +1,6 @@
 #Ignore MacOS DS_Store system conif files
 .DS_Store
+
+#Ignore IDE files
+.idea/
+.vscode/

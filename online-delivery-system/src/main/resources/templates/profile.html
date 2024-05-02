@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@100;200;300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@100;200;300;400;500;600&family=Oswald:wght@200..700&display=swap" rel="stylesheet">
+    <title>P2P Online Delivery Platform - Profile Page</title>
+    <link rel="icon" href="/images/logo_ld_white_png.png"/>
+    <link rel="stylesheet" href="/css/profile.css">
+</head>
+<body>
+
+<div class="banner">
+    <div class="left">
+        <img src="/images/logo_ld_png.png"><a target="_parent" href="home"></a></img>
+        <p><a target="_parent" href="home">Home</a></p>
+        <p><a target="_parent" href="about">About Us</a></p>
+        <p><a target="_parent" href="order">Order</a></p>
+        <p><a target="_parent" href="contact">Contact</a></p>
+    </div>
+    <div class="right">
+        <p class="right"><a target="_parent" href="profile" th:if="${loggedIn}">Profile</a></p>
+    </div>
+</div>
+
+<div class="profile-container">
+    <div class="edit-form" id="user-details">
+        <label for="firstName">Name:</label>
+        <div class="text-field" id="firstName" th:text="${firstName}"></div>
+
+        <label for="lastName">Last Name:</label>
+        <div class="text-field" id="lastName" th:text="${lastName}"></div>
+
+        <button id="edit-profile" onclick="editProfile()">Edit Profile</button>
+    </div>
+    <div>
+        <form class="edit-form" id="edit-form" style="display: none;">
+            <!--This is here so that we can use the id in the js-->
+            <input type="hidden" id="userId" th:value="${id}">
+
+            <label for="new-firstName">First name:</label>
+            <input type="text" id="new-firstName" required><br>
+
+            <label for="new-lastName">Last name:</label>
+            <input type="text" id="new-lastName" required><br>
+
+            <label for="current-password">Current Password:</label>
+            <input type="password" id="current-password" required><br>
+
+            <label for="new-password">New Password:</label>
+            <input type="password" id="new-password" required><br>
+
+            <label for="confirm-password">Confirm Password:</label>
+            <input type="password" id="confirm-password" required><br>
+
+            <button type="button" id="saveProfileChanges" onclick="saveProfile()">Save</button>
+            <button type="button" id="cancelProfileChanges" onclick="returnToProfile()">Cancel</button>
+        </form>
+    </div>
+</div>
+<div class="profile-container">
+    <div class="edit-form" id="address-details">
+        <label for="street">Street:</label>
+        <div class="text-field" id="current-street" th:text="${street}"></div>
+
+        <label for="city">City:</label>
+        <div class="text-field" id="current-city" th:text="${city}"></div>
+
+        <label for="postCode">Postcode:</label>
+        <div class="text-field" id="current-postcode" th:text="${postcode}"></div>
+
+        <label for="country">Country:</label>
+        <div class="text-field" id="current-country" th:text="${country}"></div>
+
+        <button id="edit-address-btn" onclick="editAddress()">Edit Address</button>
+    </div>
+    <div>
+        <form class="edit-form" id="address-fields" style="display: none;">
+            <label for="street">Street:</label>
+            <input type="text" id="street" required><br>
+
+            <label for="city">City:</label>
+            <input type="text" id="city" required><br>
+
+            <label for="postCode">Post Code:</label>
+            <input type="text" id="postCode" required><br>
+
+            <label for="country">Country:</label>
+            <input type="text" id="country" required><br>
+
+            <button id="saveAddressChanges" type="button" onclick="saveAddress()">Save Address</button>
+            <button id="cancelAddressChanges" type="button" onclick="returnToProfile()">Cancel</button>
+        </form>
+    </div>
+</div>
+<div class="profile-container">
+    <button id="logout">Logout</button>
+</div>
+
+
+<script src="/JavaScript/profile.js"></script>
+</body>
+</html>

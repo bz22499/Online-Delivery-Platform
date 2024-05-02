@@ -1,0 +1,105 @@
+body {
+  font-family: "IBM Plex Sans";
+  background-image: url(../images/freshFoodBackground.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.login-container {
+  background-color: whitesmoke;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  border-radius: 5px;
+  text-align: center;
+  max-width: 400px;
+  width: 100%;
+}
+
+.login-container h1 {
+  margin: 0 0 20px;
+}
+
+.form-group {
+  text-align: left;
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.form-group input {
+  width: 95%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+.confirm-password-group {
+  border: 5px solid #ff0000;
+  background-color: #ffffcc;
+}
+
+button {
+  background-color: #007bff;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+button:disabled {
+  background-color: gray;
+  cursor: wait;
+}
+
+.login-container p {
+  font-size: 14px;
+}
+
+a {
+  text-decoration: none;
+  color: #007bff;
+}
+
+.right p a {
+  font-size: 120%;
+  width: max-content;
+  display: block;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 10px;
+  padding: 5px 12px;
+  font-weight: 200;
+}
+
+.right #back-button a {
+  width: max-content;
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  background-color: black;
+  color: white;
+  border-radius: 10px;
+  cursor: pointer;
+  padding: 5px 12px;
+}
+
+.right #back-button a:hover {
+  background-color: grey;
+}

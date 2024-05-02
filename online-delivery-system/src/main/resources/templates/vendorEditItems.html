@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>P2P Online Delivery Platform - Menu</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@100;200;300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/vendorEditItems.css"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="icon" href="/images/logo_ld_white_png.png"/>
+</head>
+<body>
+<div id="vendor-info" th:attr="data-id=${id}"></div>
+<div class="banner">
+    <div class="left">
+        <img src="/images/logo_ld_png.png"><a target="_parent" href="home"></a></img>
+        <p><a target="_parent" href="vendoradditems">Add Items</a></p>
+        <p><a target="_parent" href="vendoredititems">Edit Items</a></p>
+        <p><a target="_parent" href="ordersForVendors">View Orders</a></p>
+        <p><a target="_parent" href="about">About Us</a></p>
+        <p><a target="_parent" href="contact">Contact</a></p>
+    </div>
+    <div class="right">
+        <p><a target="_parent" href="vendorProfile">Profile</a></p>
+    </div>
+</div>
+
+
+
+<div class="grid-container" style="margin-top: 30px"></div>
+
+
+<script src="/JavaScript/vendorEditItems.js"></script>
+</body>
+</html>

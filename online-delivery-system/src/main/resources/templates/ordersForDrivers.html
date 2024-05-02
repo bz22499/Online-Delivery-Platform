@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@100;200;300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@100;200;300;400;500;600&family=Oswald:wght@200..700&display=swap" rel="stylesheet">
+    <title>All Orders</title>
+    <link rel="stylesheet" href="/css/ordersForDrivers.css">
+    <link rel="icon" href="/images/logo_ld_white_png.png"/>
+</head>
+<body>
+<div class="banner">
+    <div class="left">
+        <p><img src="/images/logo_ld_png.png"></p>
+        <p><a target="_parent" href="driverMain">Home</a></p>
+        <p><a target="_parent" href="ordersForDrivers">Available Orders</a></p>  
+        <p><a target="_parent" href="collectionForDriver">My Orders</a></p> 
+        <p><a target="_parent" href="contact">Contact</a></p>
+    </div>
+    <div class="right">
+        <p><a target="_parent" href="driverProfile">Profile</a></p>
+    </div>
+</div>
+
+<div class="grid-container"></div>
+
+<input id="driverId" th:value="${id}" style="display: none;">
+
+
+<script src="/JavaScript/ordersForDrivers.js"></script>
+</body>
+</html>

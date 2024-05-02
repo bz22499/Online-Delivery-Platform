@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@100;200;300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@100;200;300;400;500;600&family=Oswald:wght@200..700&display=swap" rel="stylesheet">
+    <title>P2P Online Delivery Platform - Profile Page</title>
+    <link rel="icon" href="/images/logo_ld_white_png.png"/>
+    <link rel="stylesheet" href="/css/profile.css">
+</head>
+<body>
+
+<div class="banner">
+    <div class="left">
+        <p><img src="/images/logo_ld_png.png"></p>
+        <p><a target="_parent" href="driverMain">Home</a></p>
+        <p><a target="_parent" href="ordersForDrivers">Available Orders</a></p>  
+        <p><a target="_parent" href="collectionForDriver">My Orders</a></p>  
+        <p><a target="_parent" href="contact">Contact</a></p>
+    </div>
+    <div class="right">
+        <p><a target="_parent" href="driverProfile">Profile</a></p>
+    </div>
+</div>
+
+<div class="profile-container">
+    <div class="edit-form" id="user-details">
+        <label for="name">Name:</label>
+        <div class="text-field" id="name" th:text="${name}"></div>
+
+        <button id="edit-profile" onclick="editProfile()">Edit Profile</button>
+    </div>
+    <div>
+        <form class="edit-form" id="edit-form" style="display: none;">
+            <input type="hidden" id="driverId" th:value="${id}">
+
+            <label for="new-name">Name:</label>
+            <input type="text" id="new-name" required><br>
+
+            <label for="current-password">Current Password:</label>
+            <input type="password" id="current-password" required><br>
+
+            <label for="new-password">New Password:</label>
+            <input type="password" id="new-password" required><br>
+
+            <label for="confirm-password">Confirm Password:</label>
+            <input type="password" id="confirm-password" required><br>
+
+            <button id="saveProfileChanges" type="button" onclick="saveProfile()">Save</button>
+            <button id="cancelProfileChanges" type="button" onclick="returnToProfile()">Cancel</button>
+        </form>
+    </div>
+</div>
+<div class="profile-container">
+    <button id="logout">Logout</button>
+</div>
+
+
+<script src="/JavaScript/driverProfile.js"></script>
+</body>
+</html>
